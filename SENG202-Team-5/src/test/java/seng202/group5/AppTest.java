@@ -42,7 +42,7 @@ public class AppTest
     /**
      * Git push test
      */
-    public void gitTest()
+    public void testgit()
     {
         assertTrue( 1 != 2 );
     }
@@ -59,5 +59,12 @@ public class AppTest
 
     public void test1() {
         assertTrue(1+2 == 3);
+    }
+
+    public void testanother() {
+        boolean cool = false;
+        assertFalse(cool == true);
+        cool = false;
+        assertTrue(cool == false);
     }
 }
