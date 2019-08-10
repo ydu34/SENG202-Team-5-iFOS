@@ -46,7 +46,7 @@ public class AppTest
     }
 
     /**
-     *  Just a random test
+     *  Shivin's random test
      */
 
     public void testing()
