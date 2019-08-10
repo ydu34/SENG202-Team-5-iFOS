@@ -1,5 +1,6 @@
 package seng202.group5;
 
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,6 +32,7 @@ public class AppTest
     /**
      * Rigourous Test :-)
      */
+
     public void testApp()
     {
         assertTrue( true );
@@ -53,5 +55,9 @@ public class AppTest
     {
         assertTrue( true);
         assertTrue( 2 * 2 != 5);
+    }
+
+    public void test1() {
+        assertTrue(1+2 == 3);
     }
 }
