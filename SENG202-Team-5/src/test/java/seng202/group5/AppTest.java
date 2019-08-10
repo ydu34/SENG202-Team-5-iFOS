@@ -44,4 +44,14 @@ public class AppTest
     {
         assertTrue( 1 != 2 );
     }
+
+    /**
+     *  Just a random test
+     */
+
+    public void testing()
+    {
+        assertTrue( true);
+        assertTrue( 2 * 2 != 5);
+    }
 }
