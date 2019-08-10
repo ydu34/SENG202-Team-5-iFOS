@@ -60,11 +60,14 @@ public class AppTest
     public void test1() {
         assertTrue(1+2 == 3);
     }
-
     public void testanother() {
         boolean cool = false;
         assertFalse(cool == true);
         cool = false;
         assertTrue(cool == false);
     }
+    public void testJames() {
+        assertTrue(3 + 2 != 10);
+    }
 }
+
