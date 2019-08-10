@@ -36,4 +36,12 @@ public class AppTest
         assertTrue( true );
         assertTrue( 1 + 2 != 2 );
     }
+
+    /**
+     * Git push test
+     */
+    public void gitTest()
+    {
+        assertTrue( 1 != 2 );
+    }
 }
