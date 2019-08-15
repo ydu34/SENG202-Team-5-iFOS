@@ -3,7 +3,8 @@ package seng202.group5;
 import java.util.HashMap;
 
 /**
- *
+ * The Order class keeps track of the current orders items and total cost. Contains methods to modify items to the order
+ * and give a discount to the order.
  * @author Michael Morgoun
  */
 public class Order {
