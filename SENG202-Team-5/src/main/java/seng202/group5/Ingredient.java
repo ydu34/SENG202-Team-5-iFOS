@@ -1,11 +1,11 @@
 package seng202.group5;
 
 /**
- * The Ingredients class records all the base data for each ingredient in the database which include its name, price, category,
+ * The Ingredient class records all the base data for each ingredient in the database which include its name, price, category,
  * id and its p[rice.
  * @author Shivin Gaba
  */
-public class Ingredients {
+public class Ingredient {
 
     /** Name of the ingredient used in thge recipe **/
     private String name;
@@ -18,7 +18,7 @@ public class Ingredients {
     /** The price for a single unit of a ingredient**/
     private float price;
 
-    Ingredients(String tempName, int tempUnit, String tempCategory, int tempId, float cost) {
+    Ingredient(String tempName, int tempUnit, String tempCategory, int tempId, float cost) {
 
         tempName = name;
         tempUnit = unit;
