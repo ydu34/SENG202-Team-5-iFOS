@@ -21,7 +21,7 @@ public class Order {
      * @return
      */
     public boolean removeItem(MenuItem item) {
-
+        return false;
     }
 
 
@@ -33,7 +33,7 @@ public class Order {
      * @return
      */
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
-
+        return false;
     }
 
 
