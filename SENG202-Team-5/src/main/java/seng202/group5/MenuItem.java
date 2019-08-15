@@ -39,4 +39,8 @@ public class MenuItem {
     public String getID() {
         return ID;
     }
+
+    public void setCost(float tempCost) {
+        cost = tempCost;
+    }
 }
