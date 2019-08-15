@@ -20,15 +20,6 @@ public class MenuItem {
     }
 
     /**
-     * Updates the cost of a MenuItem when given a cost.
-     *
-     * @param newCost The new cost of the item given as a float.
-     */
-    public void updateCost(float newCost) {
-
-    }
-
-    /**
      * Adds stock to the ingredients list.
      *
      * @param ingredientList Holds values of stock.
