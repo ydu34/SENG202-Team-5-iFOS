@@ -36,8 +36,9 @@ public class Worker {
      *
      * @param menuItem the item to add to the order
      * @param quantity the quantity of the item to add to the order
+     * @throws NoOrderException if there is no current order
      */
-    public void addItem(MenuItem menuItem, int quantity) {
+    public void addItem(MenuItem menuItem, int quantity) throws NoOrderException {
 
     }
 
@@ -50,13 +51,14 @@ public class Worker {
     }
 
     /**
-     * Confirms payment for the current order, sends the order to the history, sends information
-     * about the transaction to Finance and retrieves the cash amounts to be given as change
-     *
+     * Confirms payment for the current order, sends the order to the history,
+     * sends information about the transaction to Finance and retrieves the
+     * cash amounts to be given as change
      *
      * @param denominations the cash given to the worker to pay for the item
      * @return the cash to be returned to the customer as change
-     * @throws InsufficientCashException if the given cash amount is not enough to pay for the order
+     * @throws InsufficientCashException if the given cash amount is not enough
+     *      to pay for the order
      */
     public List<Float> confirmPayment(List<Float> denominations) throws InsufficientCashException {
         return new ArrayList<Float>();
