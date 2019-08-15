@@ -1,7 +1,11 @@
 package seng202.group5;
 
-public class MenuItem {
+import java.util.HashMap;
 
+public class MenuItem {
+    /**
+     * MenuItem holds each menu item for display in the graphical user interface.
+     */
     private String name;
     private Recipe recipe;
     private float cost;
@@ -15,16 +19,21 @@ public class MenuItem {
         ID = tempID;
     }
 
-
-    public void updateCost(float newCost) {
+    /**
+     * Adds stock to the ingredients list.
+     *
+     * @param ingredientList Holds values of stock.
+     */
+    public void addStock(HashMap<Ingredient, Integer> ingredientList) {
 
     }
 
-    public void addStock(Map<Ingredient, int> ingredientList) {
-
-    }
-
-    public void removeStock(Map<Ingredient, int> ingredientList) {
+    /**
+     * Removes stock of the MenuItem from the ingredients list.
+     *
+     * @param ingredientList Holds values of stock.
+     */
+    public void removeStock(HashMap<Ingredient, Integer> ingredientList) {
 
     }
 
@@ -32,11 +41,16 @@ public class MenuItem {
         return name;
     }
 
+
     public float getCost() {
         return cost;
     }
 
     public String getID() {
         return ID;
+    }
+
+    public void setCost(float tempCost) {
+        cost = tempCost;
     }
 }
