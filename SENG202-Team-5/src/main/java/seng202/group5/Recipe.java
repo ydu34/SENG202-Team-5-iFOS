@@ -16,9 +16,9 @@ public class Recipe {
     /** Hash map for all the ingredients and its quantity **/
     private HashMap<Ingredient, Integer> IngredientsAmount;
 
-    Recipe(String tempName, String tempRtext){
-        tempName = name;
-        tempRtext = recipeText;
+    Recipe(String tempName, String tempRecipeText){
+        name = tempName;
+        recipeText = tempRecipeText;
     }
 
     /**

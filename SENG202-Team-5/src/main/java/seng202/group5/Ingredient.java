@@ -18,13 +18,13 @@ public class Ingredient {
     /** The price for a single unit of a ingredient**/
     private float price;
 
-    Ingredient(String tempName, int tempUnit, String tempCategory, int tempId, float cost) {
+    Ingredient(String tempName, int tempUnit, String tempCategory, int tempId, float tempPrice) {
 
-        tempName = name;
-        tempUnit = unit;
-        tempCategory = category;
-        tempId = id;
-        cost = price;
+        name = name;
+        unit = tempUnit;
+        category = tempCategory;
+        id = tempId;
+        price = tempPrice;
     }
 
     /**
