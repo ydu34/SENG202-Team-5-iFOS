@@ -20,7 +20,7 @@ public class Ingredient {
 
     Ingredient(String tempName, int tempUnit, String tempCategory, int tempId, float tempPrice) {
 
-        name = name;
+        name = tempName;
         unit = tempUnit;
         category = tempCategory;
         id = tempId;
