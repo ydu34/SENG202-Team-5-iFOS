@@ -15,7 +15,8 @@ public class MenuManager {
      * @param recipeText    the recipes instructions
      * @return              a Recipe
      */
-    public Recipe createRecipe(Map<Ingredient, Int> ingredients, String recipeText) {
+    public Recipe createRecipe(Map<Ingredient, Integer> ingredients, String recipeText) {
+        return null;
     }
 
     /**
@@ -35,6 +36,6 @@ public class MenuManager {
      * @return      true if the item is removed, false if the item does not exist
      */
     public boolean removeItem(String ID) {
-
+        return false;
     }
 }
