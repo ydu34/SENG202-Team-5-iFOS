@@ -64,4 +64,37 @@ public class Worker {
         return new ArrayList<Float>();
     }
 
+    /**
+     * Gets the current order
+     * @return the current order
+     */
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+
+    /**
+     * Gets the items on the menu
+     * @return the items on the menu
+     */
+    public ArrayList<MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
+    /**
+     * Gets the current stock on the food truck
+     * @return the current stock
+     */
+    public Stock getCurrentStock() {
+        return currentStock;
+    }
+
+    /**
+     * Gets the database
+     * @return the database
+     */
+    public Database getDatabase() {
+        return database;
+    }
+
+
 }
