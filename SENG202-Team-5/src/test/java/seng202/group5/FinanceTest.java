@@ -17,34 +17,46 @@ public class FinanceTest extends TestCase {
      */
     @BeforeEach
     public void init() {
-
     }
 
     @Test
     public void testPay() {
-        ArrayList<Float> payed = new ArrayList<>();
-        payed.add((float) 10.00);
-        payed.add((float) 5.00);
-        payed.add((float) 5.00);
-        ArrayList<Float> result;
-        result = testFinance.pay((float) 16.75, payed, 300);
-        ArrayList<Float> expectedResult = new ArrayList<>();
-        expectedResult.add((float) 2.00);
-        expectedResult.add((float) 1.00);
-        expectedResult.add((float) 0.20);
+        ArrayList<Double> payed = new ArrayList<>();
+        payed.add(10.00);
+        payed.add(5.00);
+        payed.add(5.00);
+        ArrayList<Double> result;
+        result = testFinance.pay(16.75, payed, 300);
+        ArrayList<Double> expectedResult = new ArrayList<>();
+        expectedResult.add(2.00);
+        expectedResult.add(1.00);
+        expectedResult.add(0.20);
+        assertEquals(result, expectedResult);
+    }
+
+    @Test
+    public void testPayRounding() {
+        ArrayList<Double> payed = new ArrayList<>();
+        payed.add(10.00);
+        payed.add(5.00);
+        payed.add(5.00);
+        ArrayList<Double> result;
+        result = testFinance.pay(19.01, payed, 300);
+        ArrayList<Double> expectedResult = new ArrayList<>();
+        expectedResult.add(1.00);
         assertEquals(result, expectedResult);
     }
 
     @Test
     public void testRefund() {
-        ArrayList<Float> moneyRefund = new ArrayList<>();
+        ArrayList<Double> moneyRefund = new ArrayList<>();
 
         assertEquals(testFinance.refund(orderID), moneyRefund);
     }
 
     @Test
     public void testTotalCalculator() {
-        ArrayList<Float> total = new ArrayList<>();
+        ArrayList<Double> total = new ArrayList<>();
 
         assertEquals(testFinance.totalCalculator(date1, date2), total);
     }
