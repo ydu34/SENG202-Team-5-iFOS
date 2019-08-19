@@ -3,8 +3,10 @@ package seng202.group5;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.*;
+
+
 
 /*
  * testRefund and testTotalCalculator need to be updated when Database is added
@@ -45,6 +47,17 @@ public class FinanceTest extends TestCase {
         ArrayList<Double> expectedResult = new ArrayList<>();
         expectedResult.add(1.00);
         assertEquals(result, expectedResult);
+    }
+    @Test
+    public void testPayError() {
+        ArrayList<Double> payed = new ArrayList<>();
+        payed.add(10.00);
+        payed.add(5.00);
+        payed.add(5.00);
+        assertThrows(InsufficientCashException.class, () -> {
+            testFinance.pay(25, payed, 300);
+            });
+
     }
 
     @Test
