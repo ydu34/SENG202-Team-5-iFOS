@@ -12,6 +12,10 @@ public class Stock {
 
     private HashMap<String, Integer> ingredientStock;
 
+    public Stock(HashMap<String, Integer> tempIngredientStock) {
+        ingredientStock = tempIngredientStock;
+    }
+
 
     /**
      * Adds an ingredient to the stock with a given name, unit, category and quantity.
