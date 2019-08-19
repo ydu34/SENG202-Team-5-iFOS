@@ -19,15 +19,25 @@ public class Worker {
     /** The stock of ingredients on the food truck */
     private Stock currentStock;
 
+    private History currentHistory;
+
     /** The database managing the system */
-    private Database database;
+   // private Database database;
+
 
     /**
      * Creates a new worker class from the given database
      *
      * @param database the database managing the system
      */
-    public Worker(Database database) {
+    //public Worker(Database database) {
+
+    //}
+    public Worker(Order tempOrder, ArrayList<MenuItem> tempMenuItems, Stock tempStock, History tempHistory) {
+        currentOrder = tempOrder;
+        menuItems = tempMenuItems;
+        currentStock = tempStock;
+        currentHistory = tempHistory;
 
     }
 
@@ -92,9 +102,9 @@ public class Worker {
      * Gets the database
      * @return the database
      */
-    public Database getDatabase() {
-        return database;
-    }
+    //public Database getDatabase() {
+    //    return database;
+    //}
 
 
 }
