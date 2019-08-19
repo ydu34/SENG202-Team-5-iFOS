@@ -70,8 +70,8 @@ public class Worker {
      * @throws InsufficientCashException if the given cash amount is not enough
      *      to pay for the order
      */
-    public List<Float> confirmPayment(List<Float> denominations) throws InsufficientCashException {
-        return new ArrayList<Float>();
+    public ArrayList<Double> confirmPayment(ArrayList<Double> denominations) throws InsufficientCashException {
+        return new ArrayList<Double>();
     }
 
     /**
