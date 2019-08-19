@@ -44,7 +44,7 @@ public class Finance {
      * @param endDate the last date to search to
      * @return a list of float representing  total profits, average profits, and other things
      */
-    public ArrayList<Float> totalCalculator(int startDate, int endDate) {
+    public ArrayList<Double> totalCalculator(int startDate, int endDate) {
         return new ArrayList<Double>();
     }
 }
