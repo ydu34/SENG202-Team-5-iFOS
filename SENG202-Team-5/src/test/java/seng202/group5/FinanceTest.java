@@ -10,7 +10,7 @@ import java.util.*;
  * testRefund and testTotalCalculator need to be updated when Database is added
  */
 public class FinanceTest extends TestCase {
-    public Finance testFinance;
+    private Finance testFinance;
 
     /*
      * When Database is added initialise with test data before each
