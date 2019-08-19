@@ -21,8 +21,8 @@ public class Finance {
      * @return a list of floats representing money in descending size order
      *
      */
-    public ArrayList<Float> refund(String ID) {
-        return new ArrayList<Float>();
+    public ArrayList<Double> refund(String ID) {
+        return new ArrayList<Double>();
     }
 
     /**
@@ -33,8 +33,8 @@ public class Finance {
      * @param time the time the order occurred at
      * @return a list of floats representing money in descending size order
      */
-    public ArrayList<Float> pay(float totalCost, ArrayList<Float> amountPayed, int time) {
-        return new ArrayList<Float>();
+    public ArrayList<Double> pay(double totalCost, ArrayList<Double> amountPayed, int time) {
+        return new ArrayList<Double>();
     }
 
     /**
@@ -45,6 +45,6 @@ public class Finance {
      * @return a list of float representing  total profits, average profits, and other things
      */
     public ArrayList<Float> totalCalculator(int startDate, int endDate) {
-        return new ArrayList<Float>();
+        return new ArrayList<Double>();
     }
 }
