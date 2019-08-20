@@ -12,6 +12,15 @@ public class Stock {
 
     private HashMap<String, Integer> ingredientStock;
 
+
+    /**
+     * Ingredient stock getter.
+     * @return The HashMap ingredientStock
+     */
+    public HashMap<String, Integer> getIngredientStock() {
+        return ingredientStock;
+    }
+
     public Stock(HashMap<String, Integer> tempIngredientStock) {
         ingredientStock = tempIngredientStock;
     }
