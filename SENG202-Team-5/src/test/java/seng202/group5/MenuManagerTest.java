@@ -29,15 +29,27 @@ public class MenuManagerTest extends TestCase {
         assertTrue(burger instanceof Recipe);
     }
 
-    public void testCreateItemNotInMenu() {
+    @Test
+    public void testCreateItemAddtoMenu() {
+        Recipe burger = menuManager.createRecipe(ingredient, burgerRecipeText);
+        String name = "cheeseBurger";
+        double cost = 11.50f;
+        boolean inMenu = true;
+        menuManager.createItem(name, burger, cost, inMenu);
+        assertTrue(menuManager.getItemList().size() == 1);
+    }
+
+    @Test
+    public void testCreateItemNotAddtoMenu() {
         Recipe burger = menuManager.createRecipe(ingredient, burgerRecipeText);
         String name = "cheeseBurger";
         double cost = 11.50f;
         boolean inMenu = false;
         menuManager.createItem(name, burger, cost, inMenu);
-        assertTrue(menuManager.getItemList().size() == 1);
+        assertTrue(menuManager.getItemList().size() == 0);
     }
 
+    @Test
     public void testRemoveItemWithItemInMenu() {
         String ID = "B1";
         menuManager.removeItem(ID);

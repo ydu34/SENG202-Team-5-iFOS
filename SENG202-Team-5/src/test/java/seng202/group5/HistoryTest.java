@@ -3,19 +3,27 @@ package seng202.group5;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
-class HistoryTest extends groovy.util.GroovyTestCase {
-    private History history = new History();
+class HistoryTest {
+    private History history;
 
     @BeforeEach
     void init() {
-        Order order = new Order();
+        HashMap<String, Order> tempTransactionHistory = new HashMap<>();
+        History history = new History(tempTransactionHistory);
+        HashMap<MenuItem, Integer> tempOrderItems = new HashMap<>();
+        double tempTotalCost = 0;
+        String tempID = "1";
+        Order order = new Order(tempOrderItems, tempTotalCost, tempID);
     }
 
     @Test
     void testViewReturnsOrder() {
+
         String orderID = "1002";
         Order order = history.view(orderID);
         assertTrue(order instanceof Order);
