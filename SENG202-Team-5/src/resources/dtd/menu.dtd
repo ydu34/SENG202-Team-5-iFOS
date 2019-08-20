@@ -1,0 +1,23 @@
+<!-- DTD for representing menu -->
+<!-- (C) Neville Churcher 2019 -->
+<!-- Note that the ingredient names need to match the 
+    corresponding codes in ingredient.dtd
+-->
+<!ENTITY version "V0.01 (C) Neville Churcher 2019">
+<!ELEMENT menu (title, description, (item*))>
+<!ATTLIST menu
+    from CDATA #IMPLIED
+    to CDATA #IMPLIED
+>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT item (id, name, (ingredient*))>
+<!ATTLIST item type (beverage|cocktail|snack|asian|grill|main) #IMPLIED>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST name serves CDATA "1">
+<!ELEMENT ingredient (name)>
+<!ATTLIST ingredient
+    unit (ml|g|count) #REQUIRED
+    quantity CDATA #REQUIRED
+>
