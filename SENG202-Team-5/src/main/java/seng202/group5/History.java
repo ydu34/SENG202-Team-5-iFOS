@@ -22,7 +22,7 @@ public class History {
      * @see         Order
      */
     public Order view(String ID) {
-
+        return null;
     }
 
     /**
