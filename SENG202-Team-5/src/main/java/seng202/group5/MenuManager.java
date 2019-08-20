@@ -16,6 +16,7 @@ public class MenuManager {
      * @return              a Recipe
      */
     public Recipe createRecipe(Map<Ingredient, Integer> ingredients, String recipeText) {
+
         return null;
     }
 
@@ -24,7 +25,7 @@ public class MenuManager {
      * @param name      the name of the item
      * @param recipe    the recipe for this item
      * @param cost      the cost of this item
-     * @param inMenu    true if the item is in the menu, false otherwise
+     * @param inMenu    true if the item is to be added into the menu, false if the item will not be added to the menu
      */
     public void createItem(String name, Recipe recipe, double cost, boolean inMenu) {
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE menu SYSTEM "../dtd/menu.dtd">
+<menu from="June" to="August">
+    <title>Winter warmers</title>
+    <description>Sample menu: Things we sell in cold weather</description>
+    <item type="grill">
+        <id>BB1</id>
+        <name>Beefburger</name>
+        <ingredient unit="count" quantity="1">
+            <name>BBun</name>
+        </ingredient>
+        <ingredient unit="count" quantity="1">
+            <name>Bpat</name>
+        </ingredient>
+        <ingredient unit="g" quantity="50">
+            <name>Onion</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="5">
+            <name>TSauce</name>
+        </ingredient>
+        <ingredient unit="count" quantity="1">
+            <name>Beetroot</name>
+        </ingredient>
+        <ingredient unit="g" quantity="15">
+            <name>Lettuce</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="5">
+            <name>Mayo</name>
+        </ingredient>
+    </item>
+    <item type="asian">
+        <id>CF</id>
+        <name>Chicken fried rice</name>
+        <ingredient unit="g" quantity="100">
+            <name>Chicken</name>
+        </ingredient>
+        <ingredient unit="g" quantity="50">
+            <name>Rice</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="10">
+            <name>Soy</name>
+        </ingredient>
+        <ingredient unit="g" quantity="50">
+            <name>Onion</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="10">
+            <name>Oil</name>
+        </ingredient>
+    </item>
+    <item type="beverage">
+        <id>Lem</id>
+        <name>LemCan</name>
+        <ingredient unit="count" quantity="1">
+            <name>LemCan</name>
+        </ingredient>
+    </item>
+    <item type="main">
+        <id>CAV</id>
+        <name serves="6">Coq au van</name>
+        <ingredient unit="g" quantity="1500">
+            <name>Chicken</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="15">
+            <name>OlOil</name>
+        </ingredient>
+        <ingredient unit="g" quantity="100">
+            <name>Bacon</name>
+        </ingredient>
+        <ingredient unit="g" quantity="200">
+            <name>Onion</name>
+        </ingredient>
+        <ingredient unit="g" quantity="10">
+            <name>Garlic</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="30">
+            <name>Brandy</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="600">
+            <name>RedWine</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="150">
+            <name>CStock</name>
+        </ingredient>
+        <ingredient unit="g" quantity="1">
+            <name>Herbs</name>
+        </ingredient>
+        <ingredient unit="count" quantity="2">
+            <name>Bay</name>
+        </ingredient>
+        <ingredient unit="g" quantity="250">
+            <name>Shrooms</name>
+        </ingredient>
+        <ingredient unit="g" quantity="5">
+            <name>Flour</name>
+        </ingredient>
+    </item>
+    <item type="cocktail">
+        <id>BF</id>
+        <name>Baby face</name>
+        <ingredient unit="ml" quantity="30">
+            <name>Vodka</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="30">
+            <name>Cassis</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="30">
+            <name>Cream</name>
+        </ingredient>
+    </item>
+    <item type="beverage">
+        <id>HotChoc</id>
+        <name>Hot Chocolate</name>
+        <ingredient unit="g" quantity="2">
+            <name>Choc</name>
+        </ingredient>
+        <ingredient unit="ml" quantity="200">
+            <name>RegMilk</name>
+        </ingredient>
+    </item>
+</menu>
