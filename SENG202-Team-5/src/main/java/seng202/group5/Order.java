@@ -25,6 +25,14 @@ public class Order {
     }
 
 
+    /**
+     * Returns the double, total cost.
+     * @return the totalCost of the order.
+     */
+    public double getTotalCost() {
+        return totalCost;
+    }
+
 
     /**
      * Removes the item taken as a parameter from the order and returns a boolean true or false as to whether
@@ -52,7 +60,7 @@ public class Order {
      * @param percentage The percentage of the discount.
      */
     public void discount(int percentage) {
-
+        totalCost = totalCost - (totalCost * percentage/100);
     }
 
     public static void main(String[] args) {

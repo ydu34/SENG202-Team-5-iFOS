@@ -9,6 +9,9 @@ import java.util.*;
 
 public class OrderTest {
 
+    private HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+
+
 
 
 }
