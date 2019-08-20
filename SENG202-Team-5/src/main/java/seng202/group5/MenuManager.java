@@ -15,7 +15,8 @@ public class MenuManager {
      * @param recipeText    the recipes instructions
      * @return              a Recipe
      */
-    public Recipe createRecipe(Map<Ingredient, Int> ingredients, String recipeText) {
+    public Recipe createRecipe(Map<Ingredient, Integer> ingredients, String recipeText) {
+        return null;
     }
 
     /**
@@ -25,7 +26,7 @@ public class MenuManager {
      * @param cost      the cost of this item
      * @param inMenu    true if the item is in the menu, false otherwise
      */
-    public void createItem(String name, Recipe recipe, float cost, boolean inMenu) {
+    public void createItem(String name, Recipe recipe, double cost, boolean inMenu) {
 
     }
 
@@ -35,6 +36,15 @@ public class MenuManager {
      * @return      true if the item is removed, false if the item does not exist
      */
     public boolean removeItem(String ID) {
-
+        return false;
     }
+
+    public Map<String, MenuItem> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(Map<String, MenuItem> itemList) {
+        this.itemList = itemList;
+    }
+
 }
