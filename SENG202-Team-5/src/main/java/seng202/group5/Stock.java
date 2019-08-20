@@ -14,6 +14,32 @@ public class Stock {
 
 
     /**
+     * Ingredient stock getter.
+     * @return The HashMap ingredientStock
+     */
+    public HashMap<String, Integer> getIngredientStock() { return ingredientStock; }
+
+
+    /**
+     * Returns a specific ingredients quantity.
+     * @param id The ID of the specific ingredient
+     * @return The quantity of the ingredient
+     */
+    public int getIngredientQuantity(String id) {
+        if (ingredientStock.containsKey(id)) {
+            return ingredientStock.get(id);
+        } else {
+            return 0;
+        }
+    }
+
+
+    public Stock(HashMap<String, Integer> tempIngredientStock) {
+        ingredientStock = tempIngredientStock;
+    }
+
+
+    /**
      * Adds an ingredient to the stock with a given name, unit, category and quantity.
      * @param name
      * @param unit
@@ -37,14 +63,19 @@ public class Stock {
 
 
     /**
-     * Modifies the quantity of an ingredient already in the stock by adding the parameter quantity to the current
+     * Modifies the quantity of an ingredient already in the stock by changing the parameter quantity to the current
      * quantity. Returns a boolean true or false as to whether it was successful or not.
      * @param ingredient
      * @param quantity
      * @return
      */
-    public boolean modifyQuantity(Ingredient ingredient, int quantity) {
-        return false;
+    public boolean modifyQuantity(String id, int quantity) {
+        if (ingredientStock.containsKey(id)) {
+            ingredientStock.replace(id, quantity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
