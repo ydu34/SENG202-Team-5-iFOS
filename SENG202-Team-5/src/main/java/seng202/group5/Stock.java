@@ -17,9 +17,22 @@ public class Stock {
      * Ingredient stock getter.
      * @return The HashMap ingredientStock
      */
-    public HashMap<String, Integer> getIngredientStock() {
-        return ingredientStock;
+    public HashMap<String, Integer> getIngredientStock() { return ingredientStock; }
+
+
+    /**
+     * Returns a specific ingredients quantity.
+     * @param id The ID of the specific ingredient
+     * @return The quantity of the ingredient
+     */
+    public int getIngredientQuantity(String id) {
+        if (ingredientStock.containsKey(id)) {
+            return ingredientStock.get(id);
+        } else {
+            return 0;
+        }
     }
+
 
     public Stock(HashMap<String, Integer> tempIngredientStock) {
         ingredientStock = tempIngredientStock;
