@@ -12,6 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MenuItemTest {
 
+    private MenuItem testBurger;
+    private Order testOrder;
+    private Worker testWorker;
+    private Stock testStock;
+
     @BeforeEach
     void init() {
         HashMap<MenuItem, Integer> orderItems = new HashMap<MenuItem, Integer>();
@@ -28,7 +33,7 @@ class MenuItemTest {
     }
     @Test
     void addStock() {
-        testBurger.addStock(testWorker.testStock);
+        testBurger.addStock(testWorker.getCurrentStock().getIngredientStock()); // getCurrentStock returns Stock yet addStock takes a map as input
 
     }
 
