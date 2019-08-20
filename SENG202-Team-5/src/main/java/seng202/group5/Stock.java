@@ -63,14 +63,19 @@ public class Stock {
 
 
     /**
-     * Modifies the quantity of an ingredient already in the stock by adding the parameter quantity to the current
+     * Modifies the quantity of an ingredient already in the stock by changing the parameter quantity to the current
      * quantity. Returns a boolean true or false as to whether it was successful or not.
      * @param ingredient
      * @param quantity
      * @return
      */
-    public boolean modifyQuantity(Ingredient ingredient, int quantity) {
-        return false;
+    public boolean modifyQuantity(String id, int quantity) {
+        if (ingredientStock.containsKey(id)) {
+            ingredientStock.replace(id, quantity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
