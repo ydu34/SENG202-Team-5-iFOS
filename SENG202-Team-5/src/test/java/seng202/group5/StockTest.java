@@ -9,7 +9,7 @@ import java.util.*;
 
 public class StockTest extends TestCase {
 
-    private Stock stock = new Stock(ingredientStock);
+    private Stock stock = new Stock();
 
 
 

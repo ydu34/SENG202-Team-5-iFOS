@@ -13,13 +13,13 @@ import java.io.*;
 public class Database {
 
     private Worker worker;
-    private Finance finfance;
+    private Finance finance;
     private MenuManager menuManager;
 
     public void uploadData(String filename) {
 
     }
-    public ArrayList<T> queryDatanase(enum datatype) {
+    public ArrayList<T> queryDatabase(enum datatype) {
 
     }
 
