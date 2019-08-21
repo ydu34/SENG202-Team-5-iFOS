@@ -16,12 +16,29 @@ public class Order {
     private double totalCost = 0;
 
     /** The unique ID of th order given by the database **/
-    String iD;
+    String id;
 
+
+    /**
+     * The builder for an Order object.
+     * @param tempOrderItems An order with an initial order list of items.
+     * @param tempTotalCost The total cost of an existing order.
+     * @param tempID The unique ID of the order.
+     */
     public Order(HashMap<MenuItem, Integer> tempOrderItems, double tempTotalCost, String tempID) {
         orderItems = tempOrderItems;
         totalCost = tempTotalCost;
-        iD = tempID;
+        id = tempID;
+    }
+
+
+    /**
+     * The builder for an Order object with no initial values.
+     */
+    public Order() {
+        orderItems = new HashMap<MenuItem, Integer>();
+        totalCost = 0;
+        id = "ABC123"; // THIS NEEDS TO BE CHANGED, CURRENTLY HAS DEFAULT VALUE SINCE THERE IS NO ID MAKER YET
     }
 
 
