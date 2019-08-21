@@ -20,6 +20,13 @@ public class Order {
 
 
     /**
+     * A getter for the current order list.
+     * @return A HashMap<MenuItem, Integer> orderItems
+     */
+    public HashMap<MenuItem, Integer> getOrderItems() { return orderItems; }
+
+
+    /**
      * The builder for an Order object.
      * @param tempOrderItems An order with an initial order list of items.
      * @param tempTotalCost The total cost of an existing order.
