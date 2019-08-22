@@ -19,13 +19,13 @@ public class Database {
     public void uploadData(String filename) {
 
     }
-    public ArrayList<T> queryDatabase(enum datatype) {
-
-    }
-
-    public ArrayList<T> queryDatabase(enum datatype, int startDate, int endDate) {
-
-    }
+//    public ArrayList<T> queryDatabase(enum datatype) {
+//
+//    }
+//
+//    public ArrayList<T> queryDatabase(enum datatype, int startDate, int endDate) {
+//
+//    }
 
 
 
