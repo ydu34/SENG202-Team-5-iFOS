@@ -19,15 +19,25 @@ public class Worker {
     /** The stock of ingredients on the food truck */
     private Stock currentStock;
 
+    private History currentHistory;
+
     /** The database managing the system */
-    private Database database;
+   // private Database database;
+
 
     /**
      * Creates a new worker class from the given database
      *
      * @param database the database managing the system
      */
-    public Worker(Database database) {
+    //public Worker(Database database) {
+
+    //}
+    public Worker(Order tempOrder, ArrayList<MenuItem> tempMenuItems, Stock tempStock, History tempHistory) {
+        currentOrder = tempOrder;
+        menuItems = tempMenuItems;
+        currentStock = tempStock;
+        currentHistory = tempHistory;
 
     }
 
@@ -60,8 +70,8 @@ public class Worker {
      * @throws InsufficientCashException if the given cash amount is not enough
      *      to pay for the order
      */
-    public List<Float> confirmPayment(List<Float> denominations) throws InsufficientCashException {
-        return new ArrayList<Float>();
+    public ArrayList<Double> confirmPayment(ArrayList<Double> denominations) throws InsufficientCashException {
+        return new ArrayList<Double>();
     }
 
     /**
@@ -79,11 +89,22 @@ public class Worker {
     public ArrayList<MenuItem> getMenuItems() {
         return menuItems;
     }
+
     /**
-     * Gets the current stock
+     * Gets the current stock on the food truck
      * @return the current stock
      */
     public Stock getCurrentStock() {
         return currentStock;
     }
+
+    /**
+     * Gets the database
+     * @return the database
+     */
+    //public Database getDatabase() {
+    //    return database;
+    //}
+
+
 }

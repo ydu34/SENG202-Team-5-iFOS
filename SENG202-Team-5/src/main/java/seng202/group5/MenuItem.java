@@ -2,17 +2,19 @@ package seng202.group5;
 
 import java.util.HashMap;
 
+/**
+ * MenuItem holds each menu item for display in the graphical user interface.
+ *  * @author James Kwok
+ */
 public class MenuItem {
-    /**
-     * MenuItem holds each menu item for display in the graphical user interface.
-     */
+
     private String name;
     private Recipe recipe;
-    private float cost;
+    private double cost;
     private String ID;
 
 
-    public MenuItem(String tempName, Recipe tempRecipe, float tempCost, String tempID) {
+    public MenuItem(String tempName, Recipe tempRecipe, double tempCost, String tempID) {
         name = tempName;
         recipe = tempRecipe;
         cost = tempCost;
@@ -42,7 +44,7 @@ public class MenuItem {
     }
 
 
-    public float getCost() {
+    public double getCost() {
         return cost;
     }
 

@@ -13,10 +13,50 @@ public class Order {
     private HashMap<MenuItem, Integer> orderItems;
 
     /** The current total cost of the order including the discount **/
-    private float totalCost = 0;
+    private double totalCost = 0;
 
     /** The unique ID of th order given by the database **/
-    String iD;
+    String id;
+
+
+    /**
+     * A getter for the current order list.
+     * @return A HashMap<MenuItem, Integer> orderItems
+     */
+    public HashMap<MenuItem, Integer> getOrderItems() { return orderItems; }
+
+
+    /**
+     * The builder for an Order object.
+     * @param tempOrderItems An order with an initial order list of items.
+     * @param tempTotalCost The total cost of an existing order.
+     * @param tempID The unique ID of the order.
+     */
+    public Order(HashMap<MenuItem, Integer> tempOrderItems, double tempTotalCost, String tempID) {
+        orderItems = tempOrderItems;
+        totalCost = tempTotalCost;
+        id = tempID;
+    }
+
+
+    /**
+     * The builder for an Order object with no initial values.
+     */
+    public Order() {
+        orderItems = new HashMap<MenuItem, Integer>();
+        totalCost = 0;
+        id = "ABC123"; // THIS NEEDS TO BE CHANGED, CURRENTLY HAS DEFAULT VALUE SINCE THERE IS NO ID MAKER YET
+    }
+
+
+    /**
+     * Returns the double, total cost.
+     * @return the totalCost of the order.
+     */
+    public double getTotalCost() {
+        return totalCost;
+    }
+
 
     /**
      * Removes the item taken as a parameter from the order and returns a boolean true or false as to whether
@@ -44,7 +84,7 @@ public class Order {
      * @param percentage The percentage of the discount.
      */
     public void discount(int percentage) {
-
+        totalCost = totalCost - (totalCost * percentage/100);
     }
 
     public static void main(String[] args) {

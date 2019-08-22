@@ -1,0 +1,17 @@
+<!-- DTD for representing ingredients -->
+<!-- (C) Neville Churcher 2019 -->
+<!-- Note that the ingredient codes will need to
+     match the corresponding entries in menus
+-->
+<!ENTITY version "V0.01 (C) Neville Churcher 2019">
+<!ELEMENT ingredients (description, (ingredient*))>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT ingredient (code, name)>
+<!ATTLIST ingredient
+    unit (ml|g|count) #REQUIRED
+    isveg (yes|no|unknown) "no"
+    isvegan (yes|no|unknown) "no"
+    isgf (yes|no|unknown) "unknown"
+>
+<!ELEMENT code (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
