@@ -1,7 +1,9 @@
 package seng202.group5;
 
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.exceptions.NoOrderException;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A class to manage the operations of a worker using the app
@@ -28,7 +30,6 @@ public class Worker {
     /**
      * Creates a new worker class from the given database
      *
-     * @param database the database managing the system
      */
     //public Worker(Database database) {
 
