@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Ignore
 class MenuItemTest {
 
     private MenuItem testBurger;

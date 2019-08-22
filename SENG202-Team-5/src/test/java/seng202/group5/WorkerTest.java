@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@Ignore
 public class WorkerTest extends TestCase {
 
     Database database;
