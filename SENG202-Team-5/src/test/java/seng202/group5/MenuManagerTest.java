@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Ignore
 public class MenuManagerTest extends TestCase {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
     private MenuManager menuManager;

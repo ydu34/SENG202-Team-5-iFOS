@@ -8,6 +8,7 @@ import java.util.HashMap;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
+@Ignore
 class HistoryTest {
     private History history;
 
