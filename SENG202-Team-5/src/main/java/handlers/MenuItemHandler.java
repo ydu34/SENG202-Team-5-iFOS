@@ -18,27 +18,24 @@ import java.io.IOException;
 public class MenuItemHandler {
 
 
-
-
-
-
     //*************** DOM STUFF ****************
     public void getDataXML(String filename, boolean validating) throws ParserConfigurationException, IOException, SAXException {
-//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder builder = null;
-//        factory.setValidating(validating);
-//        try {
-//            builder = factory.newDocumentBuilder();
-//        } catch (ParserConfigurationException e) {
-//            System.err.println(e);
-//            System.exit();
-//        }
-//        //builder.setErrorHandler(new ); new myerrorhandler
-//        Document document = builder.parse(new File(filename));
-//        System.out.println(document);
+        //        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        //        DocumentBuilder builder = null;
+        //        factory.setValidating(validating);
+        //        try {
+        //            builder = factory.newDocumentBuilder();
+        //        } catch (ParserConfigurationException e) {
+        //            System.err.println(e);
+        //            System.exit();
+        //        }
+        //        //builder.setErrorHandler(new ); new myerrorhandler
+        //        Document document = builder.parse(new File(filename));
+        //        System.out.println(document);
     }
 
     public void main(String[] args) {
         //getDataXML('')
     }
+
 }

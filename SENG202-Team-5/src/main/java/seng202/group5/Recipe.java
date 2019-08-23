@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * The Recipe class records all the recipes along with the steps that are stored in the database.
+ *
  * @author Shivin Gaba
  */
 
@@ -43,7 +44,7 @@ public class Recipe {
      */
     private ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
-    Recipe(String tempName, String tempRecipeText, float price ) {
+    Recipe(String tempName, String tempRecipeText, float price) {
         name = tempName;
         recipeText = tempRecipeText;
         cost = price;
@@ -63,7 +64,6 @@ public class Recipe {
     }
 
     /**
-     *
      * @return true when the recipe is vegan
      */
 
@@ -72,20 +72,19 @@ public class Recipe {
     }
 
     /**
-     *
      * @return true when the recipe is vegetarian
      */
-    public boolean isvegeterianStatus(){
+    public boolean isvegeterianStatus() {
         return vegeterianStatus;
     }
 
     /**
-     *
      * @return true when the recipe is gluten free
      */
-    public boolean isglutenfreeStatus(){
+    public boolean isglutenfreeStatus() {
         return glutenfreeStatus;
     }
+
     /**
      * Returns all the step in written in a particular recipe
      **/

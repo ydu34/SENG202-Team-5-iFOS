@@ -12,24 +12,29 @@ import java.util.ArrayList;
  */
 public class Worker {
 
-    /** The order currently being created */
+    /**
+     * The order currently being created
+     */
     private Order currentOrder;
 
-    /** A list of items currently on the menu */
+    /**
+     * A list of items currently on the menu
+     */
     private ArrayList<MenuItem> menuItems;
 
-    /** The stock of ingredients on the food truck */
+    /**
+     * The stock of ingredients on the food truck
+     */
     private Stock currentStock;
 
     private History currentHistory;
 
     /** The database managing the system */
-   // private Database database;
+    // private Database database;
 
 
     /**
      * Creates a new worker class from the given database
-     *
      */
     //public Worker(Database database) {
 
@@ -69,7 +74,7 @@ public class Worker {
      * @param denominations the cash given to the worker to pay for the item
      * @return the cash to be returned to the customer as change
      * @throws InsufficientCashException if the given cash amount is not enough
-     *      to pay for the order
+     *                                   to pay for the order
      */
     public ArrayList<Double> confirmPayment(ArrayList<Double> denominations) throws InsufficientCashException {
         return new ArrayList<Double>();
@@ -77,6 +82,7 @@ public class Worker {
 
     /**
      * Gets the current order
+     *
      * @return the current order
      */
     public Order getCurrentOrder() {
@@ -85,6 +91,7 @@ public class Worker {
 
     /**
      * Gets the items on the menu
+     *
      * @return the items on the menu
      */
     public ArrayList<MenuItem> getMenuItems() {
@@ -93,6 +100,7 @@ public class Worker {
 
     /**
      * Gets the current stock on the food truck
+     *
      * @return the current stock
      */
     public Stock getCurrentStock() {

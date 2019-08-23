@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * MenuItem holds each menu item for display in the graphical user interface.
- *  * @author James Kwok
+ * * @author James Kwok
  */
 public class MenuItem {
 
@@ -55,4 +55,5 @@ public class MenuItem {
     public void setCost(float tempCost) {
         cost = tempCost;
     }
+
 }

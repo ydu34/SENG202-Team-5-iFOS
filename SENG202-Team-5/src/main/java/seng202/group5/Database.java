@@ -1,6 +1,7 @@
 package seng202.group5;
 
 import java.util.ArrayList;
+
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -19,14 +20,13 @@ public class Database {
     public void uploadData(String filename) {
 
     }
-//    public ArrayList<T> queryDatabase(enum datatype) {
-//
-//    }
-//
-//    public ArrayList<T> queryDatabase(enum datatype, int startDate, int endDate) {
-//
-//    }
-
+    //    public ArrayList<T> queryDatabase(enum datatype) {
+    //
+    //    }
+    //
+    //    public ArrayList<T> queryDatabase(enum datatype, int startDate, int endDate) {
+    //
+    //    }
 
 
 }
