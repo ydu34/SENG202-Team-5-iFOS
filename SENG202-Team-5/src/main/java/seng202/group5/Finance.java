@@ -1,6 +1,7 @@
 package seng202.group5;
 
 import java.util.ArrayList;
+import seng202.group5.exceptions.InsufficientCashException;
 
 /**
  * Finance class records order history, refunds past orders and calculates change.
@@ -34,8 +35,7 @@ public class Finance {
      * @return a list of doubles representing money in descending size order
      * @throws InsufficientCashException
      */
-    public ArrayList<Double> pay(double totalCost, ArrayList<Double> amountPayed, int time) {
-        throw InsufficientCashException;
+    public ArrayList<Double> pay(double totalCost, ArrayList<Double> amountPayed, int time) throws InsufficientCashException{
         return new ArrayList<>();
     }
 
