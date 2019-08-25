@@ -55,7 +55,11 @@ public class Worker {
      * @throws NoOrderException if there is no current order
      */
     public void addItem(MenuItem menuItem, int quantity) throws NoOrderException {
-
+        if (currentOrder == null) {
+            throw new NoOrderException("No Order.");
+        } else {
+            currentOrder.getOrderItems().put(menuItem, quantity);
+        }
     }
 
     /**
