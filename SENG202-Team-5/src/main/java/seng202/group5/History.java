@@ -23,7 +23,7 @@ public class History {
      * @see Order
      */
     public Order view(String ID) {
-        return null;
+        return getTransactionHistory().get(ID);
     }
 
     /**
@@ -38,7 +38,7 @@ public class History {
      */
 
     public void setTransactionHistory(HashMap<String, Order> transactionHistory) {
-        this.transactionHistory = transactionHistory;
+        transactionHistory = transactionHistory;
     }
 
 }
