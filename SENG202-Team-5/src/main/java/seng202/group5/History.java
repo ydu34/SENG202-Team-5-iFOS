@@ -34,11 +34,11 @@ public class History {
     }
 
     /**
-     * @param transactionHistory the transaction history containing all the Orders and their IDs.
+     * @param tempTransactionHistory the transaction history containing all the Orders and their IDs.
      */
 
-    public void setTransactionHistory(HashMap<String, Order> transactionHistory) {
-        transactionHistory = transactionHistory;
+    public void setTransactionHistory(HashMap<String, Order> tempTransactionHistory) {
+        transactionHistory = tempTransactionHistory;
     }
 
 }
