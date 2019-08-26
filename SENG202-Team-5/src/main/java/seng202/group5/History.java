@@ -23,7 +23,7 @@ public class History {
      * @see Order
      */
     public Order view(String ID) {
-        return null;
+        return getTransactionHistory().get(ID);
     }
 
     /**
@@ -34,11 +34,11 @@ public class History {
     }
 
     /**
-     * @param transactionHistory the transaction history containing all the Orders and their IDs.
+     * @param tempTransactionHistory the transaction history containing all the Orders and their IDs.
      */
 
-    public void setTransactionHistory(HashMap<String, Order> transactionHistory) {
-        this.transactionHistory = transactionHistory;
+    public void setTransactionHistory(HashMap<String, Order> tempTransactionHistory) {
+        transactionHistory = tempTransactionHistory;
     }
 
 }
