@@ -22,6 +22,7 @@ class MenuItemTest {
     @BeforeEach
     void init() {
         HashMap<MenuItem, Integer> orderItems = new HashMap<MenuItem, Integer>();
+        HashMap<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
         HashMap<String, Integer> ingredientStock = new HashMap<String, Integer>();
         HashMap<String, Order> transactionHistory = new HashMap<String, Order>();
         Order testOrder = new Order(orderItems, 0.00, "1234");
@@ -29,7 +30,7 @@ class MenuItemTest {
         MenuItem testBurger = new MenuItem("Burger", testRecipe, 10.00, "BRG10");
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(testBurger);
-        Stock testStock = new Stock(ingredientStock);
+        Stock testStock = new Stock(ingredients, ingredientStock);
         History testHistory = new History(transactionHistory);
         Worker testWorker = new Worker(testOrder, menuItems, testStock, testHistory);
     }
