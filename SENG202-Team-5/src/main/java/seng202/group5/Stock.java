@@ -41,7 +41,7 @@ public class Stock {
      * @param quantity   The initial quantity of the ingredient, leave empty if 0.
      */
     public void addNewIngredient(Ingredient ingredient, int quantity) {
-        if (!ingredients.containsKey(ingredient.getId())) {
+        if (ingredients.containsKey(ingredient.getId())) {
             return;
         }
 
