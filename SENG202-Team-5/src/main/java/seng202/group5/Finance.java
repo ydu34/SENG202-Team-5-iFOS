@@ -68,38 +68,27 @@ public class Finance {
      * @return returns a list containing the change need to be returned
      */
     public ArrayList<Money> calcChange(Money change) {
+        ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
         ArrayList<Money> totalChange = new ArrayList<>();
         change.plus(Money.parse("NZD 0.03"));
         while (change.isGreaterThan(Money.parse("NZD 0.09"))) {
             // Could this be done with a sorted list of denominations instead?
             // There is a lot of repeated code
-            if (change.isGreaterThan(Money.parse("NZD 50.00"))) {
-                totalChange.add(Money.parse("NZD 50.00"));
-                change.minus(Money.parse("NZD 50.00"));
-            }else if (change.isGreaterThan(Money.parse("NZD 20.00"))) {
-                totalChange.add(Money.parse("NZD 20.00"));
-                change.minus(Money.parse("NZD 20.00"));
-            }else if (change.isGreaterThan(Money.parse("NZD 10.00"))) {
-                totalChange.add(Money.parse("NZD 10.00"));
-                change.minus(Money.parse("NZD 10.00"));
-            }else if (change.isGreaterThan(Money.parse("NZD 5.00"))) {
-                totalChange.add(Money.parse("NZD 5.00"));
-                change.minus(Money.parse("NZD 5.00"));
-            }else if (change.isGreaterThan(Money.parse("NZD 2.00"))) {
-                totalChange.add(Money.parse("NZD 2.00"));
-                change.minus(Money.parse("NZD 2.00"));
-            }else if (change.isGreaterThan(Money.parse("NZD 1.00"))) {
-                totalChange.add(Money.parse("NZD 1.00"));
-                change.minus(Money.parse("NZD 1.00"));
-            }else if (change.isGreaterThan(Money.parse("NZD 0.50"))) {
-                totalChange.add(Money.parse("NZD 0.50"));
-                change.minus(Money.parse("NZD 0.50"));
-            }else if (change.isGreaterThan(Money.parse("NZD 0.20"))) {
-                totalChange.add(Money.parse("NZD 0.20"));
-                change.minus(Money.parse("NZD 0.20"));
-            }else {
-                totalChange.add(Money.parse("NZD 0.10"));
-                change.minus(Money.parse("NZD 0.10"));
+            for (Money value: denomination)
+            {
+                while (change.isGreaterThan(value)) {
+                    totalChange.add(value);
+                    change.minus(value);
+                }
             }
         }
         return totalChange;
