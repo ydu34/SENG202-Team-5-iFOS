@@ -1,29 +1,29 @@
 package seng202.group5;
 
 /**
- * The Ingredient class records all the base data for each ingredient in the database which include its name, price, category,
- * id and its p[rice.
+ * The Ingredient class records all the base data for each ingredient in the database which include its name, price,
+ * category, id and its price.
  *
  * @author Shivin Gaba
  */
 public class Ingredient {
 
     /**
-     * Name of the ingredient used in thge recipe
+     * Name of the ingredient used in the recipe
      **/
     private String name;
     /**
-     * The quantity of a particular ingredient on hand
+     * The measurement used to quantify the ingredient i.e. kg, L, buns etc.
      **/
-    private int unit;
+    private String unit;
     /**
-     * Category that ingredient belongs to like poultry, met or bred.
+     * Category that ingredient belongs to like poultry, meat or bread.
      **/
     private String category;
     /**
      * Unique id used to identify every ingredient in the database
      **/
-    private int id;
+    private String id;
     /**
      * The price for a single unit of a ingredient
      **/
@@ -42,7 +42,7 @@ public class Ingredient {
     private boolean isVegan;
 
 
-    Ingredient(String tempName, int tempUnit, String tempCategory, int tempId, float tempPrice) {
+    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, float tempPrice) {
 
         name = tempName;
         unit = tempUnit;
@@ -51,7 +51,7 @@ public class Ingredient {
         price = tempPrice;
     }
 
-    Ingredient(String tempName, int tempUnit, String tempCategory, int tempId, float tempPrice, boolean glutenFree, boolean vegetarian, boolean vegan) {
+    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, float tempPrice, boolean glutenFree, boolean vegetarian, boolean vegan) {
 
         name = tempName;
         unit = tempUnit;
@@ -74,12 +74,12 @@ public class Ingredient {
     /**
      * Returns the number of units of the ingredient on hand
      **/
-    public int getUnit() {
+    public String getUnit() {
         return unit;
     }
 
     /**
-     * Returns the category of the ingredient if its  a spice, meat or bread.
+     * Returns the category of the ingredient if its a spice, meat or bread.
      **/
     public String getCategory() {
         return category;
@@ -88,7 +88,7 @@ public class Ingredient {
     /**
      * Returns the Unique id for every ingredient
      **/
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -97,7 +97,7 @@ public class Ingredient {
      *
      * @param someId Id for the new Ingredient added to the stock
      */
-    public void setId(int someId) {
+    public void setId(String someId) {
         id = someId;
     }
 
@@ -149,7 +149,6 @@ public class Ingredient {
     /**
      * Returns True if the ingredient is Vegan
      **/
-
     public boolean getGlutenFree() {
         return isGlutenFree;
     }
@@ -157,7 +156,6 @@ public class Ingredient {
     /**
      * Returns True if the ingredient is Vegan
      **/
-
     public boolean getVegetarian() {
         return isVegetarian;
     }
@@ -165,13 +163,12 @@ public class Ingredient {
     /**
      * Returns True if the ingredient is Vegan
      **/
-
     public boolean getVegan() {
         return isVegan;
     }
 
     /**
-     * @param other ingredient that is compared to th current ingredient
+     * @param other ingredient that is compared to the current ingredient
      * @return True if the two compared ingredients are the same
      */
     public boolean equals(Ingredient other) {
