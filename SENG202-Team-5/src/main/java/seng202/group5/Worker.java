@@ -47,6 +47,9 @@ public class Worker {
      */
     public Worker(Database tempDatabase) {
         database = tempDatabase;
+        this.newOrder();
+        Stock stock = new Stock();
+
     }
 
     public Worker(Order tempOrder, ArrayList<MenuItem> tempMenuItems, Stock tempStock, History tempHistory) {
@@ -109,8 +112,12 @@ public class Worker {
      * Gets the current order
      *
      * @return the current order
+     * @throws NoOrderException if there is no current order
      */
-    public Order getCurrentOrder() {
+    public Order getCurrentOrder() throws NoOrderException {
+        if (currentOrder == null) {
+            throw new NoOrderException("No order exists to get");
+        }
         return currentOrder;
     }
 

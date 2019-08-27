@@ -1,6 +1,8 @@
 package seng202.group5;
 
 import junit.framework.TestCase;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,9 @@ public class WorkerTest extends TestCase {
     private Order testOrder;
     private MenuItem testItem = new MenuItem(
             "Burger Item",
-            new Recipe("Burger", "Add items to burger"),
+            new Recipe("Burger",
+                       "Add items to burger",
+                       (float) 5.80),
             (float) 5.80,
             "14328"
     );
@@ -33,53 +37,66 @@ public class WorkerTest extends TestCase {
 
     @Test
     public void testAddItemAddsItem() {
-        initialOrderItems = (HashMap<MenuItem, Integer>)
-                testWorker.getCurrentOrder().getOrderItems().clone();
-        initialOrderItems.put(testItem, 3);
-        testWorker.addItem(testItem, 3);
-        assertEquals(initialOrderItems, testWorker.getCurrentOrder().getOrderItems());
+        try {
+            initialOrderItems = (HashMap<MenuItem, Integer>)
+                    testWorker.getCurrentOrder().getOrderItems().clone();
+            initialOrderItems.put(testItem, 3);
+            testWorker.addItem(testItem, 3);
+            assertEquals(initialOrderItems, testWorker.getCurrentOrder().getOrderItems());
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testNewOrderReplacesOrder() {
-        testOrder = testWorker.getCurrentOrder();
-        testWorker.newOrder();
-        assertNotSame(testOrder, testWorker.getCurrentOrder());
-        testOrder = testWorker.getCurrentOrder();
-        testWorker.newOrder();
-        assertNotSame(testOrder, testWorker.getCurrentOrder());
+        try {
+            testOrder = testWorker.getCurrentOrder();
+            testWorker.newOrder();
+            assertNotSame(testOrder, testWorker.getCurrentOrder());
+            testOrder = testWorker.getCurrentOrder();
+            testWorker.newOrder();
+            assertNotSame(testOrder, testWorker.getCurrentOrder());
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testConfirmPaymentWithOrder() { //Is this correct? As addItem throws the exception.
-        double changeSum = 0.0;
+        Money changeSum = Money.parse("NZD 0");
         try {
             testWorker.addItem(testItem, 2);
-            ArrayList<Double> paymentAmount = new ArrayList<Double>();
-            paymentAmount.add(testItem.getCost() * 2);
-            paymentAmount.add(4.0);
-            for (double x : testWorker.confirmPayment(paymentAmount)) {
-                changeSum += x;
+            ArrayList<Money> paymentAmount = new ArrayList<Money>();
+            paymentAmount.add(Money.of(CurrencyUnit.of("NZD"), testItem.getCost() * 2));
+            paymentAmount.add(Money.parse("NZD 4.0"));
+            ArrayList<Money> change = testWorker.confirmPayment(paymentAmount);
+            for (Money x : change) {
+                changeSum.plus(x);
             }
         } catch (NoOrderException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } catch (InsufficientCashException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
-        assertEquals(4.0, changeSum, 0.00001);
+        assertTrue(changeSum.isEqual(Money.parse("NZD 4.0")));
     }
 
     @Test
     @Ignore
     public void testConfirmPaymentRaisesInsufficientCashException() { // This function needs fixing
-        testWorker.addItem(testItem, 2);
-        ArrayList<Double> paymentAmount = new ArrayList<Double>();
-        paymentAmount.add(testItem.getCost());
-        paymentAmount.add(testItem.getCost() / 2);
+        try {
+            testWorker.addItem(testItem, 2);
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
+        ArrayList<Money> paymentAmount = new ArrayList<Money>();
+        paymentAmount.add(Money.of(CurrencyUnit.of("NZD"), testItem.getCost()));
+        paymentAmount.add(Money.of(CurrencyUnit.of("NZD"), testItem.getCost() / 2));
         try {
             testWorker.confirmPayment(paymentAmount);
-        } catch (InsufficientCashException) {
+        } catch (InsufficientCashException e) {
             return;
         }
         fail();
