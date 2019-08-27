@@ -21,9 +21,9 @@ public class Order {
     private double totalCost = 0;
 
     /**
-     * The unique ID of th order given by the database
+     * The unique ID of the order given by the database
      **/
-    String id;
+    private String id;
 
 
     /**
@@ -106,5 +106,14 @@ public class Order {
 
     }
 
+
+    /**
+     * Gets the ID of this order
+     *
+     * @return the ID of this order
+     */
+    public String getID() {
+        return id;
+    }
 
 }
