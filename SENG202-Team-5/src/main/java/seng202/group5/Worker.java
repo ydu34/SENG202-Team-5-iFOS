@@ -1,9 +1,13 @@
 package seng202.group5;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 
+import java.time.Instant;
 import java.util.ArrayList;
+
 
 /**
  * A class to manage the operations of a worker using the app
@@ -27,18 +31,24 @@ public class Worker {
      */
     private Stock currentStock;
 
+    /**
+     * The history of orders in this food truck
+     */
     private History currentHistory;
 
-    /** The database managing the system */
-    // private Database database;
+    /**
+     * The database managing the system
+     */
+    private Database database;
 
 
     /**
      * Creates a new worker class from the given database
      */
-    //public Worker(Database database) {
+    public Worker(Database tempDatabase) {
+        database = tempDatabase;
+    }
 
-    //}
     public Worker(Order tempOrder, ArrayList<MenuItem> tempMenuItems, Stock tempStock, History tempHistory) {
         currentOrder = tempOrder;
         menuItems = tempMenuItems;
@@ -56,7 +66,7 @@ public class Worker {
      */
     public void addItem(MenuItem menuItem, int quantity) throws NoOrderException {
         if (currentOrder == null) {
-            throw new NoOrderException("No Order.");
+            throw new NoOrderException("No Order to add the item to.");
         } else {
             currentOrder.getOrderItems().put(menuItem, quantity);
         }
@@ -67,7 +77,7 @@ public class Worker {
      * confirmation
      */
     public void newOrder() {
-
+        currentOrder = new Order();
     }
 
     /**
@@ -80,8 +90,19 @@ public class Worker {
      * @throws InsufficientCashException if the given cash amount is not enough
      *                                   to pay for the order
      */
-    public ArrayList<Double> confirmPayment(ArrayList<Double> denominations) throws InsufficientCashException {
-        return new ArrayList<Double>();
+    public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
+        Money totalPayment = Money.parse("NZD 0");
+        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
+        ArrayList<Money> change = new ArrayList<Money>();
+
+        // Need to implement database. Also, this is based on the system clock,
+        // which may be problematic. This part throws the exception
+        // change = database.getFinance().pay(Money.of(CurrencyUnit.of("NZD"), currentOrder.getTotalCost()),
+        //                           denominations,
+        //                           Instant.now().getEpochSecond());
+
+        currentHistory.getTransactionHistory().put(currentOrder.getID(), currentOrder);
+        return change;
     }
 
     /**
@@ -113,11 +134,12 @@ public class Worker {
 
     /**
      * Gets the database
+     *
      * @return the database
      */
-    //public Database getDatabase() {
-    //    return database;
-    //}
+    public Database getDatabase() {
+        return database;
+    }
 
 
 }
