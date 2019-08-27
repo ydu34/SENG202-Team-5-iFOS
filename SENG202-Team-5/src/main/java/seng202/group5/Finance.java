@@ -39,6 +39,7 @@ public class Finance {
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
     public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, int time) throws InsufficientCashException {
+        // the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
         for (Money money: amountPayed)
         {
@@ -70,6 +71,8 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
         change.plus(Money.parse("NZD 0.03"));
         while (change.isGreaterThan(Money.parse("NZD 0.09"))) {
+            // Could this be done with a sorted list of denominations instead?
+            // There is a lot of repeated code
             if (change.isGreaterThan(Money.parse("NZD 50.00"))) {
                 totalChange.add(Money.parse("NZD 50.00"));
                 change.minus(Money.parse("NZD 50.00"));
