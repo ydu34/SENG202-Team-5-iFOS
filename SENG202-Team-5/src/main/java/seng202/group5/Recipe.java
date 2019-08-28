@@ -23,10 +23,7 @@ public class Recipe {
      * Hash map for all the ingredients and its quantity
      **/
     private HashMap<Ingredient, Integer> ingredientsAmount;
-    /**
-     * Cost of the individual ingredient
-     */
-    private float cost;
+
     /**
      * The number of the non vegan ingredients
      **/
@@ -42,12 +39,11 @@ public class Recipe {
     /**
      * The IngredientList will contain all the ingredients used in a particular recipe
      */
-    private ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
-    Recipe(String tempName, String tempRecipeText, float price) {
+    Recipe(String tempName, String tempRecipeText)
+    {
         name = tempName;
         recipeText = tempRecipeText;
-        cost = price;
         veganStatus = true;
         vegeterianStatus = true;
         glutenfreeStatus = true;
@@ -106,7 +102,6 @@ public class Recipe {
         } else {
             ingredientsAmount.put(someIngredient, amount + quantity);
         }
-        ingredientList.add(someIngredient);
         if (!someIngredient.getVegan()) {
             veganStatus = false;
             System.out.println("Recipe is not vegan anymore");
@@ -132,17 +127,17 @@ public class Recipe {
 
         if (ingredientsAmount.containsKey(someIngredient)) {
             ingredientsAmount.remove(someIngredient);
-            for (int i = 0; i < ingredientList.size(); i++) {
-                boolean var1 = someIngredient.getGlutenFree();
-                boolean var2 = someIngredient.getVegan();
-                boolean var3 = someIngredient.getVegetarian();
-                if (!var1) {
+            for (int i = 0; i < ingredientsAmount.size(); i++) {
+                boolean gf = someIngredient.getGlutenFree();
+                boolean vegan = someIngredient.getVegan();
+                boolean vegetarian = someIngredient.getVegetarian();
+                if (!gf) {
                     glutenfreeStatus = false;
                 }
-                if (!var2) {
+                if (!vegan) {
                     veganStatus = false;
                 }
-                if (!var3) {
+                if (!vegetarian) {
                     vegeterianStatus = false;
                 }
             }
@@ -158,7 +153,7 @@ public class Recipe {
      * @param quantity       amount by which the quantity needs to be edited
      * @return true if the editing the quantity of that ingredient was success else returns false
      */
-    public boolean editRecepie(Ingredient someIngredient, int quantity) {
+    public boolean editRecipe(Ingredient someIngredient, int quantity) {
         boolean edited = false;
         Integer amount = ingredientsAmount.get(someIngredient);
         if (amount != null) {
