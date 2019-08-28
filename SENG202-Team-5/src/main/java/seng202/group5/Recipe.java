@@ -107,11 +107,11 @@ public class Recipe {
      */
     public void addIngredient(Ingredient someIngredient, int quantity) {
 
-        Integer amount = ingredientsAmount.get(someIngredient);
+        Integer amount = ingredientsAmount.get(someIngredient.getId());
         if (amount == null) {
-            ingredientsAmount.put(someIngredient, quantity);
+            ingredientsAmount.put(someIngredient.getId(), quantity);
         } else {
-            ingredientsAmount.put(someIngredient, amount + quantity);
+            ingredientsAmount.put(someIngredient.getId(), amount + quantity);
         }
         if (!someIngredient.getVegan()) {
             veganStatus = false;
@@ -136,8 +136,8 @@ public class Recipe {
     public boolean removeIngredient(Ingredient someIngredient, int quantity) {
         boolean removed = false;
 
-        if (ingredientsAmount.containsKey(someIngredient)) {
-            ingredientsAmount.remove(someIngredient);
+        if (ingredientsAmount.containsKey(someIngredient.getId())) {
+            ingredientsAmount.remove(someIngredient.getId());
             for (int i = 0; i < ingredientsAmount.size(); i++) {
                 boolean gf = someIngredient.getGlutenFree();
                 boolean vegan = someIngredient.getVegan();
@@ -166,10 +166,10 @@ public class Recipe {
      */
     public boolean editRecipe(Ingredient someIngredient, int quantity) {
         boolean edited = false;
-        Integer amount = ingredientsAmount.get(someIngredient);
+        Integer amount = ingredientsAmount.get(someIngredient.getId());
         if (amount != null) {
-            if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
-                ingredientsAmount.put(someIngredient, quantity);
+            if (ingredientsAmount.containsKey(someIngredient.getId()) && quantity >= 1) {
+                ingredientsAmount.put(someIngredient.getId(), quantity);
                 edited = true;
             }
         }
@@ -201,6 +201,10 @@ public class Recipe {
      */
     public boolean getGlutenfree() {
         return glutenfreeStatus;
+    }
+
+    public HashMap getIngredientAmount(){
+        return ingredientsAmount;
     }
 
 }
