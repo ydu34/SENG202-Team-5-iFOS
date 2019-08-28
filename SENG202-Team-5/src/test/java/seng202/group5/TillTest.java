@@ -41,9 +41,9 @@ class TillTest {
     public testRemoveDenomination() {
         Money testMoney30 = null;
         testMoney30.parse("NZD 30.00");
-        testTill.newDenomination(testMoney30);
+        testTill.newDenomination(testMoney30, 1);
         assertEquals(4, testTill.getDenominations().size());
-        testTill.removeDenomination(testMoney20);
+        testTill.removeDenomination(testMoney20, 1);
         assertEquals(3, testTill.getDenominations().size());
 
     }
