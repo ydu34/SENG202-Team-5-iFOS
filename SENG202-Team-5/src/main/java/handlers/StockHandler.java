@@ -1,6 +1,5 @@
 package handlers;
 
-import seng202.group5.MenuManager;
 import seng202.group5.Stock;
 
 import javax.xml.bind.JAXBContext;
@@ -25,16 +24,14 @@ public class StockHandler {
         }
     }
 
-    /**Converts the xml file menu.xml containing the menuitems into a hashmap contained in the class MenuManager.
-     * @return a instance of the class MenuManager with the map filled up with the MenuItems in the menu.xml.
-     */
-    public MenuManager xmlToMenu() {
+
+    public Stock xmlToMenu() {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(MenuManager.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Stock.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            MenuManager menuManager = (MenuManager) jaxbUnmarshaller.unmarshal( new File(System.getProperty("user.dir") +
-                                                                                                 "/src/resources/data/menu.xml"));
-            return menuManager;
+            Stock stock = (Stock) jaxbUnmarshaller.unmarshal( new File(System.getProperty("user.dir") +
+                                                                                                 "/src/resources/data/stock.xml"));
+            return stock;
 
         } catch (JAXBException e) {
             e.printStackTrace();
