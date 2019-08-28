@@ -21,7 +21,7 @@ public class MenuItemHandler {
     /**Converts the hashmap menu contained in MenuManager to an xml file named menu.xml.
      * @param menuManager a instance of the class MenuManager to have it's menu map converted to menu.xml.
      */
-    public void menuToXml(MenuManager menuManager) {
+    public void objectToXml(MenuManager menuManager) {
 
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(MenuManager.class);
@@ -38,7 +38,7 @@ public class MenuItemHandler {
     /**Converts the xml file menu.xml containing the menuitems into a hashmap contained in the class MenuManager.
      * @return a instance of the class MenuManager with the map filled up with the MenuItems in the menu.xml.
      */
-    public MenuManager xmlToMenu() {
+    public MenuManager xmlToObject() {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(MenuManager.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();

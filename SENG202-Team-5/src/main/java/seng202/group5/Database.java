@@ -1,15 +1,10 @@
 package seng202.group5;
 
-import java.util.ArrayList;
-
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-
-import javax.xml.XMLConstants;
-import javax.xml.parsers.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.validation.Schema;
-import java.io.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
 
 public class Database {
 
@@ -17,16 +12,39 @@ public class Database {
     private Finance finance;
     private MenuManager menuManager;
 
-    public void uploadData(String filename) {
 
+    /**Marshals the given object o into a xml file.
+     * @param c The class of the object o.
+     * @param o The object you want to marshal into xml file.
+     * @param fileName  The name of the xml file.
+     */
+    public void objectToXml(Class c, Object o, String fileName) {
+
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(c);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
+            jaxbMarshaller.marshal(c.cast(o), new File(System.getProperty("user.dir") +
+                                                                 "/src/resources/data/" + fileName));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
-    //    public ArrayList<T> queryDatabase(enum datatype) {
-    //
-    //    }
-    //
-    //    public ArrayList<T> queryDatabase(enum datatype, int startDate, int endDate) {
-    //
-    //    }
 
+    /**Converts the xml file to an object o.
+     * @return an object o.
+     */
+    public Object xmlToObject(Class c, Object o, String fileName) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(c);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            o = c.cast(jaxbUnmarshaller.unmarshal( new File(System.getProperty("user.dir") +
+                                                                                                 "/src/resources/data/" + fileName)));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return o;
+    }
 
 }
