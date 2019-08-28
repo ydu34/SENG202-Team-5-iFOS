@@ -22,7 +22,7 @@ public class Recipe {
     /**
      * Hash map for all the ingredients and its quantity
      **/
-    private HashMap<Ingredient, Integer> ingredientsAmount;
+    private HashMap<String, Integer> ingredientsAmount;
 
     /**
      * The number of the non vegan ingredients
@@ -47,7 +47,18 @@ public class Recipe {
         veganStatus = true;
         vegeterianStatus = true;
         glutenfreeStatus = true;
-        ingredientsAmount = new HashMap<Ingredient, Integer>();
+        ingredientsAmount = new HashMap<String, Integer>();
+
+    }
+
+    Recipe(String tempName, String tempRecipeText, HashMap<String, Integer> tempIngredientsAmount)
+    {
+        name = tempName;
+        recipeText = tempRecipeText;
+        veganStatus = false;
+        vegeterianStatus = false;
+        glutenfreeStatus = false;
+        ingredientsAmount = tempIngredientsAmount;
 
     }
 
