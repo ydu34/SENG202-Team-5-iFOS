@@ -64,4 +64,12 @@ class TillTest {
         assertEquals(120, testTill.TotalValue());
     }
 
+    public testAddMultipleDenominations() {
+        HashMap<Money, Integer> denominationCount = new HashMap<Money, Integer>();
+        denominationCount.put(testMoney10, 1);
+        denominationCount.put(testMoney20, 2);
+        testTill.addMultipleDenominations(denominationCount);
+        assertEquals(50, testTill.totalValue());
+    }
+
 }
