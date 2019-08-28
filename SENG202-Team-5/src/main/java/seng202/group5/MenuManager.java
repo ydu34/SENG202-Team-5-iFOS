@@ -12,11 +12,12 @@ public class MenuManager {
 
     /**
      * @param ingredients contains all the ingredients IDs and their quantities required for the recipe
-     * @param recipeText  the recipes instructions
-     * @return a Recipe
+     * @param recipeName the recipe's name.
+     * @param recipeText  the recipes instructions.
+     * @return the newly made Recipe object.
      */
     public Recipe createRecipe(String recipeName, Map<String, Integer> ingredients, String recipeText) {
-        return new Recipe(recipeName, ingredients, 0.00f);
+        return new Recipe(recipeName, recipeText, ingredients);
     }
 
     /**
