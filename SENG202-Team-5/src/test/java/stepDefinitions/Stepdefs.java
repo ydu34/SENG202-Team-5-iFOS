@@ -60,7 +60,7 @@ public class Stepdefs {
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(int arg0, int arg1) {
         double d = Double.parseDouble(arg0 + "." + arg1);
-        Recipe burgerRecipe = new Recipe("burgerRecipe", "Text", (float) d);
+        Recipe burgerRecipe = new Recipe("burgerRecipe", "Text");
         burger = new MenuItem("Burger", burgerRecipe, d, "testId");
     }
 
