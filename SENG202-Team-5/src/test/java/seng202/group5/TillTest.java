@@ -12,6 +12,9 @@ class TillTest {
 
 
     private Till testTill;
+    private Money testMoney10;
+    private Money testMoney20;
+
     @BeforeEach
     public void init() {
     Money testMoney10 = null;
@@ -46,5 +49,19 @@ class TillTest {
     }
 
     @Test
-    public
+    public testTotalValueOneDenomination() {
+        testTill.addDenomination(testMoney20, 1);
+        assertEquals(20, testTill.TotalValue());
+        testTill.addDenominations(testMoney20, 4);
+        assertEquals(100, testTill.TotalValue());
+    }
+
+    @Test
+    public testTotalValueMultipleDenominations() {
+        testTill.addDenomination(testMoney20, 5);
+        assertEquals(100, testTill.TotalValue());
+        testTill.addDenominations(testMoney10, 2);
+        assertEquals(120, testTill.TotalValue());
+    }
+
 }
