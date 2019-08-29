@@ -23,11 +23,11 @@ public class MenuItem {
     /**
      * The actual cost it costs the producer to produce a particular recipe
      */
-    private float productionCost;
+    private double productionCost;
     /**
      * The final cost of the menu item that after the mark up
      */
-    private float sellingCost;
+    private double sellingCost;
     /**
      * The unique id related to every item on the menu
      */
@@ -49,7 +49,7 @@ public class MenuItem {
      * @param uniqueId is the unique id related to each menu item
      */
 
-    MenuItem(String someItemName, Recipe someRecipe, float makingCost, float markupCost, String uniqueId){
+    MenuItem(String someItemName, Recipe someRecipe, double makingCost, double markupCost, String uniqueId){
 
         itemName = someItemName;
         recipe = someRecipe;
@@ -59,7 +59,7 @@ public class MenuItem {
 
     }
 
-    MenuItem(String someItemName, Recipe someRecipe, float makingCost, float markupCost, String uniqueId, Ingredient randomIngredeint, int someAmount){
+    MenuItem(String someItemName, Recipe someRecipe, double makingCost, double markupCost, String uniqueId, Ingredient randomIngredeint, int someAmount){
 
         itemName = someItemName;
         recipe = someRecipe;
@@ -104,7 +104,7 @@ public class MenuItem {
      * @return the making cost of the recipe in the form of the money object
      */
     public Money calculateMakingCost(){
-        float recipeMakingCost= 0;
+        double recipeMakingCost= 0;
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredientAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
