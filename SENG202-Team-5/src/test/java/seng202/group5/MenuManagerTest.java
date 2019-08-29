@@ -1,8 +1,8 @@
 package seng202.group5;
 
 import junit.framework.TestCase;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@Ignore
-public class MenuManagerTest extends TestCase {
+@Disabled
+public class MenuManagerTest {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
     private MenuManager menuManager;
     private String burgerRecipeText;
