@@ -41,10 +41,6 @@ public class MenuItem {
      */
     private int amount;
     /**
-     * Hash map that is used to extract the ingredient object using the ingredient id.
-     */
-    private HashMap<String, Ingredient> ingredeintMapping;
-    /**
      *
      * @param someItemName is the name of an item on the menu
      * @param someRecipe is the recipe for a an item on the menu
@@ -81,7 +77,6 @@ public class MenuItem {
      * and modifies the ingredientsAmount hash map accordingly.
      */
     public void addStock(){
-        ingredeintMapping.put(someIngredeint.getId(), someIngredeint);
         recipe.addIngredient(someIngredeint, amount);
     }
 
@@ -103,13 +98,6 @@ public class MenuItem {
         recipe.editRecipe(someIngredeint, amount);
     }
 
-    /**
-     * This method provides access to the ingredientAmount hash map which holds the amount and the ingredient in a particular
-     * Recipe which can be further used to calculate the cost of each menu item.
-     */
-    public HashMap getingredientMapping(){
-        return recipe.getIngredientAmount();
-    }
 
     /**
      * This method runs a loop over the ingredientAmount hash map and calculates the total cost of making a menu item in NZD
@@ -117,12 +105,11 @@ public class MenuItem {
      */
     public Money calculateMakingCost(){
         float recipeMakingCost= 0;
-        HashMap<String, Integer> ingredients = getingredientMapping();
-        for (Map.Entry<String, Integer> eachIngredient : ingredients.entrySet()) {
-            String ingredintsID = eachIngredient.getKey();
-            Ingredient i = ingredeintMapping.get(ingredintsID);
+        HashMap<Ingredient, Integer> ingredients = recipe.getIngredientAmount();
+        for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
+            Ingredient ingredient = eachIngredient.getKey();
             Integer amount = eachIngredient.getValue();
-            recipeMakingCost += amount*i.getCost();
+            recipeMakingCost += amount*ingredient.getCost();
         }
         return  Money.parse("NZD " + recipeMakingCost);
 
