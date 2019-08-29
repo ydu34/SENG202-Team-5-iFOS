@@ -10,7 +10,7 @@ public class Database {
 
     private Worker worker;
     private Finance finance;
-    private MenuManager menuManager;
+
 
 
     /**Marshals the given object o into a xml file.
@@ -23,6 +23,8 @@ public class Database {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(c);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
             jaxbMarshaller.marshal(c.cast(o), new File(System.getProperty("user.dir") +
@@ -45,6 +47,21 @@ public class Database {
             e.printStackTrace();
         }
         return o;
+    }
+
+    public static void main(String args[]) {
+        Ingredient ing1 = new Ingredient("Milk", "L", "Liquid" , "1",4.0f);
+        Ingredient ing2 = new Ingredient("Apple", "kg", "Fruit", "2", 1.0f);
+
+        Stock stock = new Stock();
+        stock.getIngredients().put("1", ing1);
+        stock.getIngredients().put("2", ing2);
+        System.out.print(stock.getIngredients() +"\n");
+
+        Database handler = new Database();
+        handler.objectToXml(Stock.class, stock, "stock.xml");
+
+
     }
 
 }

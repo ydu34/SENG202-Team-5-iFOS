@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +16,7 @@ public class MenuManager {
      * @return the newly made Recipe object.
      */
     public Recipe createRecipe(String recipeName, Map<String, Integer> ingredients, String recipeText) {
-        return new Recipe(recipeName, recipeText, ingredients);
+        return null;
     }
 
     /**
@@ -27,7 +26,6 @@ public class MenuManager {
      * @param inMenu true if the item is to be added into the menu, false if the item will not be added to the menu
      */
     public void createItem(String name, Recipe recipe, double cost, boolean inMenu) {
-        return new MenuItem(name, recipe, cost, inMenu);
     }
 
     /**

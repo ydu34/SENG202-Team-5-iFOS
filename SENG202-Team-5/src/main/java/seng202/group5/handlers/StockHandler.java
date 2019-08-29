@@ -1,4 +1,4 @@
-package handlers;
+package seng202.group5.handlers;
 
 import seng202.group5.Stock;
 
@@ -10,7 +10,7 @@ import java.io.File;
 
 public class StockHandler {
 
-    public void menuToXml(Stock stock) {
+    public void objectToXml(Stock stock) {
 
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Stock.class);
@@ -25,7 +25,7 @@ public class StockHandler {
     }
 
 
-    public Stock xmlToMenu() {
+    public Stock xmlToObject() {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Stock.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();

@@ -1,14 +1,19 @@
 package seng202.group5;
 
+import javax.xml.bind.annotation.*;
 import java.util.HashMap;
 
 
 /**
  * The Stock holds all ingredients in the database and methods to modify those ingredients.
  *
- * @author Michael Morgoun, Daniel Harris
+ * @author Michael Morgoun, Daniel Harris, Yu Duan
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Stock {
+
 
     private HashMap<String, Ingredient> ingredients;
 
@@ -113,6 +118,14 @@ public class Stock {
         } else {
             return null;
         }
+    }
+
+    public void setIngredients(HashMap<String, Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setIngredientStock(HashMap<String, Integer> ingredientStock) {
+        this.ingredientStock = ingredientStock;
     }
 
 }

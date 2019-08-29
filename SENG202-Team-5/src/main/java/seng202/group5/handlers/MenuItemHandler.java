@@ -1,4 +1,4 @@
-package handlers;
+package seng202.group5.handlers;
 
 import seng202.group5.MenuManager;
 
