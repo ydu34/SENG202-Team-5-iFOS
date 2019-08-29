@@ -40,10 +40,7 @@ public class MenuItem {
      *The amount specifies how much of a particular ingredient needs to be removed or added.
      */
     private int amount;
-    /**
-     * Hash map that is used to extract the ingredient object using the ingredient id.
-     */
-    private HashMap<String, Ingredient> ingredeintMapping;
+
     /**
      *
      * @param someItemName is the name of an item on the menu
@@ -81,7 +78,7 @@ public class MenuItem {
      * and modifies the ingredientsAmount hash map accordingly.
      */
     public void addStock(){
-        ingredeintMapping.put(someIngredeint.getId(), someIngredeint);
+        //ingredeintMapping.put(someIngredeint.getId(), someIngredeint);
         recipe.addIngredient(someIngredeint, amount);
     }
 
@@ -117,12 +114,12 @@ public class MenuItem {
      */
     public Money calculateMakingCost(){
         float recipeMakingCost= 0;
-        HashMap<String, Integer> ingredients = getingredientMapping();
-        for (Map.Entry<String, Integer> eachIngredient : ingredients.entrySet()) {
-            String ingredintsID = eachIngredient.getKey();
-            Ingredient i = ingredeintMapping.get(ingredintsID);
+        HashMap<Ingredient, Integer> ingredients = getingredientMapping();
+        for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
+            Ingredient someIngredient = eachIngredient.getKey();
+            //Ingredient i = ingredeintMapping.get(ingredintsID);
             Integer amount = eachIngredient.getValue();
-            recipeMakingCost += amount*i.getCost();
+            recipeMakingCost += amount*someIngredient.getCost();
         }
         return  Money.parse("NZD " + recipeMakingCost);
 

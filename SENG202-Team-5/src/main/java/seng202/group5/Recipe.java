@@ -22,7 +22,7 @@ public class Recipe {
     /**
      * Hash map for all the ingredients and its quantity
      **/
-    private HashMap<String, Integer> ingredientsAmount;
+    private HashMap<Ingredient, Integer> ingredientsAmount;
 
     /**
      * The number of the non vegan ingredients
@@ -47,11 +47,11 @@ public class Recipe {
         veganStatus = true;
         vegeterianStatus = true;
         glutenfreeStatus = true;
-        ingredientsAmount = new HashMap<String, Integer>();
+        ingredientsAmount = new HashMap<Ingredient, Integer>();
 
     }
 
-    Recipe(String tempName, String tempRecipeText, HashMap<String, Integer> tempIngredientsAmount)
+    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount)
     {
         name = tempName;
         recipeText = tempRecipeText;
@@ -109,9 +109,9 @@ public class Recipe {
 
         Integer amount = ingredientsAmount.get(someIngredient.getId());
         if (amount == null) {
-            ingredientsAmount.put(someIngredient.getId(), quantity);
+            ingredientsAmount.put(someIngredient, quantity);
         } else {
-            ingredientsAmount.put(someIngredient.getId(), amount + quantity);
+            ingredientsAmount.put(someIngredient, amount + quantity);
         }
         if (!someIngredient.getVegan()) {
             veganStatus = false;
@@ -169,7 +169,7 @@ public class Recipe {
         Integer amount = ingredientsAmount.get(someIngredient.getId());
         if (amount != null) {
             if (ingredientsAmount.containsKey(someIngredient.getId()) && quantity >= 1) {
-                ingredientsAmount.put(someIngredient.getId(), quantity);
+                ingredientsAmount.put(someIngredient, quantity);
                 edited = true;
             }
         }
@@ -206,5 +206,6 @@ public class Recipe {
     public HashMap getIngredientAmount(){
         return ingredientsAmount;
     }
+
 
 }
