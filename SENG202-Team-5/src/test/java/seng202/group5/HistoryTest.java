@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @Ignore
 class HistoryTest {

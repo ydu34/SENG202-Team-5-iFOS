@@ -4,13 +4,12 @@ import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ *
+ */
 @Ignore
 class MenuItemTest {
 
@@ -27,20 +26,20 @@ class MenuItemTest {
         HashMap<String, Order> transactionHistory = new HashMap<String, Order>();
         Order testOrder = new Order(orderItems, 0.00, "1234");
         Recipe testRecipe = new Recipe("Cheeseburger", "It's raw.");
-        MenuItem testBurger = new MenuItem("Burger", testRecipe, 10.00, "BRG10");
+        MenuItem testBurger = new MenuItem("Burger", testRecipe, 3.00, 10.00,  "BRG10");
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(testBurger);
         Stock testStock = new Stock(ingredients, ingredientStock);
         History testHistory = new History(transactionHistory);
         Worker testWorker = new Worker(testOrder, menuItems, testStock, testHistory);
     }
-    @Test
-    void addStock() {
-        testBurger.addStock(testWorker.getCurrentStock().getIngredientStock()); // getCurrentStock returns Stock yet addStock takes a map as input
+//    @Test
+//    void testAddStock() {
+//        testBurger.addStock(testWorker.getCurrentStock().getIngredientStock()); // getCurrentStock returns Stock yet addStock takes a map as input
+//
+//    }
 
-    }
-
     @Test
-    void removeStock() {
+    void testRemoveStock() {
     }
 }
