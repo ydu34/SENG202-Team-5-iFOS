@@ -1,30 +1,28 @@
-//package seng202.group5;
-//
-//import junit.framework.TestCase;
-//import org.junit.Ignore;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.util.Collection;
-//import java.util.HashMap;
-//import java.util.Map;
-//import java.util.Set;
-//
-//@Ignore
-//public class MenuManagerTest extends TestCase {
-//    private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
-//    private MenuManager menuManager;
-//    private String burgerRecipeText;
-//    private HashMap<Ingredient, Integer> ingredient;
-//
-//
-//
-//    @BeforeEach
-//    public void init() {
-//        String burgerRecipeText = "Make a burger!";
-//        HashMap<Ingredient, Integer> ingredient = new HashMap<>();
-//    }
-//
+package seng202.group5;
+
+import junit.framework.TestCase;
+import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Ignore
+public class MenuManagerTest extends TestCase {
+    private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
+    private MenuManager menuManager;
+    private String burgerRecipeText;
+    private HashMap<Ingredient, Integer> ingredient;
+
+
+
+    @BeforeEach
+    public void init() {
+        String burgerRecipeText = "Make a burger!";
+        HashMap<Ingredient, Integer> ingredient = new HashMap<>();
+    }
+
 //    @Test
 //    public void testCreateRecipeReturnsRecipe() {
 //        Recipe burger = menuManager.createRecipe(ingredient, burgerRecipeText);
@@ -50,11 +48,11 @@
 //        menuManager.createItem(name, burger, cost, inMenu);
 //        assertTrue(menuManager.getItemList().size() == 0);
 //    }
-//
-//    @Test
-//    public void testRemoveItemWithItemInMenu() {
-//        String ID = "B1";
-//        menuManager.removeItem(ID);
-//        assertTrue(menuManager.getItemList().size() == 0);
-//    }
-//}
+
+    @Test
+    public void testRemoveItemWithItemInMenu() {
+        String ID = "B1";
+        menuManager.removeItem(ID);
+        assertTrue(menuManager.getItemList().size() == 0);
+    }
+}

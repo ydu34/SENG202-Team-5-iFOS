@@ -107,7 +107,7 @@ public class Recipe {
      */
     public void addIngredient(Ingredient someIngredient, int quantity) {
 
-        Integer amount = ingredientsAmount.get(someIngredient.getId());
+        Integer amount = ingredientsAmount.get(someIngredient);
         if (amount == null) {
             ingredientsAmount.put(someIngredient, quantity);
         } else {
@@ -136,8 +136,8 @@ public class Recipe {
     public boolean removeIngredient(Ingredient someIngredient, int quantity) {
         boolean removed = false;
 
-        if (ingredientsAmount.containsKey(someIngredient.getId())) {
-            ingredientsAmount.remove(someIngredient.getId());
+        if (ingredientsAmount.containsKey(someIngredient)) {
+            ingredientsAmount.remove(someIngredient);
             for (int i = 0; i < ingredientsAmount.size(); i++) {
                 boolean gf = someIngredient.getGlutenFree();
                 boolean vegan = someIngredient.getVegan();

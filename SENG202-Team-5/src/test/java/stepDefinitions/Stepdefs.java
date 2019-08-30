@@ -5,12 +5,14 @@
 //import cucumber.api.java.en.Given;
 //import cucumber.api.java.en.Then;
 //import cucumber.api.java.en.When;
+//import org.junit.Ignore;
 //import seng202.group5.*;
 //
 //import java.util.HashMap;
 //
 //import static org.junit.Assert.*;
 //
+//@Ignore
 //public class Stepdefs {
 //    private Order order;
 //    private MenuItem burger;
@@ -42,6 +44,7 @@
 //
 //    }
 //
+//    @Ignore
 //    @Given("there are no buns")
 //    public void there_are_no_buns() {
 //        // Write code here that turns the phrase above into concrete actions
@@ -57,6 +60,7 @@
 //        throw new cucumber.api.PendingException();
 //
 //    }
+//    @Ignore
 //    @And("A Burger costs ${double}")
 //    public void aBurgerCosts$(int arg0, int arg1) {
 //        double d = Double.parseDouble(arg0 + "." + arg1);
