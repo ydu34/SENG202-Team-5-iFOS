@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.LoginController" fx:id="x">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="706.0" minHeight="10.0" prefHeight="579.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="367.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane prefHeight="593.0" prefWidth="795.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="668.0" minWidth="10.0" prefWidth="668.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="438.0" minWidth="10.0" prefWidth="227.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane GridPane.columnIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="524.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="524.0" minHeight="10.0" prefHeight="371.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="35.0" prefWidth="185.0" text="    Ingredients" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="39.0" prefWidth="191.0" text="            Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Select item " GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Button>
+                        <Label prefHeight="57.0" prefWidth="189.0" text="            $20" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ListView prefHeight="368.0" prefWidth="190.0" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="282.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="564.0" minHeight="10.0" prefHeight="526.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
+                          <tabs>
+                            <Tab text="Vegan ">
+                                 <content>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <ScrollBar nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="504.0" prefWidth="17.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </Tab>
+                            <Tab text="Gluten Free">
+                                 <content>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <ScrollBar nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="503.0" prefWidth="17.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Vegetarian ">
+                                 <content>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <ScrollBar nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="503.0" prefWidth="17.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Regular Items ">
+                                 <content>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <ScrollBar nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="504.0" prefWidth="17.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Beverages">
+                                 <content>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <ScrollBar nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="504.0" prefWidth="17.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                        <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="232.0" text="Order Preference ">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </MenuButton>
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
+            <GridPane GridPane.rowIndex="1">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Order" />
+                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="171.0" text="Invoice" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="167.0" text="Stock" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="171.0" text="Admin" GridPane.columnIndex="3" />
+                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="170.0" text="History" GridPane.columnIndex="4" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</GridPane>
