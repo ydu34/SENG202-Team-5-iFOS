@@ -118,7 +118,7 @@ public class MenuItem {
             Integer amount = eachIngredient.getValue();
             recipeMakingCost += amount * ingredient.getCost();
         }
-        return Money.parse("NZD " + recipeMakingCost);
+        return Money.parse(String.format("NZD %.2f", recipeMakingCost));
 
     }
 
@@ -127,7 +127,6 @@ public class MenuItem {
      *
      * @return the selling cost of the menu item in the form of the Money object in NZD
      */
-
     public Money calulateFinalCost() {
         Money finalCost = calculateMakingCost();
         return (finalCost.multipliedBy(2.5, RoundingMode.DOWN));
@@ -140,6 +139,18 @@ public class MenuItem {
 
     public void setInMenu(boolean inMenu) {
         this.inMenu = inMenu;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
     }
 
 }
