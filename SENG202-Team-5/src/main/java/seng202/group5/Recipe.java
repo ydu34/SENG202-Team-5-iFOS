@@ -36,12 +36,12 @@ public class Recipe {
      * The number of the non gluten-free ingredients
      **/
     private boolean glutenfreeStatus;
+
     /**
      * The IngredientList will contain all the ingredients used in a particular recipe
      */
 
-    Recipe(String tempName, String tempRecipeText)
-    {
+    Recipe(String tempName, String tempRecipeText) {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = true;
@@ -51,8 +51,7 @@ public class Recipe {
 
     }
 
-    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount)
-    {
+    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = false;
@@ -166,9 +165,9 @@ public class Recipe {
      */
     public boolean editRecipe(Ingredient someIngredient, int quantity) {
         boolean edited = false;
-        Integer amount = ingredientsAmount.get(someIngredient.getId());
+        Integer amount = ingredientsAmount.get(someIngredient);
         if (amount != null) {
-            if (ingredientsAmount.containsKey(someIngredient.getId()) && quantity >= 1) {
+            if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
                 ingredientsAmount.put(someIngredient, quantity);
                 edited = true;
             }
@@ -203,7 +202,7 @@ public class Recipe {
         return glutenfreeStatus;
     }
 
-    public HashMap getIngredientAmount(){
+    public HashMap<Ingredient, Integer> getIngredientAmount() {
         return ingredientsAmount;
     }
 
