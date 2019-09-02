@@ -1,8 +1,8 @@
 package seng202.group5;
 
 import org.joda.money.Money;
-import org.junit.Test;
 import org.junit.jupiter.api.*;
+import seng202.group5.exceptions.InsufficientCashException;
 
 import java.util.HashMap;
 
@@ -30,41 +30,45 @@ class TillTest {
     }
 
     @Test
-    public testAddNewDenomination() {
+    public void testAddNewDenomination() {
         Money testMoney30 = null;
         testMoney30.parse("NZD 30.00");
-        testTill.newDenomination(testMoney30);
+        testTill.addDenomination(testMoney30, 1);
         assertEquals(4, testTill.getDenominations().size());
     }
 
     @Test
-    public testRemoveDenomination() {
+    public void testRemoveDenomination() {
         Money testMoney30 = null;
         testMoney30.parse("NZD 30.00");
-        testTill.newDenomination(testMoney30, 1);
+        testTill.addDenomination(testMoney30, 1);
         assertEquals(4, testTill.getDenominations().size());
-        testTill.removeDenomination(testMoney20, 1);
+        try {
+            testTill.removeDenomination(testMoney20, 1);
+        } catch (InsufficientCashException e) {
+            System.out.println(e);
+        }
         assertEquals(3, testTill.getDenominations().size());
 
     }
 
     @Test
-    public testTotalValueOneDenomination() {
+    public void testTotalValueOneDenomination() {
         testTill.addDenomination(testMoney20, 1);
-        assertEquals(20, testTill.TotalValue());
-        testTill.addDenominations(testMoney20, 4);
-        assertEquals(100, testTill.TotalValue());
+        assertEquals(20, testTill.totalValue());
+        testTill.addDenomination(testMoney20, 4);
+        assertEquals(100, testTill.totalValue());
     }
 
     @Test
-    public testTotalValueMultipleDenominations() {
+    public void testTotalValueMultipleDenominations() {
         testTill.addDenomination(testMoney20, 5);
-        assertEquals(100, testTill.TotalValue());
-        testTill.addDenominations(testMoney10, 2);
-        assertEquals(120, testTill.TotalValue());
+        assertEquals(100, testTill.totalValue());
+        testTill.addDenomination(testMoney10, 2);
+        assertEquals(120, testTill.totalValue());
     }
 
-    public testAddMultipleDenominations() {
+    public void testAddMultipleDenominations() {
         HashMap<Money, Integer> denominationCount = new HashMap<Money, Integer>();
         denominationCount.put(testMoney10, 1);
         denominationCount.put(testMoney20, 2);
