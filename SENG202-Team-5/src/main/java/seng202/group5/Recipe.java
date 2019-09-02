@@ -15,10 +15,12 @@ public class Recipe {
      * Name of each recipe in the database
      **/
     private String name;
+
     /**
      * All the steps involve in the recipe
      **/
     private String recipeText;
+
     /**
      * Hash map for all the ingredients and its quantity
      **/
@@ -28,10 +30,12 @@ public class Recipe {
      * The number of the non vegan ingredients
      **/
     private boolean veganStatus;
+
     /**
      * The number of the non vegetarian ingredients
      **/
     private boolean vegeterianStatus;
+
     /**
      * The number of the non gluten-free ingredients
      **/
@@ -61,42 +65,6 @@ public class Recipe {
 
     }
 
-    /**
-     * Returns the name of the recipe
-     **/
-    public String getName() {
-        return name;
-
-    }
-
-    /**
-     * @return true when the recipe is vegan
-     */
-
-    public boolean getVeganStatus() {
-        return veganStatus;
-    }
-
-    /**
-     * @return true when the recipe is vegetarian
-     */
-    public boolean isvegeterianStatus() {
-        return vegeterianStatus;
-    }
-
-    /**
-     * @return true when the recipe is gluten free
-     */
-    public boolean isglutenfreeStatus() {
-        return glutenfreeStatus;
-    }
-
-    /**
-     * Returns all the step in written in a particular recipe
-     **/
-    public String getReceipeText() {
-        return recipeText;
-    }
 
     /**
      * This function adds the specified amount of ingredient that needs to be added in the recipe.
@@ -180,7 +148,7 @@ public class Recipe {
      *
      * @return True if the recipe is vegan else False
      */
-    public boolean getVegan() {
+    public boolean isVegan() {
         return veganStatus;
     }
 
@@ -189,7 +157,7 @@ public class Recipe {
      *
      * @return True if the recipe is vegetarian else False
      */
-    public boolean getVegetarian() {
+    public boolean isVegetarian() {
         return vegeterianStatus;
     }
 
@@ -198,12 +166,32 @@ public class Recipe {
      *
      * @return True if the recipe is glutenFree else False
      */
-    public boolean getGlutenfree() {
+    public boolean isGlutenfree() {
         return glutenfreeStatus;
     }
+
 
     public HashMap<Ingredient, Integer> getIngredientAmount() {
         return ingredientsAmount;
     }
+
+    /**
+     * Returns the name of the recipe
+     * @return Name of the recipe.
+     **/
+    public String getName() { return name; }
+
+    /**
+     * @return true when the recipe is vegan
+     */
+    public boolean getVeganStatus() {
+        return veganStatus;
+    }
+
+    /**
+     * Returns all the step in written in a particular recipe
+     **/
+    public String getReceipeText() { return recipeText; }
+
 
 }
