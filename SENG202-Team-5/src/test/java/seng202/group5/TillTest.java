@@ -68,7 +68,7 @@ class TillTest {
         HashMap<Money, Integer> denominationCount = new HashMap<Money, Integer>();
         denominationCount.put(testMoney10, 1);
         denominationCount.put(testMoney20, 2);
-        testTill.addMultipleDenominations(denominationCount);
+        testTill.addDenominations(denominationCount);
         assertEquals(50, testTill.totalValue());
     }
 

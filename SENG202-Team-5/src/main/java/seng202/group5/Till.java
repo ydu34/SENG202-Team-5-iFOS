@@ -1,6 +1,7 @@
 package seng202.group5;
 
 import org.joda.money.Money;
+import seng202.group5.exceptions.InsufficientCashException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,8 +31,11 @@ public class Till {
      * @param value holds the value of a denomination using Joda Money.
      * @param count The number of denominations to be added.
      */
-    public addDenomination(Money value, int count) { //Requires an exception.
-
+    public void addDenomination(Money value, int count) {
+        if (denominations.containsKey(value)) {
+            count += denominations.get(value);
+        }
+        denominations.put(value, count);
     }
 
     /**
@@ -39,8 +43,17 @@ public class Till {
      * @param value holds the value of a denomination using Joda Money.
      * @param count The number of denominations to be added.
      */
-    public removeDenomination(Money value, int count) { //Requires an exception.
-
+    public void removeDenomination(Money value, int count) throws InsufficientCashException { //Requires an exception.
+        if (denominations.containsKey(value)) {
+            try {
+                count -= denominations.get(value);
+                if (count < 0) {
+                    throw new InsufficientCashException("");
+                }
+            } catch InsufficientCashException(String e)
+            }
+        }
+        denominations.put(value, count);
     }
 
     /**
