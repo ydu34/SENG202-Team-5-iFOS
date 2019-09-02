@@ -1,6 +1,8 @@
 package seng202.group5;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
@@ -14,9 +16,14 @@ public class Finance {
      * The database managing the system
      */
     private Database database;
+    private HashMap<String, Transaction> transactionHistory;
 
-    public Finance(Database database) {
-
+    public Finance(Database newDatabase) {
+        database = newDatabase;
+        transactionHistory = new HashMap<>();
+    }
+    public Finance() {
+        transactionHistory = new HashMap<>();
     }
 
     /**
@@ -26,7 +33,13 @@ public class Finance {
      * @return a list of doubles representing money in descending size order
      */
     public ArrayList<Money> refund(String ID) {
-        return new ArrayList<>();
+        Transaction refundedOrder = transactionHistory.get(ID);
+        Money refund = Money.parse("NZD 0");
+        if (!refundedOrder.getRefunded()) {
+            refundedOrder.Refund();
+            refund = refundedOrder.getTotalPrice();
+        }
+        return calcChange(refund);
     }
 
     /**
@@ -59,7 +72,16 @@ public class Finance {
      * @return a list of doubles representing  total profits, average profits, and other things
      */
     public ArrayList<Money> totalCalculator(int startDate, int endDate) {
-        return new ArrayList<>();
+        Money total = Money.parse("NZD 0");
+        for (Transaction order : transactionHistory.values()) {
+            if (order.getDate() >= startDate && order.getDate() <= endDate) {
+                total.plus(order.getTotalPrice());
+            }
+        }
+        ArrayList<Money> totals = new ArrayList<>();
+        totals.add(total);
+        totals.add(total.dividedBy((endDate-startDate+1), RoundingMode.DOWN));
+        return totals;
     }
     /**
      * returns a list containing the change need to be returned
