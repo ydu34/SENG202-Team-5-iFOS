@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,10 +14,12 @@ public class Recipe {
      * Name of each recipe in the database
      **/
     private String name;
+
     /**
      * All the steps involve in the recipe
      **/
     private String recipeText;
+
     /**
      * Hash map for all the ingredients and its quantity
      **/
@@ -28,10 +29,12 @@ public class Recipe {
      * The number of the non vegan ingredients
      **/
     private boolean veganStatus;
+
     /**
      * The number of the non vegetarian ingredients
      **/
-    private boolean vegeterianStatus;
+    private boolean vegetarianStatus;
+
     /**
      * The number of the non gluten-free ingredients
      **/
@@ -45,7 +48,7 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = true;
-        vegeterianStatus = true;
+        vegetarianStatus = true;
         glutenfreeStatus = true;
         ingredientsAmount = new HashMap<Ingredient, Integer>();
 
@@ -55,48 +58,12 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = false;
-        vegeterianStatus = false;
+        vegetarianStatus = false;
         glutenfreeStatus = false;
         ingredientsAmount = tempIngredientsAmount;
 
     }
 
-    /**
-     * Returns the name of the recipe
-     **/
-    public String getName() {
-        return name;
-
-    }
-
-    /**
-     * @return true when the recipe is vegan
-     */
-
-    public boolean getVeganStatus() {
-        return veganStatus;
-    }
-
-    /**
-     * @return true when the recipe is vegetarian
-     */
-    public boolean isvegeterianStatus() {
-        return vegeterianStatus;
-    }
-
-    /**
-     * @return true when the recipe is gluten free
-     */
-    public boolean isglutenfreeStatus() {
-        return glutenfreeStatus;
-    }
-
-    /**
-     * Returns all the step in written in a particular recipe
-     **/
-    public String getReceipeText() {
-        return recipeText;
-    }
 
     /**
      * This function adds the specified amount of ingredient that needs to be added in the recipe.
@@ -117,7 +84,7 @@ public class Recipe {
             System.out.println("Recipe is not vegan anymore");
         }
         if (!someIngredient.getVegetarian()) {
-            vegeterianStatus = false;
+            vegetarianStatus = false;
             System.out.println("Recipe is not vegetarian anymore");
         }
         if (!someIngredient.getGlutenFree()) {
@@ -148,7 +115,7 @@ public class Recipe {
                     veganStatus = false;
                 }
                 if (!vegetarian) {
-                    vegeterianStatus = false;
+                    vegetarianStatus = false;
                 }
             }
             removed = true;
@@ -180,7 +147,7 @@ public class Recipe {
      *
      * @return True if the recipe is vegan else False
      */
-    public boolean getVegan() {
+    public boolean isVegan() {
         return veganStatus;
     }
 
@@ -189,8 +156,8 @@ public class Recipe {
      *
      * @return True if the recipe is vegetarian else False
      */
-    public boolean getVegetarian() {
-        return vegeterianStatus;
+    public boolean isVegetarian() {
+        return vegetarianStatus;
     }
 
     /**
@@ -198,12 +165,32 @@ public class Recipe {
      *
      * @return True if the recipe is glutenFree else False
      */
-    public boolean getGlutenfree() {
+    public boolean isGlutenFree() {
         return glutenfreeStatus;
     }
+
 
     public HashMap<Ingredient, Integer> getIngredientAmount() {
         return ingredientsAmount;
     }
+
+    /**
+     * Returns the name of the recipe
+     * @return Name of the recipe.
+     **/
+    public String getName() { return name; }
+
+    /**
+     * @return true when the recipe is vegan
+     */
+    public boolean getVeganStatus() {
+        return veganStatus;
+    }
+
+    /**
+     * Returns all the step in written in a particular recipe
+     **/
+    public String getRecipeText() { return recipeText; }
+
 
 }
