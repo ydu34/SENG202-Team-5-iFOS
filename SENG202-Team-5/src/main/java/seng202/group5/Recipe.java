@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -34,7 +33,7 @@ public class Recipe {
     /**
      * The number of the non vegetarian ingredients
      **/
-    private boolean vegeterianStatus;
+    private boolean vegetarianStatus;
 
     /**
      * The number of the non gluten-free ingredients
@@ -49,7 +48,7 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = true;
-        vegeterianStatus = true;
+        vegetarianStatus = true;
         glutenfreeStatus = true;
         ingredientsAmount = new HashMap<Ingredient, Integer>();
 
@@ -59,7 +58,7 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = false;
-        vegeterianStatus = false;
+        vegetarianStatus = false;
         glutenfreeStatus = false;
         ingredientsAmount = tempIngredientsAmount;
 
@@ -85,7 +84,7 @@ public class Recipe {
             System.out.println("Recipe is not vegan anymore");
         }
         if (!someIngredient.getVegetarian()) {
-            vegeterianStatus = false;
+            vegetarianStatus = false;
             System.out.println("Recipe is not vegetarian anymore");
         }
         if (!someIngredient.getGlutenFree()) {
@@ -116,7 +115,7 @@ public class Recipe {
                     veganStatus = false;
                 }
                 if (!vegetarian) {
-                    vegeterianStatus = false;
+                    vegetarianStatus = false;
                 }
             }
             removed = true;
@@ -158,7 +157,7 @@ public class Recipe {
      * @return True if the recipe is vegetarian else False
      */
     public boolean isVegetarian() {
-        return vegeterianStatus;
+        return vegetarianStatus;
     }
 
     /**
@@ -166,7 +165,7 @@ public class Recipe {
      *
      * @return True if the recipe is glutenFree else False
      */
-    public boolean isGlutenfree() {
+    public boolean isGlutenFree() {
         return glutenfreeStatus;
     }
 
@@ -191,7 +190,7 @@ public class Recipe {
     /**
      * Returns all the step in written in a particular recipe
      **/
-    public String getReceipeText() { return recipeText; }
+    public String getRecipeText() { return recipeText; }
 
 
 }

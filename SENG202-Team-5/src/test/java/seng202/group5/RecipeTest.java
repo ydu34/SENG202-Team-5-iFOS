@@ -16,7 +16,7 @@ public class RecipeTest {
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
         Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", 20, true, false, false);
         testRecipe.addIngredient(chickenpatty, 1);
-        assertTrue(testRecipe.isGlutenfree());
+        assertTrue(testRecipe.isGlutenFree());
         assertFalse(testRecipe.isVegetarian());
         assertFalse(testRecipe.isVegan());
     }
@@ -27,7 +27,7 @@ public class RecipeTest {
         Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", 20, true, false, false);
         testRecipe.removeIngredient(chickenPatty, 1);
         assertTrue(testRecipe.isVegetarian());
-        assertTrue(testRecipe.isGlutenfree());
+        assertTrue(testRecipe.isGlutenFree());
     }
 
     public void testEditIngredient() {
