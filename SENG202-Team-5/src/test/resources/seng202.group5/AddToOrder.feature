@@ -44,4 +44,20 @@ Feature: Add item to order
         When Burger is removed from order
         Then Order Does not contain burger
 
+    Scenario: View Order
+        Given Order exists
+        And A Burger costs $5.00
+        And Burger is in order
+        When Order is viewed
+        Then Order contains a burger
+        And Orders total cost is $5.00
+
+    Scenario: View Order
+        Given Order exists
+        And A Burger costs $5.00
+        And Burger is in order
+        When Order is confirmed
+        Then Payment is requested
+
+
 

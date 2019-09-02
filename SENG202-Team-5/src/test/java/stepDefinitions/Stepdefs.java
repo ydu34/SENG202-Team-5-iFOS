@@ -9,7 +9,6 @@
 //import org.junit.jupiter.api.Disabled;
 //import seng202.group5.*;
 //
-//import java.util.HashMap;
 //
 //import static org.junit.Assert.*;
 //
@@ -23,6 +22,7 @@
 //    private Recipe burgerRecipe;
 //    private MenuItem chip;
 //    private Ingredient buns = new Ingredient("Buns", "bun", "Bread", "TestBun", 5.00);
+//
 //
 //    @Before
 //    public void Before() {
@@ -59,7 +59,6 @@
 //    }
 //
 //
-//
 //    @Given("Stock has {int} of Buns")
 //    public void stockHasOfBuns(int arg0) {
 //        stock.addNewIngredient(buns, arg0);
@@ -76,26 +75,6 @@
 //        assertEquals(stock.getIngredientQuantity("TestBun"), arg0);
 //    }
 //
-//    @Given("Order Costs ${double}")
-//    public void orderCosts$(int arg0, int arg1) {
-//        double d = Double.parseDouble(arg0 + "." + arg1);
-//        aBurgerCosts$(arg0, arg1);
-//        orderContainsABurger();
-//    }
-//
-//    @When("Payment of ${int} if confirmed")
-//    public void paymentOf$IfConfirmed(int arg0) {
-//        throw new cucumber.api.PendingException();
-//    }
-//
-//
-//    @Then("The change ${double} is is displayed and removed from till")
-//    public void theChange$IsIsDisplayedAndRemovedFromTill(int arg0, int arg1) {
-//        double d = Double.parseDouble(arg0 + "." + arg1);
-//        throw new cucumber.api.PendingException();
-//    }
-//
-//
 //    @Then("Order contains a burger")
 //    public void orderContainsABurger() {
 //        assertTrue(order.getOrderItems().containsKey(burger));
@@ -109,8 +88,7 @@
 //
 //    @And("Chips cost ${double}")
 //    public void chipsCost$(int arg0, int arg1) {
-//        double d = Double.parseDouble(arg0 + "." + arg1);
-//        chipCost = d;
+//        chipCost = Double.parseDouble(arg0 + "." + arg1);
 //    }
 //
 //    @And("Burger is in order")
@@ -147,4 +125,8 @@
 //    public void burgerIsRemovedFromOrder() {
 //        order.removeItem(burger);
 //    }
+//
+//
+//    @When("Order is viewed")
+//    public void orderIsViewed() {}
 //}
