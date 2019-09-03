@@ -12,9 +12,9 @@ public class SampleApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/gui/sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/selection.fxml"));
+        primaryStage.setTitle("Selection Screen");
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 
