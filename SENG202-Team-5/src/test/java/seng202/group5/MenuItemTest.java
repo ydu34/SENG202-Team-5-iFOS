@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,7 @@ import java.util.HashMap;
 /**
  *
  */
-@Ignore
+
 class MenuItemTest {
 
     private MenuItem testBurger;
