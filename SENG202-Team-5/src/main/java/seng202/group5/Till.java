@@ -73,6 +73,7 @@ public class Till {
     /**
      * Returns the total amount of money held as a sum.
      * Calls Joda-Moneys method multipliedBy().
+     * @return totalSum, the total of all denominations multiplied by the number counted.
      */
     public Money totalValue() {
         Money totalSum = Money.parse("NZD 0.00");
