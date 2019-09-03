@@ -4,6 +4,9 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.joda.money.Money;
+import java.sql.Date;
+import java.util.concurrent.TimeUnit;
+
 import seng202.group5.exceptions.InsufficientCashException;
 
 /**
@@ -38,7 +41,7 @@ public class Finance {
      *
      * @param totalCost   the total cost of the order
      * @param amountPayed a lost of doubles representing money in the denominations payed
-     * @param time        the time the order occurred at
+     * @param time        the Date and time the order occurred at
      * @return a list of doubles representing money in descending size order
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
@@ -46,7 +49,8 @@ public class Finance {
         // the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
-        int Date = 0;
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
         for (Money money: amountPayed)
         {
             payedSum = payedSum.plus(money);
@@ -59,7 +63,7 @@ public class Finance {
         {
             changeSum = changeSum.plus(money);
         }
-        transactionHistory.put("test" , new Transaction(Date, time, changeSum, totalCost));
+        transactionHistory.put("test" , new Transaction(date, time, changeSum, totalCost));
         return change;
     }
 
@@ -70,16 +74,16 @@ public class Finance {
      * @param endDate   the last date to search to
      * @return a list of doubles representing  total profits, average profits, and other things
      */
-    public ArrayList<Money> totalCalculator(int startDate, int endDate) {
+    public ArrayList<Money> totalCalculator(Date startDate, Date endDate) {
         Money total = Money.parse("NZD 0");
         for (Transaction order : transactionHistory.values()) {
-            if (order.getDate() >= startDate && order.getDate() <= endDate) {
+            if (order.getDate().compareTo(startDate) >= 0 && order.getDate().compareTo(endDate) <= 0) {
                 total.plus(order.getTotalPrice());
             }
         }
         ArrayList<Money> totals = new ArrayList<>();
         totals.add(total);
-        totals.add(total.dividedBy((endDate-startDate+1), RoundingMode.DOWN));
+        totals.add(total.dividedBy((TimeUnit.DAYS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS) + 1), RoundingMode.DOWN));
         return totals;
     }
     /**
