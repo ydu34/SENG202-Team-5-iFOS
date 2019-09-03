@@ -59,7 +59,6 @@ public class Worker {
         menuItems = tempMenuItems;
         currentStock = tempStock;
         currentHistory = tempHistory;
-
     }
 
     /**
@@ -130,6 +129,10 @@ public class Worker {
      */
     public ArrayList<MenuItem> getMenuItems() {
         return menuItems;
+    }
+    public void addItemToMenu(MenuItem item) {
+        menuItems.add(item);
+
     }
 
     /**

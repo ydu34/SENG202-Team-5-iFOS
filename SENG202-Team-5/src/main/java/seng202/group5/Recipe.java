@@ -60,7 +60,12 @@ public class Recipe {
         veganStatus = false;
         vegetarianStatus = false;
         glutenfreeStatus = false;
-        ingredientsAmount = tempIngredientsAmount;
+        ingredientsAmount = new HashMap<Ingredient, Integer>();
+        int count = 0;
+        for (Ingredient ingredientKey : tempIngredientsAmount.keySet()) {
+            count = tempIngredientsAmount.get(ingredientKey);
+            ingredientsAmount.put(ingredientKey, count);
+        }
 
     }
 
