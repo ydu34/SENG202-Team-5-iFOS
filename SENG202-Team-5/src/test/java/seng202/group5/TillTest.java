@@ -34,7 +34,7 @@ class TillTest {
         Money testMoney30 = null;
         testMoney30.parse("NZD 30.00");
         testTill.addDenomination(testMoney30, 1);
-        assertEquals(4, testTill.getDenominations().size());
+        assertEquals(1, testTill.getDenominations().size());
     }
 
     @Test
@@ -42,13 +42,13 @@ class TillTest {
         Money testMoney30 = null;
         testMoney30.parse("NZD 30.00");
         testTill.addDenomination(testMoney30, 1);
-        assertEquals(4, testTill.getDenominations().size());
+        assertEquals(1, testTill.getDenominations().size());
         try {
             testTill.removeDenomination(testMoney20, 1);
         } catch (InsufficientCashException e) {
             System.out.println(e);
         }
-        assertEquals(3, testTill.getDenominations().size());
+        assertEquals(0, testTill.totalValue());
 
     }
 
