@@ -12,17 +12,11 @@ class TillTest {
 
 
     private Till testTill;
-    private Money testMoney10;
-    private Money testMoney20;
+    private Money testMoney20 = Money.parse("NZD 20.00");
+    private Money testMoney10 = Money.parse("NZD 10.00");
 
     @BeforeEach
     public void init() {
-    Money testMoney10 = null;
-    Money testMoney20 = null;
-    Money testMoney50 = null;
-    testMoney10.parse("NZD 10.00");
-    testMoney20.parse("NZD 20.00");
-    testMoney50.parse("NZD 50.00");
     HashMap<Money, Integer> testDenominations = new HashMap<Money, Integer>();
     testTill = new Till(testDenominations);
 
@@ -31,49 +25,50 @@ class TillTest {
 
     @Test
     public void testAddNewDenomination() {
-        Money testMoney30 = null;
-        testMoney30.parse("NZD 30.00");
+        Money testMoney30 = Money.parse("NZD 30.00");
         testTill.addDenomination(testMoney30, 1);
         assertEquals(1, testTill.getDenominations().size());
+        assertEquals(testMoney30, testTill.totalValue());
     }
 
     @Test
     public void testRemoveDenomination() {
-        Money testMoney30 = null;
-        testMoney30.parse("NZD 30.00");
+        Money testMoney30 = Money.parse("NZD 30.00");
+        Money testMoney0 = Money.parse("NZD 0.00");
         testTill.addDenomination(testMoney30, 1);
-        assertEquals(1, testTill.getDenominations().size());
+        assertEquals(testMoney30, testTill.totalValue());
         try {
-            testTill.removeDenomination(testMoney20, 1);
+            testTill.removeDenomination(testMoney30, 1);
         } catch (InsufficientCashException e) {
             System.out.println(e);
         }
-        assertEquals(0, testTill.totalValue());
+        assertEquals(testMoney0, testTill.totalValue());
 
     }
 
     @Test
     public void testTotalValueOneDenomination() {
         testTill.addDenomination(testMoney20, 1);
-        assertEquals(20, testTill.totalValue());
+        assertEquals(Money.parse("NZD 20.00"), testTill.totalValue());
         testTill.addDenomination(testMoney20, 4);
-        assertEquals(100, testTill.totalValue());
+        assertEquals(Money.parse("NZD 100.00"), testTill.totalValue());
     }
 
     @Test
     public void testTotalValueMultipleDenominations() {
         testTill.addDenomination(testMoney20, 5);
-        assertEquals(100, testTill.totalValue());
+        assertEquals( Money.parse("NZD 100.00"), testTill.totalValue());
         testTill.addDenomination(testMoney10, 2);
-        assertEquals(120, testTill.totalValue());
+        assertEquals(Money.parse("NZD 120.00"), testTill.totalValue());
     }
 
+    @Test
     public void testAddMultipleDenominations() {
         HashMap<Money, Integer> denominationCount = new HashMap<Money, Integer>();
         denominationCount.put(testMoney10, 1);
         denominationCount.put(testMoney20, 2);
         testTill.addDenominations(denominationCount);
-        assertEquals(50, testTill.totalValue());
+        assertEquals(Money.parse("NZD 50.00"), testTill.totalValue());
     }
 
 }
