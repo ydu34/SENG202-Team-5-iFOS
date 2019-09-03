@@ -119,7 +119,6 @@ public class MenuItem {
             recipeMakingCost += amount * ingredient.getCost();
         }
         return Money.parse(String.format("NZD %.2f", recipeMakingCost));
-
     }
 
     /**
@@ -127,7 +126,7 @@ public class MenuItem {
      *
      * @return the selling cost of the menu item in the form of the Money object in NZD
      */
-    public Money calulateFinalCost() {
+    public Money calculateFinalCost() {
         Money finalCost = calculateMakingCost();
         return (finalCost.multipliedBy(2.5, RoundingMode.DOWN));
 
