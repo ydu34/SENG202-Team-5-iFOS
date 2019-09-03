@@ -35,7 +35,7 @@ public class MenuManagerTest {
         Recipe burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
         String name = "cheeseBurger";
         double cost = 11.50f;
-        menuManager.createItem(worker, name, burger, cost, "burg123", true);
+        menuManager.createItem(name, burger, cost, "burg123", true);
         assertTrue(menuManager.getItemList().size() == 1);
     }
 
@@ -46,7 +46,7 @@ public class MenuManagerTest {
         String name = "cheeseBurger";
         double cost = 11.50f;
         boolean inMenu = false;
-        menuManager.createItem(worker, name, burger, cost, "burg123", inMenu);
+        menuManager.createItem(name, burger, cost, "burg123", inMenu);
         assertTrue(menuManager.getItemList().size() == 1);
         assertTrue(worker.getMenuItems().size() == 0);
     }
