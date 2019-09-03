@@ -44,7 +44,7 @@
                         <Font size="24.0" />
                     </font>
                 </Label>
-                <ListView prefHeight="253.0" prefWidth="178.0" GridPane.rowIndex="1" />
+                <ListView prefHeight="294.0" prefWidth="178.0" GridPane.rowIndex="1" />
                 <Label prefHeight="27.0" prefWidth="88.0" text=" Ingredient 1 " GridPane.rowIndex="1" GridPane.valignment="TOP" />
                 <ComboBox prefHeight="25.0" prefWidth="39.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             </children>
@@ -63,7 +63,7 @@
                         <Insets bottom="20.0" left="20.0" />
                     </GridPane.margin>
                 </Button>
-                <Button fx:id="addExtraIngredient" mnemonicParsing="false" onAction="#launchAddExtraIngredeintScreen" prefHeight="25.0" prefWidth="155.0" text="Add Extra Ingredient" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Button fx:id="addExtraIngredient" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="25.0" prefWidth="155.0" text="Add Extra Ingredient" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets bottom="20.0" top="10.0" />
                     </GridPane.margin>
@@ -138,7 +138,7 @@
                         <Font size="24.0" />
                     </font>
                 </Label>
-            <ListView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <ListView prefHeight="253.0" prefWidth="622.0" GridPane.rowIndex="1" />
             <Label prefHeight="60.0" prefWidth="257.0" text="Add recipe here " GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets left="15.0" />

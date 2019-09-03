@@ -37,7 +37,7 @@ public class SelectionController {
 
     }
 
-    public void launchAddExtraIngredeintScreen(javafx.event.ActionEvent actionEvent) {
+    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
     }
 }
