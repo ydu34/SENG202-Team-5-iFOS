@@ -4,6 +4,7 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.*;
 import seng202.group5.exceptions.InsufficientCashException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,10 +20,18 @@ class TillTest {
     public void init() {
     HashMap<Money, Integer> testDenominations = new HashMap<Money, Integer>();
     testTill = new Till(testDenominations);
-
-
     }
 
+    @Test void testInitialiseUsingList() {
+        ArrayList<Money> moneyList = new ArrayList<Money>();
+        HashMap<Money, Integer> expectedMap = new HashMap<Money, Integer>();
+        expectedMap.put(testMoney10, 0);
+        expectedMap.put(testMoney20, 0);
+        moneyList.add(testMoney10);
+        moneyList.add(testMoney20);
+        Till testTillList = new Till(moneyList);
+        assertEquals(expectedMap, testTillList.getDenominations());
+    }
     @Test
     public void testAddNewDenomination() {
         Money testMoney30 = Money.parse("NZD 30.00");

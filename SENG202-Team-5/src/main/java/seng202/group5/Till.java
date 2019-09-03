@@ -18,6 +18,7 @@ public class Till {
 
 
     public Till(ArrayList<Money> moneyList) {
+        denominations = new HashMap<Money, Integer>();
         for (int i = 0; i < moneyList.size(); i++) {
             denominations.put(moneyList.get(i), 0);
         }
