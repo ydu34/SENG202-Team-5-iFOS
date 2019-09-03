@@ -3,7 +3,6 @@ package seng202.group5;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 
@@ -12,16 +11,8 @@ import seng202.group5.exceptions.InsufficientCashException;
  */
 public class Finance {
 
-    /**
-     * The database managing the system
-     */
-    private Database database;
     private HashMap<String, Transaction> transactionHistory;
 
-    public Finance(Database newDatabase) {
-        database = newDatabase;
-        transactionHistory = new HashMap<>();
-    }
     public Finance() {
         transactionHistory = new HashMap<>();
     }
@@ -54,6 +45,8 @@ public class Finance {
     public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, int time) throws InsufficientCashException {
         // the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
+        Money changeSum = Money.parse("NZD 0");
+        int Date = 0;
         for (Money money: amountPayed)
         {
             payedSum = payedSum.plus(money);
@@ -61,7 +54,13 @@ public class Finance {
         if (totalCost.isGreaterThan(payedSum) || totalCost.isNegative()) {
             throw new InsufficientCashException();
         }
-        return calcChange(payedSum.minus(totalCost));
+        ArrayList<Money> change = calcChange(payedSum.minus(totalCost));
+        for (Money money: change)
+        {
+            changeSum = changeSum.plus(money);
+        }
+        transactionHistory.put("test" , new Transaction(Date, time, changeSum, totalCost));
+        return change;
     }
 
     /**
