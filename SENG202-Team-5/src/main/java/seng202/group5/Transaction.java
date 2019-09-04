@@ -1,21 +1,21 @@
 package seng202.group5;
 
 import org.joda.money.Money;
+import org.joda.time.DateTime;
 
-import java.sql.Date;
 
 /**
  * The Transaction class records past orders and if they were refunded;
  */
 public class Transaction {
-    private Date date;
+    private DateTime date;
     private int time;
     private Money change;
     private Money totalPrice;
     private String orderNum;
     private Boolean isRefunded;
 
-    public Transaction(Date newDate, int newTime, Money newChange, Money newTotalPrice) {
+    public Transaction(DateTime newDate, int newTime, Money newChange, Money newTotalPrice) {
         isRefunded = false;
         date = newDate;
         time = newTime;
@@ -36,7 +36,7 @@ public class Transaction {
     public String getOrderNum() {
         return orderNum;
     }
-    public Date getDate() {
+    public DateTime getDate() {
         return date;
     }
     public int getTime() {
