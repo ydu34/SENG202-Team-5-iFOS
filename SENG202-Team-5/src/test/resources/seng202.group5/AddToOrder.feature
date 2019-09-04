@@ -52,7 +52,7 @@ Feature: Add item to order
         Then Order contains a burger
         And Orders total cost is $5.00
 
-    Scenario: View Order
+    Scenario: Confirm Order
         Given Order exists
         And A Burger costs $5.00
         And Burger is in order
