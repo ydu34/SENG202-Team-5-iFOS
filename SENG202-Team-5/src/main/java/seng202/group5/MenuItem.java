@@ -46,7 +46,22 @@ public class MenuItem {
      */
     private int amount;
 
+    private boolean vegan;
     /**
+     * The number of the non vegetarian ingredients
+     **/
+    private boolean vegeterian;
+    /**
+     * The number of the non gluten-free ingredients
+     **/
+    private boolean glutenfree;
+    /**
+     * The IngredientList will contain all the ingredients used in a particular recipe
+     */
+    /**
+
+
+     /**
      * @param someItemName is the name of an item on the menu
      * @param someRecipe   is the recipe for a an item on the menu
      * @param makingCost   is the actual cost of production
@@ -74,6 +89,11 @@ public class MenuItem {
         inMenu = false;
         someIngredient = randomIngredient;
         amount = someAmount;
+        this.vegan = recipe.isVegan();
+        this.vegeterian = recipe.isVegetarian();
+        this.glutenfree = recipe.isGlutenFree();
+
+
 
 
     }
@@ -112,7 +132,7 @@ public class MenuItem {
      */
     public Money calculateMakingCost() {
         double recipeMakingCost = 0;
-        HashMap<Ingredient, Integer> ingredients = recipe.getIngredientAmount();
+        HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
             Integer amount = eachIngredient.getValue();
@@ -152,4 +172,30 @@ public class MenuItem {
         return recipe;
     }
 
+    public boolean isVegan() {
+        return vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
+    }
+
+    public boolean isVegeterian() {
+        return vegeterian;
+    }
+
+    public void setVegeterian(boolean vegeterian) {
+        this.vegeterian = vegeterian;
+    }
+
+    public boolean isGlutenfree() {
+        return glutenfree;
+    }
+
+    public void setGlutenfree(boolean glutenfree) {
+        this.glutenfree = glutenfree;
+    }
 }
+
+
+

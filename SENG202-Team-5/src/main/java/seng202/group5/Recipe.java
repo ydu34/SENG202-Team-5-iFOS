@@ -175,7 +175,7 @@ public class Recipe {
     }
 
 
-    public HashMap<Ingredient, Integer> getIngredientAmount() {
+    public HashMap<Ingredient, Integer> getIngredientsAmount() {
         return ingredientsAmount;
     }
 
@@ -187,10 +187,10 @@ public class Recipe {
 
     /**
      * @return true when the recipe is vegan
-     */
-    public boolean getVeganStatus() {
-        return veganStatus;
-    }
+//     */
+//    public boolean getVeganStatus() {
+//        return veganStatus;
+//    }
 
     /**
      * Returns all the step in written in a particular recipe
