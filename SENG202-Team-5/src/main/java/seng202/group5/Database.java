@@ -6,6 +6,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author Yu Duan
@@ -14,6 +15,7 @@ public class Database {
 
     private Worker worker;
     private Finance finance;
+    private Stock stock;
 
 
     /**Marshals the given object o into a xml file.
@@ -52,33 +54,32 @@ public class Database {
         return o;
     }
 
+    /** Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
+     * hashmap containing the ingredient and quantity.
+     * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
+     * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
+     */
+    public HashMap<Ingredient, Integer> getIngredientsFromID(HashMap<String, Integer> IngredientIDs) {
+        HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
+        for (Map.Entry<String, Integer> entry : IngredientIDs.entrySet()) {
+            String ID = entry.getKey();
+            Integer quantity = entry.getValue();
+            Ingredient ingredient = stock.getIngredients().get(ID);
+            ingredients.put(ingredient, quantity);
+        }
+        return ingredients;
+    }
 
-    public static void main(String args[]) {
-        Ingredient ing1 = new Ingredient("Milk", "L", "Liquid" , "1",4.0f);
-        Ingredient ing2 = new Ingredient("Apple", "kg", "Fruit", "2", 1.0f);
+    public void handleMenu() {
 
-        Stock stock = new Stock();
-        stock.getIngredients().put("1", ing1);
-        stock.getIngredients().put("2", ing2);
-        System.out.print(stock.getIngredients() +"\n");
+    }
 
-        Database handler = new Database();
-        handler.objectToXml(Stock.class, stock, "stock.xml");
+    public Stock getStock() {
+        return stock;
+    }
 
-        HashMap<Ingredient, Integer> cheeseBurgerIngredients = new HashMap<Ingredient, Integer>();
-        cheeseBurgerIngredients.put(ing1,1);
-        cheeseBurgerIngredients.put(ing2,2);
-        Recipe cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe",cheeseBurgerIngredients);
-        MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1");
-
-        MenuManager menuManger = new MenuManager();
-        menuManger.setItemList(new HashMap<String, MenuItem>());
-        menuManger.getItemList().put("1", cheeseBurger);
-
-        handler.objectToXml(MenuManager.class, menuManger, "menu.xml");
-
-
-
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 
 }

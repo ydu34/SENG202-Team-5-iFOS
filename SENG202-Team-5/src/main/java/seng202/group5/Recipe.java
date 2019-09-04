@@ -3,12 +3,13 @@ package seng202.group5;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 
 /**
  * The Recipe class records all the recipes along with the steps that are stored in the database.
  *
- * @author Shivin Gaba
+ * @author Shivin Gaba, Yu Duan
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,23 +26,32 @@ public class Recipe {
     private String recipeText;
 
     /**
+     * Hash map for all the ingredients' string id and its quantity.
+     */
+    private HashMap<String, Integer> ingredientIDs;
+
+    /**
      * Hash map for all the ingredients and its quantity
      **/
+    @XmlTransient
     private HashMap<Ingredient, Integer> ingredientsAmount;
 
     /**
      * The number of the non vegan ingredients
      **/
+    @XmlTransient
     private boolean veganStatus;
 
     /**
      * The number of the non vegetarian ingredients
      **/
+    @XmlTransient
     private boolean vegetarianStatus;
 
     /**
      * The number of the non gluten-free ingredients
      **/
+    @XmlTransient
     private boolean glutenfreeStatus;
 
     Recipe()
@@ -56,8 +66,9 @@ public class Recipe {
         vegetarianStatus = true;
         glutenfreeStatus = true;
         ingredientsAmount = new HashMap<Ingredient, Integer>();
-
+        ingredientIDs = new HashMap<String, Integer>();
     }
+
 
     Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
         name = tempName;
@@ -65,13 +76,8 @@ public class Recipe {
         veganStatus = false;
         vegetarianStatus = false;
         glutenfreeStatus = false;
-        ingredientsAmount = new HashMap<Ingredient, Integer>();
-        int count = 0;
-        for (Ingredient ingredientKey : tempIngredientsAmount.keySet()) {
-            count = tempIngredientsAmount.get(ingredientKey);
-            ingredientsAmount.put(ingredientKey, count);
-        }
-
+        ingredientsAmount = tempIngredientsAmount;
+        ingredientIDs = new HashMap<String, Integer>();
     }
 
 
@@ -152,6 +158,7 @@ public class Recipe {
         return edited;
     }
 
+
     /**
      * This method checks if the nonVeganIngredient ingredient parameter is 0 or 1.
      *
@@ -180,14 +187,12 @@ public class Recipe {
     }
 
 
-    public HashMap<Ingredient, Integer> getIngredientAmount() {
-        return ingredientsAmount;
-    }
 
     /**
      * Returns the name of the recipe
      * @return Name of the recipe.
      **/
+
     public String getName() { return name; }
 
     /**
@@ -200,7 +205,25 @@ public class Recipe {
     /**
      * Returns all the step in written in a particular recipe
      **/
+
     public String getRecipeText() { return recipeText; }
 
+
+    public HashMap<String, Integer> getIngredientIDs() {
+        return ingredientIDs;
+    }
+
+
+    public void setIngredientIDs(HashMap<String, Integer> ingredientIDs) {
+        this.ingredientIDs = ingredientIDs;
+    }
+
+    public HashMap<Ingredient, Integer> getIngredientsAmount() {
+        return ingredientsAmount;
+    }
+
+    public void setIngredientsAmount(HashMap<Ingredient, Integer> ingredientsAmount) {
+        this.ingredientsAmount = ingredientsAmount;
+    }
 
 }
