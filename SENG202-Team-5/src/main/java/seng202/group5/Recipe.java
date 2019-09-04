@@ -3,6 +3,8 @@ package seng202.group5;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
 /**
  * The Recipe class records all the recipes along with the steps that are stored in the database.
  *
@@ -166,9 +168,9 @@ public class Recipe {
      */
     public boolean editRecipe(Ingredient someIngredient, int quantity) {
         boolean edited = false;
-        Integer amount = ingredientsAmount.get(someIngredient.getId());
+        Integer amount = ingredientsAmount.get(someIngredient);
         if (amount != null) {
-            if (ingredientsAmount.containsKey(someIngredient.getId()) && quantity >= 1) {
+            if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
                 ingredientsAmount.put(someIngredient, quantity);
                 edited = true;
             }

@@ -3,6 +3,7 @@ package seng202.group5;
 import org.joda.money.Money;
 
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,19 @@ public class MenuItem {
      *The amount specifies how much of a particular ingredient needs to be removed or added.
      */
     private int amount;
+
+    private boolean vegan;
+    /**
+     * The number of the non vegetarian ingredients
+     **/
+    private boolean vegeterian;
+    /**
+     * The number of the non gluten-free ingredients
+     **/
+    private boolean glutenfree;
+    /**
+     * The IngredientList will contain all the ingredients used in a particular recipe
+     */
     /**
      *
      * @param someItemName is the name of an item on the menu
@@ -56,6 +70,9 @@ public class MenuItem {
         productionCost = makingCost;
         sellingCost = markupCost;
         id = uniqueId;
+        this.vegan = recipe.getVegan();
+        this.vegeterian = recipe.getVegetarian();
+        this.glutenfree = recipe.getGlutenfree();
 
     }
 
@@ -126,4 +143,27 @@ public class MenuItem {
 
     }
 
+    public boolean isVegan() {
+        return vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
+    }
+
+    public boolean isVegeterian() {
+        return vegeterian;
+    }
+
+    public void setVegeterian(boolean vegeterian) {
+        this.vegeterian = vegeterian;
+    }
+
+    public boolean isGlutenfree() {
+        return glutenfree;
+    }
+
+    public void setGlutenfree(boolean glutenfree) {
+        this.glutenfree = glutenfree;
+    }
 }
