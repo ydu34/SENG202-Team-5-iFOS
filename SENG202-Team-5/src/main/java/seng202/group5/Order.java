@@ -61,6 +61,16 @@ public class Order {
 
 
     /**
+     * Gives a discount to the order based off a percentage given as a parameter.
+     *
+     * @param percentage The percentage of the discount.
+     */
+    public void discount(int percentage) {
+        totalCost = totalCost - (totalCost * percentage / 100);
+    }
+
+
+    /**
      * Returns the double, total cost.
      *
      * @return the totalCost of the order.
@@ -68,7 +78,6 @@ public class Order {
     public double getTotalCost() {
         return totalCost;
     }
-
 
     /**
      * Removes the item taken as a parameter from the order and returns a boolean true or false as to whether
@@ -92,20 +101,6 @@ public class Order {
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
         return false;
     }
-
-    /**
-     * Gives a discount to the order based off a percentage given as a parameter.
-     *
-     * @param percentage The percentage of the discount.
-     */
-    public void discount(int percentage) {
-        totalCost = totalCost - (totalCost * percentage / 100);
-    }
-
-    public static void main(String[] args) {
-
-    }
-
 
     /**
      * Gets the ID of this order

@@ -7,6 +7,7 @@ import seng202.group5.exceptions.NoOrderException;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -48,7 +49,8 @@ public class Worker {
     public Worker(Database tempDatabase) {
         database = tempDatabase;
         this.newOrder();
-        Stock stock = new Stock();
+        currentStock = new Stock();
+        currentHistory = new History(new HashMap<>());
 
     }
 
@@ -57,7 +59,6 @@ public class Worker {
         menuItems = tempMenuItems;
         currentStock = tempStock;
         currentHistory = tempHistory;
-
     }
 
     /**
@@ -98,13 +99,13 @@ public class Worker {
         for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
         ArrayList<Money> change = new ArrayList<Money>();
 
+        currentHistory.getTransactionHistory().put(currentOrder.getID(), currentOrder);
         // Need to implement database. Also, this is based on the system clock,
         // which may be problematic. This part throws the exception
         // change = database.getFinance().pay(Money.of(CurrencyUnit.of("NZD"), currentOrder.getTotalCost()),
         //                           denominations,
         //                           Instant.now().getEpochSecond());
 
-        currentHistory.getTransactionHistory().put(currentOrder.getID(), currentOrder);
         return change;
     }
 
@@ -128,6 +129,10 @@ public class Worker {
      */
     public ArrayList<MenuItem> getMenuItems() {
         return menuItems;
+    }
+    public void addItemToMenu(MenuItem item) {
+        menuItems.add(item);
+
     }
 
     /**

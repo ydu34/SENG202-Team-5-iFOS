@@ -27,7 +27,7 @@ public class Ingredient {
     /**
      * The price for a single unit of a ingredient
      **/
-    private float price;
+    private double price;
     /**
      * Boolean when True means the product is Gluten Free
      **/
@@ -42,7 +42,7 @@ public class Ingredient {
     private boolean isVegan;
 
 
-    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, float tempPrice) {
+    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice) {
 
         name = tempName;
         unit = tempUnit;
@@ -51,7 +51,7 @@ public class Ingredient {
         price = tempPrice;
     }
 
-    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, float tempPrice, boolean glutenFree, boolean vegetarian, boolean vegan) {
+    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice, boolean glutenFree, boolean vegetarian, boolean vegan) {
 
         name = tempName;
         unit = tempUnit;
@@ -142,7 +142,7 @@ public class Ingredient {
     /**
      * Returns the cost of each ingredient
      **/
-    public float getCost() {
+    public double getCost() {
         return price;
     }
 

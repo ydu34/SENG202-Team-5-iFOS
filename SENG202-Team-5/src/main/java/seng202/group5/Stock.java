@@ -29,8 +29,8 @@ public class Stock {
      * The builder for the Stock object if there is no initial stock.
      */
     public Stock() {
-        ingredients = new HashMap<String, Ingredient>();
-        ingredientStock = new HashMap<String, Integer>();
+        ingredients = new HashMap<>();
+        ingredientStock = new HashMap<>();
     }
 
 
@@ -78,6 +78,16 @@ public class Stock {
         }
     }
 
+    /**
+     * Creates a clone of this Stock class for a temporary order stock
+     *
+     * @return A clone of this stock class
+     */
+    public Stock clone() {
+        HashMap<String, Ingredient> tempIngredients = (HashMap<String, Ingredient>) ingredients.clone();
+        HashMap<String, Integer> tempStock = (HashMap<String, Integer>) ingredientStock.clone();
+        return new Stock(tempIngredients, tempStock);
+    }
 
     /**
      * Ingredient stock getter.
@@ -96,11 +106,7 @@ public class Stock {
      * @return The quantity of the ingredient
      */
     public int getIngredientQuantity(String id) {
-        if (ingredientStock.containsKey(id)) {
-            return ingredientStock.get(id);
-        } else {
-            return 0;
-        }
+        return ingredientStock.getOrDefault(id, 0);
     }
 
     public HashMap<String, Ingredient> getIngredients() {
@@ -108,11 +114,7 @@ public class Stock {
     }
 
     public Ingredient getIngredientFromID(String id) {
-        if (ingredients.containsKey(id)) {
-            return ingredients.get(id);
-        } else {
-            return null;
-        }
+        return ingredients.getOrDefault(id, null);
     }
 
 }
