@@ -3,8 +3,12 @@ package seng202.group5;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.joda.money.Money;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import seng202.group5.exceptions.InsufficientCashException;
 
 /**
@@ -12,18 +16,26 @@ import seng202.group5.exceptions.InsufficientCashException;
  */
 public class Finance {
 
-    /**
-     * The database managing the system
-     */
-    private Database database;
     private HashMap<String, Transaction> transactionHistory;
+    private ArrayList<Money> denomination;
+    /**
+     * Temporary id generator for testing purposes.
+     */
+    private int tempId;
 
-    public Finance(Database newDatabase) {
-        database = newDatabase;
-        transactionHistory = new HashMap<>();
-    }
     public Finance() {
+        tempId = 0;
         transactionHistory = new HashMap<>();
+        denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
     }
 
     /**
@@ -47,13 +59,15 @@ public class Finance {
      *
      * @param totalCost   the total cost of the order
      * @param amountPayed a lost of doubles representing money in the denominations payed
-     * @param time        the time the order occurred at
+     * @param time        the Date and time the order occurred at
      * @return a list of doubles representing money in descending size order
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
     public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, int time) throws InsufficientCashException {
         // the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
+        Money changeSum = Money.parse("NZD 0");
+        DateTime date =  new DateTime(DateTimeZone.UTC);
         for (Money money: amountPayed)
         {
             payedSum = payedSum.plus(money);
@@ -61,7 +75,13 @@ public class Finance {
         if (totalCost.isGreaterThan(payedSum) || totalCost.isNegative()) {
             throw new InsufficientCashException();
         }
-        return calcChange(payedSum.minus(totalCost));
+        ArrayList<Money> change = calcChange(payedSum.minus(totalCost));
+        for (Money money: change)
+        {
+            changeSum = changeSum.plus(money);
+        }
+        transactionHistory.put("test"+tempId++ , new Transaction(date, time, changeSum, totalCost));
+        return change;
     }
 
     /**
@@ -71,16 +91,18 @@ public class Finance {
      * @param endDate   the last date to search to
      * @return a list of doubles representing  total profits, average profits, and other things
      */
-    public ArrayList<Money> totalCalculator(int startDate, int endDate) {
+    public ArrayList<Money> totalCalculator(DateTime startDate, DateTime endDate) {
         Money total = Money.parse("NZD 0");
         for (Transaction order : transactionHistory.values()) {
-            if (order.getDate() >= startDate && order.getDate() <= endDate) {
-                total.plus(order.getTotalPrice());
+            if (order.getDate().compareTo(startDate) >= 0 && order.getDate().compareTo(endDate) <= 0) {
+                total = total.plus(order.getTotalPrice());
             }
         }
         ArrayList<Money> totals = new ArrayList<>();
         totals.add(total);
-        totals.add(total.dividedBy((endDate-startDate+1), RoundingMode.DOWN));
+        long daysBetween = (Days.daysBetween(startDate.toLocalDate(), endDate.toLocalDate()).getDays()) + 1;
+        totals.add(total.dividedBy(daysBetween, RoundingMode.DOWN));
+        System.out.println(totals);
         return totals;
     }
     /**
@@ -90,26 +112,21 @@ public class Finance {
      * @return returns a list containing the change need to be returned
      */
     public ArrayList<Money> calcChange(Money change) {
-        ArrayList<Money> denomination = new ArrayList<>();
-        denomination.add(Money.parse("NZD 50.00"));
-        denomination.add(Money.parse("NZD 20.00"));
-        denomination.add(Money.parse("NZD 10.00"));
-        denomination.add(Money.parse("NZD 5.00"));
-        denomination.add(Money.parse("NZD 2.00"));
-        denomination.add(Money.parse("NZD 1.00"));
-        denomination.add(Money.parse("NZD 0.50"));
-        denomination.add(Money.parse("NZD 0.20"));
-        denomination.add(Money.parse("NZD 0.10"));
+
+
         ArrayList<Money> totalChange = new ArrayList<>();
-        change.plus(Money.parse("NZD 0.03"));
-        while (change.isGreaterThan(Money.parse("NZD 0.09"))) {
+        change = change.plus(Money.parse("NZD 0.03"));
+
+        Money minimin = Money.parse("NZD 0.09");
+        while (change.isGreaterThan(minimin)) {
             // Could this be done with a sorted list of denominations instead?
             // There is a lot of repeated code
             for (Money value: denomination)
             {
                 while (change.isGreaterThan(value)) {
+
                     totalChange.add(value);
-                    change.minus(value);
+                    change = change.minus(value);
                 }
             }
         }

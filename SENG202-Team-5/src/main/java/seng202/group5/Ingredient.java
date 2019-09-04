@@ -52,7 +52,7 @@ public class Ingredient {
     Ingredient()
     {}
 
-    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice) {
+    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice) {
 
         name = tempName;
         unit = tempUnit;
