@@ -1,5 +1,8 @@
 package seng202.group5;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 
 /**
@@ -7,7 +10,8 @@ import java.util.HashMap;
  *
  * @author Shivin Gaba
  */
-
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Recipe {
 
     /**
@@ -40,10 +44,11 @@ public class Recipe {
      **/
     private boolean glutenfreeStatus;
 
+    Recipe()
+    {}
     /**
      * The IngredientList will contain all the ingredients used in a particular recipe
      */
-
     Recipe(String tempName, String tempRecipeText) {
         name = tempName;
         recipeText = tempRecipeText;

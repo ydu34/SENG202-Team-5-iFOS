@@ -5,12 +5,15 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.util.HashMap;
 
+/**
+ * @Author Yu Duan
+ */
 public class Database {
 
     private Worker worker;
     private Finance finance;
-
 
 
     /**Marshals the given object o into a xml file.
@@ -49,6 +52,7 @@ public class Database {
         return o;
     }
 
+
     public static void main(String args[]) {
         Ingredient ing1 = new Ingredient("Milk", "L", "Liquid" , "1",4.0f);
         Ingredient ing2 = new Ingredient("Apple", "kg", "Fruit", "2", 1.0f);
@@ -60,6 +64,19 @@ public class Database {
 
         Database handler = new Database();
         handler.objectToXml(Stock.class, stock, "stock.xml");
+
+        HashMap<Ingredient, Integer> cheeseBurgerIngredients = new HashMap<Ingredient, Integer>();
+        cheeseBurgerIngredients.put(ing1,1);
+        cheeseBurgerIngredients.put(ing2,2);
+        Recipe cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe",cheeseBurgerIngredients);
+        MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1");
+
+        MenuManager menuManger = new MenuManager();
+        menuManger.setItemList(new HashMap<String, MenuItem>());
+        menuManger.getItemList().put("1", cheeseBurger);
+
+        handler.objectToXml(MenuManager.class, menuManger, "menu.xml");
+
 
 
     }
