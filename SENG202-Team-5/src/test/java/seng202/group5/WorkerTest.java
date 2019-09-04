@@ -1,19 +1,20 @@
 package seng202.group5;
 
-import junit.framework.TestCase;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Ignore
-public class WorkerTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class WorkerTest {
 
     private Database database;
     private Worker testWorker;
@@ -23,8 +24,12 @@ public class WorkerTest extends TestCase {
             "Burger Item",
             new Recipe("Burger",
                        "Add items to burger",
-                       (float) 5.80),
-            (float) 5.80,
+                       new HashMap<>(){{
+                           put(new Ingredient("Bun", "buns", "Bread", "ARZ4O2", 1.2), 2);
+                           put(new Ingredient("Patty", "patties", "Meat", "5ES240", 3.4), 1);
+                       }}),
+            5.80,
+            0.00,
             "14328"
     );
 
@@ -63,42 +68,45 @@ public class WorkerTest extends TestCase {
     }
 
     @Test
-    public void testConfirmPaymentWithOrder() { //Is this correct? As addItem throws the exception.
+    @Disabled
+    public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
         Money changeSum = Money.parse("NZD 0");
         try {
             testWorker.addItem(testItem, 2);
-            ArrayList<Money> paymentAmount = new ArrayList<Money>();
-            paymentAmount.add(Money.of(CurrencyUnit.of("NZD"), testItem.getCost() * 2));
+            ArrayList<Money> paymentAmount = new ArrayList<>();
+            paymentAmount.add(testItem.calculateMakingCost().multipliedBy(2));
             paymentAmount.add(Money.parse("NZD 4.0"));
             ArrayList<Money> change = testWorker.confirmPayment(paymentAmount);
             for (Money x : change) {
-                changeSum.plus(x);
+                changeSum = changeSum.plus(x);
             }
         } catch (NoOrderException e) {
             e.printStackTrace();
+            fail();
         } catch (InsufficientCashException e) {
             e.printStackTrace();
+            fail();
         }
 
-        assertTrue(changeSum.isEqual(Money.parse("NZD 4.0")));
+        assertTrue(changeSum.isEqual(Money.parse("NZD 4")));
     }
 
     @Test
-    @Ignore
-    public void testConfirmPaymentRaisesInsufficientCashException() { // This function needs fixing
+    @Disabled
+    public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
         try {
             testWorker.addItem(testItem, 2);
         } catch (NoOrderException e) {
             e.printStackTrace();
         }
-        ArrayList<Money> paymentAmount = new ArrayList<Money>();
-        paymentAmount.add(Money.of(CurrencyUnit.of("NZD"), testItem.getCost()));
-        paymentAmount.add(Money.of(CurrencyUnit.of("NZD"), testItem.getCost() / 2));
+        ArrayList<Money> paymentAmount = new ArrayList<>();
+        paymentAmount.add(testItem.calculateMakingCost());
+        paymentAmount.add(testItem.calculateMakingCost().dividedBy(2, RoundingMode.DOWN));
         try {
             testWorker.confirmPayment(paymentAmount);
+            fail();
         } catch (InsufficientCashException e) {
-            return;
+
         }
-        fail();
     }
 }

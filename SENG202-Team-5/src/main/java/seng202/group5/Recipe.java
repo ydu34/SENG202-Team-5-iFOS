@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,89 +14,61 @@ public class Recipe {
      * Name of each recipe in the database
      **/
     private String name;
+
     /**
      * All the steps involve in the recipe
      **/
     private String recipeText;
+
     /**
      * Hash map for all the ingredients and its quantity
      **/
-    private HashMap<String, Integer> ingredientsAmount;
+    private HashMap<Ingredient, Integer> ingredientsAmount;
 
     /**
      * The number of the non vegan ingredients
      **/
     private boolean veganStatus;
+
     /**
      * The number of the non vegetarian ingredients
      **/
-    private boolean vegeterianStatus;
+    private boolean vegetarianStatus;
+
     /**
      * The number of the non gluten-free ingredients
      **/
     private boolean glutenfreeStatus;
+
     /**
      * The IngredientList will contain all the ingredients used in a particular recipe
      */
 
-    Recipe(String tempName, String tempRecipeText)
-    {
+    Recipe(String tempName, String tempRecipeText) {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = true;
-        vegeterianStatus = true;
+        vegetarianStatus = true;
         glutenfreeStatus = true;
-        ingredientsAmount = new HashMap<String, Integer>();
+        ingredientsAmount = new HashMap<Ingredient, Integer>();
 
     }
 
-    Recipe(String tempName, String tempRecipeText, HashMap<String, Integer> tempIngredientsAmount)
-    {
+    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
         name = tempName;
         recipeText = tempRecipeText;
         veganStatus = false;
-        vegeterianStatus = false;
+        vegetarianStatus = false;
         glutenfreeStatus = false;
-        ingredientsAmount = tempIngredientsAmount;
+        ingredientsAmount = new HashMap<Ingredient, Integer>();
+        int count = 0;
+        for (Ingredient ingredientKey : tempIngredientsAmount.keySet()) {
+            count = tempIngredientsAmount.get(ingredientKey);
+            ingredientsAmount.put(ingredientKey, count);
+        }
 
     }
 
-    /**
-     * Returns the name of the recipe
-     **/
-    public String getName() {
-        return name;
-
-    }
-
-    /**
-     * @return true when the recipe is vegan
-     */
-
-    public boolean getVeganStatus() {
-        return veganStatus;
-    }
-
-    /**
-     * @return true when the recipe is vegetarian
-     */
-    public boolean isvegeterianStatus() {
-        return vegeterianStatus;
-    }
-
-    /**
-     * @return true when the recipe is gluten free
-     */
-    public boolean isglutenfreeStatus() {
-        return glutenfreeStatus;
-    }
-
-    /**
-     * Returns all the step in written in a particular recipe
-     **/
-    public String getReceipeText() {
-        return recipeText;
-    }
 
     /**
      * This function adds the specified amount of ingredient that needs to be added in the recipe.
@@ -107,18 +78,18 @@ public class Recipe {
      */
     public void addIngredient(Ingredient someIngredient, int quantity) {
 
-        Integer amount = ingredientsAmount.get(someIngredient.getId());
+        Integer amount = ingredientsAmount.get(someIngredient);
         if (amount == null) {
-            ingredientsAmount.put(someIngredient.getId(), quantity);
+            ingredientsAmount.put(someIngredient, quantity);
         } else {
-            ingredientsAmount.put(someIngredient.getId(), amount + quantity);
+            ingredientsAmount.put(someIngredient, amount + quantity);
         }
         if (!someIngredient.getVegan()) {
             veganStatus = false;
             System.out.println("Recipe is not vegan anymore");
         }
         if (!someIngredient.getVegetarian()) {
-            vegeterianStatus = false;
+            vegetarianStatus = false;
             System.out.println("Recipe is not vegetarian anymore");
         }
         if (!someIngredient.getGlutenFree()) {
@@ -136,8 +107,8 @@ public class Recipe {
     public boolean removeIngredient(Ingredient someIngredient, int quantity) {
         boolean removed = false;
 
-        if (ingredientsAmount.containsKey(someIngredient.getId())) {
-            ingredientsAmount.remove(someIngredient.getId());
+        if (ingredientsAmount.containsKey(someIngredient)) {
+            ingredientsAmount.remove(someIngredient);
             for (int i = 0; i < ingredientsAmount.size(); i++) {
                 boolean gf = someIngredient.getGlutenFree();
                 boolean vegan = someIngredient.getVegan();
@@ -149,7 +120,7 @@ public class Recipe {
                     veganStatus = false;
                 }
                 if (!vegetarian) {
-                    vegeterianStatus = false;
+                    vegetarianStatus = false;
                 }
             }
             removed = true;
@@ -166,10 +137,10 @@ public class Recipe {
      */
     public boolean editRecipe(Ingredient someIngredient, int quantity) {
         boolean edited = false;
-        Integer amount = ingredientsAmount.get(someIngredient.getId());
+        Integer amount = ingredientsAmount.get(someIngredient);
         if (amount != null) {
-            if (ingredientsAmount.containsKey(someIngredient.getId()) && quantity >= 1) {
-                ingredientsAmount.put(someIngredient.getId(), quantity);
+            if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
+                ingredientsAmount.put(someIngredient, quantity);
                 edited = true;
             }
         }
@@ -181,7 +152,7 @@ public class Recipe {
      *
      * @return True if the recipe is vegan else False
      */
-    public boolean getVegan() {
+    public boolean isVegan() {
         return veganStatus;
     }
 
@@ -190,8 +161,8 @@ public class Recipe {
      *
      * @return True if the recipe is vegetarian else False
      */
-    public boolean getVegetarian() {
-        return vegeterianStatus;
+    public boolean isVegetarian() {
+        return vegetarianStatus;
     }
 
     /**
@@ -199,12 +170,32 @@ public class Recipe {
      *
      * @return True if the recipe is glutenFree else False
      */
-    public boolean getGlutenfree() {
+    public boolean isGlutenFree() {
         return glutenfreeStatus;
     }
 
-    public HashMap getIngredientAmount(){
+
+    public HashMap<Ingredient, Integer> getIngredientAmount() {
         return ingredientsAmount;
     }
+
+    /**
+     * Returns the name of the recipe
+     * @return Name of the recipe.
+     **/
+    public String getName() { return name; }
+
+    /**
+     * @return true when the recipe is vegan
+     */
+    public boolean getVeganStatus() {
+        return veganStatus;
+    }
+
+    /**
+     * Returns all the step in written in a particular recipe
+     **/
+    public String getRecipeText() { return recipeText; }
+
 
 }

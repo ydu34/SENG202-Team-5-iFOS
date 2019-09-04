@@ -1,72 +1,48 @@
 package seng202.group5;
 
-
-import javax.xml.bind.annotation.*;
-
 /**
  * The Ingredient class records all the base data for each ingredient in the database which include its name, price,
  * category, id and its price.
  *
- * @author Shivin Gaba, Yu Duan
+ * @author Shivin Gaba
  */
-
-@XmlAccessorType (XmlAccessType.FIELD)
 public class Ingredient {
 
     /**
      * Name of the ingredient used in the recipe
      **/
-
     private String name;
     /**
      * The measurement used to quantify the ingredient i.e. kg, L, buns etc.
      **/
-
     private String unit;
     /**
      * Category that ingredient belongs to like poultry, meat or bread.
      **/
-
     private String category;
     /**
      * Unique id used to identify every ingredient in the database
      **/
-
     private String id;
     /**
      * The price for a single unit of a ingredient
      **/
-
-    private float price;
+    private double price;
     /**
      * Boolean when True means the product is Gluten Free
      **/
-
     private boolean isGlutenFree;
     /**
      * Boolean when True means the ingredient is vegetarian
      */
-
     private boolean isVegetarian;
     /**
      * Boolean when True means the ingredient is vegan
      **/
-
     private boolean isVegan;
 
-    Ingredient() {
-        name = "";
-        unit = "";
-        category = "";
-        id = "";
-        price = 1.0f;
-        isGlutenFree = false;
-        isVegetarian = false;
-        isVegan = false;
 
-    }
-
-    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, float tempPrice) {
+    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice) {
 
         name = tempName;
         unit = tempUnit;
@@ -75,7 +51,7 @@ public class Ingredient {
         price = tempPrice;
     }
 
-    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, float tempPrice, boolean glutenFree, boolean vegetarian, boolean vegan) {
+    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice, boolean glutenFree, boolean vegetarian, boolean vegan) {
 
         name = tempName;
         unit = tempUnit;
@@ -121,7 +97,6 @@ public class Ingredient {
      *
      * @param someId Id for the new Ingredient added to the stock
      */
-
     public void setId(String someId) {
         id = someId;
     }
@@ -131,7 +106,6 @@ public class Ingredient {
      *
      * @param someName name of the new ingredient
      */
-
     public void setName(String someName) {
         name = someName;
     }
@@ -139,7 +113,6 @@ public class Ingredient {
     /**
      * @param someCategory Category for the newly added ingredient like drink,food,spice etc.
      */
-
     public void setCategory(String someCategory) {
         category = someCategory;
     }
@@ -155,7 +128,6 @@ public class Ingredient {
     /**
      * This method sets the boolean True for the ingredient if it is vegetarian
      */
-
     public void setVegetarian() {
         isVegetarian = true;
     }
@@ -163,7 +135,6 @@ public class Ingredient {
     /**
      * This method sets the boolean True for the ingredient if it is gluten free
      */
-
     public void setGlutenFree() {
         isGlutenFree = true;
     }
@@ -171,7 +142,7 @@ public class Ingredient {
     /**
      * Returns the cost of each ingredient
      **/
-    public float getCost() {
+    public double getCost() {
         return price;
     }
 
@@ -202,42 +173,6 @@ public class Ingredient {
      */
     public boolean equals(Ingredient other) {
         return id == other.id;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public boolean isGlutenFree() {
-        return isGlutenFree;
-    }
-
-    public void setGlutenFree(boolean glutenFree) {
-        isGlutenFree = glutenFree;
-    }
-
-    public boolean isVegetarian() {
-        return isVegetarian;
-    }
-
-    public void setVegetarian(boolean vegetarian) {
-        isVegetarian = vegetarian;
-    }
-
-    public boolean isVegan() {
-        return isVegan;
-    }
-
-    public void setVegan(boolean vegan) {
-        isVegan = vegan;
     }
 
 }
