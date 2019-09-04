@@ -153,5 +153,24 @@ public class Worker {
         return database;
     }
 
+    /**
+     *
+     * @param vegan true if recipe is vegan
+     * @param vegeterian  true if recipe is vegetarian
+     * @param gf  true if recipe is gluten free
+     * @return  returns the list of the menu items according to the check boxes ticked on the order screen.
+     */
+
+    public ArrayList<MenuItem> getMenuItemStatus(boolean vegan, boolean vegeterian, boolean gf){
+        ArrayList<MenuItem> result = new ArrayList<>();
+        for(MenuItem m:menuItems){
+            if(m.isVegeterian() == vegeterian && m.isVegan() == vegan && m.isGlutenfree() == gf){
+                result.add(m);
+            }
+
+        }
+        return result;
+    }
+
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="737.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="569.0" minHeight="10.0" prefHeight="558.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="226.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane GridPane.rowIndex="1">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="160.0" text="Order" />
+            <Button mnemonicParsing="false" prefHeight="84.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
+            <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
+            <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+      <TableView editable="true" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn prefWidth="193.0" text="Ingredients" />
+            <TableColumn prefWidth="89.0" text="Quantity" />
+            <TableColumn minWidth="0.0" prefWidth="85.0" text="Units" />
+            <TableColumn prefWidth="130.0" text="Used/Hour" />
+          <TableColumn minWidth="0.0" prefWidth="302.0" text="Category " />
+        </columns>
+      </TableView>
+   </children>
+</GridPane>
