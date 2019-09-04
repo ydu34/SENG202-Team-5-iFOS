@@ -118,7 +118,7 @@ public class MenuItem {
      */
     public Money calculateMakingCost() {
         double recipeMakingCost = 0;
-        HashMap<Ingredient, Integer> ingredients = recipe.getIngredientAmount();
+        HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
             Integer amount = eachIngredient.getValue();
