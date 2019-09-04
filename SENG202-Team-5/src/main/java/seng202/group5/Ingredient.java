@@ -1,32 +1,40 @@
 package seng202.group5;
 
+import javax.xml.bind.annotation.*;
+
 /**
  * The Ingredient class records all the base data for each ingredient in the database which include its name, price,
  * category, id and its price.
  *
  * @author Shivin Gaba
  */
+@XmlRootElement
 public class Ingredient {
 
     /**
      * Name of the ingredient used in the recipe
      **/
+
     private String name;
     /**
      * The measurement used to quantify the ingredient i.e. kg, L, buns etc.
      **/
+
     private String unit;
     /**
      * Category that ingredient belongs to like poultry, meat or bread.
      **/
+
     private String category;
     /**
      * Unique id used to identify every ingredient in the database
      **/
+
     private String id;
     /**
      * The price for a single unit of a ingredient
      **/
+
     private double price;
     /**
      * Boolean when True means the product is Gluten Free
@@ -41,6 +49,8 @@ public class Ingredient {
      **/
     private boolean isVegan;
 
+    Ingredient()
+    {}
 
     Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice) {
 
@@ -67,6 +77,7 @@ public class Ingredient {
     /**
      * Returns the name of the of the ingredient
      **/
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -74,6 +85,7 @@ public class Ingredient {
     /**
      * Returns the number of units of the ingredient on hand
      **/
+    @XmlElement
     public String getUnit() {
         return unit;
     }
@@ -81,6 +93,7 @@ public class Ingredient {
     /**
      * Returns the category of the ingredient if its a spice, meat or bread.
      **/
+    @XmlElement
     public String getCategory() {
         return category;
     }
@@ -88,6 +101,7 @@ public class Ingredient {
     /**
      * Returns the Unique id for every ingredient
      **/
+    @XmlAttribute
     public String getId() {
         return id;
     }
@@ -142,6 +156,7 @@ public class Ingredient {
     /**
      * Returns the cost of each ingredient
      **/
+    @XmlElement
     public double getCost() {
         return price;
     }
@@ -149,6 +164,7 @@ public class Ingredient {
     /**
      * Returns True if the ingredient is Vegan
      **/
+    @XmlElement
     public boolean getGlutenFree() {
         return isGlutenFree;
     }
@@ -156,6 +172,7 @@ public class Ingredient {
     /**
      * Returns True if the ingredient is Vegan
      **/
+    @XmlElement
     public boolean getVegetarian() {
         return isVegetarian;
     }
@@ -163,6 +180,7 @@ public class Ingredient {
     /**
      * Returns True if the ingredient is Vegan
      **/
+    @XmlElement
     public boolean getVegan() {
         return isVegan;
     }
