@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@Disabled
 class HistoryTest {
     private History history;
 
@@ -18,7 +17,6 @@ class HistoryTest {
     void init() {
         HashMap<String, Order> tempTransactionHistory = new HashMap<>();
         History history = new History(tempTransactionHistory);
-        HashMap<MenuItem, Integer> tempOrderItems = new HashMap<>();
         double tempTotalCost = 0;
         String tempID = "1";
         Order order = new Order(tempOrderItems, tempTotalCost, tempID);
@@ -26,8 +24,11 @@ class HistoryTest {
 
     @Test
     void testViewReturnsOrder() {
+        HashMap<MenuItem, Integer> tempOrderItems = new HashMap<>();
 
+        history.addTransactionHistory();
         String orderID = "1002";
+
         Order order = history.view(orderID);
         assertTrue(order instanceof Order);
     }

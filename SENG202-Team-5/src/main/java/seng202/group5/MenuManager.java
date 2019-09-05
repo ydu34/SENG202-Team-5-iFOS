@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,9 +7,7 @@ import java.util.Map;
  * This class manages the menu, includes creating recipes and items, and removing items from the menu.
  * @author James Kwok
  */
-@XmlRootElement
 public class MenuManager {
-
 
     private Map<String, MenuItem> itemList;
 
@@ -60,6 +57,5 @@ public class MenuManager {
     public void setItemList(Map<String, MenuItem> itemList) {
         this.itemList = itemList;
     }
-
 
 }
