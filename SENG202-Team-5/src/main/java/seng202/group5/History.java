@@ -40,5 +40,11 @@ public class History {
     public void setTransactionHistory(HashMap<String, Order> tempTransactionHistory) {
         transactionHistory = tempTransactionHistory;
     }
+    public void addTransactionHistory(HashMap<String, Order> tempTransaction) {
+        for (String stringKey : tempTransaction.keySet()) {
+            Order tempOrder = tempTransaction.get(stringKey);
+            transactionHistory.put(stringKey, tempOrder);
+        }
+    }
 
 }
