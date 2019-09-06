@@ -34,9 +34,14 @@ public class SelectionController {
         }
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         oldStage.setScene(new Scene(sampleScene, 821, 628));
-
     }
 
+
+    /**
+     * Changes screen to the add extra ingredient screen.
+     *
+     * @param actionEvent The action of clicking or pressing the button.
+     */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
     }

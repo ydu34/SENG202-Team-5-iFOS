@@ -82,7 +82,7 @@
             <children>
                 <ImageView fitHeight="164.0" fitWidth="242.0" opacity="0.89" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <image>
-                        <Image url="@../../../../../../../download.jpeg" />
+                        <Image url="https://strayfawnstudio.com/community/uploads/monthly_2018_05/imported-photo-1038.thumb.jpeg.b14269a65f3cb063d3423863a15cf728.jpeg" />
                     </image>
                     <effect>
                         <Blend />
@@ -139,7 +139,7 @@
                     </font>
                 </Label>
             <ListView prefHeight="253.0" prefWidth="622.0" GridPane.rowIndex="1" />
-            <Label prefHeight="60.0" prefWidth="257.0" text="Add recipe here " GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label prefHeight="60.0" prefWidth="257.0" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets left="15.0" />
                </GridPane.margin>
