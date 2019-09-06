@@ -48,7 +48,7 @@ public class Finance {
         Transaction refundedOrder = transactionHistory.get(ID);
         Money refund = Money.parse("NZD 0");
         if (!refundedOrder.getRefunded()) {
-            refundedOrder.Refund();
+            refundedOrder.refund();
             refund = refundedOrder.getTotalPrice();
         }
         return calcChange(refund);
