@@ -24,6 +24,7 @@ public class Stepdefs {
     private MenuItem chip;
     private MenuManager manager;
     private Ingredient buns = new Ingredient("Buns", "Kg", "Bread", "TestBun", 5.00);
+    private boolean error;
 
 
 
@@ -34,8 +35,9 @@ public class Stepdefs {
         burgerRecipe = manager.createRecipe("burgerRecipe", new HashMap<>() , "Text");
         stock = new Stock();
         stock.addNewIngredient(buns);
-        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
-        burger = manager.getItemList().get("testId");
+        error = false;
+//        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
+//        burger = manager.getItemList().get("testId");
     }
     @Given("Order exists")
     public void Order_exists() {
@@ -44,7 +46,8 @@ public class Stepdefs {
 
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {
-        order.modifyItemQuantity(burger, 1);
+        error = !order.modifyItemQuantity(burger, 1);
+
     }
 
     @Then("Orders total cost is ${double}")
@@ -54,14 +57,15 @@ public class Stepdefs {
 
     @Then("Receive error")
     public void receiveError() {
-        throw new cucumber.api.PendingException();
+        assertTrue(error);
 
     }
 
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(double arg0) {
         manager.removeItem("testId");
-        manager.createItem("Burger", burgerRecipe, arg0-1.00,"testId", false);
+        manager.createItem("Burger", burgerRecipe, arg0-1.00,"testId", true);
+
 
         burger = manager.getItemList().get("testId");
     }
@@ -92,7 +96,7 @@ public class Stepdefs {
     public void chipsAreAddedToOrder() {
 
         Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>() , "Text");
-        manager.createItem("chip", chipRecipe, chipCost-1.00,"chipId", false);
+        manager.createItem("chip", chipRecipe, chipCost-1.00,"chipId", true);
         chip = manager.getItemList().get("chipId");
     }
 
@@ -128,7 +132,14 @@ public class Stepdefs {
 
     @Then("Burger in the order contains {int} buns")
     public void burgerInTheOrderContainsBuns(int arg0) {
-        throw new cucumber.api.PendingException();
+        System.out.println();
+        Boolean pass = false;
+        for (MenuItem item : order.getOrderItems().keySet()) {
+            if (item.getId() == "testID" && item.getRecipe().getIngredientIDs().containsKey("TestBun")) {
+                pass = true;
+            }
+        }
+        assertTrue(pass);
     }
 
     @When("Burger is removed from order")

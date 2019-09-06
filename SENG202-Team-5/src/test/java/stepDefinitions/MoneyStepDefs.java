@@ -17,7 +17,7 @@ public class MoneyStepDefs {
     private ArrayList<Money> change;
     private Finance finance;
     private Money cost;
-    public Till till;
+    private Till till;
 
 
     @Before
