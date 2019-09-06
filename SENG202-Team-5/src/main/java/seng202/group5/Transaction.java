@@ -42,7 +42,7 @@ public class Transaction {
     public int getTime() {
         return time;
     }
-    public void Refund() {
+    public void refund() {
         isRefunded = true;
     }
 }
