@@ -19,7 +19,7 @@ public class OrderTest {
 
     @BeforeEach
     void init() {
-        order = new Order();
+        order = new Order(new Stock());
     }
 
     @Test

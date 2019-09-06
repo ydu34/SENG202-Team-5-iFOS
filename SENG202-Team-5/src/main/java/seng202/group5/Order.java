@@ -25,15 +25,10 @@ public class Order {
      **/
     private String id;
 
-
     /**
-     * A getter for the current order list.
-     *
-     * @return A HashMap<MenuItem, Integer> orderItems
+     * The Stock to update when creating this order
      */
-    public HashMap<MenuItem, Integer> getOrderItems() {
-        return orderItems;
-    }
+    private Stock temporaryStock;
 
 
     /**
@@ -47,16 +42,33 @@ public class Order {
         orderItems = tempOrderItems;
         totalCost = tempTotalCost;
         id = tempID;
+
+    }
+
+    /**
+     * The builder for an Order object.
+     *
+     * @param tempOrderItems An order with an initial order list of items.
+     * @param tempTotalCost  The total cost of an existing order.
+     * @param tempID         The unique ID of the order.
+     * @param tempStock      The temporary stock to update when adding/removing items
+     */
+    public Order(HashMap<MenuItem, Integer> tempOrderItems, double tempTotalCost, String tempID, Stock tempStock) {
+        orderItems = tempOrderItems;
+        totalCost = tempTotalCost;
+        id = tempID;
+        temporaryStock = tempStock.clone();
     }
 
 
     /**
      * The builder for an Order object with no initial values.
      */
-    public Order() {
+    public Order(Stock tempStock) {
         orderItems = new HashMap<MenuItem, Integer>();
         totalCost = 0;
         id = "ABC123"; // THIS NEEDS TO BE CHANGED, CURRENTLY HAS DEFAULT VALUE SINCE THERE IS NO ID MAKER YET
+        temporaryStock = tempStock.clone();
     }
 
 
@@ -69,14 +81,14 @@ public class Order {
         totalCost = totalCost - (totalCost * percentage / 100);
     }
 
-
     /**
-     * Returns the double, total cost.
+     * Adds a new item to the order
      *
-     * @return the totalCost of the order.
+     * @param item     The item to add to the order
+     * @param quantity The quantity of the item to add to the order
      */
-    public double getTotalCost() {
-        return totalCost;
+    public void addItem(MenuItem item, int quantity) {
+
     }
 
     /**
@@ -109,6 +121,33 @@ public class Order {
      */
     public String getID() {
         return id;
+    }
+
+    /**
+     * A getter for the current order list.
+     *
+     * @return A HashMap<MenuItem, Integer> orderItems
+     */
+    public HashMap<MenuItem, Integer> getOrderItems() {
+        return orderItems;
+    }
+
+    /**
+     * Returns the total cost.
+     *
+     * @return the totalCost of the order.
+     */
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    /**
+     * Gets the stock that is being updated
+     *
+     * @return the stock that is being updated
+     */
+    public Stock getStock() {
+        return temporaryStock;
     }
 
 }

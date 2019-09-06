@@ -81,7 +81,7 @@ public class Worker {
      * confirmation
      */
     public void newOrder() {
-        currentOrder = new Order();
+        currentOrder = new Order(currentStock);
     }
 
     /**
