@@ -12,15 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-/*
- * testRefund and testTotalCalculator need to be updated when Database is added
- */
 public class FinanceTest {
     private Finance testFinance;
     private ArrayList<Money> payed;
-    /*
-     * When Database is added initialise with test data before each
-     */
+
     @BeforeEach
     public void init() {
         testFinance = new Finance();
