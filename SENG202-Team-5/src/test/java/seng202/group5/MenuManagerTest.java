@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MenuManagerTest {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
-    private MenuManager menuManager = new MenuManager();
+    private MenuManager menuManager;
     private String burgerRecipeText = "Make a burger!";
     private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", 10.30);
     private HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
@@ -18,6 +18,7 @@ public class MenuManagerTest {
 
     @BeforeEach
     public void init() {
+        menuManager = new MenuManager();
         HashMap<Ingredient, Integer> ingredients = new HashMap<>();
     }
 

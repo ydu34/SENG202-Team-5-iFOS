@@ -35,13 +35,13 @@
             <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
          </children>
       </GridPane>
-      <TableView editable="true" prefHeight="200.0" prefWidth="200.0">
+      <TableView prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="193.0" text="Ingredients" />
-            <TableColumn prefWidth="89.0" text="Quantity" />
-            <TableColumn minWidth="0.0" prefWidth="85.0" text="Units" />
-            <TableColumn prefWidth="130.0" text="Used/Hour" />
-          <TableColumn minWidth="0.0" prefWidth="302.0" text="Category " />
+          <TableColumn prefWidth="249.0" text="Ingredients" />
+            <TableColumn prefWidth="96.0" text="Quantity" />
+            <TableColumn minWidth="0.0" prefWidth="87.0" text="Units" />
+            <TableColumn prefWidth="103.0" text="Used/Hour" />
+          <TableColumn minWidth="0.0" prefWidth="264.0" text="Category " />
         </columns>
       </TableView>
    </children>
