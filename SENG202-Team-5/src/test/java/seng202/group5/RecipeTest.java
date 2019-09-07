@@ -35,7 +35,7 @@ public class RecipeTest {
         assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
         assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGAN));
     }
-
+    @Test
     public void testRemoveIngredient() {
 
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
@@ -44,7 +44,7 @@ public class RecipeTest {
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.GLUTEN_FREE));
     }
-
+    @Test
     public void testEditIngredient() {
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
         testRecipe.addIngredient(chickenPatty, 10);

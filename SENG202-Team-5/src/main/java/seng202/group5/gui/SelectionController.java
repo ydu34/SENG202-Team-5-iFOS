@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package seng202.group5.gui;
 
 import javafx.event.ActionEvent;
@@ -7,28 +10,33 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seng202.group5.Recipe;
+
 import java.io.IOException;
 
 public class SelectionController {
 
+
+    Recipe recipe;
+    public OrderController order;
     @FXML
     private Text pressedCountText;
 
     @FXML
     private Button addIngredientButton;
 
-    private int count = 0;
+    @FXML
+    private Text itemName;
 
-    public void countButtonPressed() {
-        count += 1;
-        pressedCountText.setText(String.format("Count: %s", count));
-    }
     public void changeScreen(ActionEvent event, String scenePath){
+
         Parent sampleScene = null;
         try {
             sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,5 +52,21 @@ public class SelectionController {
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+    }
+
+    /**
+     *This method takes the recipe object as the input which was passed during th launch of the selection screen sets the
+     * recipe object.
+     * @param
+     */
+
+    public void setRecipe(Recipe someRecipe){
+        recipe = someRecipe;
+
+    }
+
+    public void setItemName(){
+        System.out.println(recipe.getName());
+        itemName.setText(recipe.getName());
     }
 }
