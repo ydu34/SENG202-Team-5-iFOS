@@ -15,7 +15,6 @@ import static org.junit.Assert.*;
 
 @Disabled
 public class Stepdefs {
-
     private Order order;
     private MenuItem burger;
     private Stock stock;
@@ -26,6 +25,7 @@ public class Stepdefs {
     private MenuManager manager;
     private Ingredient buns = new Ingredient("Buns", "Kg", "Bread", "TestBun", 5.00);
     private boolean error;
+
 
 
     @Before
@@ -39,11 +39,10 @@ public class Stepdefs {
         //        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
         //        burger = manager.getItemList().get("testId");
     }
-
-    @Given("Order exists")
-    public void Order_exists() {
-        order = new Order(new Stock());
-    }
+    //    @Given("Order exists")
+    //    public void Order_exists() {
+    //        order = new Order();
+    //    }
 
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {
@@ -153,5 +152,4 @@ public class Stepdefs {
     @When("Order is viewed")
     public void orderIsViewed() {
     }
-
 }

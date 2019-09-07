@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * This class contains methods to update the stock, removes the stock , calculates the making and selling price for the menu item.
  *
- * @author Shivin Gaba
+ * @author Shivin Gaba, James Kwok
  */
 public class MenuItem {
 
@@ -56,6 +56,8 @@ public class MenuItem {
      **/
     private boolean glutenfree;
 
+     MenuItem(){}
+
      /**
      * @param someItemName is the name of an item on the menu
      * @param someRecipe   is the recipe for a an item on the menu
@@ -64,14 +66,14 @@ public class MenuItem {
      * @param uniqueId     is the unique id related to each menu item
      */
 
-    MenuItem(String someItemName, Recipe someRecipe, double makingCost, double markupCost, String uniqueId) {
-
+    MenuItem(String someItemName, Recipe someRecipe, double makingCost,
+             double markupCost, String uniqueId, boolean someInMenu) {
         itemName = someItemName;
         recipe = someRecipe;
         productionCost = makingCost;
         sellingCost = markupCost;
         id = uniqueId;
-        inMenu = false;
+        inMenu = someInMenu;
     }
 
     MenuItem(String someItemName, Recipe someRecipe, double makingCost, double markupCost, String uniqueId, Ingredient randomIngredient, int someAmount) {
@@ -142,10 +144,6 @@ public class MenuItem {
 
     public boolean isInMenu() {
         return inMenu;
-    }
-
-    public void setInMenu(boolean tempInMenu) {
-        inMenu = tempInMenu;
     }
 
     public String getId() {

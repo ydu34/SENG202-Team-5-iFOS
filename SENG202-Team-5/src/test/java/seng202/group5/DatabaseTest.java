@@ -28,14 +28,13 @@ class DatabaseTest {
 
         Recipe cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerRecipe.setIngredientsAmount(cheeseBurgerIngredients);
-        MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1");
+        MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1", true);
 
         MenuManager menuManager = new MenuManager();
         menuManager.setItemList(new HashMap<>());
         menuManager.getItemList().put("1", cheeseBurger);
 
         handler.objectToXml(MenuManager.class, menuManager, "menu.xml");
-        // What does this do? Ingredient IDs
         for (Map.Entry<String, MenuItem> entry : menuManager.getItemList().entrySet()) {
             String ID = entry.getKey();
             MenuItem menuItem = entry.getValue();

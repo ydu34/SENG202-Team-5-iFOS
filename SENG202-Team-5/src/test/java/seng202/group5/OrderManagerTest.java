@@ -27,7 +27,8 @@ public class OrderManagerTest {
                        }}),
             5.80,
             0.00,
-            "14328"
+            "14328",
+            true
     );
 
     @BeforeEach
@@ -100,47 +101,46 @@ public class OrderManagerTest {
     }
 
     //These tests may be useful for AppEnvironment
-    @Test
-    @Disabled
-    public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
-        Money changeSum = Money.parse("NZD 0");
-        try {
-            testOrderManager.getOrder().addItem(testItem, 2);
-            ArrayList<Money> paymentAmount = new ArrayList<>();
-            paymentAmount.add(testItem.calculateMakingCost().multipliedBy(2));
-            paymentAmount.add(Money.parse("NZD 4.0"));
-            ArrayList<Money> change = new ArrayList<>();//testOrderManager.confirmPayment(paymentAmount);
-            for (Money x : change) {
-                changeSum = changeSum.plus(x);
-            }
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-            fail();
+//    @Test
+//    @Disabled
+//    public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
+//        Money changeSum = Money.parse("NZD 0");
+//        try {
+//            testOrderManager.getOrder().addItem(testItem, 2);
+//            ArrayList<Money> paymentAmount = new ArrayList<>();
+//            paymentAmount.add(testItem.calculateMakingCost().multipliedBy(2));
+//            paymentAmount.add(Money.parse("NZD 4.0"));
+//            ArrayList<Money> change = testOrderManager.confirmPayment(paymentAmount);
+//            for (Money x : change) {
+//                changeSum = changeSum.plus(x);
+//            }
+//        } catch (NoOrderException e) {
+//            e.printStackTrace();
+//            fail();
 //        } catch (InsufficientCashException e) {
 //            e.printStackTrace();
 //            fail();
-        }
+//        }
+//
+//        assertTrue(changeSum.isEqual(Money.parse("NZD 4")));
+//    }
 
-        assertTrue(changeSum.isEqual(Money.parse("NZD 4")));
-    }
-
-    @Test
-    @Disabled
-    public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
-        try {
-            testOrderManager.getOrder().addItem(testItem, 2);
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-        }
-        ArrayList<Money> paymentAmount = new ArrayList<>();
-        paymentAmount.add(testItem.calculateMakingCost());
-        paymentAmount.add(testItem.calculateMakingCost().dividedBy(2, RoundingMode.DOWN));
+//    @Test
+//    @Disabled
+//    public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
+//        try {
+//            testOrderManager.getOrder().addItem(testItem, 2);
+//        } catch (NoOrderException e) {
+//            e.printStackTrace();
+//        }
+//        ArrayList<Money> paymentAmount = new ArrayList<>();
+//        paymentAmount.add(testItem.calculateMakingCost());
+//        paymentAmount.add(testItem.calculateMakingCost().dividedBy(2, RoundingMode.DOWN));
 //        try {
 //            testOrderManager.confirmPayment(paymentAmount);
 //            fail();
 //        } catch (InsufficientCashException e) {
 //
 //        }
-        fail();
-    }
+//    }
 }

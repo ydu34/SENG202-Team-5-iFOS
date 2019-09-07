@@ -1,44 +1,45 @@
-//package seng202.group5;
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Disabled;
-//import org.junit.jupiter.api.Test;
-//
-//import java.util.HashMap;
-//
-//import static org.junit.jupiter.api.Assertions.assertNull;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//
-//
-//class HistoryTest {
-//    private History history;
-//
-//    @BeforeEach
-//    void init() {
-//        HashMap<String, Order> tempTransactionHistory = new HashMap<>();
-//        HashMap<MenuItem, Integer> tempOrderItems = new HashMap<MenuItem, Integer>();
-//        History history = new History(tempTransactionHistory);
-//        double tempTotalCost = 0;
-//        String tempID = "1";
-//
-//        Order order = new Order(tempOrderItems, tempTotalCost, tempID);
-//    }
-//
-//    @Test
-//    void testViewReturnsOrder() {
-//        HashMap<MenuItem, Integer> tempOrderItems = new HashMap<>();
-//
-//        history.addTransactionHistory();
-//        String orderID = "1002";
-//
-//        Order order = history.view(orderID);
-//        assertTrue(order instanceof Order);
-//    }
-//
-//    @Test
-//    void testViewOrderDoesNotExist() {
-//        String orderID = "1000";
-//        Order order = history.view(orderID);
-//        assertNull(order);
-//    }
-//}
+package seng202.group5;
+
+import org.junit.jupiter.api.*;
+import seng202.group5.exceptions.NoPastOrderException;
+import java.util.HashMap;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+class HistoryTest {
+    private History history;
+    private Order order;
+
+    @BeforeEach
+    void init() {
+        HashMap<String, Order> tempTransactionHistory = new HashMap<>();
+        history = new History(tempTransactionHistory);
+        double tempTotalCost = 0;
+        HashMap<MenuItem, Integer> tempOrderItems = new HashMap<MenuItem, Integer>();
+        order = new Order(tempOrderItems, tempTotalCost, "1");
+        String orderID = "1002";
+        history.setTransactionHistory(orderID, order);
+    }
+
+    @Test
+    void testViewReturnsOrder() {
+        try {
+            Order newOrder = history.view("1002");
+            assertTrue(newOrder instanceof Order);
+        } catch(NoPastOrderException e) {
+            System.out.println("Error " + e);
+        }
+    }
+
+    @Test
+    void testViewOrderDoesNotExist() {
+        Throwable exception = null;
+        String orderID = "1000";
+        try {
+            Order order = history.view(orderID);
+        } catch (Throwable e) {
+                exception = e;
+        }
+        assertTrue(exception instanceof NoPastOrderException);
+    }
+}

@@ -9,7 +9,18 @@ import java.util.Map;
  */
 public class MenuManager {
 
-    private Map<String, MenuItem> itemList;
+    private HashMap<String, MenuItem> itemList;
+
+
+    public MenuManager() {
+        itemList = new HashMap<String, MenuItem>();
+    }
+
+    public MenuManager(HashMap<String,MenuItem> tempItemList) {
+        for (String stringKey : tempItemList.keySet()) {
+            itemList.put(stringKey, tempItemList.get(stringKey));
+        }
+    }
 
     /**
      * Creates a new recipe
@@ -32,9 +43,8 @@ public class MenuManager {
      * @param inMenu true if the item is to be added into the menu, false if the item will not be added to the menu
      */
     public void createItem(String name, Recipe recipe, double cost, String id, boolean inMenu) {
-        MenuItem newItem = new MenuItem(name, recipe, cost, 1.0, id); // This will need changing
-        newItem.setInMenu(inMenu);
-        itemList.put(newItem.getId(), newItem);
+        MenuItem newItem = new MenuItem(name, recipe, cost, 1.0, id, inMenu);
+        itemList.put(id, newItem);
     }
 
     /**
@@ -42,20 +52,31 @@ public class MenuManager {
      * @return true if the item is removed, false if the item does not exist
      */
     public boolean removeItem(String ID) {
+        boolean removed = false;
         MenuItem answerItem = itemList.remove(ID);
-        if (answerItem == null) {
-            return false;
-        } else {
-            return true;
+        if (answerItem != null) {
+            removed = true;
         }
+        return removed;
     }
 
-    public Map<String, MenuItem> getItemList() {
+    public HashMap<String, MenuItem> getItemList() {
         return itemList;
     }
 
-    public void setItemList(Map<String, MenuItem> itemList) {
-        this.itemList = itemList;
+    public void setItemList(HashMap<String, MenuItem> tempItemList) {
+        itemList = tempItemList;
+    }
+
+    public HashMap<String, MenuItem> getMenuItems() {
+        HashMap<String, MenuItem> menuItemList = new HashMap<String, MenuItem>();
+        for (String stringKey : itemList.keySet()) {
+            MenuItem item = itemList.get(stringKey);
+            if (item.isInMenu()) {
+                menuItemList.put(stringKey, item);
+            }
+        }
+        return menuItemList;
     }
 
 }
