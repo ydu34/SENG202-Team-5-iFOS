@@ -42,12 +42,12 @@ public class MenuManager {
      * @return true if the item is removed, false if the item does not exist
      */
     public boolean removeItem(String ID) {
+        boolean removed = false;
         MenuItem answerItem = itemList.remove(ID);
-        if (answerItem == null) {
-            return false;
-        } else {
-            return true;
+        if (answerItem != null) {
+            removed = true;
         }
+        return removed;
     }
 
     public HashMap<String, MenuItem> getItemList() {
