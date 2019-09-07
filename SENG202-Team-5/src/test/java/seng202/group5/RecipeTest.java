@@ -4,6 +4,7 @@ package seng202.group5;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,37 +14,39 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class RecipeTest {
 
+    HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
+        add(DietEnum.GLUTEN_FREE);
+    }};
+    Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", 20, ingredientInfo);
+
     @Test
     public void testAddIngredient() {
 
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", 20, true, false, false);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", 20, true, true, true);
-        testRecipe.addIngredient(chickenpatty, 1);
+        HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+            add(DietEnum.VEGETARIAN);
+            add(DietEnum.VEGAN);
+        }};
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", 20, ingredientInfo);
+        testRecipe.addIngredient(chickenPatty, 1);
         testRecipe.addIngredient(cheese, 1);
-        assertTrue(testRecipe.isGlutenFree());
-        assertFalse(testRecipe.isVegetarian());
-        assertFalse(testRecipe.isVegan());
-        for (Map.Entry<Ingredient, Integer> entry : testRecipe.getIngredientsAmount().entrySet()) {
-            Ingredient ing = entry.getKey();
-            Integer value = entry.getValue();
-            System.out.print(ing.getName()+"\n");
-        }
+        assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.GLUTEN_FREE));
+        assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
+        assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGAN));
     }
 
     public void testRemoveIngredient() {
 
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
-        Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", 20, true, false, false);
+
         testRecipe.removeIngredient(chickenPatty, 1);
-        assertTrue(testRecipe.isVegetarian());
-        assertTrue(testRecipe.isGlutenFree());
+        assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
+        assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.GLUTEN_FREE));
     }
 
     public void testEditIngredient() {
-
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
-        Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", 20, true, false, false);
         testRecipe.addIngredient(chickenPatty, 10);
         assertTrue(testRecipe.editRecipe(chickenPatty, 5));
     }

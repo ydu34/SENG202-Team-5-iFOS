@@ -185,4 +185,8 @@ public class Recipe {
         this.ingredientsAmount = ingredientsAmount;
     }
 
+    public HashSet<DietEnum> getDietaryInformation() {
+        return dietaryInformation;
+    }
+
 }
