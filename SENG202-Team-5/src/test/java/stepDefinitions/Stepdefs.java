@@ -39,10 +39,10 @@ public class Stepdefs {
 //        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
 //        burger = manager.getItemList().get("testId");
     }
-    @Given("Order exists")
-    public void Order_exists() {
-        order = new Order();
-    }
+//    @Given("Order exists")
+//    public void Order_exists() {
+//        order = new Order();
+//    }
 
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {
