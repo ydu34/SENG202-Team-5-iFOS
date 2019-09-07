@@ -1,6 +1,5 @@
 package seng202.group5;
 
-import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -14,10 +13,10 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WorkerTest {
+public class OrderManagerTest {
 
     private Database database;
-    private Worker testWorker;
+    private OrderManager testOrderManager;
     private HashMap<MenuItem, Integer> initialOrderItems;
     private Order testOrder;
     private MenuItem testItem = new MenuItem(
@@ -36,7 +35,7 @@ public class WorkerTest {
     @BeforeEach
     public void init() {
         database = new Database();
-        testWorker = new Worker(database);
+        testOrderManager = new OrderManager(database);
 
     }
 
@@ -44,10 +43,10 @@ public class WorkerTest {
     public void testAddItemAddsItem() {
         try {
             initialOrderItems = (HashMap<MenuItem, Integer>)
-                    testWorker.getCurrentOrder().getOrderItems().clone();
+                    testOrderManager.getOrder().getOrderItems().clone();
             initialOrderItems.put(testItem, 3);
-            testWorker.addItem(testItem, 3);
-            assertEquals(initialOrderItems, testWorker.getCurrentOrder().getOrderItems());
+            testOrderManager.getOrder().addItem(testItem, 3);
+            assertEquals(initialOrderItems, testOrderManager.getOrder().getOrderItems());
         } catch (NoOrderException e) {
             e.printStackTrace();
         }
@@ -56,27 +55,28 @@ public class WorkerTest {
     @Test
     public void testNewOrderReplacesOrder() {
         try {
-            testOrder = testWorker.getCurrentOrder();
-            testWorker.newOrder();
-            assertNotSame(testOrder, testWorker.getCurrentOrder());
-            testOrder = testWorker.getCurrentOrder();
-            testWorker.newOrder();
-            assertNotSame(testOrder, testWorker.getCurrentOrder());
+            testOrder = testOrderManager.getOrder();
+            testOrderManager.newOrder();
+            assertNotSame(testOrder, testOrderManager.getOrder());
+            testOrder = testOrderManager.getOrder();
+            testOrderManager.newOrder();
+            assertNotSame(testOrder, testOrderManager.getOrder());
         } catch (NoOrderException e) {
             e.printStackTrace();
         }
     }
 
+    //These tests may be useful for AppEnvironment
     @Test
     @Disabled
     public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
         Money changeSum = Money.parse("NZD 0");
         try {
-            testWorker.addItem(testItem, 2);
+            testOrderManager.getOrder().addItem(testItem, 2);
             ArrayList<Money> paymentAmount = new ArrayList<>();
             paymentAmount.add(testItem.calculateMakingCost().multipliedBy(2));
             paymentAmount.add(Money.parse("NZD 4.0"));
-            ArrayList<Money> change = testWorker.confirmPayment(paymentAmount);
+            ArrayList<Money> change = testOrderManager.confirmPayment(paymentAmount);
             for (Money x : change) {
                 changeSum = changeSum.plus(x);
             }
@@ -95,7 +95,7 @@ public class WorkerTest {
     @Disabled
     public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
         try {
-            testWorker.addItem(testItem, 2);
+            testOrderManager.getOrder().addItem(testItem, 2);
         } catch (NoOrderException e) {
             e.printStackTrace();
         }
@@ -103,7 +103,7 @@ public class WorkerTest {
         paymentAmount.add(testItem.calculateMakingCost());
         paymentAmount.add(testItem.calculateMakingCost().dividedBy(2, RoundingMode.DOWN));
         try {
-            testWorker.confirmPayment(paymentAmount);
+            testOrderManager.confirmPayment(paymentAmount);
             fail();
         } catch (InsufficientCashException e) {
 

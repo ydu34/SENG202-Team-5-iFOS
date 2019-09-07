@@ -14,7 +14,7 @@ class MenuItemTest {
 
     private MenuItem testBurger;
     private Order testOrder;
-    private Worker testWorker;
+    private OrderManager testOrderManager;
     private Stock testStock;
 
     @BeforeEach
@@ -30,11 +30,11 @@ class MenuItemTest {
         menuItems.add(testBurger);
         Stock testStock = new Stock(ingredients, ingredientStock);
         History testHistory = new History(transactionHistory);
-        Worker testWorker = new Worker(testOrder, menuItems, testStock, testHistory);
+        OrderManager testOrderManager = new OrderManager(testOrder, menuItems, testStock, testHistory);
     }
 //    @Test
 //    void testAddStock() {
-//        testBurger.addStock(testWorker.getCurrentStock().getIngredientStock()); // getCurrentStock returns Stock yet addStock takes a map as input
+//        testBurger.addStock(testOrderManager.getCurrentStock().getIngredientStock()); // getCurrentStock returns Stock yet addStock takes a map as input
 //
 //    }
 

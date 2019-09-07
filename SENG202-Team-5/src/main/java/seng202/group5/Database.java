@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author Yu Duan
+ * @author Yu Duan
  */
 public class Database {
 
-    private Worker worker;
+    private OrderManager orderManager;
     private Finance finance;
     private Stock stock;
 

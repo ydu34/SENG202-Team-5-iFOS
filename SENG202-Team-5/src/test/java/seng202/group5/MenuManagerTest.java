@@ -12,7 +12,7 @@ public class MenuManagerTest {
     private String burgerRecipeText = "Make a burger!";
     private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", 10.30);
     private HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-    private Worker worker;
+    private OrderManager orderManager;
 
 
 
@@ -41,6 +41,7 @@ public class MenuManagerTest {
     }
 
     @Test
+    @Disabled
     public void testCreateItemNotAddtoMenu() {
         ingredients.put(bun, 2);
         Recipe burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
@@ -49,7 +50,7 @@ public class MenuManagerTest {
         boolean inMenu = false;
         menuManager.createItem(name, burger, cost, "burg123", inMenu);
         assertTrue(menuManager.getItemList().size() == 1);
-        assertTrue(worker.getMenuItems().size() == 0);
+        assertTrue(menuManager.getMenuItems().size() == 0);
     }
 
     @Test
