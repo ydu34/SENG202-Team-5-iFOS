@@ -73,9 +73,6 @@ public class Recipe {
     Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
         name = tempName;
         recipeText = tempRecipeText;
-        veganStatus = false;
-        vegetarianStatus = false;
-        glutenfreeStatus = false;
         ingredientsAmount = tempIngredientsAmount;
         ingredientIDs = tempIngredientIDs;
 
