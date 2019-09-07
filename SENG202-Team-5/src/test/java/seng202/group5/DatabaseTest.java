@@ -28,7 +28,7 @@ class DatabaseTest {
 
         Recipe cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
-        MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1");
+        MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1", true);
 
         MenuManager menuManager = new MenuManager();
         menuManager.setItemList(new HashMap<String, MenuItem>());

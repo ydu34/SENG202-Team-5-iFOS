@@ -151,10 +151,6 @@ public class MenuItem {
         return inMenu;
     }
 
-    public void setInMenu(boolean tempInMenu) {
-        inMenu = tempInMenu;
-    }
-
     public String getId() {
         return id;
     }
