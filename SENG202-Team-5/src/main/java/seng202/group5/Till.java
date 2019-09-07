@@ -49,13 +49,12 @@ public class Till {
      */
     public void removeDenomination(Money value, int count) throws InsufficientCashException { //Requires an exception.
         if (denominations.containsKey(value)) {
-            count -= denominations.get(value);
-                if (count < 0) {
-                    throw new InsufficientCashException("Not enough denominations exist.");
-                    // This will only be thrown after the count has been reduced to zero?
-                } else {
-                    denominations.put(value, count);
-                }
+            if (denominations.get(value) < count) {
+                throw new InsufficientCashException("Not enough denominations exist.");
+            } else {
+                count -= denominations.get(value);
+                denominations.put(value, count);
+            }
         }
     }
 
