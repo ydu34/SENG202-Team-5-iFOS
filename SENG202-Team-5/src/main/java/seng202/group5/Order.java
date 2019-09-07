@@ -88,7 +88,9 @@ public class Order {
      * @param quantity The quantity of the item to add to the order
      */
     public void addItem(MenuItem item, int quantity) {
-
+        if (quantity != 0) {
+            orderItems.put(item, quantity);
+        }
     }
 
     /**
@@ -99,7 +101,12 @@ public class Order {
      * @return The boolean success of the removal.
      */
     public boolean removeItem(MenuItem item) {
-        return false;
+        if (orderItems.containsKey(item)) {
+            orderItems.remove(item);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -111,7 +118,12 @@ public class Order {
      * @return The boolean success of the quantity update.
      */
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
-        return false;
+        if (orderItems.containsKey(item)) {
+            orderItems.replace(item, quantity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
