@@ -55,9 +55,8 @@ public class MenuItem {
      * The number of the non gluten-free ingredients
      **/
     private boolean glutenfree;
-    /**
-     * The IngredientList will contain all the ingredients used in a particular recipe
-     */
+
+     MenuItem(){}
 
      /**
      * @param someItemName is the name of an item on the menu
@@ -87,9 +86,6 @@ public class MenuItem {
         inMenu = false;
         someIngredient = randomIngredient;
         amount = someAmount;
-        this.vegan = recipe.isVegan();
-        this.vegeterian = recipe.isVegetarian();
-        this.glutenfree = recipe.isGlutenFree();
 
     }
 
@@ -103,8 +99,7 @@ public class MenuItem {
 
     /**
      * This method calls the removeIngredient method in the Recipe class which takes the ingredient object and the amount as the input
-     * and modifies the ingredientsAmount hash map accordingly.This method is only called when a particular ingredient has to be fully
-     * omitted from the recipe.
+     * and modifies the ingredientsAmount hash map accordingly.
      */
     public void removeStock() {
         recipe.removeIngredient(someIngredient, amount);
@@ -162,31 +157,6 @@ public class MenuItem {
         return recipe;
     }
 
-    public Ingredient getSomeIngredient() { return someIngredient; }
-
-    public boolean isVegan() {
-        return vegan;
-    }
-
-    public void setVegan(boolean vegan) {
-        this.vegan = vegan;
-    }
-
-    public boolean isVegeterian() {
-        return vegeterian;
-    }
-
-    public void setVegeterian(boolean vegeterian) {
-        this.vegeterian = vegeterian;
-    }
-
-    public boolean isGlutenfree() {
-        return glutenfree;
-    }
-
-    public void setGlutenfree(boolean glutenfree) {
-        this.glutenfree = glutenfree;
-    }
 }
 
 

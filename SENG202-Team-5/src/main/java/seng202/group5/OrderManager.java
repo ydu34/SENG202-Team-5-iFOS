@@ -35,21 +35,29 @@ public class OrderManager {
      */
     private History currentHistory;
 
-
     /**
-     * Creates a new worker class from the given database
+     * Creates a new OrderManager with the given order
+     *
+     * @param tempOrder   The order to create the manager with
+     * @param tempStock   The stock to create the manager with
+     * @param tempHistory The history to create the manager with
      */
-    public OrderManager(Database tempDatabase) {
-        currentStock = new Stock();
-        this.newOrder();
-        currentHistory = new History(new HashMap<>());
-
-    }
-
-    public OrderManager(Order tempOrder, ArrayList<MenuItem> tempMenuItems, Stock tempStock, History tempHistory) {
+    public OrderManager(Order tempOrder, Stock tempStock, History tempHistory) {
         currentOrder = tempOrder;
         currentStock = tempStock;
         currentHistory = tempHistory;
+    }
+
+    /**
+     * Creates a new OrderManager
+     *
+     * @param tempStock   The stock to create the manager with
+     * @param tempHistory The history to create the manager with
+     */
+    public OrderManager(Stock tempStock, History tempHistory) {
+        currentStock = tempStock;
+        currentHistory = tempHistory;
+        newOrder();
     }
 
     //    /**
@@ -144,7 +152,20 @@ public class OrderManager {
         return currentStock;
     }
 
+    /**
+     * Sets the current stock to a new stock
+     *
+     * @param newStock The new stock
+     */
+    public void setStock(Stock newStock) {
+        currentStock = newStock;
+    }
 
+    /**
+     * Gets the history of orders processed by this order manager
+     *
+     * @return The history of orders
+     */
     public History getHistory() {
         return currentHistory;
     }

@@ -32,17 +32,17 @@ public class Stepdefs {
     public void Before() {
         manager = new MenuManager();
         burgerCost = 0.00;
-        burgerRecipe = manager.createRecipe("burgerRecipe", new HashMap<>() , "Text");
+        burgerRecipe = manager.createRecipe("burgerRecipe", new HashMap<>(), "Text");
         stock = new Stock();
         stock.addNewIngredient(buns);
         error = false;
-//        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
-//        burger = manager.getItemList().get("testId");
+        //        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
+        //        burger = manager.getItemList().get("testId");
     }
-//    @Given("Order exists")
-//    public void Order_exists() {
-//        order = new Order();
-//    }
+    //    @Given("Order exists")
+    //    public void Order_exists() {
+    //        order = new Order();
+    //    }
 
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {
@@ -64,7 +64,7 @@ public class Stepdefs {
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(double arg0) {
         manager.removeItem("testId");
-        manager.createItem("Burger", burgerRecipe, arg0-1.00,"testId", true);
+        manager.createItem("Burger", burgerRecipe, arg0 - 1.00, "testId", true);
 
 
         burger = manager.getItemList().get("testId");
@@ -95,8 +95,8 @@ public class Stepdefs {
     @When("Chips are added to order")
     public void chipsAreAddedToOrder() {
 
-        Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>() , "Text");
-        manager.createItem("chip", chipRecipe, chipCost-1.00,"chipId", true);
+        Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>(), "Text");
+        manager.createItem("chip", chipRecipe, chipCost - 1.00, "chipId", true);
         chip = manager.getItemList().get("chipId");
     }
 
@@ -133,10 +133,11 @@ public class Stepdefs {
     @Then("Burger in the order contains {int} buns")
     public void burgerInTheOrderContainsBuns(int arg0) {
         System.out.println();
-        Boolean pass = false;
+        boolean pass = false;
         for (MenuItem item : order.getOrderItems().keySet()) {
-            if (item.getId() == "testID" && item.getRecipe().getIngredientIDs().containsKey("TestBun")) {
+            if (item.getId().equals("testID") && item.getRecipe().getIngredientsAmount().containsKey(buns)) {
                 pass = true;
+                break;
             }
         }
         assertTrue(pass);
@@ -149,5 +150,6 @@ public class Stepdefs {
 
 
     @When("Order is viewed")
-    public void orderIsViewed() {}
+    public void orderIsViewed() {
+    }
 }

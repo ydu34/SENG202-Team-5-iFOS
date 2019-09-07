@@ -4,12 +4,14 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * The Recipe class records all the recipes along with the steps that are stored in the database.
  *
- * @author Shivin Gaba, Yu Duan
+ * @author Shivin Gaba, Yu Duan, Daniel Harris
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -36,48 +38,36 @@ public class Recipe {
     @XmlTransient
     private HashMap<Ingredient, Integer> ingredientsAmount;
 
+    //TODO is this XmlTransient?
     /**
-     * The number of the non vegan ingredients
-     **/
-    @XmlTransient
-    private boolean veganStatus;
+     * A HashSet to store dietary information about the recipe
+     */
+    private HashSet<DietEnum> dietaryInformation;
 
-    /**
-     * The number of the non vegetarian ingredients
-     **/
-    @XmlTransient
-    private boolean vegetarianStatus;
+    Recipe() {
+    }
 
-    /**
-     * The number of the non gluten-free ingredients
-     **/
-    @XmlTransient
-    private boolean glutenfreeStatus;
-
-    Recipe()
-    {}
     /**
      * The IngredientList will contain all the ingredients used in a particular recipe
      */
     Recipe(String tempName, String tempRecipeText) {
         name = tempName;
         recipeText = tempRecipeText;
-        veganStatus = true;
-        vegetarianStatus = true;
-        glutenfreeStatus = true;
-        ingredientsAmount = new HashMap<Ingredient, Integer>();
-        ingredientIDs = new HashMap<String, Integer>();
+        dietaryInformation = new HashSet<>();
+        dietaryInformation.addAll(Arrays.asList(DietEnum.values()));
+        ingredientsAmount = new HashMap<>();
+        ingredientIDs = new HashMap<>();
+
     }
 
 
     Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
         name = tempName;
         recipeText = tempRecipeText;
-        veganStatus = false;
-        vegetarianStatus = false;
-        glutenfreeStatus = false;
+        dietaryInformation = new HashSet<>();
+        dietaryInformation.addAll(Arrays.asList(DietEnum.values()));
         ingredientsAmount = tempIngredientsAmount;
-        ingredientIDs = new HashMap<String, Integer>();
+        ingredientIDs = new HashMap<>();
     }
 
     Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
@@ -99,50 +89,25 @@ public class Recipe {
      */
     public void addIngredient(Ingredient someIngredient, int quantity) {
 
-        Integer amount = ingredientsAmount.get(someIngredient);
-        if (amount == null) {
-            ingredientsAmount.put(someIngredient, quantity);
-        } else {
-            ingredientsAmount.put(someIngredient, amount + quantity);
-        }
-        if (!someIngredient.getVegan()) {
-            veganStatus = false;
-            System.out.println("Recipe is not vegan anymore");
-        }
-        if (!someIngredient.getVegetarian()) {
-            vegetarianStatus = false;
-            System.out.println("Recipe is not vegetarian anymore");
-        }
-        if (!someIngredient.getGlutenFree()) {
-            glutenfreeStatus = false;
-            System.out.println("Recipe has Gluten in it");
-        }
+        ingredientsAmount.merge(someIngredient, quantity, Integer::sum);
+        dietaryInformation.retainAll(someIngredient.getDietInfo());
     }
 
     /**
-     * This function totally removes the specified ingredient form the recipe and returns the boolean accordingly.
+     * This function removes the specified ingredient from the recipe and returns the boolean accordingly.
      *
      * @param someIngredient ingredient that needs to be removed
+     * @param quantity the quantity of the ingredient to remove
      * @return True if the removal of the ingredient was successful, else returns false
      */
     public boolean removeIngredient(Ingredient someIngredient, int quantity) {
         boolean removed = false;
 
         if (ingredientsAmount.containsKey(someIngredient)) {
-            ingredientsAmount.remove(someIngredient);
-            for (int i = 0; i < ingredientsAmount.size(); i++) {
-                boolean gf = someIngredient.getGlutenFree();
-                boolean vegan = someIngredient.getVegan();
-                boolean vegetarian = someIngredient.getVegetarian();
-                if (!gf) {
-                    glutenfreeStatus = false;
-                }
-                if (!vegan) {
-                    veganStatus = false;
-                }
-                if (!vegetarian) {
-                    vegetarianStatus = false;
-                }
+            if (quantity >= ingredientsAmount.get(someIngredient)) {
+                removeIngredient(someIngredient);
+            } else {
+                ingredientsAmount.replace(someIngredient, ingredientsAmount.get(someIngredient) - quantity);
             }
             removed = true;
         }
@@ -150,11 +115,41 @@ public class Recipe {
     }
 
     /**
+     * Completely removes an ingredient from the recipe
+     *
+     * @param someIngredient The ingredient to remove
+     * @return Whether or not the ingredient was removed
+     */
+    public boolean removeIngredient(Ingredient someIngredient) {
+        if (ingredientsAmount.containsKey(someIngredient)) {
+            ingredientsAmount.remove(someIngredient);
+
+            // This section checks if the dietary information can be changed
+            for (DietEnum dietType : DietEnum.values()) {
+                boolean isOfType = dietaryInformation.contains(dietType);
+                if (!isOfType && !someIngredient.getDietInfo().contains(dietType)) {
+                    isOfType = true;
+                    for (Ingredient ingredient : ingredientsAmount.keySet()) {
+                        if (!ingredient.getDietInfo().contains(dietType)) {
+                            isOfType = false;
+                            break;
+                        }
+                    }
+                    if (isOfType) dietaryInformation.add(dietType);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * This function edits the quantity of the specified ingredient and returns the boolean accordingly.
      *
      * @param someIngredient ingredient whose quantity needs to be edited
      * @param quantity       amount by which the quantity needs to be edited
-     * @return true if the editing the quantity of that ingredient was success else returns false
+     * @return true if the editing the quantity of that ingredient was successful else returns false
      */
     public boolean editRecipe(Ingredient someIngredient, int quantity) {
         boolean edited = false;
@@ -168,36 +163,6 @@ public class Recipe {
         return edited;
     }
 
-
-    /**
-     * This method checks if the nonVeganIngredient ingredient parameter is 0 or 1.
-     *
-     * @return True if the recipe is vegan else False
-     */
-    public boolean isVegan() {
-        return veganStatus;
-    }
-
-    /**
-     * This method checks if the nonVegetarianIngredient  ingredient parameter is 0 or 1.
-     *
-     * @return True if the recipe is vegetarian else False
-     */
-    public boolean isVegetarian() {
-        return vegetarianStatus;
-    }
-
-    /**
-     * This method checks if the nonGlutenFreeIngredient ingredient parameter is 0 or 1.
-     *
-     * @return True if the recipe is glutenFree else False
-     */
-    public boolean isGlutenFree() {
-        return glutenfreeStatus;
-    }
-
-
-
     /**
      * Returns the name of the recipe
      * @return Name of the recipe.
@@ -205,12 +170,6 @@ public class Recipe {
 
     public String getName() { return name; }
 
-    /**
-     * @return true when the recipe is vegan
-     */
-    public boolean getVeganStatus() {
-        return veganStatus;
-    }
 
     /**
      * Returns all the step in written in a particular recipe
@@ -234,6 +193,10 @@ public class Recipe {
 
     public void setIngredientsAmount(HashMap<Ingredient, Integer> ingredientsAmount) {
         this.ingredientsAmount = ingredientsAmount;
+    }
+
+    public HashSet<DietEnum> getDietaryInformation() {
+        return dietaryInformation;
     }
 
 }

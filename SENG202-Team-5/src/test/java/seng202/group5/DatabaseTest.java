@@ -22,16 +22,16 @@ class DatabaseTest {
         handler.objectToXml(Stock.class, stock, "stock.xml");
         handler.setStock(stock);
 
-        HashMap<String, Integer> cheeseBurgerIngredients = new HashMap<String, Integer>();
-        cheeseBurgerIngredients.put("1", 10);
-        cheeseBurgerIngredients.put("2",5);
+        HashMap<Ingredient, Integer> cheeseBurgerIngredients = new HashMap<>();
+        cheeseBurgerIngredients.put(ing1, 10);
+        cheeseBurgerIngredients.put(ing2, 5);
 
         Recipe cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
-        cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
+        cheeseBurgerRecipe.setIngredientsAmount(cheeseBurgerIngredients);
         MenuItem cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, 5.0, 8.0, "1", true);
 
         MenuManager menuManager = new MenuManager();
-        menuManager.setItemList(new HashMap<String, MenuItem>());
+        menuManager.setItemList(new HashMap<>());
         menuManager.getItemList().put("1", cheeseBurger);
 
         handler.objectToXml(MenuManager.class, menuManager, "menu.xml");
