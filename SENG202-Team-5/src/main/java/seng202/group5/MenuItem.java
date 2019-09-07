@@ -161,6 +161,22 @@ public class MenuItem {
         return recipe;
     }
 
+    public double getProductionCost() {
+        return productionCost;
+    }
+
+    public void setProductionCost(double productionCost) {
+        this.productionCost = productionCost;
+    }
+
+    public double getSellingCost() {
+        return sellingCost;
+    }
+
+    public void setSellingCost(double sellingCost) {
+        this.sellingCost = sellingCost;
+    }
+
 }
 
 

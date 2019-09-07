@@ -16,6 +16,8 @@ public class Database {
     private OrderManager orderManager;
     private Finance finance;
     private Stock stock;
+    private History history;
+    private MenuManager menuManager;
 
 
     /**Marshals the given object o into a xml file.
@@ -85,12 +87,25 @@ public class Database {
         }
     }
 
+    public void allXmlToObjects() {
+        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml");
+        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml");
+        history = (History) xmlToObject(History.class, history, "history.xml");
+        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager,"menu.xml");
+        handleMenu(menuManager.getMenuItems());
+    }
+
+
     public Stock getStock() {
         return stock;
     }
 
     public void setStock(Stock stock) {
         this.stock = stock;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 }

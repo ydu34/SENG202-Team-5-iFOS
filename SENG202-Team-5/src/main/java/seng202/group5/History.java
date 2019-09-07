@@ -2,15 +2,24 @@ package seng202.group5;
 
 import seng202.group5.exceptions.NoPastOrderException;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class contains the transactionHistory which contains the Order and their IDs.
+ * @Author Yu Duan
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class History {
 
     private HashMap<String, Order> transactionHistory;
+
+    History() {
+        transactionHistory = new HashMap<>();
+    }
 
     public History(HashMap<String, Order> tempTransactionHistory) {
         transactionHistory = tempTransactionHistory;

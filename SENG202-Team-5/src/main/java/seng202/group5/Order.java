@@ -1,5 +1,9 @@
 package seng202.group5;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -8,8 +12,10 @@ import java.util.Set;
  * The Order class keeps track of the current orders items and total cost. Contains methods to modify items to the order
  * and give a discount to the order.
  *
- * @author Michael Morgoun
+ * @author Michael Morgoun, Yu Duan
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Order {
 
     /**
@@ -30,7 +36,12 @@ public class Order {
     /**
      * The Stock to update when creating this order
      */
+    @XmlTransient
     private Stock temporaryStock;
+
+    Order() {
+
+    }
 
 
     /**
