@@ -108,7 +108,6 @@ public class MenuItem {
      * and modifies the ingredientsAmount hash map accordingly.This method is only called when a particular ingredient has to be fully
      * omitted from the recipe.
      */
-
     public void removeStock() {
         recipe.removeIngredient(someIngredient, amount);
     }
@@ -169,6 +168,7 @@ public class MenuItem {
         return recipe;
     }
 
+    public Ingredient getSomeIngredient() { return someIngredient; }
 
     public boolean isVegan() {
         return vegan;
