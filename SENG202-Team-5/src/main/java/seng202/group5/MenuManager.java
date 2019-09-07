@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class MenuManager {
 
-    private Map<String, MenuItem> itemList;
+    private HashMap<String, MenuItem> itemList;
 
     /**
      * Creates a new recipe
@@ -50,12 +50,23 @@ public class MenuManager {
         }
     }
 
-    public Map<String, MenuItem> getItemList() {
+    public HashMap<String, MenuItem> getItemList() {
         return itemList;
     }
 
-    public void setItemList(Map<String, MenuItem> itemList) {
-        this.itemList = itemList;
+    public void setItemList(HashMap<String, MenuItem> tempItemList) {
+        itemList = tempItemList;
+    }
+
+    public HashMap<String, MenuItem> getMenuItems() {
+        HashMap<String, MenuItem> menuItemList = new HashMap<String, MenuItem>();
+        for (String stringKey : itemList.keySet()) {
+            MenuItem item = itemList.get(stringKey);
+            if (item.isInMenu()) {
+                menuItemList.put(stringKey, item);
+            }
+        }
+        return menuItemList;
     }
 
 }
