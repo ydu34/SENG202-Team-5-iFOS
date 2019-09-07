@@ -1,5 +1,7 @@
 package seng202.group5;
 
+import seng202.group5.exceptions.NoPastOrderException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public class History {
     /**
      * Returns an Order object that represents a customer's order.
      *
-     * @param ID a string representing the Order's ID
+     * @param orderID a string representing the Order's ID
      * @return an Order of the specified ID
      * @see Order
      */
@@ -34,17 +36,12 @@ public class History {
     }
 
     /**
-     * @param tempTransactionHistory the transaction history containing all the Orders and their IDs.
+     * @param stringID holds the ID of the order for reference later.
+     * @param tempOrder the object of the order to be stored.
      */
 
-    public void setTransactionHistory(HashMap<String, Order> tempTransactionHistory) {
-        transactionHistory = tempTransactionHistory;
-    }
-    public void addTransactionHistory(HashMap<String, Order> tempTransaction) {
-        for (String stringKey : tempTransaction.keySet()) {
-            Order tempOrder = tempTransaction.get(stringKey);
-            transactionHistory.put(stringKey, tempOrder);
-        }
+    public void setTransactionHistory(String stringID, Order tempOrder) {
+        transactionHistory.put(stringID, tempOrder);
     }
 
 }
