@@ -8,55 +8,51 @@ import java.util.Map;
 
 public class MenuManagerTest {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
-    private MenuManager menuManager;
+    private MenuManager menuManager = new MenuManager();
     private String burgerRecipeText = "Make a burger!";
     private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", 10.30);
     private HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
     private OrderManager orderManager;
+    private Recipe burger;
+    private String name;
+    private double cost;
 
 
 
     @BeforeEach
     public void init() {
         menuManager = new MenuManager();
-        HashMap<Ingredient, Integer> ingredients = new HashMap<>();
+        ingredients.put(bun, 2);
+        name = "Cheese Burger";
+        cost = 11.50;
+        burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
+
     }
 
     @Test
     public void testCreateRecipeReturnsRecipe() {
-
-        ingredients.put(bun, 2);
-        Recipe burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
         assertTrue(burger instanceof Recipe);
     }
 
     @Test
     public void testCreateItemAddtoMenu() {
-        ingredients.put(bun, 2);
-        Recipe burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
-        String name = "cheeseBurger";
-        double cost = 11.50f;
         menuManager.createItem(name, burger, cost, "burg123", true);
-        assertTrue(menuManager.getItemList().size() == 1);
+        assertTrue(menuManager.getMenuItems().size() == 1);
     }
 
     @Test
-    @Disabled
     public void testCreateItemWithoutAddingtoMenu() {
-        ingredients.put(bun, 2);
-        Recipe burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
-        String name = "cheeseBurger";
-        double cost = 11.50f;
-        boolean inMenu = false;
-        menuManager.createItem(name, burger, cost, "burg123", inMenu);
+        menuManager.createItem(name, burger, cost, "burg123", false);
         assertTrue(menuManager.getItemList().size() == 1);
         assertTrue(menuManager.getMenuItems().size() == 0);
     }
 
     @Test
     public void testRemoveItemWithItemInMenu() {
-        String ID = "B1";
-        menuManager.removeItem(ID);
+        String testID = "burg123";
+        menuManager.createItem(name, burger, cost, "burg123", false);
+        assertTrue(menuManager.getItemList().size() == 1);
+        menuManager.removeItem(testID);
         assertTrue(menuManager.getItemList().size() == 0);
     }
 }

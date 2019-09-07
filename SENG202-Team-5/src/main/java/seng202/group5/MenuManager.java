@@ -11,6 +11,17 @@ public class MenuManager {
 
     private HashMap<String, MenuItem> itemList;
 
+
+    public MenuManager() {
+        itemList = new HashMap<String, MenuItem>();
+    }
+
+    public MenuManager(HashMap<String,MenuItem> tempItemList) {
+        for (String stringKey : tempItemList.keySet()) {
+            itemList.put(stringKey, tempItemList.get(stringKey));
+        }
+    }
+
     /**
      * Creates a new recipe
      *
@@ -32,9 +43,8 @@ public class MenuManager {
      * @param inMenu true if the item is to be added into the menu, false if the item will not be added to the menu
      */
     public void createItem(String name, Recipe recipe, double cost, String id, boolean inMenu) {
-        MenuItem newItem = new MenuItem(name, recipe, cost, 1.0, id); // This will need changing
-        newItem.setInMenu(inMenu);
-        itemList.put(newItem.getId(), newItem);
+        MenuItem newItem = new MenuItem(name, recipe, cost, 1.0, id, inMenu);
+        itemList.put(id, newItem);
     }
 
     /**

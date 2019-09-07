@@ -25,7 +25,8 @@ class MenuItemTest {
         HashMap<String, Order> transactionHistory = new HashMap<String, Order>();
         Order testOrder = new Order(orderItems, 0.00, "1234");
         Recipe testRecipe = new Recipe("Cheeseburger", "It's raw.");
-        MenuItem testBurger = new MenuItem("Burger", testRecipe, 3.00, 10.00,  "BRG10");
+        MenuItem testBurger = new MenuItem("Burger", testRecipe, 3.00,
+                10.00,  "BRG10", true);
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(testBurger);
         Stock testStock = new Stock(ingredients, ingredientStock);
