@@ -42,7 +42,7 @@ public class MenuManagerTest {
 
     @Test
     @Disabled
-    public void testCreateItemNotAddtoMenu() {
+    public void testCreateItemWithoutAddingtoMenu() {
         ingredients.put(bun, 2);
         Recipe burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
         String name = "cheeseBurger";
