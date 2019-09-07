@@ -80,4 +80,17 @@ class TillTest {
         assertEquals(Money.parse("NZD 50.00"), testTill.totalValue());
     }
 
+    @Test
+    void testRemovingDenominationsThrowsInsufficientCashException() {
+        Throwable exception = null;
+        Money testMoney30 = Money.parse("NZD 30.00");
+        testTill.addDenomination(testMoney30, 1);
+        try {
+            testTill.removeDenomination(testMoney30, 2);
+        } catch (Throwable e) {
+            exception = e;
+        }
+        assertTrue(exception instanceof InsufficientCashException);
+    }
+
 }
