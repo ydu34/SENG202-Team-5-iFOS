@@ -1,7 +1,9 @@
+package seng202.group5.gui;
+
 /**
  * author @ Shivin Gaba
  */
-package seng202.group5.gui;
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class StockController {
+public class HistoryController {
 
     @FXML
     private Button launchInvoiceButton;
@@ -55,7 +57,7 @@ public class StockController {
 
 
     /**
-     * This method launches the stock screen when clicked on the "Order" button
+     * This method launches the order screen when clicked on the "Order" button
      * @param actionEvent
      */
 
@@ -76,13 +78,13 @@ public class StockController {
 
 
     /**
-     * This method launches the history screen when clicked on the "History" button
+     * This method launches the stock screen when clicked on the "History" button
      * @param actionEvent
      */
 
 
-    public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/history.fxml");
+    public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
+        changeScreen(actionEvent, "/gui/stock.fxml");
     }
 
 }
