@@ -109,8 +109,9 @@ public class Order {
 
         // Finally removing ingredient amounts from stock
         for (String id : listOfKeys) {
-            temporaryStock.getIngredientStock().replace(id, ingredients.get(id));
+            temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id));
         }
+        orderItems.put(item, quantity);
         return true;
     }
 
