@@ -11,6 +11,17 @@ public class MenuManager {
 
     private HashMap<String, MenuItem> itemList;
 
+
+    public MenuManager() {
+        itemList = new HashMap<String, MenuItem>();
+    }
+
+    public MenuManager(HashMap<String,MenuItem> tempItemList) {
+        for (String stringKey : tempItemList.keySet()) {
+            itemList.put(stringKey, tempItemList.get(stringKey));
+        }
+    }
+
     /**
      * Creates a new recipe
      *
