@@ -101,7 +101,6 @@ public class MenuItem {
      * This method calls the removeIngredient method in the Recipe class which takes the ingredient object and the amount as the input
      * and modifies the ingredientsAmount hash map accordingly.
      */
-
     public void removeStock() {
         recipe.removeIngredient(someIngredient, amount);
     }
