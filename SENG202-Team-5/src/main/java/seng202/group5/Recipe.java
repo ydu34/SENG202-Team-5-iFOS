@@ -70,6 +70,16 @@ public class Recipe {
         ingredientIDs = new HashMap<>();
     }
 
+    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
+        name = tempName;
+        recipeText = tempRecipeText;
+        veganStatus = false;
+        vegetarianStatus = false;
+        glutenfreeStatus = false;
+        ingredientsAmount = tempIngredientsAmount;
+        ingredientIDs = tempIngredientIDs;
+
+    }
 
     /**
      * This function adds the specified amount of ingredient that needs to be added in the recipe.
