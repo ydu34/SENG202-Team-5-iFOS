@@ -17,8 +17,6 @@ public class OrderManagerTest {
 
     private Database database;
     private OrderManager testOrderManager;
-    private HashMap<MenuItem, Integer> initialOrderItems;
-    private Order testOrder;
     private MenuItem testItem = new MenuItem(
             "Burger Item",
             new Recipe("Burger",
@@ -35,27 +33,31 @@ public class OrderManagerTest {
     @BeforeEach
     public void init() {
         database = new Database();
-        testOrderManager = new OrderManager(database);
+        Stock stock = new Stock();
+        testOrderManager = new OrderManager(new Order(stock), stock, new History(new HashMap<>()));
 
     }
 
+    // Needs Order to be implemented
     @Test
+    @Disabled
     public void testAddItemAddsItem() {
         try {
-            initialOrderItems = (HashMap<MenuItem, Integer>)
+            HashMap<MenuItem, Integer> initialOrderItems = (HashMap<MenuItem, Integer>)
                     testOrderManager.getOrder().getOrderItems().clone();
             initialOrderItems.put(testItem, 3);
             testOrderManager.getOrder().addItem(testItem, 3);
             assertEquals(initialOrderItems, testOrderManager.getOrder().getOrderItems());
         } catch (NoOrderException e) {
             e.printStackTrace();
+            fail();
         }
     }
 
     @Test
     public void testNewOrderReplacesOrder() {
         try {
-            testOrder = testOrderManager.getOrder();
+            Order testOrder = testOrderManager.getOrder();
             testOrderManager.newOrder();
             assertNotSame(testOrder, testOrderManager.getOrder());
             testOrder = testOrderManager.getOrder();
@@ -64,6 +66,37 @@ public class OrderManagerTest {
         } catch (NoOrderException e) {
             e.printStackTrace();
         }
+    }
+
+    // This needs Order to be implemented
+    @Test
+    @Disabled
+    public void testPrintReceipt() {
+        try {
+            testOrderManager.getOrder().addItem(testItem, 3);
+            assertEquals("3 Burger Item(s) - $0.00\nTotal cost - $0.00", testOrderManager.printReceipt());
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    public void testStockSetCorrectly() {
+        Stock stock = new Stock();
+        testOrderManager = new OrderManager(new Order(stock), stock, new History(new HashMap<>()));
+        assertEquals(stock, testOrderManager.getStock());
+        stock = new Stock();
+        testOrderManager.setStock(stock);
+        assertEquals(stock, testOrderManager.getStock());
+    }
+
+    @Test
+    public void testHistorySetCorrectly() {
+        Stock stock = new Stock();
+        History history = new History(new HashMap<>());
+        testOrderManager = new OrderManager(new Order(stock), stock, history);
+        assertEquals(history, testOrderManager.getHistory());
     }
 
     //These tests may be useful for AppEnvironment
@@ -76,16 +109,16 @@ public class OrderManagerTest {
             ArrayList<Money> paymentAmount = new ArrayList<>();
             paymentAmount.add(testItem.calculateMakingCost().multipliedBy(2));
             paymentAmount.add(Money.parse("NZD 4.0"));
-            ArrayList<Money> change = testOrderManager.confirmPayment(paymentAmount);
+            ArrayList<Money> change = new ArrayList<>();//testOrderManager.confirmPayment(paymentAmount);
             for (Money x : change) {
                 changeSum = changeSum.plus(x);
             }
         } catch (NoOrderException e) {
             e.printStackTrace();
             fail();
-        } catch (InsufficientCashException e) {
-            e.printStackTrace();
-            fail();
+//        } catch (InsufficientCashException e) {
+//            e.printStackTrace();
+//            fail();
         }
 
         assertTrue(changeSum.isEqual(Money.parse("NZD 4")));
@@ -102,11 +135,12 @@ public class OrderManagerTest {
         ArrayList<Money> paymentAmount = new ArrayList<>();
         paymentAmount.add(testItem.calculateMakingCost());
         paymentAmount.add(testItem.calculateMakingCost().dividedBy(2, RoundingMode.DOWN));
-        try {
-            testOrderManager.confirmPayment(paymentAmount);
-            fail();
-        } catch (InsufficientCashException e) {
-
-        }
+//        try {
+//            testOrderManager.confirmPayment(paymentAmount);
+//            fail();
+//        } catch (InsufficientCashException e) {
+//
+//        }
+        fail();
     }
 }
