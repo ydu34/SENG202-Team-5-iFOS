@@ -61,11 +61,11 @@ public class Recipe {
     }
 
 
-   public Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
+    public Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
         name = tempName;
         recipeText = tempRecipeText;
         dietaryInformation = new HashSet<>();
-        dietaryInformation.addAll(Arrays.asList(DietEnum.values()));
+        for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
         ingredientsAmount = tempIngredientsAmount;
         ingredientIDs = new HashMap<>();
     }
@@ -74,6 +74,9 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         ingredientsAmount = tempIngredientsAmount;
+
+        dietaryInformation = new HashSet<>();
+        for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
         ingredientIDs = tempIngredientIDs;
 
     }
@@ -123,22 +126,32 @@ public class Recipe {
 
             // This section checks if the dietary information can be changed
             for (DietEnum dietType : DietEnum.values()) {
-                boolean isOfType = dietaryInformation.contains(dietType);
-                if (!isOfType && !someIngredient.getDietInfo().contains(dietType)) {
-                    isOfType = true;
-                    for (Ingredient ingredient : ingredientsAmount.keySet()) {
-                        if (!ingredient.getDietInfo().contains(dietType)) {
-                            isOfType = false;
-                            break;
-                        }
-                    }
-                    if (isOfType) dietaryInformation.add(dietType);
+                if (!dietaryInformation.contains(dietType) &&
+                        !someIngredient.getDietInfo().contains(dietType)) {
+                    checkDietaryInfo(dietType);
                 }
             }
             return true;
         } else {
             return false;
         }
+    }
+
+
+    /**
+     * Checks if this recipe satisfies one of the dietary types, and updates the dietary info accordingly
+     *
+     * @param typeToCheck the dietary type to check
+     */
+    private void checkDietaryInfo(DietEnum typeToCheck) {
+        boolean isOfType = true;
+        for (Ingredient ingredient : ingredientsAmount.keySet()) {
+            if (!ingredient.getDietInfo().contains(typeToCheck)) {
+                isOfType = false;
+                break;
+            }
+        }
+        if (isOfType) dietaryInformation.add(typeToCheck);
     }
 
     /**
