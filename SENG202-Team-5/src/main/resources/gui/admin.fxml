@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AdminController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="737.0" />
   </columnConstraints>
@@ -16,6 +16,7 @@
     <RowConstraints maxHeight="574.0" minHeight="10.0" prefHeight="534.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="226.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
   </rowConstraints>
+
    <children>
       <GridPane GridPane.rowIndex="1">
         <columnConstraints>
@@ -29,10 +30,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="160.0" text="Order" />
-            <Button mnemonicParsing="false" prefHeight="84.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
+            <Button fx:id="launchOrderScreenButton" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="79.0" prefWidth="160.0" text="Order" />
+            <Button fx:id="launchInvoiceButton" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="84.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
+            <Button fx:id="launchStockScreenButton" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="99.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
+            <Button fx:id="launchHistoryScreenButton" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="63.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
             <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
          </children>
       </GridPane>
@@ -48,6 +49,39 @@
                      <rowConstraints>
                         <RowConstraints maxHeight="512.0" minHeight="0.0" prefHeight="499.0" vgrow="SOMETIMES" />
                      </rowConstraints>
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button fx:id="viewHistoryButton" alignment="TOP_LEFT" mnemonicParsing="false" text="View History" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" />
+                                    <DatePicker promptText="Start Date" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="End Date" />
+                                    <DatePicker promptText="End Date" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </TextFlow>
+                     </children>
                   </GridPane>
             </content>
           </Tab>

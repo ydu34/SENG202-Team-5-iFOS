@@ -67,7 +67,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Select item " GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                        <Button fx:id="launchSelectionScreenButton" mnemonicParsing="false" onAction="#launchSelectionScreen" prefHeight="50.0" prefWidth="100.0" text="Select item " GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -77,7 +77,11 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ListView prefHeight="368.0" prefWidth="190.0" GridPane.rowIndex="1" />
+                        <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                           <children>
+                              <Text fx:id="ingredientText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </TextFlow>
                      </children>
                   </GridPane>
                   <GridPane>
@@ -164,7 +168,11 @@
                                 <tabs>
                                   <Tab text="Main">
                                     <content>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Button fx:id="burgerButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="63.0" text="Item_1" />
+                                             </children>
+                                          </AnchorPane>
                                     </content>
                                   </Tab>
                                   <Tab text="Sides">

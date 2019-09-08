@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<menuManager>
+    <itemList>
+        <entry>
+            <key>1</key>
+            <value>
+                <itemName>Cheese Burger</itemName>
+                <recipe>
+                    <name>Cheese Burger</name>
+                    <recipeText>PlaceholderRecipe</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>1</key>
+                            <value>10</value>
+                        </entry>
+                        <entry>
+                            <key>2</key>
+                            <value>5</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                </recipe>
+                <productionCost>5.0</productionCost>
+                <sellingCost>8.0</sellingCost>
+                <id>1</id>
+                <inMenu>true</inMenu>
+                <amount>0</amount>
+                <vegan>false</vegan>
+                <vegeterian>false</vegeterian>
+                <glutenfree>false</glutenfree>
+            </value>
+        </entry>
+    </itemList>
+</menuManager>

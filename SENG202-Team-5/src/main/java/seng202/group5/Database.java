@@ -16,6 +16,8 @@ public class Database {
     private OrderManager orderManager;
     private Finance finance;
     private Stock stock;
+    private History history;
+    private MenuManager menuManager;
 
 
     /**Marshals the given object o into a xml file.
@@ -70,9 +72,29 @@ public class Database {
         return ingredients;
     }
 
-    public void handleMenu() {
 
+    /** Given the hash map containing all the menu items, search through each menu item and get access it's recipe and fill up the ingredientsAmount hash map with ingredient objects using
+     * the getIngredientsFromID method.
+     * @param menuItems Contains the menu items.
+     */
+    public void handleMenu(HashMap<String, MenuItem> menuItems) {
+        for (Map.Entry<String, MenuItem> entry : menuItems.entrySet()) {
+            MenuItem menuItem = entry.getValue();
+            Recipe recipe = menuItem.getRecipe();
+            HashMap<String, Integer> ingredientIDs = menuItem.getRecipe().getIngredientIDs();
+            HashMap<Ingredient, Integer> recipeIngredients = getIngredientsFromID(ingredientIDs);
+            recipe.setIngredientsAmount(recipeIngredients);
+        }
     }
+
+    public void allXmlToObjects() {
+        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml");
+        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml");
+        history = (History) xmlToObject(History.class, history, "history.xml");
+        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager,"menu.xml");
+        handleMenu(menuManager.getMenuItems());
+    }
+
 
     public Stock getStock() {
         return stock;
@@ -80,6 +102,10 @@ public class Database {
 
     public void setStock(Stock stock) {
         this.stock = stock;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 }

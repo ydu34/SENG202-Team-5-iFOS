@@ -57,7 +57,7 @@ public class Ingredient {
         price = tempPrice;
     }
 
-    Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice, HashSet<DietEnum> dietInfo) {
+    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice, HashSet<DietEnum> dietInfo) {
 
         name = tempName;
         unit = tempUnit;

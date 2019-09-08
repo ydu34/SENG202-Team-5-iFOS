@@ -2,6 +2,9 @@ package seng202.group5;
 
 import org.joda.money.Money;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +14,8 @@ import java.util.Map;
  *
  * @author Shivin Gaba, James Kwok
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MenuItem {
 
     /**
@@ -56,8 +61,8 @@ public class MenuItem {
      **/
     private boolean glutenfree;
 
-     MenuItem(){}
 
+    MenuItem (){}
      /**
      * @param someItemName is the name of an item on the menu
      * @param someRecipe   is the recipe for a an item on the menu
@@ -65,7 +70,6 @@ public class MenuItem {
      * @param markupCost   is the final selling cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
      */
-
     MenuItem(String someItemName, Recipe someRecipe, double makingCost,
              double markupCost, String uniqueId, boolean someInMenu) {
         itemName = someItemName;
@@ -155,6 +159,22 @@ public class MenuItem {
 
     public Recipe getRecipe() {
         return recipe;
+    }
+
+    public double getProductionCost() {
+        return productionCost;
+    }
+
+    public void setProductionCost(double productionCost) {
+        this.productionCost = productionCost;
+    }
+
+    public double getSellingCost() {
+        return sellingCost;
+    }
+
+    public void setSellingCost(double sellingCost) {
+        this.sellingCost = sellingCost;
     }
 
 }

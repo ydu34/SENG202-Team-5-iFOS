@@ -50,7 +50,7 @@ public class Recipe {
     /**
      * The IngredientList will contain all the ingredients used in a particular recipe
      */
-    Recipe(String tempName, String tempRecipeText) {
+    public Recipe(String tempName, String tempRecipeText) {
         name = tempName;
         recipeText = tempRecipeText;
         dietaryInformation = new HashSet<>();
@@ -61,7 +61,7 @@ public class Recipe {
     }
 
 
-    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
+   public Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount) {
         name = tempName;
         recipeText = tempRecipeText;
         dietaryInformation = new HashSet<>();
@@ -70,6 +70,13 @@ public class Recipe {
         ingredientIDs = new HashMap<>();
     }
 
+    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
+        name = tempName;
+        recipeText = tempRecipeText;
+        ingredientsAmount = tempIngredientsAmount;
+        ingredientIDs = tempIngredientIDs;
+
+    }
 
     /**
      * This function adds the specified amount of ingredient that needs to be added in the recipe.
