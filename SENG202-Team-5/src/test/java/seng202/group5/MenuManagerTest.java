@@ -13,7 +13,6 @@ public class MenuManagerTest {
     private String burgerRecipeText = "Make a burger!";
     private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", Money.parse("NZD 10.30"));
     private HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-    private OrderManager orderManager;
     private Recipe burger;
     private String name;
     private Money cost;
@@ -27,7 +26,15 @@ public class MenuManagerTest {
         name = "Cheese Burger";
         cost = Money.parse("NZD 11.50");
         burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
-
+    }
+    @Test
+    public void testCreateMenuManagerWithExistingMenuItems() {
+        MenuItem item = new MenuItem("Hamburger", burger, cost,
+                "burg124", true);
+        HashMap<String, MenuItem> itemListToBeAdded = new HashMap<String, MenuItem>();
+        itemListToBeAdded.put("1", item);
+        MenuManager newMenuManager = new MenuManager(itemListToBeAdded);
+        assertTrue(newMenuManager.getItemList().size() == 1);
     }
 
     @Test

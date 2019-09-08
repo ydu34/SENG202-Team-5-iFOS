@@ -22,6 +22,7 @@ public class MenuManager {
     }
 
     public MenuManager(HashMap<String, MenuItem> tempItemList) {
+        itemList = new HashMap<String, MenuItem>();
         for (String stringKey : tempItemList.keySet()) {
             itemList.put(stringKey, tempItemList.get(stringKey));
         }
