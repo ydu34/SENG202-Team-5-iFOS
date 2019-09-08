@@ -46,7 +46,7 @@ public class OrderController {
     private Text ingredientText;
 
     @FXML
-    private Button burgerButton;
+    private Button itemButton;
 
     private  String ingredeint;
 

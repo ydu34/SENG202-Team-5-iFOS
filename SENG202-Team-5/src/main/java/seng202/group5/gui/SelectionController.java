@@ -31,6 +31,9 @@ public class SelectionController {
     @FXML
     private Text itemName;
 
+    @FXML
+    private Button closeSelectionScreenButton;
+
     public void changeScreen(ActionEvent event, String scenePath){
 
         Parent sampleScene = null;
@@ -68,5 +71,9 @@ public class SelectionController {
     public void setItemName(){
         System.out.println(recipe.getName());
         itemName.setText(recipe.getName());
+    }
+
+    public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
+        changeScreen(actionEvent, "/gui/order.fxml");
     }
 }
