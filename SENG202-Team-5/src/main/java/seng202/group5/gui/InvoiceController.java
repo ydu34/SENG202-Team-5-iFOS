@@ -108,7 +108,7 @@ public class InvoiceController {
 
     public void setOrder(Order order) {
         this.order = order;
-        totalCost = Money.parse("NZD " + order.getTotalCost());
+        totalCost = order.getTotalCost();
         totalCostDisplay.setText("Total Cost: " + totalCost);
 
     }

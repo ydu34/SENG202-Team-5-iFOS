@@ -1,14 +1,15 @@
 package seng202.group5;
 
 
+import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Unit test for simple AppEnvironment.
  */
@@ -17,7 +18,7 @@ public class RecipeTest {
     HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
         add(DietEnum.GLUTEN_FREE);
     }};
-    Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", 20, ingredientInfo);
+    Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
 
     @Test
     public void testAddIngredient() {
@@ -28,7 +29,7 @@ public class RecipeTest {
             add(DietEnum.VEGETARIAN);
             add(DietEnum.VEGAN);
         }};
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", 20, ingredientInfo);
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 1);
         testRecipe.addIngredient(cheese, 1);
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.GLUTEN_FREE));
@@ -50,7 +51,8 @@ public class RecipeTest {
     public void testEditIngredient() {
         Recipe testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
         testRecipe.addIngredient(chickenPatty, 10);
-        assertTrue(testRecipe.editRecipe(chickenPatty, 5));
+        testRecipe.editRecipe(chickenPatty, 5);
+        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 5);
     }
 
 

@@ -1,9 +1,13 @@
 package seng202.group5;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -26,7 +30,7 @@ public class Order {
     /**
      * The current total cost of the order including the discount
      **/
-    private double totalCost = 0;
+    private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
     /**
      * The unique ID of the order given by the database
@@ -51,7 +55,7 @@ public class Order {
      * @param tempTotalCost  The total cost of an existing order.
      * @param tempID         The unique ID of the order.
      */
-    public Order(HashMap<MenuItem, Integer> tempOrderItems, double tempTotalCost, String tempID) {
+    public Order(HashMap<MenuItem, Integer> tempOrderItems, Money tempTotalCost, String tempID) {
         orderItems = tempOrderItems;
         totalCost = tempTotalCost;
         id = tempID;
@@ -66,7 +70,7 @@ public class Order {
      * @param tempID         The unique ID of the order.
      * @param tempStock      The temporary stock to update when adding/removing items
      */
-    public Order(HashMap<MenuItem, Integer> tempOrderItems, double tempTotalCost, String tempID, Stock tempStock) {
+    public Order(HashMap<MenuItem, Integer> tempOrderItems, Money tempTotalCost, String tempID, Stock tempStock) {
         orderItems = tempOrderItems;
         totalCost = tempTotalCost;
         id = tempID;
@@ -79,7 +83,7 @@ public class Order {
      */
     public Order(Stock tempStock) {
         orderItems = new HashMap<MenuItem, Integer>();
-        totalCost = 0;
+        totalCost = Money.zero(CurrencyUnit.of("NZD"));
         id = "ABC123"; // THIS NEEDS TO BE CHANGED, CURRENTLY HAS DEFAULT VALUE SINCE THERE IS NO ID MAKER YET
         temporaryStock = tempStock.clone();
     }
@@ -91,7 +95,8 @@ public class Order {
      * @param percentage The percentage of the discount.
      */
     public void discount(int percentage) {
-        totalCost = totalCost - (totalCost * percentage / 100);
+        //TODO refactor the class so it applies the discount passively, should possibly store the discount as an attribute
+        totalCost = totalCost.minus(totalCost.multipliedBy(percentage / 100.0, RoundingMode.UP));
     }
 
     /**
@@ -192,7 +197,7 @@ public class Order {
      *
      * @return the totalCost of the order.
      */
-    public double getTotalCost() {
+    public Money getTotalCost() {
         return totalCost;
     }
 

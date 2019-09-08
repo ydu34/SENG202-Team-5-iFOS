@@ -1,5 +1,7 @@
 package seng202.group5;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.junit.jupiter.api.*;
 import seng202.group5.exceptions.NoPastOrderException;
 import java.util.HashMap;
@@ -14,7 +16,7 @@ class HistoryTest {
     void init() {
         HashMap<String, Order> tempTransactionHistory = new HashMap<>();
         history = new History(tempTransactionHistory);
-        double tempTotalCost = 0;
+        Money tempTotalCost = Money.zero(CurrencyUnit.of("NZD"));
         HashMap<MenuItem, Integer> tempOrderItems = new HashMap<MenuItem, Integer>();
         order = new Order(tempOrderItems, tempTotalCost, "1");
         String orderID = "1002";

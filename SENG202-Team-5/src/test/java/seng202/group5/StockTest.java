@@ -1,5 +1,6 @@
 package seng202.group5;
 
+import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +25,12 @@ public class StockTest {
     @Test
     public void testAddIngredientsToStock() {
         // Adding an ingredient with a default quantity
-        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", (float) 10.0);
+        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient);
         assertFalse(stock.getIngredientStock().isEmpty());
         assertEquals(0, stock.getIngredientStock().get("ABC123"));
         // Adding an ingredient with our own quantity
-        tempIngredient = new Ingredient("Apple", "apples", "Fruit", "Apple", (float) 10.0);
+        tempIngredient = new Ingredient("Apple", "apples", "Fruit", "Apple", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient, 10);
         assertEquals(10, stock.getIngredientStock().get("Apple"));
     }
@@ -37,7 +38,7 @@ public class StockTest {
     @Test
     public void testModifyQuantity() {
         // Starting from the value of 15, modifying it
-        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", (float) 10.0);
+        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient, 15);
 
         assertTrue(stock.modifyQuantity("ABC123", 10));
@@ -47,7 +48,7 @@ public class StockTest {
 
     @Test
     public void testGetIngredientQuantity() {
-        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", (float) 10.0);
+        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient, 15);
 
         assertEquals(15, stock.getIngredientQuantity("ABC123"));
@@ -56,7 +57,7 @@ public class StockTest {
 
     @Test
     public void testGetIngredient() {
-        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", (float) 10.0);
+        Ingredient tempIngredient = new Ingredient("Beef", "Kg", "Meat", "ABC123", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient, 15);
 
         assertEquals(tempIngredient, stock.getIngredientFromID("ABC123"));
@@ -65,7 +66,7 @@ public class StockTest {
 
     @Test
     public void testCloneStock() {
-        Ingredient ing = new Ingredient("Name", "unit", "cate", "ID", 10.0);
+        Ingredient ing = new Ingredient("Name", "unit", "cate", "ID", Money.parse("NZD 10.0"));
         stock.addNewIngredient(ing);
 
         Stock newstock = stock.clone();

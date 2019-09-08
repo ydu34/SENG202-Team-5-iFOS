@@ -1,5 +1,6 @@
 package seng202.group5;
 
+import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class MenuItemTest {
         HashMap<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
         HashMap<String, Integer> ingredientStock = new HashMap<String, Integer>();
         HashMap<String, Order> transactionHistory = new HashMap<String, Order>();
-        Order testOrder = new Order(orderItems, 0.00, "1234");
+        Order testOrder = new Order(orderItems, Money.parse("NZD 0.00"), "1234");
         Recipe testRecipe = new Recipe("Cheeseburger", "It's raw.");
 //        MenuItem testBurger = new MenuItem("Burger", testRecipe, 3.00,
 //                10.00,  "BRG10", true);

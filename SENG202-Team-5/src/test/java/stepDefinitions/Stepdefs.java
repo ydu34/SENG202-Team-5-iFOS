@@ -5,6 +5,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.junit.jupiter.api.Disabled;
 import seng202.group5.*;
 
@@ -18,12 +20,12 @@ public class Stepdefs {
     private Order order;
     private MenuItem burger;
     private Stock stock;
-    private double burgerCost;
-    private double chipCost;
+    private Money burgerCost;
+    private Money chipCost;
     private Recipe burgerRecipe;
     private MenuItem chip;
     private MenuManager manager;
-    private Ingredient buns = new Ingredient("Buns", "Kg", "Bread", "TestBun", 5.00);
+    private Ingredient buns = new Ingredient("Buns", "Kg", "Bread", "TestBun", Money.parse("NZD 5.00"));
     private boolean error;
 
 
@@ -31,7 +33,7 @@ public class Stepdefs {
     @Before
     public void Before() {
         manager = new MenuManager();
-        burgerCost = 0.00;
+        burgerCost = Money.zero(CurrencyUnit.of("NZD"));
         burgerRecipe = manager.createRecipe("burgerRecipe", new HashMap<>(), "Text");
         stock = new Stock();
         stock.addNewIngredient(buns);
@@ -52,7 +54,8 @@ public class Stepdefs {
 
     @Then("Orders total cost is ${double}")
     public void ordersTotalCostIs$(double arg0) {
-        assertEquals(arg0, order.getTotalCost(), 0.10);
+        Money newArg = Money.parse(String.format("NZD %.2d", arg0));
+        assertEquals(newArg, order.getTotalCost());
     }
 
     @Then("Receive error")
@@ -64,7 +67,8 @@ public class Stepdefs {
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(double arg0) {
         manager.removeItem("testId");
-        manager.createItem("Burger", burgerRecipe, arg0 - 1.00, "testId", true);
+        Money newArg = Money.parse(String.format("NZD %.2d", arg0 - 1.00));
+        manager.createItem("Burger", burgerRecipe, newArg, "testId", true);
 
 
         burger = manager.getItemList().get("testId");
@@ -96,13 +100,14 @@ public class Stepdefs {
     public void chipsAreAddedToOrder() {
 
         Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>(), "Text");
-        manager.createItem("chip", chipRecipe, chipCost - 1.00, "chipId", true);
+        manager.createItem("chip", chipRecipe, chipCost.minus(Money.parse("NZD 1.00")), "chipId", true);
         chip = manager.getItemList().get("chipId");
     }
 
     @And("Chips cost ${double}")
     public void chipsCost$(double arg0) {
-        chipCost = arg0;
+        chipCost = Money.parse(String.format("NZD %.2d", arg0));
+        ;
     }
 
     @And("Burger is in order")

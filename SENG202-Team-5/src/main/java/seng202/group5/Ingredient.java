@@ -1,5 +1,7 @@
 package seng202.group5;
 
+import org.joda.money.Money;
+
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,7 +38,7 @@ public class Ingredient {
     /**
      * The price for a single unit of a ingredient
      **/
-    private double price;
+    private Money price;
 
 
     //TODO is this XmlTransient?
@@ -48,16 +50,17 @@ public class Ingredient {
     Ingredient() {
     }
 
-    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice) {
+    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice) {
 
         name = tempName;
         unit = tempUnit;
         category = tempCategory;
         id = tempId;
         price = tempPrice;
+        dietaryInformation = new HashSet<>();
     }
 
-    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, double tempPrice, HashSet<DietEnum> dietInfo) {
+    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice, HashSet<DietEnum> dietInfo) {
 
         name = tempName;
         unit = tempUnit;
@@ -191,7 +194,7 @@ public class Ingredient {
      *
      * @return The cost of this ingredient
      */
-    public double getCost() {
+    public Money getCost() {
         return price;
     }
 

@@ -2,11 +2,13 @@ package seng202.group5;
 
 import junit.framework.TestCase;
 import junit.framework.TestResult;
+import org.joda.money.Money;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions.*;
 
+import java.math.RoundingMode;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,25 +27,25 @@ public class OrderTest {
     @Test
     public void testApplyingDiscount() {
         HashMap<MenuItem, Integer> orderList = new HashMap<MenuItem, Integer>();
-        Double cost = 125.50;
+        Money cost = Money.parse("NZD 125.50");
         order = new Order(orderList, cost, "ABC123");
 
         int percentage = 50;
-        double value = cost * (1 - (percentage / 100.0));
+        Money value = cost.multipliedBy(1 - (percentage / 100.0), RoundingMode.UP);
         order.discount(percentage);
 
-        assertTrue(value == order.getTotalCost());
+        assertEquals(value, order.getTotalCost());
     }
 
     @Test
     public void testAddItem() {
-        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", 10.0);
+        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", Money.parse("NZD 10.0"));
         HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
         ingredients.put(ingredient, 1);
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();
         ingredientIDs.put(ingredient.getId(), 1);
         Recipe recipe = new Recipe("Name", "Text", ingredients, ingredientIDs);
-        MenuItem item = new MenuItem("SomeName", recipe, 10.0, 10.0, "FoodID", true);
+        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true);
 
         HashMap<String, Ingredient> ingredientStock = new HashMap<String, Ingredient>();
         ingredientStock.put(ingredient.getId(), ingredient);
@@ -63,13 +65,13 @@ public class OrderTest {
 
     @Test
     public void testRemoveItem() {
-        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", 10.0);
+        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", Money.parse("NZD 10.0"));
         HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
         ingredients.put(ingredient, 1);
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();
         ingredientIDs.put(ingredient.getId(), 1);
         Recipe recipe = new Recipe("Name", "Text", ingredients, ingredientIDs);
-        MenuItem item = new MenuItem("SomeName", recipe, 10.0, 10.0, "FoodID", true);
+        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true);
 
         HashMap<String, Ingredient> ingredientStock = new HashMap<String, Ingredient>();
         ingredientStock.put(ingredient.getId(), ingredient);

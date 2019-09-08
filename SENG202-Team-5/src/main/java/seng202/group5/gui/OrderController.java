@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import org.joda.money.Money;
 import seng202.group5.DietEnum;
 import seng202.group5.Ingredient;
 import seng202.group5.Recipe;
@@ -61,8 +62,8 @@ public class OrderController {
         HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
         }};
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", 20, ingredientInfo);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", 20, ingredientInfo);
+        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenpatty,1);
         testRecipe.addIngredient(cheese,1);
         for(Map.Entry<Ingredient, Integer> entry :testRecipe.getIngredientsAmount().entrySet())

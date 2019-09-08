@@ -148,16 +148,12 @@ public class Recipe {
      * @param quantity       amount by which the quantity needs to be edited
      * @return true if the editing the quantity of that ingredient was successful else returns false
      */
-    public boolean editRecipe(Ingredient someIngredient, int quantity) {
-        boolean edited = false;
-        Integer amount = ingredientsAmount.get(someIngredient);
-        if (amount != null) {
-            if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
-                ingredientsAmount.put(someIngredient, quantity);
-                edited = true;
-            }
+    public void editRecipe(Ingredient someIngredient, int quantity) {
+        if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
+            ingredientsAmount.put(someIngredient, quantity);
+        } else {
+            addIngredient(someIngredient, quantity);
         }
-        return edited;
     }
 
     /**

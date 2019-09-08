@@ -42,7 +42,7 @@ public class Finance {
      * Refunds a previous order and returns the list of notes to return in descending size order.
      *
      * @param ID the id of the order to refund
-     * @return a list of doubles representing money in descending size order
+     * @return a list of Money representing coins in descending size order
      */
     public ArrayList<Money> refund(String ID) {
         Transaction refundedOrder = transactionHistory.get(ID);
@@ -58,13 +58,13 @@ public class Finance {
      * Saves order to database and returns a list of notes to return as change.
      *
      * @param totalCost   the total cost of the order
-     * @param amountPayed a lost of doubles representing money in the denominations payed
+     * @param amountPayed a list of Money representing the coins payed
      * @param time        the Date and time the order occurred at
-     * @return a list of doubles representing money in descending size order
+     * @return a list of Money representing coins to give as change in descending size order
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
     public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, int time) throws InsufficientCashException {
-        // the time probably needs to be a long instead
+        //TODO the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
         DateTime date =  new DateTime(DateTimeZone.UTC);
@@ -89,7 +89,7 @@ public class Finance {
      *
      * @param startDate the first date to search from
      * @param endDate   the last date to search to
-     * @return a list of doubles representing  total profits, average profits, and other things
+     * @return a list of Money representing total profits, average profits, and other things
      */
     public ArrayList<Money> totalCalculator(DateTime startDate, DateTime endDate) {
         Money total = Money.parse("NZD 0");

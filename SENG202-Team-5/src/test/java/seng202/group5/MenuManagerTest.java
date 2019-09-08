@@ -1,5 +1,6 @@
 package seng202.group5;
 
+import org.joda.money.Money;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,12 +11,12 @@ public class MenuManagerTest {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
     private MenuManager menuManager = new MenuManager();
     private String burgerRecipeText = "Make a burger!";
-    private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", 10.30);
+    private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", Money.parse("NZD 10.30"));
     private HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
     private OrderManager orderManager;
     private Recipe burger;
     private String name;
-    private double cost;
+    private Money cost;
 
 
 
@@ -24,7 +25,7 @@ public class MenuManagerTest {
         menuManager = new MenuManager();
         ingredients.put(bun, 2);
         name = "Cheese Burger";
-        cost = 11.50;
+        cost = Money.parse("NZD 11.50");
         burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
 
     }

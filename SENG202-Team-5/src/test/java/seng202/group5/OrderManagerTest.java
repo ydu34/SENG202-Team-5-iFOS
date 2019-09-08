@@ -22,11 +22,10 @@ public class OrderManagerTest {
             new Recipe("Burger",
                        "Add items to burger",
                        new HashMap<>(){{
-                           put(new Ingredient("Bun", "buns", "Bread", "ARZ4O2", 1.2), 2);
-                           put(new Ingredient("Patty", "patties", "Meat", "5ES240", 3.4), 1);
+                           put(new Ingredient("Bun", "buns", "Bread", "ARZ4O2", Money.parse("NZD 1.2")), 2);
+                           put(new Ingredient("Patty", "patties", "Meat", "5ES240", Money.parse("NZD 3.4")), 1);
                        }}),
-            5.80,
-            0.00,
+            Money.parse("NZD 5.80"),
             "14328",
             true
     );
