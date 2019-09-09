@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AddIngredientController {
+public class AddExtraIngredientController {
 
     @FXML
     private Button launchSelectionScreenButton;
