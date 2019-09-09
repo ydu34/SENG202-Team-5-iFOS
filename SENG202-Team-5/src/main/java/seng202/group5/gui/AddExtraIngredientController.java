@@ -17,22 +17,32 @@ public class AddExtraIngredientController {
     private Button launchSelectionScreenButton;
 
 
-    public void changeScreen(ActionEvent event, String scenePath){
-        Parent sampleScene = null;
+    public void changeScreen(ActionEvent event, String scenePath, String windowTitle){
+        Parent newScene = null;
         try {
 
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
+            newScene = FXMLLoader.load(getClass().getResource(scenePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        oldStage.setScene(new Scene(sampleScene, 821, 628));
+        oldStage.setTitle(windowTitle);
+        oldStage.setScene(new Scene(newScene, 821, 628));
+    }
+
+    /**
+    * Takes Worker and the list of MenuItems and iterates through finding each item
+     * and adds it to the addExtraIngredient.fxml file.
+     */
+    public void initialise() {
+
+
+
     }
 
 
-
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/selection.fxml");
+        changeScreen(actionEvent, "/gui/selection.fxml", "Select an Item");
     }
 
 }

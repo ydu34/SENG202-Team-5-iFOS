@@ -34,7 +34,7 @@ public class SelectionController {
     @FXML
     private Button closeSelectionScreenButton;
 
-    public void changeScreen(ActionEvent event, String scenePath){
+    public void changeScreen(ActionEvent event, String scenePath, String windowTitle){
 
         Parent sampleScene = null;
         try {
@@ -44,6 +44,7 @@ public class SelectionController {
             e.printStackTrace();
         }
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        oldStage.setTitle(windowTitle);
         oldStage.setScene(new Scene(sampleScene, 821, 628));
     }
 
@@ -54,7 +55,7 @@ public class SelectionController {
      * @param actionEvent The action of clicking or pressing the button.
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml", "Modifying Item");
     }
 
     /**
@@ -74,6 +75,6 @@ public class SelectionController {
     }
 
     public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/order.fxml");
+        changeScreen(actionEvent, "/gui/order.fxml", "Order");
     }
 }
