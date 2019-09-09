@@ -46,18 +46,18 @@ public class MenuItem {
     }
 
     /**
-     * @param someItemName is the name of an item on the menu
-     * @param someRecipe   is the recipe for a an item on the menu
-     * @param markupCost   is the cost added to the ingredient cost of the menu item
+     * @param tempItemName is the name of an item on the menu
+     * @param tempRecipe   is the recipe for a an item on the menu
+     * @param tempMarkupCost   is the cost added to the ingredient cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
      */
 
-    MenuItem(String someItemName, Recipe someRecipe, Money markupCost, String uniqueId, boolean someInMenu) {
-        itemName = someItemName;
-        recipe = someRecipe;
-        this.markupCost = markupCost;
+    MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
+        itemName = tempItemName;
+        recipe = tempRecipe;
+        markupCost = tempMarkupCost;
         id = uniqueId;
-        inMenu = someInMenu;
+        inMenu = tempInMenu;
     }
 
 

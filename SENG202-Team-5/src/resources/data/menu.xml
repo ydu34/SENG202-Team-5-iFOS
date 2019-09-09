@@ -18,8 +18,8 @@
                             <value>5</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>VEGAN</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>VEGAN</dietaryInformation>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 </recipe>
                 <markupCost/>
