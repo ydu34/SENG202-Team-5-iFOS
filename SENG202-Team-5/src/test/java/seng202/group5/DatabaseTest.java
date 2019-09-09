@@ -1,6 +1,7 @@
 package seng202.group5;
 
 import org.joda.money.Money;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class DatabaseTest {
         cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
         Ingredient cheese = new Ingredient("Cheese", "Count", "Dairy", "1", Money.parse("NZD 0.10"));
         Ingredient bun = new Ingredient("Bun", "Count", "Bread", "2", Money.parse("NZD 0.50"));
-        Ingredient beefPattile = new Ingredient("Beef Pattie", "Count", "Meat", "3", Money.parse("NZD 1.0"));
+        Ingredient beefPattie = new Ingredient("Beef Pattie", "Count", "Meat", "3", Money.parse("NZD 1.0"));
         Ingredient lettuce = new Ingredient("Lettuce", "Count", "Vegetable", "4", Money.parse("NZD 0.2"));
         Ingredient tomatoSauce = new Ingredient("Tomato Sauce", "ml", "Sauce", "5", Money.parse("NZD 0.1"));
     }
@@ -46,11 +47,8 @@ class DatabaseTest {
         stock.getIngredients().put("1", ing1);
         stock.getIngredients().put("2", ing2);
 
-        handler.objectToXml(Stock.class, stock, "stock.xml");
+        handler.objectToXml(Stock.class, stock, "stockTest.xml");
         handler.setStock(stock);
-
-
-
 
         MenuManager menuManager = new MenuManager();
         menuManager.setItemList(new HashMap<String, MenuItem>());
@@ -71,6 +69,17 @@ class DatabaseTest {
         History history = new History();
         history.getTransactionHistory().put("1", order);
         handler.objectToXml(History.class, history, "history.xml");
+    }
+
+    // Test only works if stockTest.xml exists before running tests.
+    @Test
+    void testStockXmlToObject() {
+        Stock stock = new Stock();
+        stock = (Stock) handler.xmlToObject(Stock.class, stock, "stockTest.xml");
+        Ingredient ing1 = stock.getIngredients().get("1");
+        Ingredient ing2 = stock.getIngredients().get("2");
+        Assertions.assertEquals(ing1.getName(), "Milk");
+        Assertions.assertEquals(ing2.getName(), "Apple");
     }
 
 }
