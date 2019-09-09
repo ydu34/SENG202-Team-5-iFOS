@@ -1,12 +1,7 @@
 package seng202.group5;
 
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,22 +55,6 @@ public class OrderManager {
         newOrder();
     }
 
-    //    /**
-    //     * Adds an item to the current order
-    //     *
-    //     * @param menuItem the item to add to the order
-    //     * @param quantity the quantity of the item to add to the order
-    //     * @throws NoOrderException if there is no current order
-    //     */
-    //    public void addItem(MenuItem menuItem, int quantity) throws NoOrderException {
-    //        if (currentOrder == null) {
-    //            throw new NoOrderException("No Order to add the item to.");
-    //        } else {
-    //            currentOrder.getOrder().addItem(menuItem, quantity);
-    //        }
-    //    }
-    // This is done by using OrderManager.getOrder().addItem()
-
     /**
      * Creates a new order, replacing the previous order if it exists after
      * confirmation
@@ -83,31 +62,6 @@ public class OrderManager {
     public void newOrder() {
         currentOrder = new Order(currentStock);
     }
-
-    //    /**
-    //     * Confirms payment for the current order, sends the order to the history,
-    //     * sends information about the transaction to Finance and retrieves the
-    //     * cash amounts to be given as change
-    //     *
-    //     * @param denominations the cash given to the worker to pay for the item
-    //     * @return the cash to be returned to the customer as change
-    //     * @throws InsufficientCashException if the given cash amount is not enough
-    //     *                                   to pay for the order
-    //     */
-    //    public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
-    //        Money totalPayment = Money.parse("NZD 0");
-    //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
-    //        ArrayList<Money> change = new ArrayList<Money>();
-    //
-    //        currentHistory.getTransactionHistory().put(currentOrder.getID(), currentOrder);
-    //        // Need to implement database. Also, this is based on the system clock,
-    //        // which may be problematic. This part throws the exception
-    //        change = getFinance().pay(Money.of(CurrencyUnit.of("NZD"), currentOrder.getTotalCost()),
-    //                                           denominations,
-    //                                           Instant.now().getEpochSecond());
-    //
-    //        return change;
-    //    }
 
     /**
      * Prints the reciept of the order
