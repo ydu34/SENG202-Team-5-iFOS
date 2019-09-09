@@ -28,7 +28,7 @@
                                 <Button fx:id="launchSelectionScreenButton" layoutY="569.0" mnemonicParsing="false" onAction="#launchSelectionScreen" prefHeight="25.0" prefWidth="80.0" text="&lt;&lt;&lt;&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="741.0" />
                         <TextFlow layoutX="3.0" layoutY="1.0" prefHeight="558.0" prefWidth="814.0" AnchorPane.leftAnchor="5.0">
                            <children>
-                              <Label prefHeight="15.0" prefWidth="149.0" text="Ingredeint">
+                              <Label prefHeight="15.0" prefWidth="149.0" text="Ingredient">
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding>
