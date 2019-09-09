@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AdminController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AdminController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="737.0" />
   </columnConstraints>
@@ -61,24 +67,24 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="viewHistoryButton" alignment="TOP_LEFT" mnemonicParsing="false" text="View History" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Button fx:id="viewHistoryButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#viewHistory" text="View History" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" />
-                                    <DatePicker promptText="Start Date" />
+                                    <DatePicker fx:id="startDate" promptText="Start Date" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="End Date" />
-                                    <DatePicker promptText="End Date" />
+                                    <DatePicker fx:id="endDate" promptText="End Date" />
                                  </children>
                               </VBox>
                            </children>
                         </GridPane>
                         <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="saleSummaryText" strokeType="OUTSIDE" strokeWidth="0.0" />
                            </children>
                         </TextFlow>
                      </children>
