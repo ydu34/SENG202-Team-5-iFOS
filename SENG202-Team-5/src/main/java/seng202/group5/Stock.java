@@ -122,11 +122,9 @@ public class Stock {
         return ingredients.getOrDefault(id, null);
     }
 
-    public void setIngredients(HashMap<String, Ingredient> ingredients) {
+    public void setIngredientsAndStock(HashMap<String, Ingredient> ingredients,
+                                       HashMap<String, Integer> ingredientStock) {
         this.ingredients = ingredients;
-    }
-
-    public void setIngredientStock(HashMap<String, Integer> ingredientStock) {
         this.ingredientStock = ingredientStock;
     }
 
