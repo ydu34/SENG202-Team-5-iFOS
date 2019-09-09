@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stock>
+    <ingredients>
+        <entry>
+            <key>1</key>
+            <value id="1">
+                <category>Liquid</category>
+                <name>Milk</name>
+                <unit>L</unit>
+            </value>
+        </entry>
+        <entry>
+            <key>2</key>
+            <value id="2">
+                <category>Fruit</category>
+                <name>Apple</name>
+                <unit>kg</unit>
+            </value>
+        </entry>
+    </ingredients>
+    <ingredientStock/>
+</stock>
