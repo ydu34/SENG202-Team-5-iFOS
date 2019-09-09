@@ -101,7 +101,9 @@ public class InvoiceController {
 
             }
         } else {
-            changeDisplay.setText("");
+            changeDisplay.setText("There is no order to pay for.");
+            total = Money.parse("NZD 0");
+
         }
 
     }
@@ -117,7 +119,7 @@ public class InvoiceController {
         total = Money.parse("NZD 0");
         payment = new ArrayList<>();
 
-        totalChangeDisplay.setText("Change:132131 <amount>");
+        totalChangeDisplay.setText("Change: <amount>");
         changeDisplay.setText("");
     }
 
@@ -158,7 +160,6 @@ public class InvoiceController {
     @FXML
     private void addTwoDollar(){
         addMoney(200);
-
     }
 
     @FXML

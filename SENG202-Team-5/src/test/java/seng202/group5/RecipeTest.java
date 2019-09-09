@@ -2,6 +2,7 @@ package seng202.group5;
 
 
 import org.joda.money.Money;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,11 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RecipeTest {
 
     HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
-            add(DietEnum.GLUTEN_FREE);
+        add(DietEnum.GLUTEN_FREE);
 
     }};
     Recipe testRecipe = new Recipe("Chicken burger", "Steps to chicken burger");
     Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
+
+    @Before
+    public void setUp() {}
 
 
     @Test
@@ -34,10 +38,10 @@ public class RecipeTest {
         }};
         Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 2);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty),2);
+        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 2);
         testRecipe.addIngredient(chickenPatty, 12);
         testRecipe.addIngredient(cheese, 1);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty),14);
+        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 14);
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.GLUTEN_FREE));
         assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
         assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGAN));
@@ -56,8 +60,8 @@ public class RecipeTest {
 
         testRecipe.addIngredient(chickenPatty, 12);
         testRecipe.removeIngredient(chickenPatty, 3);
-        assertNotEquals(testRecipe.getIngredientsAmount().get(chickenPatty),23);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty),9);
+        assertNotEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 23);
+        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 9);
         testRecipe.removeIngredient(chickenPatty);
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
         testRecipe.addIngredient(chickenPatty, 12);
@@ -81,6 +85,15 @@ public class RecipeTest {
         assertEquals(testRecipe.getIngredientsAmount().get(cheese), 2);
     }
 
+    @Test
+    public void testRecipeConstructors() {
+        HashMap<Ingredient, Integer> ingredientsAmount = new HashMap<>();
+        HashMap<String, Integer> ingredientIDs = new HashMap<>();
+        Recipe testrecipe_2 = new Recipe("Burger", "Making Burger", ingredientsAmount, ingredientIDs);
+        testrecipe_2.addIngredient(chickenPatty, 2);
+        System.out.println(chickenPatty.getDietInfo());
+        assertEquals(testrecipe_2.getIngredientsAmount().get(chickenPatty), 2);
 
+    }
 
 }

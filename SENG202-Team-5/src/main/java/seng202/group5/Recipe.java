@@ -74,7 +74,6 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         ingredientsAmount = tempIngredientsAmount;
-
         dietaryInformation = new HashSet<>();
         for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
         ingredientIDs = tempIngredientIDs;

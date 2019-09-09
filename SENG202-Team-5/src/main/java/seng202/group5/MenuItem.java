@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -41,24 +42,26 @@ public class MenuItem {
     private boolean inMenu;
 
 
-    MenuItem (){}
-     /**
-     * @param someItemName is the name of an item on the menu
-     * @param someRecipe   is the recipe for a an item on the menu
-      * @param markupCost   is the cost added to the ingredient cost of the menu item
+    MenuItem() {
+    }
+
+    /**
+     * @param tempItemName is the name of an item on the menu
+     * @param tempRecipe   is the recipe for a an item on the menu
+     * @param tempMarkupCost   is the cost added to the ingredient cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
      */
 
-     MenuItem(String someItemName, Recipe someRecipe, Money markupCost, String uniqueId, boolean someInMenu) {
-        itemName = someItemName;
-        recipe = someRecipe;
-         this.markupCost = markupCost;
+    MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
+        itemName = tempItemName;
+        recipe = tempRecipe;
+        markupCost = tempMarkupCost;
         id = uniqueId;
-        inMenu = someInMenu;
+        inMenu = tempInMenu;
     }
 
 
-    // addStock, removeStock and editStock can be done through getRecipe
+
 
     /**
      * This method runs a loop over the ingredientAmount hash map and calculates the total cost of making a menu item in NZD
@@ -66,7 +69,7 @@ public class MenuItem {
      * @return the making cost of the recipe in the form of the money object in NZD
      */
     public Money calculateMakingCost() {
-        Money recipeMakingCost = Money.zero(CurrencyUnit.of("NZD"));
+        Money recipeMakingCost = Money.parse("NZD 00.00");
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
@@ -108,6 +111,8 @@ public class MenuItem {
     }
 
 }
+
+
 
 
 
