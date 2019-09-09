@@ -24,3 +24,6 @@ hs_err_pid*
 
 # IntelliJ
 .idea/
+
+# Ignore files generated in target directory
+target/

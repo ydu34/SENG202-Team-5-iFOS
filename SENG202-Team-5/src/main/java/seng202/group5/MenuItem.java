@@ -61,7 +61,7 @@ public class MenuItem {
     }
 
 
-    // addStock, removeStock and editStock can be done through getRecipe
+
 
     /**
      * This method runs a loop over the ingredientAmount hash map and calculates the total cost of making a menu item in NZD
@@ -70,13 +70,11 @@ public class MenuItem {
      */
     public Money calculateMakingCost() {
         Money recipeMakingCost = Money.parse("NZD 00.00");
-        // System.out.println(recipeMakingCost);
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
             Integer amount = eachIngredient.getValue();
             recipeMakingCost = recipeMakingCost.plus(ingredient.getCost().multipliedBy(amount));
-            //  System.out.println(recipeMakingCost);
         }
         return recipeMakingCost;
     }
