@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -41,18 +42,20 @@ public class MenuItem {
     private boolean inMenu;
 
 
-    MenuItem (){}
-     /**
+    MenuItem() {
+    }
+
+    /**
      * @param someItemName is the name of an item on the menu
      * @param someRecipe   is the recipe for a an item on the menu
-      * @param markupCost   is the cost added to the ingredient cost of the menu item
+     * @param markupCost   is the cost added to the ingredient cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
      */
 
-     MenuItem(String someItemName, Recipe someRecipe, Money markupCost, String uniqueId, boolean someInMenu) {
+    MenuItem(String someItemName, Recipe someRecipe, Money markupCost, String uniqueId, boolean someInMenu) {
         itemName = someItemName;
         recipe = someRecipe;
-         this.markupCost = markupCost;
+        this.markupCost = markupCost;
         id = uniqueId;
         inMenu = someInMenu;
     }
@@ -66,12 +69,14 @@ public class MenuItem {
      * @return the making cost of the recipe in the form of the money object in NZD
      */
     public Money calculateMakingCost() {
-        Money recipeMakingCost = Money.zero(CurrencyUnit.of("NZD"));
+        Money recipeMakingCost = Money.parse("NZD 00.00");
+        // System.out.println(recipeMakingCost);
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
             Integer amount = eachIngredient.getValue();
             recipeMakingCost = recipeMakingCost.plus(ingredient.getCost().multipliedBy(amount));
+            //  System.out.println(recipeMakingCost);
         }
         return recipeMakingCost;
     }
@@ -108,6 +113,8 @@ public class MenuItem {
     }
 
 }
+
+
 
 
 
