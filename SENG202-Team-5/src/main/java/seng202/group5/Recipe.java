@@ -65,7 +65,6 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         dietaryInformation = new HashSet<>();
-        dietaryInformation.addAll(Arrays.asList(DietEnum.values()));
         ingredientsAmount = tempIngredientsAmount;
         ingredientIDs = new HashMap<>();
     }
@@ -73,6 +72,7 @@ public class Recipe {
     Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
         name = tempName;
         recipeText = tempRecipeText;
+        dietaryInformation = new HashSet<>();
         ingredientsAmount = tempIngredientsAmount;
         ingredientIDs = tempIngredientIDs;
 
@@ -87,6 +87,7 @@ public class Recipe {
     public void addIngredient(Ingredient someIngredient, int quantity) {
 
         ingredientsAmount.merge(someIngredient, quantity, Integer::sum);
+       // System.out.println(dietaryInformation);
         dietaryInformation.retainAll(someIngredient.getDietInfo());
     }
 
