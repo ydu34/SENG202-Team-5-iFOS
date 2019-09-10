@@ -9,11 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.DietEnum;
 import seng202.group5.Ingredient;
+import seng202.group5.MenuItem;
 import seng202.group5.Recipe;
 
 import java.io.IOException;
@@ -28,7 +30,6 @@ import java.util.Map;
 public class OrderController {
 
     public Recipe testRecipe;
-
 
     @FXML
     private Button launchInvoiceButton;
@@ -47,7 +48,9 @@ public class OrderController {
 
     @FXML
     private Button itemButton;
-
+    private MenuItem item;
+    @FXML
+    private Text totalCostDisplay;
     private String ingredient;
 
     /**
@@ -59,11 +62,12 @@ public class OrderController {
 
         ingredient = "";
         testRecipe = new Recipe("Vege burger", "Steps to make pad thai");
+        item = new MenuItem("Vege BUrger",testRecipe, Money.parse("NZD 5"), "1221", true);
         HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
         }};
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
+        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 10"), ingredientInfo);
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 5"), ingredientInfo);
         testRecipe.addIngredient(chickenpatty, 1);
         testRecipe.addIngredient(cheese, 1);
         for (Map.Entry<Ingredient, Integer> entry : testRecipe.getIngredientsAmount().entrySet()) {
@@ -89,7 +93,7 @@ public class OrderController {
             FXMLLoader selectionLoader = new FXMLLoader(getClass().getResource(scenePath));
             selectionScene = selectionLoader.load();
             SelectionController controller = selectionLoader.getController();
-            controller.setRecipe(testRecipe);
+            controller.setRecipe(item.getRecipe());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -156,12 +160,13 @@ public class OrderController {
 
     /**
      * This method calls the make_object() method and sets the text in the Ingredient panel to the list of ingredient
-     * present in the recipe along with their values.
+     * present in the recipe  and also updates the totalCostDisplay to the selling cost of that menuitem.
      */
     @FXML
     public void getIngredients() {
         make_object();
         ingredientText.setText(ingredient);
+        totalCostDisplay.setText(String.valueOf(item.calculateFinalCost().getAmount()));
     }
 
 
