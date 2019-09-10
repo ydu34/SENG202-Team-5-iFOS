@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -31,68 +32,57 @@
                                     <content>
                                         <GridPane prefHeight="535.0" prefWidth="782.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="223.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="353.0" />
-                                                <ColumnConstraints maxWidth="167.0" minWidth="91.0" prefWidth="91.0" />
-                                                <ColumnConstraints maxWidth="133.0" minWidth="57.0" prefWidth="133.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="398.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="444.0" minWidth="10.0" prefWidth="280.0" />
+                                                <ColumnConstraints maxWidth="404.0" minWidth="0.0" prefWidth="128.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <Text smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Available" textAlignment="CENTER" wrappingWidth="226.791015625" GridPane.columnIndex="1">
+                                                <Text smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Available" textAlignment="CENTER" wrappingWidth="262.791015625" GridPane.columnIndex="1">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Text>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Selected" textAlignment="CENTER" wrappingWidth="171.826171875" GridPane.columnIndex="2">
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient Name" textAlignment="CENTER" wrappingWidth="401.583984375">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
                                                 </Text>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient Name" textAlignment="CENTER" wrappingWidth="227.583984375">
-                                                    <font>
-                                                        <Font size="18.0" />
-                                                    </font>
-                                                </Text>
-                                                <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="3" />
+                                    <ComboBox prefHeight="25.0" prefWidth="81.0" GridPane.columnIndex="2" />
                                             </children>
                                         </GridPane>
                                     </content>
                                 </ScrollPane>
                                 <GridPane prefHeight="27.0" prefWidth="801.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.0" minWidth="10.0" prefWidth="401.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="228.0" />
                               <ColumnConstraints />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Text smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Available" textAlignment="CENTER" wrappingWidth="226.791015625" GridPane.columnIndex="1">
+                                        <Text smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Available" textAlignment="CENTER" wrappingWidth="248.791015625" GridPane.columnIndex="1">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Text>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Selected" textAlignment="CENTER" wrappingWidth="171.826171875" GridPane.columnIndex="2">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Amount" textAlignment="CENTER" wrappingWidth="171.826171875" GridPane.columnIndex="2">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Text>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm" textAlignment="CENTER" wrappingWidth="174.421875" GridPane.columnIndex="3">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </Text>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient Name" textAlignment="CENTER" wrappingWidth="226.583984375">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient Name" textAlignment="CENTER" wrappingWidth="401.583984375">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Text>
                                     </children>
                                 </GridPane>
+                                    <Button layoutX="761.0" layoutY="569.0" mnemonicParsing="false" text="Confirm" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
