@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
@@ -58,26 +59,26 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="39.0" prefWidth="191.0" text="            Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
                         <Button fx:id="launchSelectionScreenButton" mnemonicParsing="false" onAction="#launchSelectionScreen" prefHeight="50.0" prefWidth="100.0" text="Select item " GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                        <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" GridPane.rowIndex="1">
                            <children>
-                              <Text fx:id="ingredientText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="ingredientText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
                            </children>
                         </TextFlow>
-                        <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                        <VBox fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="79.0" prefWidth="186.0" GridPane.rowIndex="2">
                            <children>
-                              <Text fx:id="totalCostDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="250.572265625" />
+                              <Label prefHeight="39.0" prefWidth="191.0" text="            Cost:" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="totalCostDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="185.572265625" />
                            </children>
-                        </TextFlow>
+                        </VBox>
                      </children>
                   </GridPane>
                   <GridPane>
