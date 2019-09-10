@@ -17,6 +17,7 @@ public class Stock {
 
     private HashMap<String, Ingredient> ingredients;
 
+    @XmlElement(name = "ingredientQuantity")
     private HashMap<String, Integer> ingredientStock;
 
     /**

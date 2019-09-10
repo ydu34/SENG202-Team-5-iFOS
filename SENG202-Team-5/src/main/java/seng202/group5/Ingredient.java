@@ -10,9 +10,10 @@ import java.util.HashSet;
  * The Ingredient class records all the base data for each ingredient in the database which include its name, price,
  * category, id and its price.
  *
- * @author Shivin Gaba, Daniel Harris
+ * @author Shivin Gaba, Daniel Harris, Yu Duan
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Ingredient {
 
     /**
@@ -30,10 +31,12 @@ public class Ingredient {
      **/
     private String category;
 
+    @XmlTransient
+    private IDGenerator generator = new IDGenerator();
     /**
      * Unique id used to identify every ingredient in the database
      **/
-    private IDGenerator generator = new IDGenerator();
+    @XmlAttribute
     private String id = generator.newID();
 
     /**
@@ -42,10 +45,10 @@ public class Ingredient {
     private Money price;
 
 
-    //TODO is this XmlTransient?
     /**
      * A HashSet to store dietary information about the recipe
      */
+    @XmlTransient
     private HashSet<DietEnum> dietaryInformation;
 
     Ingredient() {
@@ -75,7 +78,7 @@ public class Ingredient {
     /**
      * Returns the name of the of the ingredient
      **/
-    @XmlElement
+
     public String getName() {
         return name;
     }
@@ -83,7 +86,7 @@ public class Ingredient {
     /**
      * Returns the number of units of the ingredient on hand
      **/
-    @XmlElement
+
     public String getUnit() {
         return unit;
     }
@@ -91,7 +94,7 @@ public class Ingredient {
     /**
      * Returns the category of the ingredient if its a spice, meat or bread.
      **/
-    @XmlElement
+
     public String getCategory() {
         return category;
     }
@@ -99,7 +102,7 @@ public class Ingredient {
     /**
      * Returns the Unique id for every ingredient
      **/
-    @XmlAttribute
+
     public String getId() {
         return id;
     }
