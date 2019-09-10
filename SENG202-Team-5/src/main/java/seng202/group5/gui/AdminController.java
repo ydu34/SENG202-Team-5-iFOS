@@ -15,15 +15,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
-import seng202.group5.AppEnvironment;
 import seng202.group5.Finance;
-import seng202.group5.Order;
-import seng202.group5.exceptions.InsufficientCashException;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -61,8 +57,6 @@ public class AdminController extends GeneralController {
     private Finance finance = new Finance();
 
     private List<File> selectedFiles;
-
-    private AppEnvironment app = new AppEnvironment();
 
 
 
@@ -140,9 +134,10 @@ public class AdminController extends GeneralController {
                 String fileName = selectedFiles.get(i).getName();
                 if (fileName == "stock.xml") {
                     System.out.println(selectedFiles.get(i).getPath());
-                    app.stockXmlToObject(selectedFiles.get(i).getPath());
+                    getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getPath());
                 }
             }
+            clearList();
         } else {
             fileNotificationText.setText("No files selected");
         }
@@ -156,8 +151,8 @@ public class AdminController extends GeneralController {
      * Empties the list of files selected
      */
     public void clearList() {
+        selectedFiles = new ArrayList<>();
         importFilesListView.getItems().clear();
-        selectedFiles.clear();
     }
 
     /**
