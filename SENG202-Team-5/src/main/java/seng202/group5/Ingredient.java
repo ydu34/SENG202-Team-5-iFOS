@@ -33,7 +33,8 @@ public class Ingredient {
     /**
      * Unique id used to identify every ingredient in the database
      **/
-    private String id;
+    private IDGenerator generator = new IDGenerator();
+    private String id = generator.newID();
 
     /**
      * The price for a single unit of a ingredient

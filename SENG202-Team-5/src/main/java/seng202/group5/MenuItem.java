@@ -32,7 +32,8 @@ public class    MenuItem {
     /**
      * The unique id related to every item on the menu
      */
-    private String id;
+    private IDGenerator generator = new IDGenerator();
+    private String id = generator.newID();
     /**
      * Whether or not this item is in the menu
      */

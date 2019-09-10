@@ -35,7 +35,8 @@ public class Order {
     /**
      * The unique ID of the order given by the database
      **/
-    private String id;
+    private IDGenerator generator = new IDGenerator();
+    private String id = generator.newID();
 
     /**
      * The Stock to update when creating this order

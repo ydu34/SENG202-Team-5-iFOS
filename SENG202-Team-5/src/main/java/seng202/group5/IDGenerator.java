@@ -15,8 +15,7 @@ public class IDGenerator {
      * Creates a new ID but incrementing the static variable by 1.
      * @return The new ID as a string.
      */
-    public String createNew() {
+    public String newID() {
         return Integer.toString(id++);
     }
-
 }
