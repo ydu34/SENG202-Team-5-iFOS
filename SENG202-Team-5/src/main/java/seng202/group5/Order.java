@@ -35,7 +35,8 @@ public class Order {
     /**
      * The unique ID of the order given by the database
      **/
-    private String id;
+    private IDGenerator generator = new IDGenerator();
+    private String id = generator.newID();
 
     /**
      * The Stock to update when creating this order
@@ -44,7 +45,6 @@ public class Order {
     private Stock temporaryStock;
 
     Order() {
-
     }
 
 
@@ -173,6 +173,9 @@ public class Order {
      */
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
         if (orderItems.containsKey(item)) {
+            int currentNum = orderItems.get(item);
+            int diff = quantity - currentNum;
+            totalCost.plus(item.getMarkupCost().multipliedBy(diff));
             orderItems.replace(item, quantity);
             return true;
         } else {
