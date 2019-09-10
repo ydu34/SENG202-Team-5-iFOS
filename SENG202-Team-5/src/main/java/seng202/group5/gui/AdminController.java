@@ -27,18 +27,7 @@ import java.util.List;
 /**
  * @Author Yu Duan
  */
-public class AdminController {
-    @FXML
-    private Button launchOrderScreenButton;
-
-    @FXML
-    private Button launchStockScreenButton;
-
-    @FXML
-    private Button launchInvoiceButton;
-
-    @FXML
-    private Button launchHistoryScreenButton;
+public class AdminController extends GeneralController {
 
     @FXML
     private DatePicker startDate;
@@ -69,37 +58,6 @@ public class AdminController {
 
     private Finance finance = new Finance();
 
-
-    public void changeScreen(ActionEvent event, String scenePath){
-        Parent sampleScene = null;
-        try {
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (sampleScene != null) {
-            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            oldStage.setScene(new Scene(sampleScene, 821, 628));
-        }
-
-    }
-
-    public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/order.fxml");
-    }
-
-    public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/stock.fxml");
-    }
-
-    public void launchInvoiceScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/invoice.fxml");
-    }
-
-    public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/history.fxml");
-    }
-
     @FXML
     public void viewHistory() {
         DateTime eDate = DateTime.parse(endDate.getValue().toString());
@@ -111,9 +69,7 @@ public class AdminController {
             saleSummaryText.setText("End date is before start date");
         }
 
-
     }
-
 
     /**
      * The method called when importData button is clicked

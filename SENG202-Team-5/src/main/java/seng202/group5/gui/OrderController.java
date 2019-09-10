@@ -27,21 +27,9 @@ import java.util.Map;
  *
  * @author Shivin Gaba
  */
-public class OrderController {
+public class OrderController extends GeneralController {
 
     public Recipe testRecipe;
-
-    @FXML
-    private Button launchInvoiceButton;
-
-    @FXML
-    private Button launchStockButton;
-
-    @FXML
-    private Button launchAdminButton;
-
-    @FXML
-    private Button launchHistoryButton;
 
     @FXML
     private Text ingredientText;
@@ -100,62 +88,6 @@ public class OrderController {
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         oldStage.setScene(new Scene(selectionScene, 821, 628));
 
-    }
-
-    /**
-     * This method is called when any of the button (invoice, history,stock or admin are clicked on the order the screen)
-     *
-     * @param event
-     * @param scenePath
-     */
-    public void changeScreen(ActionEvent event, String scenePath) {
-        Parent sampleScene = null;
-        try {
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        oldStage.setScene(new Scene(sampleScene, 821, 628));
-    }
-
-    /**
-     * This method launches the invoice screen when clicked on the "Invoice" button
-     *
-     * @param actionEvent
-     */
-    public void launchInvoiceScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/invoice.fxml");
-    }
-
-
-    /**
-     * This method launches the stock screen when clicked on the "Stock" button
-     *
-     * @param actionEvent
-     */
-    public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/stock.fxml");
-    }
-
-
-    /**
-     * This method launches the admin screen when clicked on the "Admin" button
-     *
-     * @param actionEvent
-     */
-    public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/admin.fxml");
-    }
-
-
-    /**
-     * This method launches the history screen when clicked on the "History" button.
-     *
-     * @param actionEvent
-     */
-    public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/history.fxml");
     }
 
     /**
