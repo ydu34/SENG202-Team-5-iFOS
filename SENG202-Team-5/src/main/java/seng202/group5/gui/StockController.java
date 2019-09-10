@@ -84,5 +84,4 @@ public class StockController {
     public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/history.fxml");
     }
-
 }
