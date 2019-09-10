@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -17,7 +22,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -125,12 +130,12 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Vegan">
+                                          <CheckBox fx:id="veganCheck" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Vegan">
                                              <GridPane.margin>
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
                                           </CheckBox>
-                                          <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Gluten Free" GridPane.rowIndex="2">
+                                          <CheckBox fx:id="glutenFree" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Gluten Free" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
@@ -147,14 +152,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button mnemonicParsing="false" text="Confirm">
+                                          <Button fx:id="checkDietryInfo" mnemonicParsing="false" onAction="#showItems" text="Confirm">
                                              <GridPane.margin>
                                                 <Insets left="15.0" />
                                              </GridPane.margin>
                                           </Button>
                                        </children>
                                     </GridPane>
-                                    <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" text="Vegetarian">
+                                    <CheckBox fx:id="vegetarianCheck" mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" text="Vegetarian">
                                        <GridPane.margin>
                                           <Insets left="5.0" />
                                        </GridPane.margin>
