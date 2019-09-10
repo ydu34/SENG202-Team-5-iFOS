@@ -140,7 +140,7 @@ public class Stepdefs {
         System.out.println();
         boolean pass = false;
         for (MenuItem item : order.getOrderItems().keySet()) {
-            if (item.getId().equals("testID") && item.getRecipe().getIngredientsAmount().containsKey(buns)) {
+            if (item.getID().equals("testID") && item.getRecipe().getIngredientsAmount().containsKey(buns)) {
                 pass = true;
                 break;
             }

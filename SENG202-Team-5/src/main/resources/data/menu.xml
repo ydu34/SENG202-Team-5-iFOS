@@ -18,11 +18,12 @@
                             <value>5</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost/>
+                <generator/>
                 <id>1</id>
                 <inMenu>true</inMenu>
             </value>

@@ -100,19 +100,10 @@ public class Ingredient {
      * Returns the Unique id for every ingredient
      **/
     @XmlAttribute
-    public String getId() {
+    public String getID() {
         return id;
     }
 
-
-    /**
-     * This method sets the unique id for the new ingredient added to the stock
-     *
-     * @param someId Id for the new Ingredient added to the stock
-     */
-    public void setId(String someId) {
-        id = someId;
-    }
 
     /**
      * This method sets the name to the ingredient added to the stock

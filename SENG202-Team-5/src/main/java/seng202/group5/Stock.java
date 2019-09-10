@@ -46,12 +46,12 @@ public class Stock {
      * @param quantity   The initial quantity of the ingredient, leave empty if 0.
      */
     public void addNewIngredient(Ingredient ingredient, int quantity) {
-        if (ingredients.containsKey(ingredient.getId())) {
+        if (ingredients.containsKey(ingredient.getID())) {
             return;
         }
 
-        ingredients.put(ingredient.getId(), ingredient);
-        ingredientStock.put(ingredient.getId(), quantity);
+        ingredients.put(ingredient.getID(), ingredient);
+        ingredientStock.put(ingredient.getID(), quantity);
     }
 
 

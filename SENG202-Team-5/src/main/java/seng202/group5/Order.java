@@ -45,7 +45,6 @@ public class Order {
     private Stock temporaryStock;
 
     Order() {
-
     }
 
 
@@ -174,6 +173,9 @@ public class Order {
      */
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
         if (orderItems.containsKey(item)) {
+            int currentNum = orderItems.get(item);
+            int diff = quantity - currentNum;
+            totalCost.plus(item.getMarkupCost().multipliedBy(diff));
             orderItems.replace(item, quantity);
             return true;
         } else {
