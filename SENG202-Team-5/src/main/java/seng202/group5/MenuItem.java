@@ -101,6 +101,8 @@ public class    MenuItem {
         return recipe;
     }
 
+    public Money getMarkupCost() { return markupCost; }
+
     public void setMarkupCost(Money markupCost) {
         this.markupCost = markupCost;
     }

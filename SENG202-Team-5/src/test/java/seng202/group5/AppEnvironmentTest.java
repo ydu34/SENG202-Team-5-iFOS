@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-class DatabaseTest {
-    Database handler;
+class AppEnvironmentTest {
+
+    AppEnvironment handler;
     Recipe cheeseBurgerRecipe;
     HashMap<String, Integer> cheeseBurgerIngredients;
     MenuItem cheeseBurger;
@@ -20,7 +21,7 @@ class DatabaseTest {
 
     @BeforeEach
     void init() {
-        handler= new Database();
+        handler = new AppEnvironment();
         cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerIngredients = new HashMap<>();
         cheeseBurgerIngredients.put("1", 10);
