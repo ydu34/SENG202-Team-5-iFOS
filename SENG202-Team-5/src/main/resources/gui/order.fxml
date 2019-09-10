@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -68,14 +68,14 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Label prefHeight="57.0" prefWidth="70.0" text="   $20" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
                         <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <children>
                               <Text fx:id="ingredientText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </TextFlow>
+                        <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                           <children>
+                              <Text fx:id="totalCostDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="250.572265625" />
                            </children>
                         </TextFlow>
                      </children>

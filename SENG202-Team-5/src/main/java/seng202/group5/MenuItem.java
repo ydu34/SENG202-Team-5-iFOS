@@ -1,14 +1,11 @@
 package seng202.group5;
 
-import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.math.RoundingMode;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -18,7 +15,7 @@ import java.util.Map;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MenuItem {
+public class    MenuItem {
 
     /**
      * Name of the dish/item on the menu.
@@ -52,15 +49,13 @@ public class MenuItem {
      * @param uniqueId     is the unique id related to each menu item
      */
 
-    MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
+    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
         itemName = tempItemName;
         recipe = tempRecipe;
         markupCost = tempMarkupCost;
         id = uniqueId;
         inMenu = tempInMenu;
     }
-
-
 
 
     /**
@@ -105,6 +100,8 @@ public class MenuItem {
     public Recipe getRecipe() {
         return recipe;
     }
+
+    public Money getMarkupCost() { return markupCost; }
 
     public void setMarkupCost(Money markupCost) {
         this.markupCost = markupCost;

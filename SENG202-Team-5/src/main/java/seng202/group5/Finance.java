@@ -1,19 +1,23 @@
 package seng202.group5;
 
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.joda.money.Money;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
-import org.joda.time.LocalDate;
 import seng202.group5.exceptions.InsufficientCashException;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Finance class records order history, refunds past orders and calculates change.
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Finance {
 
     private HashMap<String, Transaction> transactionHistory;
@@ -22,6 +26,7 @@ public class Finance {
      * Temporary id generator for testing purposes.
      */
     private int tempId;
+    
 
     public Finance() {
         tempId = 0;

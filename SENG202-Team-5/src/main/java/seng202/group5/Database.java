@@ -35,7 +35,7 @@ public class Database {
 
             jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
             jaxbMarshaller.marshal(c.cast(o), new File(System.getProperty("user.dir") +
-                                                                 "/src/resources/data/" + fileName));
+                                                                 "/src/main/resources/data/" + fileName));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -49,7 +49,7 @@ public class Database {
             JAXBContext jaxbContext = JAXBContext.newInstance(c);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             o = c.cast(jaxbUnmarshaller.unmarshal( new File(System.getProperty("user.dir") +
-                                                                                                 "/src/resources/data/" + fileName)));
+                                                                                                 "/src/main/resources/data/" + fileName)));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
