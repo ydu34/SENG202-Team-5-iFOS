@@ -1,5 +1,3 @@
-
-
 package seng202.group5.gui;
 
 import javafx.event.ActionEvent;
