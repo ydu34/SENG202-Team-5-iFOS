@@ -100,7 +100,7 @@ public class Ingredient {
     /**
      * Returns the Unique id for every ingredient
      **/
-    public String getId() {
+    public String getID() {
         return id;
     }
 
