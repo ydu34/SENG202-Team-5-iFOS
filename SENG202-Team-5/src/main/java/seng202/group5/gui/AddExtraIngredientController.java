@@ -11,25 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AddExtraIngredientController {
+public class AddExtraIngredientController extends GeneralController {
 
     @FXML
     private Button launchSelectionScreenButton;
-
-
-    public void changeScreen(ActionEvent event, String scenePath){
-        Parent sampleScene = null;
-        try {
-
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        oldStage.setScene(new Scene(sampleScene, 821, 628));
-    }
-
-
 
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/selection.fxml");

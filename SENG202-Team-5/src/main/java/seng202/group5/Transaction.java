@@ -18,7 +18,8 @@ public class Transaction {
     private int time;
     private Money change;
     private Money totalPrice;
-    private String orderNum;
+    private IDGenerator generator = new IDGenerator();
+    private String orderNum = generator.newID();
     private Boolean isRefunded;
 
     Transaction() {}

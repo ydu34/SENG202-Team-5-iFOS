@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -12,11 +17,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -58,26 +64,26 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="39.0" prefWidth="191.0" text="            Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
                         <Button fx:id="launchSelectionScreenButton" mnemonicParsing="false" onAction="#launchSelectionScreen" prefHeight="50.0" prefWidth="100.0" text="Select item " GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Label prefHeight="57.0" prefWidth="70.0" text="   $20" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                        <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" GridPane.rowIndex="1">
                            <children>
-                              <Text fx:id="ingredientText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="ingredientText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
                            </children>
                         </TextFlow>
+                        <VBox fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="79.0" prefWidth="186.0" GridPane.rowIndex="2">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="191.0" text="            Cost:" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="totalCostDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="185.572265625" />
+                           </children>
+                        </VBox>
                      </children>
                   </GridPane>
                   <GridPane>
@@ -124,12 +130,12 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Vegan">
+                                          <CheckBox fx:id="veganCheck" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Vegan">
                                              <GridPane.margin>
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
                                           </CheckBox>
-                                          <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Gluten Free" GridPane.rowIndex="2">
+                                          <CheckBox fx:id="glutenFree" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Gluten Free" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
@@ -146,14 +152,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button mnemonicParsing="false" text="Confirm">
+                                          <Button fx:id="checkDietryInfo" mnemonicParsing="false" onAction="#showItems" text="Confirm">
                                              <GridPane.margin>
                                                 <Insets left="15.0" />
                                              </GridPane.margin>
                                           </Button>
                                        </children>
                                     </GridPane>
-                                    <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" text="Vegetarian">
+                                    <CheckBox fx:id="vegetarianCheck" mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" text="Vegetarian">
                                        <GridPane.margin>
                                           <Insets left="5.0" />
                                        </GridPane.margin>

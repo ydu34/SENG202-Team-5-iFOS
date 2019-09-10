@@ -17,7 +17,7 @@ import seng202.group5.Recipe;
 
 import java.io.IOException;
 
-public class SelectionController {
+public class SelectionController extends GeneralController {
 
 
     Recipe recipe;
@@ -34,18 +34,6 @@ public class SelectionController {
     @FXML
     private Button closeSelectionScreenButton;
 
-    public void changeScreen(ActionEvent event, String scenePath){
-
-        Parent sampleScene = null;
-        try {
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        oldStage.setScene(new Scene(sampleScene, 821, 628));
-    }
 
 
     /**

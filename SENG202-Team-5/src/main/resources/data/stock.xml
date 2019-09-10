@@ -5,7 +5,7 @@
             <key>1</key>
             <value id="1">
                 <name>Milk</name>
-                <unit>L</unit>
+                <unit>Bottles</unit>
                 <category>Liquid</category>
                 <price/>
             </value>
@@ -14,11 +14,20 @@
             <key>2</key>
             <value id="2">
                 <name>Apple</name>
-                <unit>kg</unit>
+                <unit>Count</unit>
                 <category>Fruit</category>
                 <price/>
             </value>
         </entry>
     </ingredients>
-    <ingredientQuantity/>
+    <ingredientQuantity>
+        <entry>
+            <key>1</key>
+            <value>10</value>
+        </entry>
+        <entry>
+            <key>2</key>
+            <value>5</value>
+        </entry>
+    </ingredientQuantity>
 </stock>

@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
+import seng202.group5.AppEnvironment;
 import seng202.group5.Finance;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
@@ -22,23 +23,13 @@ import seng202.group5.exceptions.InsufficientCashException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
  * @Author Yu Duan
  */
-public class AdminController {
-    @FXML
-    private Button launchOrderScreenButton;
-
-    @FXML
-    private Button launchStockScreenButton;
-
-    @FXML
-    private Button launchInvoiceButton;
-
-    @FXML
-    private Button launchHistoryScreenButton;
+public class AdminController extends GeneralController {
 
     @FXML
     private DatePicker startDate;
@@ -68,6 +59,11 @@ public class AdminController {
     private Text fileNotificationText;
 
     private Finance finance = new Finance();
+
+    private List<File> selectedFiles;
+
+    private AppEnvironment app = new AppEnvironment();
+
 
 
     public void changeScreen(ActionEvent event, String scenePath){
@@ -111,9 +107,7 @@ public class AdminController {
             saleSummaryText.setText("End date is before start date");
         }
 
-
     }
-
 
     /**
      * The method called when importData button is clicked
@@ -122,7 +116,7 @@ public class AdminController {
     public void selectFiles() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
+        selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
         if (selectedFiles != null) {
             for (int i = 0; i < selectedFiles.size(); i++) {
@@ -132,6 +126,7 @@ public class AdminController {
             System.out.println("file is not valid");
             fileNotificationText.setText("The selected file is not valid");
         }
+
     }
 
 
@@ -140,6 +135,18 @@ public class AdminController {
      * all the xml files to objects.
      */
     public void importFiles() {
+        if (selectedFiles != null) {
+            for (int i = 0; i < selectedFiles.size(); i++) {
+                String fileName = selectedFiles.get(i).getName();
+                if (fileName == "stock.xml") {
+                    System.out.println(selectedFiles.get(i).getPath());
+                    app.stockXmlToObject(selectedFiles.get(i).getPath());
+                }
+            }
+        } else {
+            fileNotificationText.setText("No files selected");
+        }
+
 
     }
 
@@ -150,6 +157,7 @@ public class AdminController {
      */
     public void clearList() {
         importFilesListView.getItems().clear();
+        selectedFiles.clear();
     }
 
     /**

@@ -18,19 +18,7 @@ import javax.swing.text.html.ListView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class InvoiceController {
-
-    @FXML
-    private Button launchOrderScreenButton;
-
-    @FXML
-    private Button launchStockScreenButton;
-
-    @FXML
-    private Button launchAdminScreenButton;
-
-    @FXML
-    private Button launchHistoryScreenButton;
+public class InvoiceController extends GeneralController {
 
     @FXML
     private Text totalChangeDisplay;
@@ -53,36 +41,6 @@ public class InvoiceController {
     private ArrayList<Money> payment = new ArrayList<>();
 
     private Money total = Money.parse("NZD 0");
-
-    public void changeScreen(ActionEvent event, String scenePath){
-        Parent sampleScene = null;
-        try {
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (sampleScene != null) {
-            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            oldStage.setScene(new Scene(sampleScene, 821, 628));
-        }
-
-    }
-
-    public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/order.fxml");
-    }
-
-    public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/stock.fxml");
-    }
-
-    public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/admin.fxml");
-    }
-
-    public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/history.fxml");
-    }
 
     public void payCash() {
         if (order != null) {
@@ -186,9 +144,5 @@ public class InvoiceController {
     private void addHundredDollar(){
         addMoney(10000);
     }
-
-
-
-
 
 }
