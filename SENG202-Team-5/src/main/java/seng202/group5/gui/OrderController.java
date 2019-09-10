@@ -176,6 +176,4 @@ public class OrderController {
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         selectionScreen(actionEvent, "/gui/selection.fxml");
     }
-
-
 }
