@@ -33,6 +33,7 @@ public class Ingredient {
 
     @XmlTransient
     private IDGenerator generator = new IDGenerator();
+
     /**
      * Unique id used to identify every ingredient in the database
      **/
@@ -49,7 +50,7 @@ public class Ingredient {
      * A HashSet to store dietary information about the recipe
      */
     @XmlTransient
-    private HashSet<DietEnum> dietaryInformation;
+    private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
     Ingredient() {
     }
@@ -78,7 +79,6 @@ public class Ingredient {
     /**
      * Returns the name of the of the ingredient
      **/
-
     public String getName() {
         return name;
     }
@@ -86,7 +86,6 @@ public class Ingredient {
     /**
      * Returns the number of units of the ingredient on hand
      **/
-
     public String getUnit() {
         return unit;
     }
@@ -94,7 +93,6 @@ public class Ingredient {
     /**
      * Returns the category of the ingredient if its a spice, meat or bread.
      **/
-
     public String getCategory() {
         return category;
     }
@@ -102,20 +100,10 @@ public class Ingredient {
     /**
      * Returns the Unique id for every ingredient
      **/
-
     public String getId() {
         return id;
     }
 
-
-    /**
-     * This method sets the unique id for the new ingredient added to the stock
-     *
-     * @param someId Id for the new Ingredient added to the stock
-     */
-    public void setId(String someId) {
-        id = someId;
-    }
 
     /**
      * This method sets the name to the ingredient added to the stock

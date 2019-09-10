@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IDGeneratorTest {
 
@@ -19,6 +20,28 @@ public class IDGeneratorTest {
 
         HashSet<String> set = new HashSet<String>(list);
         assertEquals(set.size(), list.size());
+    }
+
+    @Test
+    public void testClassIDs() {
+        Ingredient ingredient = new Ingredient();
+        Order order = new Order();
+        MenuItem item = new MenuItem();
+        Transaction transaction = new Transaction();
+
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(ingredient.getID());
+        ids.add(order.getID());
+        ids.add(item.getID());
+        ids.add(transaction.getOrderNum());
+
+        for (int i = 0; i < 4; i++) {
+            for (String idd : ids) {
+                if (ids.indexOf(idd) != i) {
+                    assertNotEquals(ids.get(i), idd);
+                }
+            }
+        }
     }
 
 }
