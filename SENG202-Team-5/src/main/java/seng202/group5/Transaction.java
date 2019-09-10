@@ -3,10 +3,16 @@ package seng202.group5;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  * The Transaction class records past orders and if they were refunded;
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
     private DateTime date;
     private int time;
@@ -14,6 +20,8 @@ public class Transaction {
     private Money totalPrice;
     private String orderNum;
     private Boolean isRefunded;
+
+    Transaction() {}
 
     public Transaction(DateTime newDate, int newTime, Money newChange, Money newTotalPrice) {
         isRefunded = false;
