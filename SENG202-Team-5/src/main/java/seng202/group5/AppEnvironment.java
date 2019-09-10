@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author Yu Duan
  */
-public class Database {
+public class AppEnvironment {
 
     private OrderManager orderManager;
     private Finance finance;
