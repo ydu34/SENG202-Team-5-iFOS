@@ -46,7 +46,7 @@ public class Ingredient {
     /**
      * A HashSet to store dietary information about the recipe
      */
-    private HashSet<DietEnum> dietaryInformation;
+    private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
     Ingredient() {
     }
@@ -58,7 +58,6 @@ public class Ingredient {
         category = tempCategory;
         id = tempId;
         price = tempPrice;
-        dietaryInformation = new HashSet<>();
     }
 
     public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice, HashSet<DietEnum> dietInfo) {
