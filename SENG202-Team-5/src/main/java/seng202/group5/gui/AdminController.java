@@ -59,8 +59,7 @@ public class AdminController extends GeneralController {
     private List<File> selectedFiles;
 
 
-
-    public void changeScreen(ActionEvent event, String scenePath){
+    public void changeScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
         try {
             sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
@@ -132,10 +131,10 @@ public class AdminController extends GeneralController {
         if (selectedFiles != null) {
             for (int i = 0; i < selectedFiles.size(); i++) {
                 String fileName = selectedFiles.get(i).getName();
-                if (fileName == "stock.xml") {
-                    System.out.println(selectedFiles.get(i).getPath());
-                    getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getPath());
-                }
+
+                System.out.println(selectedFiles.get(i).getParent());
+                getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getParent());
+
             }
             clearList();
         } else {
@@ -144,7 +143,6 @@ public class AdminController extends GeneralController {
 
 
     }
-
 
 
     /**
@@ -165,12 +163,12 @@ public class AdminController extends GeneralController {
 
         if (selectedDirectory != null) {
             System.out.println(selectedDirectory.getAbsolutePath());
+            getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
         } else {
             System.out.println("No directory selected");
         }
 
     }
-
 
 
     public void setFinance(Finance newFinance) {

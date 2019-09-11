@@ -20,6 +20,7 @@ public class AppEnvironment {
     private History history;
     private MenuManager menuManager;
     private HashSet<String> acceptedFiles;
+    private Till till;
 
 
     /**
@@ -37,12 +38,15 @@ public class AppEnvironment {
         acceptedFiles.add("finance.xml");
         acceptedFiles.add("till.xml");
     }
-    /**Marshals the given object o into a xml file.
-     * @param c The class of the object o.
-     * @param o The object you want to marshal into xml file.
-     * @param fileName  The name of the xml file.
+
+    /**
+     * Marshals the given object o into a xml file.
+     *
+     * @param c        The class of the object o.
+     * @param o        The object you want to marshal into xml file.
+     * @param fileName The name of the xml file.
      */
-    public void objectToXml(Class c, Object o, String fileName) {
+    public void objectToXml(Class c, Object o, String fileName, String fileDirectory) {
 
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(c);
@@ -51,29 +55,32 @@ public class AppEnvironment {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
-            jaxbMarshaller.marshal(c.cast(o), new File(System.getProperty("user.dir") +
-                                                                 "/src/main/resources/data/" + fileName));
+            jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + "/" + fileName));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
     }
 
-    /**Converts the xml file to an object o.
+    /**
+     * Converts the xml file to an object o.
+     *
      * @return an object o.
      */
     public Object xmlToObject(Class c, Object o, String fileName, String fileDirectory) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(c);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            o = c.cast(jaxbUnmarshaller.unmarshal( new File(fileDirectory + fileName)));
+            o = c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + "/" + fileName)));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
         return o;
     }
 
-    /** Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
+    /**
+     * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
      * hashmap containing the ingredient and quantity.
+     *
      * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
      * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
      */
@@ -89,8 +96,10 @@ public class AppEnvironment {
     }
 
 
-    /** Given the hash map containing all the menu items, search through each menu item and get access it's recipe and fill up the ingredientsAmount hash map with ingredient objects using
+    /**
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe and fill up the ingredientsAmount hash map with ingredient objects using
      * the getIngredientsFromID method.
+     *
      * @param menuItems Contains the menu items.
      */
     public void handleMenu(HashMap<String, MenuItem> menuItems) {
@@ -107,14 +116,12 @@ public class AppEnvironment {
         stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", fileDirectory);
     }
 
-//    public void allXmlToObjects(String fileDirectory) {
-//        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", fileDirectory);
-////        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", fileDirectory);
-////        history = (History) xmlToObject(History.class, history, "history.xml", fileDirectory);
-////        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager,"menu.xml", fileDirectory);
-////        handleMenu(menuManager.getMenuItems());
-//    }
-
+    public void allObjectsToXml(String fileDirectory) {
+        objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
+        objectToXml(History.class, history, "history.xml", fileDirectory);
+        objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
+        objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+    }
 
     public Stock getStock() {
         return stock;
