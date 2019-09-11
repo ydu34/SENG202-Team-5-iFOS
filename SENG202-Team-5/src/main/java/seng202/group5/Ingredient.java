@@ -10,9 +10,10 @@ import java.util.HashSet;
  * The Ingredient class records all the base data for each ingredient in the database which include its name, price,
  * category, id and its price.
  *
- * @author Shivin Gaba, Daniel Harris
+ * @author Shivin Gaba, Daniel Harris, Yu Duan
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Ingredient {
 
     /**
@@ -30,10 +31,14 @@ public class Ingredient {
      **/
     private String category;
 
+    @XmlTransient
+    private IDGenerator generator = new IDGenerator();
+
     /**
      * Unique id used to identify every ingredient in the database
      **/
-    private String id;
+    @XmlAttribute
+    private String id = generator.newID();
 
     /**
      * The price for a single unit of a ingredient
@@ -41,11 +46,11 @@ public class Ingredient {
     private Money price;
 
 
-    //TODO is this XmlTransient?
     /**
      * A HashSet to store dietary information about the recipe
      */
-    private HashSet<DietEnum> dietaryInformation;
+    @XmlTransient
+    private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
     Ingredient() {
     }
@@ -74,7 +79,6 @@ public class Ingredient {
     /**
      * Returns the name of the of the ingredient
      **/
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -82,7 +86,6 @@ public class Ingredient {
     /**
      * Returns the number of units of the ingredient on hand
      **/
-    @XmlElement
     public String getUnit() {
         return unit;
     }
@@ -90,7 +93,6 @@ public class Ingredient {
     /**
      * Returns the category of the ingredient if its a spice, meat or bread.
      **/
-    @XmlElement
     public String getCategory() {
         return category;
     }
@@ -98,20 +100,10 @@ public class Ingredient {
     /**
      * Returns the Unique id for every ingredient
      **/
-    @XmlAttribute
-    public String getId() {
+    public String getID() {
         return id;
     }
 
-
-    /**
-     * This method sets the unique id for the new ingredient added to the stock
-     *
-     * @param someId Id for the new Ingredient added to the stock
-     */
-    public void setId(String someId) {
-        id = someId;
-    }
 
     /**
      * This method sets the name to the ingredient added to the stock

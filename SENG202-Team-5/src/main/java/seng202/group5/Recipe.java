@@ -65,18 +65,18 @@ public class Recipe {
         name = tempName;
         recipeText = tempRecipeText;
         dietaryInformation = new HashSet<>();
-        for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
         ingredientsAmount = tempIngredientsAmount;
         ingredientIDs = new HashMap<>();
+        for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
     }
 
     Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
         name = tempName;
         recipeText = tempRecipeText;
         ingredientsAmount = tempIngredientsAmount;
+        ingredientIDs = tempIngredientIDs;
         dietaryInformation = new HashSet<>();
         for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
-        ingredientIDs = tempIngredientIDs;
 
     }
 

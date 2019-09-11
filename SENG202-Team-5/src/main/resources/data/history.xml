@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<history>
+    <transactionHistory>
+        <entry>
+            <key>1</key>
+            <value>
+                <orderItems>
+                    <entry>
+                        <key>
+                            <itemName>Cheese Burger</itemName>
+                            <recipe>
+<name>Cheese Burger</name>
+<recipeText>PlaceholderRecipe</recipeText>
+<ingredientIDs>
+    <entry>
+        <key>1</key>
+        <value>10</value>
+    </entry>
+    <entry>
+        <key>2</key>
+        <value>5</value>
+    </entry>
+</ingredientIDs>
+<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+<dietaryInformation>VEGETARIAN</dietaryInformation>
+<dietaryInformation>VEGAN</dietaryInformation>
+<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                            </recipe>
+                            <markupCost/>
+                            <generator/>
+                            <id>1</id>
+                            <inMenu>true</inMenu>
+                        </key>
+                        <value>1</value>
+                    </entry>
+                </orderItems>
+                <totalCost/>
+                <generator/>
+                <id>1</id>
+            </value>
+        </entry>
+    </transactionHistory>
+</history>

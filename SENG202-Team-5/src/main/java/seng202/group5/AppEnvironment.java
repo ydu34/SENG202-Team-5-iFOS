@@ -6,20 +6,37 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
  * @author Yu Duan
  */
-public class Database {
+public class AppEnvironment {
 
     private OrderManager orderManager;
     private Finance finance;
     private Stock stock;
     private History history;
     private MenuManager menuManager;
+    private HashSet<String> acceptedFiles;
 
 
+    /**
+     * The constructor for AppEnvironment
+     */
+    public AppEnvironment() {
+        finance = new Finance();
+        stock = new Stock();
+        history = new History();
+        menuManager = new MenuManager();
+        acceptedFiles = new HashSet<>();
+        acceptedFiles.add("stock.xml");
+        acceptedFiles.add("menu.xml");
+        acceptedFiles.add("history.xml");
+        acceptedFiles.add("finance.xml");
+        acceptedFiles.add("till.xml");
+    }
     /**Marshals the given object o into a xml file.
      * @param c The class of the object o.
      * @param o The object you want to marshal into xml file.
@@ -35,7 +52,7 @@ public class Database {
 
             jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
             jaxbMarshaller.marshal(c.cast(o), new File(System.getProperty("user.dir") +
-                                                                 "/src/resources/data/" + fileName));
+                                                                 "/src/main/resources/data/" + fileName));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -44,12 +61,11 @@ public class Database {
     /**Converts the xml file to an object o.
      * @return an object o.
      */
-    public Object xmlToObject(Class c, Object o, String fileName) {
+    public Object xmlToObject(Class c, Object o, String fileName, String fileDirectory) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(c);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            o = c.cast(jaxbUnmarshaller.unmarshal( new File(System.getProperty("user.dir") +
-                                                                                                 "/src/resources/data/" + fileName)));
+            o = c.cast(jaxbUnmarshaller.unmarshal( new File(fileDirectory + fileName)));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -87,13 +103,17 @@ public class Database {
         }
     }
 
-    public void allXmlToObjects() {
-        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml");
-        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml");
-        history = (History) xmlToObject(History.class, history, "history.xml");
-        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager,"menu.xml");
-        handleMenu(menuManager.getMenuItems());
+    public void stockXmlToObject(String fileDirectory) {
+        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", fileDirectory);
     }
+
+//    public void allXmlToObjects(String fileDirectory) {
+//        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", fileDirectory);
+////        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", fileDirectory);
+////        history = (History) xmlToObject(History.class, history, "history.xml", fileDirectory);
+////        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager,"menu.xml", fileDirectory);
+////        handleMenu(menuManager.getMenuItems());
+//    }
 
 
     public Stock getStock() {
@@ -104,8 +124,12 @@ public class Database {
         this.stock = stock;
     }
 
-    public static void main(String[] args) {
 
+    public HashSet<String> getAcceptedFiles() {
+        return acceptedFiles;
     }
 
+    public void setAcceptedFiles(HashSet<String> acceptedFiles) {
+        this.acceptedFiles = acceptedFiles;
+    }
 }

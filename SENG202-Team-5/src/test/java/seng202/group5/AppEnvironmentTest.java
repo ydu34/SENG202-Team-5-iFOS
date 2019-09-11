@@ -1,13 +1,15 @@
 package seng202.group5;
 
 import org.joda.money.Money;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-class DatabaseTest {
-    Database handler;
+class AppEnvironmentTest {
+
+    AppEnvironment handler;
     Recipe cheeseBurgerRecipe;
     HashMap<String, Integer> cheeseBurgerIngredients;
     MenuItem cheeseBurger;
@@ -19,7 +21,7 @@ class DatabaseTest {
 
     @BeforeEach
     void init() {
-        handler= new Database();
+        handler = new AppEnvironment();
         cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerIngredients = new HashMap<>();
         cheeseBurgerIngredients.put("1", 10);
@@ -28,7 +30,7 @@ class DatabaseTest {
         cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
         Ingredient cheese = new Ingredient("Cheese", "Count", "Dairy", "1", Money.parse("NZD 0.10"));
         Ingredient bun = new Ingredient("Bun", "Count", "Bread", "2", Money.parse("NZD 0.50"));
-        Ingredient beefPattile = new Ingredient("Beef Pattie", "Count", "Meat", "3", Money.parse("NZD 1.0"));
+        Ingredient beefPattie = new Ingredient("Beef Pattie", "Count", "Meat", "3", Money.parse("NZD 1.0"));
         Ingredient lettuce = new Ingredient("Lettuce", "Count", "Vegetable", "4", Money.parse("NZD 0.2"));
         Ingredient tomatoSauce = new Ingredient("Tomato Sauce", "ml", "Sauce", "5", Money.parse("NZD 0.1"));
     }
@@ -46,18 +48,15 @@ class DatabaseTest {
         stock.getIngredients().put("1", ing1);
         stock.getIngredients().put("2", ing2);
 
-        handler.objectToXml(Stock.class, stock, "stock.xml");
+        handler.objectToXml(Stock.class, stock, "stockTest.xml");
         handler.setStock(stock);
-
-
-
 
         MenuManager menuManager = new MenuManager();
         menuManager.setItemList(new HashMap<String, MenuItem>());
         menuManager.getItemList().put("1", cheeseBurger);
 
 
-        handler.objectToXml(MenuManager.class, menuManager, "menu.xml");
+        handler.objectToXml(MenuManager.class, menuManager, "menuTest.xml");
         HashMap<String, MenuItem> menuItems = menuManager.getItemList();
         handler.handleMenu(menuItems);
         System.out.print(menuItems.get("1").getRecipe().getIngredientsAmount());
@@ -70,7 +69,18 @@ class DatabaseTest {
         Order order = new Order(orderItems, cheeseBurger.calculateFinalCost(), "1");
         History history = new History();
         history.getTransactionHistory().put("1", order);
-        handler.objectToXml(History.class, history, "history.xml");
+        handler.objectToXml(History.class, history, "historyTest.xml");
     }
+
+    // Test only works if stockTest.xml exists before running tests.
+//    @Test
+//    void testStockXmlToObject() {
+//        Stock stock = new Stock();
+//        stock = (Stock) handler.xmlToObject(Stock.class, stock, "stockTest.xml");
+//        Ingredient ing1 = stock.getIngredients().get("1");
+//        Ingredient ing2 = stock.getIngredients().get("2");
+//        Assertions.assertEquals(ing1.getName(), "Milk");
+//        Assertions.assertEquals(ing2.getName(), "Apple");
+//    }
 
 }
