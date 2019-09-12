@@ -147,6 +147,9 @@ public class AppEnvironment {
             Order order = orderManager.getOrder();
             order.setDateTimeProcessed(LocalDateTime.now());
             orderManager.getHistory().getTransactionHistory().put(order.getID(), order);
+            setStock(order.getStock().clone());
+            orderManager.setStock(stock);
+            orderManager.newOrder();
 
             change = finance.pay(order.getTotalCost(),
                                  denominations,
@@ -167,6 +170,10 @@ public class AppEnvironment {
         this.stock = stock;
     }
 
+    public History getHistory() {
+        return history;
+    }
+
 
     public HashSet<String> getAcceptedFiles() {
         return acceptedFiles;
@@ -175,4 +182,13 @@ public class AppEnvironment {
     public void setAcceptedFiles(HashSet<String> acceptedFiles) {
         this.acceptedFiles = acceptedFiles;
     }
+
+    public OrderManager getOrderManager() {
+        return orderManager;
+    }
+
+    public void setOrderManager(OrderManager tempManager) {
+        orderManager = tempManager;
+    }
+
 }

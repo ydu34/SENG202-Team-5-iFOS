@@ -58,6 +58,7 @@ public class Order {
      * @param tempTotalCost  The total cost of an existing order.
      * @param tempID         The unique ID of the order.
      */
+    @Deprecated(since = "Replaced with version that edits stock, THIS VERSION BREAKS OTHER CODE")
     public Order(HashMap<MenuItem, Integer> tempOrderItems, Money tempTotalCost, String tempID) {
         orderItems = tempOrderItems;
         totalCost = tempTotalCost;

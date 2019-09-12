@@ -5,21 +5,19 @@ package seng202.group5.gui;
  */
 
 
-import javafx.event.ActionEvent;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.LocalDateStringConverter;
+import seng202.group5.History;
+import seng202.group5.Order;
+import seng202.group5.OrderManager;
 
-import java.io.IOException;
-import java.time.LocalDate;
+import java.time.*;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class HistoryController extends GeneralController {
 
@@ -33,6 +31,41 @@ public class HistoryController extends GeneralController {
     @FXML
     private TextField historySearchbar;
 
+    @FXML
+    private TableView historyTable;
+
+    @FXML
+    private TableColumn rowID;
+
+    @FXML
+    private TableColumn rowDate;
+
+    @FXML
+    private TableColumn rowTime;
+
+    @FXML
+    private TableColumn rowOrder;
+
+    @FXML
+    private TableColumn rowAction;
+
+    @Override
+    public void pseudoInitialize() {
+        rowID.setCellValueFactory(new PropertyValueFactory<>("iD"));
+        rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+                ((TableColumn.CellDataFeatures<Order, String>) cellData).getValue().getDateTimeProcessed().
+                        toLocalDate().toString()));
+        rowTime.setCellValueFactory(cellData -> {
+            LocalTime time = ((TableColumn.CellDataFeatures<Order, String>) cellData).getValue()
+                    .getDateTimeProcessed().toLocalTime();
+            return new ReadOnlyStringWrapper(String.format("%d:%d", time.getHour(), time.getMinute()));
+        });
+        rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+
+        for (Order order : super.getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values()) {
+            historyTable.getItems().add(order);
+        }
+    }
 
     /**
      * Sets the DateCell creators for the start date picker
@@ -108,7 +141,7 @@ public class HistoryController extends GeneralController {
                 dateElement.updateItem(dateElement.getItem(), dateElement.isEmpty());
             }
         }
-        //TODO add code to add and remove orders from the table in a separate function
+        updateVisibleOrders(actionEvent);
     }
 
     /**
@@ -123,9 +156,41 @@ public class HistoryController extends GeneralController {
                 dateElement.updateItem(dateElement.getItem(), dateElement.isEmpty());
             }
         }
-        //TODO add code to add and remove orders from the table in a separate function
+        updateVisibleOrders(actionEvent);
     }
 
 
+    /**
+     * Updates the orders that are visible in the order table
+     *
+     * @param event
+     */
+    public void updateVisibleOrders(javafx.event.Event event) {
+        LocalDate firstDate = historyStartDatePicker.getValue();
+        LocalDate lastDate = historyEndDatePicker.getValue();
+        LocalDateTime firstTime;
+        if (firstDate == null) {
+            firstTime = LocalDateTime.MIN;
+        } else {
+            firstTime = LocalDateTime.of(firstDate, LocalTime.MIN);
+        }
+        LocalDateTime lastTime;
+        if (lastDate == null) {
+            lastTime = LocalDateTime.MAX;
+        } else {
+            lastTime = LocalDateTime.of(lastDate, LocalTime.MAX);
+        }
+        Collection<Order> historyValues = super.getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values();
+        historyTable.getItems().removeAll(historyValues);
+        String searchString = historySearchbar.getCharacters().toString();
+        for (Order order : historyValues) {
+            if (order.getDateTimeProcessed().isAfter(firstTime) &&
+                    order.getDateTimeProcessed().isBefore(lastTime) &&
+                    order.getID().matches(".*" + searchString + ".*")) {
+                historyTable.getItems().add(order);
+            }
+
+        }
+    }
 
 }
