@@ -130,7 +130,7 @@ public class Order {
         orderItems.put(item, quantity);
 
         // Add price of item to total cost
-        totalCost.plus(item.getMarkupCost().multipliedBy(quantity));
+        totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(quantity));
         return true;
     }
 
@@ -156,7 +156,7 @@ public class Order {
             orderItems.remove(item);
 
             // Minuses the price of the item from the total cost
-            totalCost.minus(item.getMarkupCost());
+            totalCost = totalCost.minus(item.getMarkupCost());
             return true;
         } else {
             return false;
@@ -175,7 +175,7 @@ public class Order {
         if (orderItems.containsKey(item)) {
             int currentNum = orderItems.get(item);
             int diff = quantity - currentNum;
-            totalCost.plus(item.getMarkupCost().multipliedBy(diff));
+            totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(diff));
             orderItems.replace(item, quantity);
             return true;
         } else {
