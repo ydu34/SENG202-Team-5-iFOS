@@ -200,6 +200,18 @@ public class Recipe {
         this.ingredientsAmount = ingredientsAmount;
     }
 
+    public boolean isGlutenFree() {
+        return dietaryInformation.contains(DietEnum.GLUTEN_FREE);
+    }
+
+    public boolean isVegan() {
+        return dietaryInformation.contains(DietEnum.VEGAN);
+    }
+
+    public boolean isVegetarian() {
+        return dietaryInformation.contains(DietEnum.VEGETARIAN);
+    }
+
     public HashSet<DietEnum> getDietaryInformation() {
         return dietaryInformation;
     }

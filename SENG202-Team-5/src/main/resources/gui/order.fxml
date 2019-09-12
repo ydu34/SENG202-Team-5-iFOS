@@ -130,7 +130,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <CheckBox fx:id="veganCheck" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Vegan">
+                                          <CheckBox fx:id="vegan" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Vegan">
                                              <GridPane.margin>
                                                 <Insets left="5.0" />
                                              </GridPane.margin>
@@ -159,7 +159,7 @@
                                           </Button>
                                        </children>
                                     </GridPane>
-                                    <CheckBox fx:id="vegetarianCheck" mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" text="Vegetarian">
+                                    <CheckBox fx:id="vegetarian" mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" text="Vegetarian">
                                        <GridPane.margin>
                                           <Insets left="5.0" />
                                        </GridPane.margin>
@@ -172,7 +172,8 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <Button fx:id="itemButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="63.0" text="Item_1" />
+                                                <Button fx:id="itemButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="Item_1" />
+                                                <Button fx:id="itemButton2" layoutX="195.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="item_2" />
                                              </children>
                                           </AnchorPane>
                                     </content>
