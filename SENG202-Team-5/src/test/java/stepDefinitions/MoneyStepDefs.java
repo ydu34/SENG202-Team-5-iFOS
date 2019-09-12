@@ -9,7 +9,9 @@ import cucumber.api.java.en.When;
 import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,11 +33,11 @@ public class MoneyStepDefs {
         cost = Money.parse("NZD "+arg0);
     }
 
-    @When("Payment of ${double} if confirmed")
+    @When("Payment of ${double} is confirmed")
     public void paymentOf$IfConfirmed(double arg0) throws InsufficientCashException {
         ArrayList<Money> payment= new ArrayList<>();
         payment.add(Money.parse("NZD "+arg0));
-        change = finance.pay(cost, payment, 100);
+        change = finance.pay(cost, payment, LocalDateTime.now());
     }
 
     @Then("${double} is displayed to be returned")
@@ -57,16 +59,15 @@ public class MoneyStepDefs {
     public void orderHasAlreadyBeenPayedFor() throws InsufficientCashException {
         ArrayList<Money> payment= new ArrayList<>();
         payment.add(cost);
-        finance.pay(cost, payment, 100);
+        finance.pay(cost, payment, LocalDateTime.now());
     }
 
     @Given("till starts with {int} ${double} notes")
     public void tillStartsWith$Notes(int arg0, double arg1) {
-        ArrayList<Money> initial = new ArrayList<>();
-        for (int i = 0; i < arg0; i++) {
-            initial.add(Money.parse("NZD "+ arg1));
-        }
-        till = new Till(initial);
+
+        till = new Till();
+        till.addDenomination(Money.parse("NZD "+ arg1), arg0);
+
     }
 
     @When("an order is payed for with {int} ${double} note")
@@ -76,10 +77,8 @@ public class MoneyStepDefs {
 
     @Then("till has {int} ${double} notes")
     public void tillHas$Notes(int arg0, double arg1) {
-        ArrayList<Money> expected = new ArrayList<>();
-        for (int i = 0; i < arg0; i++) {
-            expected.add(Money.parse("NZD "+ arg1));
-        }
+        HashMap<Money, Integer> expected = new HashMap<>();
+        expected.put(Money.parse("NZD "+ arg1), arg0);
         assertEquals(expected, till.getDenominations());
 
     }

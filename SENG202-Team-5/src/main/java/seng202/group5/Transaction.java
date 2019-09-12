@@ -1,11 +1,11 @@
 package seng202.group5;
 
 import org.joda.money.Money;
-import org.joda.time.DateTime;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 
 
 /**
@@ -14,8 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
-    private DateTime date;
-    private int time;
+
+    private LocalDateTime datetime;
     private Money change;
     private Money totalPrice;
     private IDGenerator generator = new IDGenerator();
@@ -24,10 +24,9 @@ public class Transaction {
 
     Transaction() {}
 
-    public Transaction(DateTime newDate, int newTime, Money newChange, Money newTotalPrice) {
+    public Transaction(LocalDateTime newDateTime, Money newChange, Money newTotalPrice) {
         isRefunded = false;
-        date = newDate;
-        time = newTime;
+        datetime = newDateTime;
         change = newChange;
         totalPrice = newTotalPrice;
 
@@ -45,11 +44,9 @@ public class Transaction {
     public String getOrderNum() {
         return orderNum;
     }
-    public DateTime getDate() {
-        return date;
-    }
-    public int getTime() {
-        return time;
+
+    public LocalDateTime getDateTime() {
+        return datetime;
     }
     public void refund() {
         isRefunded = true;

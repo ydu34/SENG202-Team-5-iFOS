@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Disabled;
 import seng202.group5.*;
 
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
@@ -38,23 +39,26 @@ public class Stepdefs {
         stock = new Stock();
         stock.addNewIngredient(buns);
         error = false;
-        //        manager.createItem("Burger", burgerRecipe, burgerCost-1.00,"testId", false);
-        //        burger = manager.getItemList().get("testId");
+        manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
+        burger = manager.getItemList().get("testId");
     }
-    //    @Given("Order exists")
-    //    public void Order_exists() {
-    //        order = new Order();
-    //    }
+    @Given("Order exists")
+    public void Order_exists() {
+
+        order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01");
+
+    }
 
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {
-        error = !order.modifyItemQuantity(burger, 1);
+        error = !order.addItem(burger, 1);
 
     }
 
     @Then("Orders total cost is ${double}")
     public void ordersTotalCostIs$(double arg0) {
-        Money newArg = Money.parse(String.format("NZD %.2d", arg0));
+        DecimalFormat df = new DecimalFormat("#.00");
+        Money newArg = Money.parse("NZD " + df.format(arg0));
         assertEquals(newArg, order.getTotalCost());
     }
 
@@ -67,10 +71,10 @@ public class Stepdefs {
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(double arg0) {
         manager.removeItem("testId");
-        Money newArg = Money.parse(String.format("NZD %.2d", arg0 - 1.00));
+        DecimalFormat df = new DecimalFormat("#.00");
+        Money newArg = Money.parse("NZD " + df.format(arg0));
+        manager.removeItem("testId");
         manager.createItem("Burger", burgerRecipe, newArg, "testId", true);
-
-
         burger = manager.getItemList().get("testId");
     }
 
@@ -100,14 +104,15 @@ public class Stepdefs {
     public void chipsAreAddedToOrder() {
 
         Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>(), "Text");
-        manager.createItem("chip", chipRecipe, chipCost.minus(Money.parse("NZD 1.00")), "chipId", true);
+        manager.createItem("chip", chipRecipe, chipCost, "chipId", true);
         chip = manager.getItemList().get("chipId");
+        order.addItem(chip, 1);
     }
 
     @And("Chips cost ${double}")
     public void chipsCost$(double arg0) {
-        chipCost = Money.parse(String.format("NZD %.2d", arg0));
-        ;
+        DecimalFormat df = new DecimalFormat("#.00");
+        chipCost = Money.parse("NZD " + df.format(arg0));
     }
 
     @And("Burger is in order")
@@ -123,6 +128,10 @@ public class Stepdefs {
     @And("A Burger contains buns")
     public void aBurgerContainsBuns() {
         burgerRecipe.addIngredient(buns, 1);
+        manager.removeItem("testId");
+        manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
+        burger = manager.getItemList().get("testId");
+
     }
 
     @And("Order Does not contain burger")
@@ -137,10 +146,9 @@ public class Stepdefs {
 
     @Then("Burger in the order contains {int} buns")
     public void burgerInTheOrderContainsBuns(int arg0) {
-        System.out.println();
         boolean pass = false;
         for (MenuItem item : order.getOrderItems().keySet()) {
-            if (item.getID().equals("testID") && item.getRecipe().getIngredientsAmount().containsKey(buns)) {
+            if (item.getID().equals("testId") && item.getRecipe().getIngredientsAmount().containsKey(buns)) {
                 pass = true;
                 break;
             }

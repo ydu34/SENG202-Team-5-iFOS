@@ -4,12 +4,15 @@ import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
+
+import java.time.LocalDateTime;
 import seng202.group5.exceptions.InsufficientCashException;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.RoundingMode;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,15 +67,14 @@ public class Finance {
      *
      * @param totalCost   the total cost of the order
      * @param amountPayed a list of Money representing the coins payed
-     * @param time        the Date and time the order occurred at
+     * @param datetime        the Date and time the order occurred at
      * @return a list of Money representing coins to give as change in descending size order
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
-    public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, int time) throws InsufficientCashException {
+    public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, LocalDateTime datetime) throws InsufficientCashException {
         //TODO the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
-        DateTime date =  new DateTime(DateTimeZone.UTC);
         for (Money money: amountPayed)
         {
             payedSum = payedSum.plus(money);
@@ -85,7 +87,7 @@ public class Finance {
         {
             changeSum = changeSum.plus(money);
         }
-        transactionHistory.put("test"+tempId++ , new Transaction(date, time, changeSum, totalCost));
+        transactionHistory.put("test" + tempId++, new Transaction(datetime, changeSum, totalCost));
         return change;
     }
 
@@ -96,16 +98,17 @@ public class Finance {
      * @param endDate   the last date to search to
      * @return a list of Money representing total profits, average profits, and other things
      */
-    public ArrayList<Money> totalCalculator(DateTime startDate, DateTime endDate) {
+    public ArrayList<Money> totalCalculator(LocalDateTime startDate, LocalDateTime endDate) {
         Money total = Money.parse("NZD 0");
         for (Transaction order : transactionHistory.values()) {
-            if (order.getDate().compareTo(startDate) >= 0 && order.getDate().compareTo(endDate) <= 0) {
+            if (order.getDateTime().compareTo(startDate) >= 0 && order.getDateTime().compareTo(endDate) <= 0) {
                 total = total.plus(order.getTotalPrice());
             }
         }
         ArrayList<Money> totals = new ArrayList<>();
         totals.add(total);
-        long daysBetween = (Days.daysBetween(startDate.toLocalDate(), endDate.toLocalDate()).getDays()) + 1;
+
+        long daysBetween = ChronoUnit.DAYS.between(startDate.toLocalDate(), endDate.toLocalDate()) + 1;
         totals.add(total.dividedBy(daysBetween, RoundingMode.DOWN));
         System.out.println(totals);
         return totals;

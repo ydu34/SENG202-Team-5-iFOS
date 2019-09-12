@@ -14,20 +14,18 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import org.joda.time.DateTime;
-import seng202.group5.AppEnvironment;
+
+import java.time.LocalDateTime;
 import seng202.group5.Finance;
-import seng202.group5.Order;
-import seng202.group5.exceptions.InsufficientCashException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
- * @Author Yu Duan
+ * @author Yu Duan
  */
 public class AdminController extends GeneralController {
 
@@ -62,11 +60,8 @@ public class AdminController extends GeneralController {
 
     private List<File> selectedFiles;
 
-    private AppEnvironment app = new AppEnvironment();
 
-
-
-    public void changeScreen(ActionEvent event, String scenePath){
+    public void changeScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
         try {
             sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
@@ -98,8 +93,8 @@ public class AdminController extends GeneralController {
 
     @FXML
     public void viewHistory() {
-        DateTime eDate = DateTime.parse(endDate.getValue().toString());
-        DateTime sDate = DateTime.parse(startDate.getValue().toString());
+        LocalDateTime eDate = LocalDateTime.of(endDate.getValue(), LocalTime.MIN);
+        LocalDateTime sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MAX);
         if (!eDate.isBefore(sDate)) {
             ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
             saleSummaryText.setText("Testresult\nTotal cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
@@ -138,11 +133,12 @@ public class AdminController extends GeneralController {
         if (selectedFiles != null) {
             for (int i = 0; i < selectedFiles.size(); i++) {
                 String fileName = selectedFiles.get(i).getName();
-                if (fileName == "stock.xml") {
-                    System.out.println(selectedFiles.get(i).getPath());
-                    app.stockXmlToObject(selectedFiles.get(i).getPath());
-                }
+
+                System.out.println(selectedFiles.get(i).getParent());
+                getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getParent());
+
             }
+            clearList();
         } else {
             fileNotificationText.setText("No files selected");
         }
@@ -151,13 +147,12 @@ public class AdminController extends GeneralController {
     }
 
 
-
     /**
      * Empties the list of files selected
      */
     public void clearList() {
+        selectedFiles = new ArrayList<>();
         importFilesListView.getItems().clear();
-        selectedFiles.clear();
     }
 
     /**
@@ -170,12 +165,12 @@ public class AdminController extends GeneralController {
 
         if (selectedDirectory != null) {
             System.out.println(selectedDirectory.getAbsolutePath());
+            getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
         } else {
             System.out.println("No directory selected");
         }
 
     }
-
 
 
     public void setFinance(Finance newFinance) {
