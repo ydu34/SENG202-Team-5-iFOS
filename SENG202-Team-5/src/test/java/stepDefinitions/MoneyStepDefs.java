@@ -9,6 +9,7 @@ import cucumber.api.java.en.When;
 import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +36,7 @@ public class MoneyStepDefs {
     public void paymentOf$IfConfirmed(double arg0) throws InsufficientCashException {
         ArrayList<Money> payment= new ArrayList<>();
         payment.add(Money.parse("NZD "+arg0));
-        change = finance.pay(cost, payment, 100);
+        change = finance.pay(cost, payment, LocalDateTime.now());
     }
 
     @Then("${double} is displayed to be returned")
@@ -57,7 +58,7 @@ public class MoneyStepDefs {
     public void orderHasAlreadyBeenPayedFor() throws InsufficientCashException {
         ArrayList<Money> payment= new ArrayList<>();
         payment.add(cost);
-        finance.pay(cost, payment, 100);
+        finance.pay(cost, payment, LocalDateTime.now());
     }
 
     @Given("till starts with {int} ${double} notes")

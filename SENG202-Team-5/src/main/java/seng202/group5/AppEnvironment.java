@@ -1,10 +1,16 @@
 package seng202.group5;
 
+import org.joda.money.Money;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.exceptions.NoOrderException;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -121,6 +127,36 @@ public class AppEnvironment {
         objectToXml(History.class, history, "history.xml", fileDirectory);
         objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
         objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+    }
+
+    /**
+     * Confirms payment for the current order, sends the order to the history,
+     * sends information about the transaction to Finance and retrieves the
+     * cash amounts to be given as change
+     *
+     * @param denominations the cash given to the worker to pay for the item
+     * @return the cash to be returned to the customer as change
+     * @throws InsufficientCashException if the given cash amount is not enough
+     *                                   to pay for the order
+     */
+    public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
+        Money totalPayment = Money.parse("NZD 0");
+        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
+        ArrayList<Money> change = new ArrayList<Money>();
+        try {
+            Order order = orderManager.getOrder();
+            order.setDateTimeProcessed(LocalDateTime.now());
+            orderManager.getHistory().getTransactionHistory().put(order.getID(), order);
+
+            change = finance.pay(order.getTotalCost(),
+                                 denominations,
+                                 order.getDateTimeProcessed());
+
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
+
+        return change;
     }
 
     public Stock getStock() {

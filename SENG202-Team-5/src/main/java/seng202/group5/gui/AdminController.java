@@ -14,16 +14,18 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import org.joda.time.DateTime;
+
+import java.time.LocalDateTime;
 import seng202.group5.Finance;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author Yu Duan
+ * @author Yu Duan
  */
 public class AdminController extends GeneralController {
 
@@ -91,8 +93,8 @@ public class AdminController extends GeneralController {
 
     @FXML
     public void viewHistory() {
-        DateTime eDate = DateTime.parse(endDate.getValue().toString());
-        DateTime sDate = DateTime.parse(startDate.getValue().toString());
+        LocalDateTime eDate = LocalDateTime.of(endDate.getValue(), LocalTime.MIN);
+        LocalDateTime sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MAX);
         if (!eDate.isBefore(sDate)) {
             ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
             saleSummaryText.setText("Testresult\nTotal cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));

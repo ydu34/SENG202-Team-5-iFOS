@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -31,6 +32,8 @@ public class Order {
      * The current total cost of the order including the discount
      **/
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
+
+    private LocalDateTime dateTimeProcessed;
 
     /**
      * The unique ID of the order given by the database
@@ -217,6 +220,15 @@ public class Order {
      */
     public Stock getStock() {
         return temporaryStock;
+    }
+
+
+    public LocalDateTime getDateTimeProcessed() {
+        return dateTimeProcessed;
+    }
+
+    public void setDateTimeProcessed(LocalDateTime dateProcessed) {
+        this.dateTimeProcessed = dateProcessed;
     }
 
 }
