@@ -2,6 +2,7 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import seng202.group5.adapters.LocalDateTimeAdapter;
+import seng202.group5.adapters.MoneyAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,7 +20,9 @@ public class Transaction {
 
     @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
     private LocalDateTime datetime;
+    @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money change;
+    @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money totalPrice;
     private IDGenerator generator = new IDGenerator();
     private String orderNum = generator.newID();
