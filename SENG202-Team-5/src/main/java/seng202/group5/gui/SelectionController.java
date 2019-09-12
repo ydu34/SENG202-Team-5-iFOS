@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seng202.group5.MenuItem;
 import seng202.group5.Recipe;
 
 import java.io.IOException;
@@ -20,6 +21,10 @@ import java.io.IOException;
 public class SelectionController extends GeneralController {
 
 
+    @FXML
+    public Text costText;
+    @FXML
+    public Text recipeText;
     Recipe recipe;
     public OrderController order;
     @FXML
@@ -34,6 +39,9 @@ public class SelectionController extends GeneralController {
     @FXML
     private Button closeSelectionScreenButton;
 
+
+    @FXML
+    public MenuItem item;
 
 
     /**
@@ -51,8 +59,12 @@ public class SelectionController extends GeneralController {
      * @param
      */
 
-    public void setRecipe(Recipe someRecipe){
-        recipe = someRecipe;
+    public void setMenuItem(MenuItem newItem){
+        System.out.println(newItem);
+        item = newItem;
+        costText.setText(item.calculateFinalCost().toString());
+        recipeText.setText(item.getRecipe().getRecipeText());
+
 
     }
 
