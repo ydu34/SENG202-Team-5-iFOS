@@ -202,6 +202,8 @@ public class OrderController extends GeneralController {
             SelectionController controller = selectionLoader.getController();
             System.out.println(item.getItemName());
             controller.setMenuItem(item);
+            controller.setAppEnvironment(getAppEnvironment());
+            controller.pseudoInitialize();
         } catch (IOException e) {
             e.printStackTrace();
         }
