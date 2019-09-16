@@ -35,7 +35,7 @@ public class OrderController extends GeneralController {
     public Recipe testRecipe;
 
     @FXML
-    private Text ingredientText;
+    private Label ingredientText;
 
     @FXML
     private Button itemButton;
@@ -47,7 +47,7 @@ public class OrderController extends GeneralController {
     @FXML
     private Recipe testRecipe2;
     @FXML
-    private Text totalCostDisplay;
+    private Label totalCostDisplay;
     private String ingredient;
     @FXML
     private CheckBox vegan;
