@@ -64,13 +64,10 @@ public class OrderController extends GeneralController {
     private ArrayList<MenuItem> allItems;
     private ArrayList<MenuItem> filteredItems;
 
-    /*
     @Override
     public void pseudoInitialize() {
-        make_object();
         showItems(new ActionEvent());
     }
-    */
 
     public void checkDietryInfo(ActionEvent event) {
         // get values of checkboxes here
@@ -78,15 +75,14 @@ public class OrderController extends GeneralController {
     }
 
     public ArrayList<MenuItem> filterItems() {
-        if(allItems == null){
-            make_object();
-            filteredButtons = new ArrayList<>();
-            filteredButtons.add(itemButton);
-            filteredButtons.add(itemButton2);
-
+        make_object();
+        filteredButtons = new ArrayList<>();
+        filteredButtons.add(itemButton);
+        filteredButtons.add(itemButton2);
+        ArrayList<MenuItem> filteredMenuItems = new ArrayList<>();
+        if (allItems != null) {
+            filteredMenuItems = new ArrayList<>(allItems);
         }
-        ArrayList<MenuItem> filteredMenuItems = new ArrayList<>(allItems);
-
 
 
         if (glutenFree.isSelected()) {
@@ -153,29 +149,29 @@ public class OrderController extends GeneralController {
         ingredient = "";
         testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
         testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
-        MenuItem item = new MenuItem("Chicken Burger",testRecipe, Money.parse("NZD 5"), "1221", true);
-        MenuItem item2 = new MenuItem("Vege Burger",testRecipe2, Money.parse("NZD 7"), "1222", true);
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
         }};
         HashSet<DietEnum> ingredientInfo2 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
-          add(DietEnum.VEGETARIAN);
+            add(DietEnum.VEGETARIAN);
         }};
         Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 10"), ingredientInfo1);
         Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 5"), ingredientInfo2);
         HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
-           add(DietEnum.VEGETARIAN);
+            add(DietEnum.VEGETARIAN);
         }};
         Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", "12", Money.parse("NZD 10"), ingredientInfo3);
         testRecipe.addIngredient(chickenpatty, 1);
         testRecipe.addIngredient(cheese, 1);
         testRecipe2.addIngredient(vegePatty, 1);
+
+        MenuItem item = new MenuItem("Chicken Burger",testRecipe, Money.parse("NZD 5"), "1221", true);
+        MenuItem item2 = new MenuItem("Vege Burger",testRecipe2, Money.parse("NZD 7"), "1222", true);
+
         allItems.add(item);
         allItems.add(item2);
-
-
 
     }
 
