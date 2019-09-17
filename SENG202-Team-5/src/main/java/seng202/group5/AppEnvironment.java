@@ -192,6 +192,9 @@ public class AppEnvironment {
         return history;
     }
 
+    public Finance getFinance() {
+        return finance;
+    }
 
     public HashSet<String> getAcceptedFiles() {
         return acceptedFiles;
