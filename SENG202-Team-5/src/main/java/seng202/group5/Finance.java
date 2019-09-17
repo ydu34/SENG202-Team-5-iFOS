@@ -6,11 +6,15 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 
 import java.time.LocalDateTime;
+
+import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.exceptions.InsufficientCashException;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.RoundingMode;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -24,6 +28,8 @@ import java.util.HashMap;
 public class Finance {
 
     private HashMap<String, Transaction> transactionHistory;
+    @XmlJavaTypeAdapter(value = MoneyAdapter.class)
+    @XmlList
     private ArrayList<Money> denomination;
     /**
      * Temporary id generator for testing purposes.

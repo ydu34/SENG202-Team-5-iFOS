@@ -1,11 +1,17 @@
 package seng202.group5;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 
 /**
  * A class which creates IDs for all that requires an ID and makes sure that
  * they're never the same.
+ * @author Michael Morgoun
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class IDGenerator {
 
     /**
@@ -14,15 +20,21 @@ public class IDGenerator {
     private static int id = 0;
 
 
-    private static ArrayList<String> currentIDs = new ArrayList<>();
-
     /**
      * Creates a new ID but incrementing the static variable by 1.
      * @return The new ID as a string.
      */
     public String newID() {
         String newID = Integer.toString(id++);
-        currentIDs.add(newID);
         return newID;
     }
+
+    /**
+     * Sets the last ID used, to the string lastID.
+     * @param lastID A string ID.
+     */
+    public void setLastID(String lastID) {
+        id = Integer.parseInt(lastID);
+    }
+
 }
