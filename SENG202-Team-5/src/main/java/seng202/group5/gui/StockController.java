@@ -10,14 +10,30 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import seng202.group5.Order;
 
 import java.io.IOException;
 
 public class StockController extends GeneralController {
 
 
+    @FXML
+    private TableView<Order> stockTable;
 
+    @FXML
+    private TableColumn rowIngredient;
+
+    @FXML
+    private TableColumn rowQuantity;
+
+    @FXML
+    private TableColumn rowUnits;
+
+    @FXML
+    private TableColumn rowCategory;
 
 
 }
