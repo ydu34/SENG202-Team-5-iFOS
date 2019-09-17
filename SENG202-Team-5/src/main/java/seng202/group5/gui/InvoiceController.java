@@ -16,6 +16,7 @@ import seng202.group5.exceptions.InsufficientCashException;
 
 import javax.swing.text.html.ListView;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class InvoiceController extends GeneralController {
@@ -45,7 +46,7 @@ public class InvoiceController extends GeneralController {
     public void payCash() {
         if (order != null) {
             try {
-                ArrayList<Money> change = finance.pay(total, payment, 300);
+                ArrayList<Money> change = finance.pay(total, payment, LocalDateTime.now());
                 String display = "";
                 Money totalChange = Money.parse("NZD 0.00");
                 for (Money money: change) {

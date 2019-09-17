@@ -1,41 +1,32 @@
 package seng202.group5;
 import org.joda.money.Money;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import seng202.group5.exceptions.InsufficientCashException;
-import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 
 public class TransactionTest {
     private Transaction testTransaction;
-    private DateTime testTime;
+    private LocalDateTime testDateTime;
     @BeforeEach
     public void init() {
-        testTime = DateTime.now();
-        testTransaction = new Transaction(testTime, 300, Money.parse("NZD 20.00"), Money.parse("NZD 30.00"));
+        testDateTime = LocalDateTime.now();
+        testTransaction = new Transaction(testDateTime, Money.parse("NZD 20.00"), Money.parse("NZD 30.00"));
     }
 
     @Test
     public void testGetDate(){
-        assertEquals(testTime, testTransaction.getDate());
-
-    }
-
-    @Test
-    public void testGetTime(){
-        assertEquals(300, testTransaction.getTime());
+        assertEquals(testDateTime, testTransaction.getDateTime());
 
     }
 
     @Test
     public void testGetChange(){
         assertEquals(Money.parse("NZD 20.00"), testTransaction.getChange());
-
     }
 
     @Test

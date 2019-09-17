@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -32,6 +33,8 @@ public class Order {
      **/
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
+    private LocalDateTime dateTimeProcessed;
+
     /**
      * The unique ID of the order given by the database
      **/
@@ -55,6 +58,7 @@ public class Order {
      * @param tempTotalCost  The total cost of an existing order.
      * @param tempID         The unique ID of the order.
      */
+    @Deprecated(since = "Replaced with version that edits stock, THIS VERSION BREAKS OTHER CODE")
     public Order(HashMap<MenuItem, Integer> tempOrderItems, Money tempTotalCost, String tempID) {
         orderItems = tempOrderItems;
         totalCost = tempTotalCost;
@@ -130,7 +134,7 @@ public class Order {
         orderItems.put(item, quantity);
 
         // Add price of item to total cost
-        totalCost.plus(item.getMarkupCost().multipliedBy(quantity));
+        totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(quantity));
         return true;
     }
 
@@ -156,7 +160,7 @@ public class Order {
             orderItems.remove(item);
 
             // Minuses the price of the item from the total cost
-            totalCost.minus(item.getMarkupCost());
+            totalCost = totalCost.minus(item.getMarkupCost());
             return true;
         } else {
             return false;
@@ -175,7 +179,7 @@ public class Order {
         if (orderItems.containsKey(item)) {
             int currentNum = orderItems.get(item);
             int diff = quantity - currentNum;
-            totalCost.plus(item.getMarkupCost().multipliedBy(diff));
+            totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(diff));
             orderItems.replace(item, quantity);
             return true;
         } else {
@@ -217,6 +221,15 @@ public class Order {
      */
     public Stock getStock() {
         return temporaryStock;
+    }
+
+
+    public LocalDateTime getDateTimeProcessed() {
+        return dateTimeProcessed;
+    }
+
+    public void setDateTimeProcessed(LocalDateTime dateProcessed) {
+        this.dateTimeProcessed = dateProcessed;
     }
 
 }

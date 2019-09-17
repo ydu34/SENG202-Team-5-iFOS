@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seng202.group5.MenuItem;
 import seng202.group5.Recipe;
 
 import java.io.IOException;
@@ -20,6 +21,10 @@ import java.io.IOException;
 public class SelectionController {
 
 
+    @FXML
+    public Text costText;
+    @FXML
+    public Text recipeText;
     Recipe recipe;
     public OrderController order;
     @FXML
@@ -48,6 +53,9 @@ public class SelectionController {
         oldStage.setScene(new Scene(sampleScene, 821, 628));
     }
 
+    @FXML
+    public MenuItem item;
+
 
     /**
      * Changes screen to the add extra ingredient screen.
@@ -64,8 +72,12 @@ public class SelectionController {
      * @param
      */
 
-    public void setRecipe(Recipe someRecipe){
-        recipe = someRecipe;
+    public void setMenuItem(MenuItem newItem){
+        System.out.println(newItem);
+        item = newItem;
+        costText.setText(item.calculateFinalCost().toString());
+        recipeText.setText(item.getRecipe().getRecipeText());
+
 
     }
 

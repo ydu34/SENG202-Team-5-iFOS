@@ -35,6 +35,14 @@ public class GeneralController {
     //public abstract void initialize();
 
     /**
+     * A function which can be overwritten to initialize a controller with the
+     * AppEnvironment set, which is not available with the regular initialize method
+     */
+    public void pseudoInitialize() {
+        return;
+    }
+
+    /**
      * This method is called when the screen needs to change to a different one
      * @param event
      * @param scenePath
@@ -46,6 +54,7 @@ public class GeneralController {
             sampleScene = sampleLoader.load();
             GeneralController controller = sampleLoader.getController();
             controller.setAppEnvironment(appEnvironment);
+            controller.pseudoInitialize();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,9 @@ package seng202.group5;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,11 +13,17 @@ import java.util.HashMap;
  * Till class keeps track of held denominations value and how many are held. Has methods to calculate the total amount
  * held and methods to calculate change.
  *
- * @author James Kwok
+ * @author James Kwok, Yu Duan
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Till {
 
     private HashMap<Money, Integer> denominations;
+
+    public Till() {
+        denominations = new HashMap<>();
+    }
 
 
     public Till(ArrayList<Money> moneyList) {

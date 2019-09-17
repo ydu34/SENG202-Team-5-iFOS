@@ -6,11 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.AppEnvironment;
-import seng202.group5.Ingredient;
-import seng202.group5.Stock;
+import seng202.group5.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class GuiManager extends Application {
 
@@ -32,6 +32,25 @@ public class GuiManager extends Application {
         Stock stock = new Stock();
         stock.addNewIngredient(test);
         thing.setStock(stock);
+        thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
+
+        MenuItem testItem = new MenuItem(
+                "Burger Item",
+                new Recipe("Burger",
+                           "Add items to burger",
+                           new HashMap<>() {{
+                               put(new Ingredient("Bun", "buns", "Bread", "ARZ4O2", Money.parse("NZD 1.2")), 2);
+                               put(new Ingredient("Patty", "patties", "Meat", "5ES240", Money.parse("NZD 3.4")), 1);
+                           }}),
+                Money.parse("NZD 5.80"),
+                "14328",
+                true
+        );
+        Order tempOrder = new Order(new Stock());
+        tempOrder.addItem(testItem, 4);
+        thing.getHistory().getTransactionHistory().put(tempOrder.getID(),
+                                                       tempOrder);
+        tempOrder.setDateTimeProcessed(LocalDateTime.now());
         return thing;
     }
 

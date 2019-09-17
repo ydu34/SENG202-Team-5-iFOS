@@ -18,6 +18,7 @@ class AppEnvironmentTest {
     Ingredient beefPattie;
     Ingredient lettuce;
     Ingredient tomatoSauce;
+    String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
 
     @BeforeEach
     void init() {
@@ -48,7 +49,7 @@ class AppEnvironmentTest {
         stock.getIngredients().put("1", ing1);
         stock.getIngredients().put("2", ing2);
 
-        handler.objectToXml(Stock.class, stock, "stockTest.xml");
+        handler.objectToXml(Stock.class, stock, "stockTest.xml", testDirectory);
         handler.setStock(stock);
 
         MenuManager menuManager = new MenuManager();
@@ -56,7 +57,7 @@ class AppEnvironmentTest {
         menuManager.getItemList().put("1", cheeseBurger);
 
 
-        handler.objectToXml(MenuManager.class, menuManager, "menuTest.xml");
+        handler.objectToXml(MenuManager.class, menuManager, "menuTest.xml", testDirectory);
         HashMap<String, MenuItem> menuItems = menuManager.getItemList();
         handler.handleMenu(menuItems);
         System.out.print(menuItems.get("1").getRecipe().getIngredientsAmount());
@@ -69,7 +70,7 @@ class AppEnvironmentTest {
         Order order = new Order(orderItems, cheeseBurger.calculateFinalCost(), "1");
         History history = new History();
         history.getTransactionHistory().put("1", order);
-        handler.objectToXml(History.class, history, "historyTest.xml");
+        handler.objectToXml(History.class, history, "historyTest.xml", testDirectory);
     }
 
     // Test only works if stockTest.xml exists before running tests.

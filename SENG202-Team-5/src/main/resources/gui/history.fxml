@@ -46,11 +46,11 @@
                   prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
                   GridPane.vgrow="ALWAYS">
         <columns>
-          <TableColumn prefWidth="161.0" text="ID" />
-          <TableColumn minWidth="0.0" prefWidth="158.0" text="Date" />
-            <TableColumn prefWidth="160.0" text="Time" />
-            <TableColumn prefWidth="158.0" text="Order " />
-            <TableColumn prefWidth="158.0" text="Action" />
+            <TableColumn fx:id="rowID" editable="false" prefWidth="161.0" text="ID"/>
+            <TableColumn fx:id="rowDate" editable="false" minWidth="0.0" prefWidth="158.0" text="Date"/>
+            <TableColumn fx:id="rowTime" editable="false" prefWidth="160.0" text="Time"/>
+            <TableColumn fx:id="rowOrder" editable="false" prefWidth="158.0" text="Order "/>
+            <TableColumn fx:id="rowAction" editable="false" prefWidth="158.0" text="Action"/>
         </columns>
       </TableView>
        <GridPane>
@@ -68,7 +68,8 @@
                            onShowing="#setStartDateUpdater" promptText="Start Date"/>
                <DatePicker fx:id="historyEndDatePicker" onAction="#updateSelectableStartDates"
                            onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1"/>
-               <TextField fx:id="historySearchbar" promptText="Order ID search bar" GridPane.columnIndex="3"/>
+               <TextField fx:id="historySearchbar" onKeyTyped="#updateVisibleOrders" promptText="Order ID search bar"
+                          GridPane.columnIndex="3"/>
            </children>
            <GridPane.margin>
                <Insets/>

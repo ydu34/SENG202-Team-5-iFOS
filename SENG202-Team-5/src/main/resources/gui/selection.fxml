@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -14,7 +21,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.SelectionController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.SelectionController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="633.0" minWidth="10.0" prefWidth="633.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.0" minWidth="10.0" prefWidth="188.0" />
@@ -70,11 +77,12 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="186.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="253.0" minHeight="10.0" prefHeight="253.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="186.0" minHeight="0.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="180.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="253.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <ImageView fx:id="item" fitHeight="164.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                <ImageView fx:id="image" fitHeight="164.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <effect>
                         <Blend />
                     </effect>
@@ -84,7 +92,7 @@
                 </ImageView>
                 <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="144.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets bottom="75.0" left="75.0" top="30.0" />
+                        <Insets left="75.0" top="30.0" />
                     </GridPane.margin>
                 </Button>
                 <ComboBox prefHeight="40.0" prefWidth="142.0" promptText="Quantity " GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -92,21 +100,13 @@
                         <Insets left="75.0" top="30.0" />
                     </GridPane.margin>
                 </ComboBox>
-                <Label prefHeight="38.0" prefWidth="131.0" text="    Cost " GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                <Label prefHeight="38.0" prefWidth="131.0" text="    Cost " GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets bottom="30.0" top="10.0" />
                     </GridPane.margin>
                     <font>
                         <Font size="24.0" />
                     </font>
-                </Label>
-                <Label text="\$100.00" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                    <font>
-                        <Font size="26.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets bottom="30.0" right="100.0" top="10.0" />
-                    </GridPane.margin>
                 </Label>
             <GridPane>
               <columnConstraints>
@@ -123,6 +123,11 @@
                   </TextFlow>
                </children>
             </GridPane>
+            <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <children>
+                  <Text fx:id="costText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="28.7294921875" />
+               </children>
+            </TextFlow>
             </children>
         </GridPane>
         <GridPane prefHeight="364.0" prefWidth="633.0" GridPane.rowIndex="1">
@@ -140,11 +145,11 @@
                     </font>
                 </Label>
             <ListView prefHeight="253.0" prefWidth="622.0" GridPane.rowIndex="1" />
-            <Label prefHeight="60.0" prefWidth="257.0" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets left="15.0" />
-               </GridPane.margin>
-            </Label>
+            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Text fx:id="recipeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+               </children>
+            </TextFlow>
             </children>
         </GridPane>
     </children>
