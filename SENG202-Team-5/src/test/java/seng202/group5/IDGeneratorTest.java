@@ -44,4 +44,12 @@ public class IDGeneratorTest {
         }
     }
 
+    @Test
+    public void testSetId() {
+        String lastID = "1";
+        generator.setLastID(lastID);
+
+        assertTrue(generator.newID() != lastID);
+    }
+
 }
