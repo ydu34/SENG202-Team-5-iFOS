@@ -78,7 +78,6 @@ public class Finance {
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
     public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, LocalDateTime datetime) throws InsufficientCashException {
-        //TODO the time probably needs to be a long instead
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
         for (Money money: amountPayed)

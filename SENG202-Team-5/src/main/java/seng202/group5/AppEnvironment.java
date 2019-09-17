@@ -37,6 +37,7 @@ public class AppEnvironment {
         stock = new Stock();
         history = new History();
         menuManager = new MenuManager();
+        orderManager = new OrderManager(stock, history);
         till = new Till();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");

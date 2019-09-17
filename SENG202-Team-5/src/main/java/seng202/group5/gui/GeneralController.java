@@ -13,7 +13,6 @@ import seng202.group5.AppEnvironment;
 import java.io.IOException;
 
 public class GeneralController {
-//public abstract class GeneralController {
 
     private AppEnvironment appEnvironment;
 
@@ -31,8 +30,6 @@ public class GeneralController {
 
     @FXML
     private Button launchHistoryScreenButton;
-
-    //public abstract void initialize();
 
     /**
      * A function which can be overwritten to initialize a controller with the
