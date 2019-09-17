@@ -32,7 +32,7 @@ public class HistoryController extends GeneralController {
     private TextField historySearchbar;
 
     @FXML
-    private TableView<Order> historyTable;
+    private TableView historyTable;
 
     @FXML
     private TableColumn rowID;
@@ -62,7 +62,9 @@ public class HistoryController extends GeneralController {
         });
         rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
 
-        historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
+        for (Order order : super.getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values()) {
+            historyTable.getItems().add(order);
+        }
     }
 
     /**
@@ -178,7 +180,7 @@ public class HistoryController extends GeneralController {
         } else {
             lastTime = LocalDateTime.of(lastDate, LocalTime.MAX);
         }
-        Collection<Order> historyValues = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values();
+        Collection<Order> historyValues = super.getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values();
         historyTable.getItems().removeAll(historyValues);
         String searchString = historySearchbar.getCharacters().toString();
         for (Order order : historyValues) {

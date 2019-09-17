@@ -133,18 +133,9 @@ public class AdminController extends GeneralController {
         if (selectedFiles != null) {
             for (int i = 0; i < selectedFiles.size(); i++) {
                 String fileName = selectedFiles.get(i).getName();
-                switch(fileName) {
-                    case "stock.xml": getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "history.xml": getAppEnvironment().historyXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "finance.xml": getAppEnvironment().financeXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "menu.xml": getAppEnvironment().menuXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "till.xml": getAppEnvironment().tillXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                }
+
+                System.out.println(selectedFiles.get(i).getParent());
+                getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getParent());
 
             }
             clearList();

@@ -35,7 +35,7 @@ public class OrderController extends GeneralController {
     public Recipe testRecipe;
 
     @FXML
-    private Label ingredientText;
+    private Text ingredientText;
 
     @FXML
     private Button itemButton;
@@ -47,7 +47,7 @@ public class OrderController extends GeneralController {
     @FXML
     private Recipe testRecipe2;
     @FXML
-    private Label totalCostDisplay;
+    private Text totalCostDisplay;
     private String ingredient;
     @FXML
     private CheckBox vegan;
@@ -202,8 +202,6 @@ public class OrderController extends GeneralController {
             SelectionController controller = selectionLoader.getController();
             System.out.println(item.getItemName());
             controller.setMenuItem(item);
-            controller.setAppEnvironment(getAppEnvironment());
-            controller.pseudoInitialize();
         } catch (IOException e) {
             e.printStackTrace();
         }
