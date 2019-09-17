@@ -20,5 +20,12 @@ public class AddExtraIngredientController extends GeneralController {
         changeScreen(actionEvent, "/gui/selection.fxml");
     }
 
+    /**
+     * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
+     */
+    public void updateItemIngredients(javafx.event.ActionEvent actionEvent) {
+        System.out.println("Implement me!");
+    }
+
 }
 
