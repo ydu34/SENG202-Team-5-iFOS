@@ -13,6 +13,7 @@ import org.joda.money.Money;
 import seng202.group5.Finance;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.exceptions.NoOrderException;
 
 import javax.swing.text.html.ListView;
 import java.io.IOException;
@@ -33,33 +34,42 @@ public class InvoiceController extends GeneralController {
     @FXML
     private Text orderDisplay;
 
-    private Order order;
-
     private Money totalCost;
-
-    private Finance finance;
 
     private ArrayList<Money> payment = new ArrayList<>();
 
     private Money total = Money.parse("NZD 0");
 
+    public void pseudoInitialize() {
+        try {
+            totalCost = super.getAppEnvironment().getOrderManager().getOrder().getTotalCost();
+        } catch (NoOrderException ignored) {
+            totalCost = Money.parse("NZD 0");
+        }
+        totalCostDisplay.setText("Total Cost: "+ totalCost);
+    }
     public void payCash() {
-        if (order != null) {
-            try {
-                ArrayList<Money> change = finance.pay(total, payment, LocalDateTime.now());
-                String display = "";
-                Money totalChange = Money.parse("NZD 0.00");
-                for (Money money: change) {
-                    display += money + "\n";
-                    totalChange = totalChange.plus(money);
-                }
-                changeDisplay.setText(display);
-                totalChangeDisplay.setText("Change: " + totalChange);
-            } catch (InsufficientCashException e) {
-                changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: "+total);
+        try {
+            if (super.getAppEnvironment().getOrderManager().getOrder().getTotalCost().equals(Money.parse("NZD 0.00"))) {
+                throw new NoOrderException("No order exists to get");
+            } else {
+                System.out.println((super.getAppEnvironment().getOrderManager().getOrder().getTotalCost()));
+                try {
+                    ArrayList<Money> change = super.getAppEnvironment().getFinance().pay(totalCost, payment, LocalDateTime.now());
+                    String display = "";
+                    Money totalChange = Money.parse("NZD 0.00");
+                    for (Money money : change) {
+                        display += money + "\n";
+                        totalChange = totalChange.plus(money);
+                    }
+                    changeDisplay.setText(display);
+                    totalChangeDisplay.setText("Change: " + totalChange);
+                } catch (InsufficientCashException e) {
+                    changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
 
+                }
             }
-        } else {
+        } catch (NoOrderException e) {
             changeDisplay.setText("There is no order to pay for.");
             total = Money.parse("NZD 0");
 
@@ -67,12 +77,6 @@ public class InvoiceController extends GeneralController {
 
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-        totalCost = order.getTotalCost();
-        totalCostDisplay.setText("Total Cost: " + totalCost);
-
-    }
 
     public void clearPayment() {
         total = Money.parse("NZD 0");
@@ -91,9 +95,10 @@ public class InvoiceController extends GeneralController {
     @FXML
     private void cancelOrder() {
         clearPayment();
-        totalCostDisplay.setText("Total Cost: <amount>");
+        totalCost = Money.parse("NZD 0");
+        totalCostDisplay.setText("Total Cost: "+ totalCost);
         orderDisplay.setText("");
-        order = null;
+        super.getAppEnvironment().getOrderManager().newOrder();
     }
 
     @FXML
