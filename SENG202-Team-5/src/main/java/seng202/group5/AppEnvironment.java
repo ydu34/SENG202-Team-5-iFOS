@@ -187,6 +187,7 @@ public class AppEnvironment {
 
     public void setStock(Stock stock) {
         this.stock = stock;
+        orderManager.setStock(stock);
     }
 
     public History getHistory() {
@@ -195,6 +196,10 @@ public class AppEnvironment {
 
     public Finance getFinance() {
         return finance;
+    }
+
+    public MenuManager getMenuManager() {
+        return menuManager;
     }
 
     public HashSet<String> getAcceptedFiles() {

@@ -11,6 +11,7 @@ import seng202.group5.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class GuiManager extends Application {
 
@@ -24,7 +25,6 @@ public class GuiManager extends Application {
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
         primaryStage.setScene(new Scene(root, 800, 600));
-        System.out.println(primaryStage.getScene().getHeight());
         primaryStage.show();
     }
 
@@ -35,6 +35,33 @@ public class GuiManager extends Application {
         stock.addNewIngredient(test);
         thing.setStock(stock);
         thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
+
+        Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
+        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
+        HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+        }};
+        HashSet<DietEnum> ingredientInfo2 = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+            add(DietEnum.VEGETARIAN);
+        }};
+        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 10"), ingredientInfo1);
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 5"), ingredientInfo2);
+        HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+            add(DietEnum.VEGETARIAN);
+        }};
+        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", "12", Money.parse("NZD 10"), ingredientInfo3);
+        testRecipe.addIngredient(chickenpatty, 1);
+        testRecipe.addIngredient(cheese, 1);
+        testRecipe2.addIngredient(vegePatty, 1);
+
+        stock.addNewIngredient(chickenpatty, 100);
+        stock.addNewIngredient(cheese, 200);
+        stock.addNewIngredient(vegePatty, 150);
+
+        thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1221", true);
+        thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
 
         MenuItem testItem = new MenuItem(
                 "Burger Item",
@@ -50,9 +77,9 @@ public class GuiManager extends Application {
         );
         Order tempOrder = new Order(new Stock());
         tempOrder.addItem(testItem, 4);
+        tempOrder.setDateTimeProcessed(LocalDateTime.now());
         thing.getHistory().getTransactionHistory().put(tempOrder.getID(),
                                                        tempOrder);
-        tempOrder.setDateTimeProcessed(LocalDateTime.now());
         return thing;
     }
 
