@@ -1,5 +1,5 @@
 /**
- * author @ Shivin Gaba
+ * @author Shivin Gaba, Michael Morgoun
  */
 package seng202.group5.gui;
 
@@ -35,5 +35,13 @@ public class StockController extends GeneralController {
     @FXML
     private TableColumn rowCategory;
 
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button modifyButton;
+
+    @FXML
+    private Button removeButton;
 
 }
