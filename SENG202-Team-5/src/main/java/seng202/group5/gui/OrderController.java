@@ -193,6 +193,7 @@ public class OrderController extends GeneralController {
      * @param scenePath
      */
     public void selectionScreen(ActionEvent event, String scenePath) {
+        //TODO this should be refactored somehow so it is using the code in GeneralController instead of being a copy
         Parent selectionScene = null;
         try {
             FXMLLoader selectionLoader = new FXMLLoader(getClass().getResource(scenePath));
@@ -206,7 +207,9 @@ public class OrderController extends GeneralController {
             e.printStackTrace();
         }
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        oldStage.setScene(new Scene(selectionScene, 821, 628));
+        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
+        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
+        oldStage.setScene(new Scene(selectionScene, prevWidth, prevHeight));
 
     }
 

@@ -22,8 +22,9 @@ public class GuiManager extends Application {
         //primaryStage.setTitle("Selection Screen");
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
-        //controller.pseudoInitialize();
+        controller.pseudoInitialize();
         primaryStage.setScene(new Scene(root, 800, 600));
+        System.out.println(primaryStage.getScene().getHeight());
         primaryStage.show();
     }
 

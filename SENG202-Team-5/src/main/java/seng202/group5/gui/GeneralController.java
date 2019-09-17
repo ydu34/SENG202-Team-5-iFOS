@@ -56,7 +56,9 @@ public class GeneralController {
             e.printStackTrace();
         }
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        oldStage.setScene(new Scene(sampleScene, 821, 628));
+        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
+        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
+        oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
     }
 
     /**
