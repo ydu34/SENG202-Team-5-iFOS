@@ -37,6 +37,7 @@ public class AppEnvironment {
         stock = new Stock();
         history = new History();
         menuManager = new MenuManager();
+        till = new Till();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
@@ -122,11 +123,28 @@ public class AppEnvironment {
         stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", fileDirectory);
     }
 
+    public void historyXmlToObject(String fileDirectory) {
+        history = (History) xmlToObject(History.class, history, "history.xml", fileDirectory);
+    }
+
+    public void financeXmlToObject(String fileDirectory) {
+        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", fileDirectory);
+    }
+
+    public void menuXmlToObject(String fileDirectory) {
+        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+    }
+
+    public void tillXmlToObject(String fileDirectory) {
+        till = (Till) xmlToObject(Till.class, till, "till.xml", fileDirectory);
+    }
+
     public void allObjectsToXml(String fileDirectory) {
         objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
         objectToXml(History.class, history, "history.xml", fileDirectory);
         objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
         objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+        objectToXml(Till.class, till, "till.xml", fileDirectory);
     }
 
     /**
@@ -174,6 +192,9 @@ public class AppEnvironment {
         return history;
     }
 
+    public Finance getFinance() {
+        return finance;
+    }
 
     public HashSet<String> getAcceptedFiles() {
         return acceptedFiles;

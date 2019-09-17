@@ -2,11 +2,13 @@ package seng202.group5;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
+import seng202.group5.adapters.LocalDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class Order {
      **/
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
+    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
     private LocalDateTime dateTimeProcessed;
 
     /**
