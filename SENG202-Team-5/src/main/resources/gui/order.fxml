@@ -22,55 +22,45 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-          minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
-          xmlns="http://javafx.com/javafx/8" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController" fx:id="x">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
         <GridPane>
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="800.0" prefWidth="800.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="800.0" prefWidth="800.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="540.0"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="540.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
-                        <TabPane prefHeight="540.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE"
-                                 BorderPane.alignment="CENTER">
+                        <TabPane prefHeight="540.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                             <tabs>
                                 <Tab text="Main">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
-                                                <Button fx:id="itemButton" layoutX="14.0" layoutY="14.0"
-                                                        mnemonicParsing="false" onAction="#getIngredients"
-                                                        prefHeight="50.0" prefWidth="126.0" text="Item_1"/>
-                                                <Button fx:id="itemButton2" layoutX="195.0" layoutY="14.0"
-                                                        mnemonicParsing="false" onAction="#getIngredients"
-                                                        prefHeight="50.0" prefWidth="126.0" text="item_2"/>
+                                                <Button fx:id="itemButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="Item_1" />
+                                                <Button fx:id="itemButton2" layoutX="195.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="item_2" />
                                             </children>
                                         </AnchorPane>
                                     </content>
                                 </Tab>
                                 <Tab text="Sides">
                                     <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                    prefWidth="200.0"/>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                     </content>
                                 </Tab>
                                 <Tab text="Beverages ">
                                     <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                                                    prefWidth="200.0"/>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                     </content>
                                 </Tab>
                             </tabs>
@@ -81,35 +71,31 @@
                             <children>
                                 <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Sort by">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Action 1"/>
-                                        <MenuItem mnemonicParsing="false" text="Action 2"/>
+                                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                                        <MenuItem mnemonicParsing="false" text="Action 2" />
                                     </items>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </MenuButton>
-                                <CheckBox fx:id="vegan" mnemonicParsing="false" prefHeight="18.0" prefWidth="140.0"
-                                          text="Vegan">
+                                <CheckBox fx:id="vegan" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0" prefWidth="140.0" text="Vegan">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </CheckBox>
-                                <CheckBox fx:id="vegetarian" mnemonicParsing="false" prefHeight="18.0" prefWidth="140.0"
-                                          text="Vegetarian">
+                                <CheckBox fx:id="vegetarian" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0" prefWidth="140.0" text="Vegetarian">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </CheckBox>
-                                <CheckBox fx:id="glutenFree" mnemonicParsing="false" prefHeight="18.0" prefWidth="140.0"
-                                          text="Gluten Free">
+                                <CheckBox fx:id="glutenFree" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0" prefWidth="140.0" text="Gluten Free">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </CheckBox>
-                                <Button fx:id="checkDietryInfo" mnemonicParsing="false" onAction="#showItems"
-                                        prefWidth="140.0" text="Confirm">
+                                <Button fx:id="checkDietryInfo" mnemonicParsing="false" onAction="#showItems" prefWidth="140.0" text="Confirm">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Button>
                      </children>
@@ -118,45 +104,38 @@
                     <right>
                         <VBox maxWidth="-Infinity" prefHeight="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" text="Ingredients"
-                                       textAlignment="CENTER" wrapText="true">
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" text="Ingredients" textAlignment="CENTER" wrapText="true">
                                     <font>
-                                        <Font size="24.0"/>
+                                        <Font size="24.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Label fx:id="ingredientText" alignment="CENTER" contentDisplay="CENTER"
-                                       maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                       prefHeight="40.0" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
+                                <Label fx:id="ingredientText" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
                                     <font>
-                                        <Font size="18.0"/>
+                                        <Font size="18.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                                       prefHeight="40.0" text="Cost:" textAlignment="CENTER" wrapText="true">
+                                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Cost:" textAlignment="CENTER" wrapText="true">
                                     <font>
-                                        <Font size="18.0"/>
+                                        <Font size="18.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Label fx:id="totalCostDisplay" alignment="CENTER" contentDisplay="CENTER"
-                                       maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Text">
+                                <Label fx:id="totalCostDisplay" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="40.0" text="Text">
                                     <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Button fx:id="launchSelectionScreenButton" alignment="CENTER" contentDisplay="CENTER"
-                                        mnemonicParsing="false" onAction="#launchSelectionScreen" prefHeight="40.0"
-                                        text="Select item ">
+                                <Button fx:id="launchSelectionScreenButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#launchSelectionScreen" prefHeight="40.0" text="Select item ">
                                     <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Button>
                             </children>
@@ -165,35 +144,21 @@
                 </BorderPane>
             <GridPane GridPane.rowIndex="1">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0"
-                                     prefWidth="160.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0"
-                                     prefWidth="160.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0"
-                                     prefWidth="160.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0"
-                                     prefWidth="160.0"/>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0"
-                                     prefWidth="160.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0" prefWidth="160.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0" prefWidth="160.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0" prefWidth="160.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0" prefWidth="160.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="160.0" prefWidth="160.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES"/>
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                   <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-                           mnemonicParsing="false" prefHeight="60.0" text="Order" GridPane.hgrow="ALWAYS"/>
-                   <Button fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                           minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen"
-                           prefHeight="60.0" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
-                   <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                           minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0"
-                           text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS"/>
-                   <Button fx:id="launchAdminScreenButtton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                           minHeight="-Infinity" mnemonicParsing="false" onAction="#launchAdminScreen" prefHeight="60.0"
-                           text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS"/>
-                   <Button fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                           minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen"
-                           prefHeight="60.0" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS"/>
+                   <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" text="Order" GridPane.hgrow="ALWAYS" />
+                   <Button fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                   <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
+                   <Button fx:id="launchAdminScreenButtton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchAdminScreen" prefHeight="60.0" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+                   <Button fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
                </children>
             </GridPane>
          </children>

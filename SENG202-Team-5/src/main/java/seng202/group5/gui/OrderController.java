@@ -64,11 +64,13 @@ public class OrderController extends GeneralController {
     private ArrayList<MenuItem> allItems;
     private ArrayList<MenuItem> filteredItems;
 
-//    @FXML
-//    public void initialize() {
-//        make_object();
-//        showItems(allItems);
-//    }
+    /*
+    @Override
+    public void pseudoInitialize() {
+        make_object();
+        showItems(new ActionEvent());
+    }
+    */
 
     public void checkDietryInfo(ActionEvent event) {
         // get values of checkboxes here

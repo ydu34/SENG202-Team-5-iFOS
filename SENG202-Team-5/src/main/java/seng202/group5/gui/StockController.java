@@ -16,4 +16,8 @@ import java.io.IOException;
 
 public class StockController extends GeneralController {
 
+
+
+
+
 }
