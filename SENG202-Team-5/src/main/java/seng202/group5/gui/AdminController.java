@@ -60,19 +60,9 @@ public class AdminController extends GeneralController {
 
     private List<File> selectedFiles;
 
-
-    public void changeScreen(ActionEvent event, String scenePath) {
-        Parent sampleScene = null;
-        try {
-            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (sampleScene != null) {
-            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            oldStage.setScene(new Scene(sampleScene, 821, 628));
-        }
-
+    @Override
+    public void pseudoInitialize() {
+        finance = getAppEnvironment().getFinance();
     }
 
     public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
