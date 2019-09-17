@@ -18,7 +18,7 @@ import seng202.group5.Recipe;
 
 import java.io.IOException;
 
-public class SelectionController extends GeneralController {
+public class SelectionController {
 
 
     @FXML
@@ -39,6 +39,19 @@ public class SelectionController extends GeneralController {
     @FXML
     private Button closeSelectionScreenButton;
 
+    public void changeScreen(ActionEvent event, String scenePath, String windowTitle){
+
+        Parent sampleScene = null;
+        try {
+            sampleScene = FXMLLoader.load(getClass().getResource(scenePath));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        oldStage.setTitle(windowTitle);
+        oldStage.setScene(new Scene(sampleScene, 821, 628));
+    }
 
     @FXML
     public MenuItem item;
@@ -50,7 +63,7 @@ public class SelectionController extends GeneralController {
      * @param actionEvent The action of clicking or pressing the button.
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml", "Modifying Item");
     }
 
     /**
@@ -74,6 +87,6 @@ public class SelectionController extends GeneralController {
     }
 
     public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/order.fxml");
+        changeScreen(actionEvent, "/gui/order.fxml", "Order");
     }
 }
