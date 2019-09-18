@@ -14,12 +14,11 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="833.0" minHeight="10.0" prefHeight="833.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="355.0" minHeight="0.0" prefHeight="52.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="997.0" minHeight="0.0" prefHeight="997.0" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.vgrow="ALWAYS">
         <columns>
           <TableColumn prefWidth="614.0" text="Ingredient" />
             <TableColumn prefWidth="425.0" text="Categories" />
@@ -27,7 +26,7 @@
             <TableColumn prefWidth="310.0" text="Selected" />
         </columns>
       </TableView>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <BorderPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="800.0" prefHeight="60.0" prefWidth="800.0" GridPane.rowIndex="1">
          <right>
             <Button mnemonicParsing="false" onAction="#updateItemIngredients" text="Confirm" translateX="-60.0" BorderPane.alignment="CENTER">
                <font>
@@ -36,7 +35,7 @@
             </Button>
          </right>
          <left>
-            <Button mnemonicParsing="false" text="Confirm" translateX="60.0" BorderPane.alignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#launchSelectionScreen" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
