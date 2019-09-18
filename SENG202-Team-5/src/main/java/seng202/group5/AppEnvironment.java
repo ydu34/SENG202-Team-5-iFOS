@@ -172,7 +172,8 @@ public class AppEnvironment {
 
             change = finance.pay(order.getTotalCost(),
                                  denominations,
-                                 order.getDateTimeProcessed());
+                                 order.getDateTimeProcessed(),
+                                 order.getID());
 
         } catch (NoOrderException e) {
             e.printStackTrace();

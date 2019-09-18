@@ -1,9 +1,6 @@
 package seng202.group5;
 
 import org.joda.money.Money;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Days;
 
 import java.time.LocalDateTime;
 
@@ -74,10 +71,11 @@ public class Finance {
      * @param totalCost   the total cost of the order
      * @param amountPayed a list of Money representing the coins payed
      * @param datetime        the Date and time the order occurred at
+     * @param orderID   the ID of the order that is being paid for
      * @return a list of Money representing coins to give as change in descending size order
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
-    public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, LocalDateTime datetime) throws InsufficientCashException {
+    public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, LocalDateTime datetime, String orderID) throws InsufficientCashException {
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
         for (Money money: amountPayed)
@@ -92,7 +90,7 @@ public class Finance {
         {
             changeSum = changeSum.plus(money);
         }
-        transactionHistory.put("test" + tempId++, new Transaction(datetime, changeSum, totalCost));
+        transactionHistory.put("test" + tempId++, new Transaction(datetime, changeSum, totalCost, orderID));
         return change;
     }
 
