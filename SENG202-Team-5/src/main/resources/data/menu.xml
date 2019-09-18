@@ -19,7 +19,7 @@
             </value>
         </entry>
         <entry>
-            <key>1221</key>
+            <key>1220</key>
             <value>
                 <itemName>Chicken Burger</itemName>
                 <recipe>
@@ -33,7 +33,7 @@
                 </recipe>
                 <markupCost/>
                 <generator/>
-                <id>1221</id>
+                <id>1220</id>
                 <inMenu>true</inMenu>
             </value>
         </entry>

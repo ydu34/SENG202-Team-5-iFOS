@@ -49,7 +49,6 @@ public class Ingredient {
     /**
      * A HashSet to store dietary information about the recipe
      */
-    @XmlTransient
     private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
     Ingredient() {
