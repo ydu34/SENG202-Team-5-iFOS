@@ -2,6 +2,15 @@
 <stock>
     <ingredients>
         <entry>
+            <key>12</key>
+            <value id="12">
+                <name>chicken</name>
+                <unit>kg</unit>
+                <category>meat</category>
+                <price/>
+            </value>
+        </entry>
+        <entry>
             <key>ABC123</key>
             <value id="ABC123">
                 <name>test</name>
@@ -12,6 +21,10 @@
         </entry>
     </ingredients>
     <ingredientStock>
+        <entry>
+            <key>12</key>
+            <value>100</value>
+        </entry>
         <entry>
             <key>ABC123</key>
             <value>0</value>
