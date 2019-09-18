@@ -85,7 +85,7 @@ public class StockController extends GeneralController {
             stage.setTitle("Add An Ingredient");
             stage.setScene(new Scene(root, 600, 200));
 
-            //stage.initOwner();
+            //stage.initOwner(primaryStage);
 
             stage.show();
         }

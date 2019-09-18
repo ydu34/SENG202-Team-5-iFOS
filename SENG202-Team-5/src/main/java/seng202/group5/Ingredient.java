@@ -55,6 +55,14 @@ public class Ingredient {
     Ingredient() {
     }
 
+    public Ingredient(String tempName, String tempUnit, String tempCategory, Money tempPrice) {
+        name = tempName;
+        unit = tempUnit;
+        category = tempCategory;
+        price = tempPrice;
+        dietaryInformation = new HashSet<>();
+    }
+
     public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice) {
 
         name = tempName;
