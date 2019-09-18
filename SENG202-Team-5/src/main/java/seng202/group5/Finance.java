@@ -93,7 +93,7 @@ public class Finance {
         }
         Transaction transaction = new Transaction(datetime, changeSum, totalCost, orderID);
         transactionHistory.put(transaction.getTransactionID(), transaction);
-        //TODO add monney into till
+        //TODO add money into till
         return change;
     }
 
@@ -107,7 +107,9 @@ public class Finance {
     public ArrayList<Money> totalCalculator(LocalDateTime startDate, LocalDateTime endDate) {
         Money total = Money.parse("NZD 0");
         for (Transaction order : transactionHistory.values()) {
-            if (order.getDateTime().compareTo(startDate) >= 0 && order.getDateTime().compareTo(endDate) <= 0) {
+            if (order.getDateTime().compareTo(startDate) >= 0 &&
+                    order.getDateTime().compareTo(endDate) <= 0 &&
+                    !order.getRefunded()) {
                 total = total.plus(order.getTotalPrice());
             }
         }
@@ -133,8 +135,6 @@ public class Finance {
 
         Money minimin = Money.parse("NZD 0.09");
         while (change.isGreaterThan(minimin)) {
-            // Could this be done with a sorted list of denominations instead?
-            // There is a lot of repeated code
             for (Money value: denomination)
             {
                 while (change.isGreaterThan(value)) {

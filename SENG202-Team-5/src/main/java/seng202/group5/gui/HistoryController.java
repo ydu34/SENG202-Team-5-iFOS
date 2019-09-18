@@ -39,11 +39,15 @@ public class HistoryController extends GeneralController {
     @FXML
     private DatePicker historyEndDatePicker;
 
-    /** The TextField for searching for an order by ID */
+    /**
+     * The TextField for searching for an order by ID
+     */
     @FXML
     private TextField historySearchbar;
 
-    /** The table that displays the history of the orders */
+    /**
+     * The table that displays the history of the orders
+     */
     @FXML
     private TableView<Order> historyTable;
 
@@ -62,11 +66,11 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableColumn<Order, Button> rowAction;
 
-    private HashMap<String, Transaction> orderIDTransactionIndex;
+    private HashMap<String, Transaction> orderIDTransactionIndex = new HashMap<>();
+    private ArrayList<Order> toBeRefunded = new ArrayList<>();
 
     @Override
     public void pseudoInitialize() {
-        orderIDTransactionIndex = new HashMap<>();
         for (Transaction transaction : getAppEnvironment().getFinance().getTransactions().values()) {
             orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
         }
@@ -86,7 +90,7 @@ public class HistoryController extends GeneralController {
             Order order = param.getValue();
             refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).getRefunded());
             refundButton.setOnAction((ActionEvent event) -> {
-                refundOrder(order);
+                refundOrder(order, refundButton);
                 refundButton.setDisable(true);
             });
             return new ReadOnlyObjectWrapper<>(refundButton);
@@ -117,10 +121,28 @@ public class HistoryController extends GeneralController {
      *
      * @param orderToRefund the order to refund
      */
-    private void refundOrder(Order orderToRefund) {
-        //TODO this is unfinished.
-        String transactionID = orderIDTransactionIndex.get(orderToRefund.getID()).getTransactionID();
-        for (Money coin : getAppEnvironment().getFinance().refund(transactionID)) {
+    private void refundOrder(Order orderToRefund, Button button) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/refundOrder.fxml"));
+            Parent root = loader.load();
+
+            ConfirmRefundController controller = loader.getController();
+            controller.setSource(this);
+            controller.setButton(button);
+            controller.setText(orderToRefund.getID());
+
+            Stage stage = new Stage();
+            stage.setTitle("Confirm refund");
+            stage.setScene(new Scene(root, 600, 200));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void confirmOrder(String orderID) {
+        for (Money coin : getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID())) {
             System.out.println(coin);
         }
     }
