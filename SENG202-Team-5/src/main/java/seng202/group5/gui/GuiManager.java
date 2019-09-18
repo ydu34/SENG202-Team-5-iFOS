@@ -45,13 +45,13 @@ public class GuiManager extends Application {
             add(DietEnum.GLUTEN_FREE);
             add(DietEnum.VEGETARIAN);
         }};
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 10"), ingredientInfo1);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 5"), ingredientInfo2);
+        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "15", Money.parse("NZD 10"), ingredientInfo1);
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "14", Money.parse("NZD 5"), ingredientInfo2);
         HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
             add(DietEnum.VEGETARIAN);
         }};
-        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", "12", Money.parse("NZD 10"), ingredientInfo3);
+        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", "13", Money.parse("NZD 10"), ingredientInfo3);
         testRecipe.addIngredient(chickenpatty, 1);
         testRecipe.addIngredient(cheese, 1);
         testRecipe2.addIngredient(vegePatty, 1);
@@ -60,7 +60,7 @@ public class GuiManager extends Application {
         stock.addNewIngredient(cheese, 200);
         stock.addNewIngredient(vegePatty, 150);
 
-        thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1221", true);
+        thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
 
         MenuItem testItem = new MenuItem(

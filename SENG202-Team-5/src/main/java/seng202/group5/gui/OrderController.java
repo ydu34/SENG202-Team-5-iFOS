@@ -10,19 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.joda.money.Money;
-import seng202.group5.DietEnum;
 import seng202.group5.Ingredient;
 import seng202.group5.MenuItem;
 import seng202.group5.Recipe;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -141,7 +135,7 @@ public class OrderController extends GeneralController {
 
     }
 
-    public void printIngredeints(MenuItem someItem){
+    public void printIngredients(MenuItem someItem){
         ingredient = "";
         for (Map.Entry<Ingredient, Integer> entry : someItem.getRecipe().getIngredientsAmount().entrySet()) {
             Ingredient ingredientObject = entry.getKey();
@@ -182,7 +176,7 @@ public class OrderController extends GeneralController {
                 }
             }
             if (selectedItem != null) {
-                printIngredeints(selectedItem);
+                printIngredients(selectedItem);
                 ingredientText.setText(ingredient);
                 System.out.println(selectedItem.calculateFinalCost().getAmount());
                 System.out.println(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
