@@ -25,7 +25,7 @@ public class Transaction {
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money totalPrice;
     private IDGenerator generator = new IDGenerator();
-    private String orderNum = generator.newID();
+    private String transactionID = generator.newID();
     private Boolean isRefunded;
     private String orderID;
 
@@ -48,8 +48,9 @@ public class Transaction {
     public Money getChange() {
         return change;
     }
-    public String getOrderNum() {
-        return orderNum;
+
+    public String getTransactionID() {
+        return transactionID;
     }
 
     public LocalDateTime getDateTime() {

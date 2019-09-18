@@ -61,6 +61,7 @@ public class Finance {
         if (!refundedOrder.getRefunded()) {
             refundedOrder.refund();
             refund = refundedOrder.getTotalPrice();
+            //TODO remove money from till
         }
         return calcChange(refund);
     }
@@ -90,7 +91,9 @@ public class Finance {
         {
             changeSum = changeSum.plus(money);
         }
-        transactionHistory.put("test" + tempId++, new Transaction(datetime, changeSum, totalCost, orderID));
+        Transaction transaction = new Transaction(datetime, changeSum, totalCost, orderID);
+        transactionHistory.put(transaction.getTransactionID(), transaction);
+        //TODO add monney into till
         return change;
     }
 
@@ -142,6 +145,10 @@ public class Finance {
             }
         }
         return totalChange;
+    }
+
+    public HashMap<String, Transaction> getTransactions() {
+        return (HashMap<String, Transaction>) transactionHistory.clone();
     }
 
 }

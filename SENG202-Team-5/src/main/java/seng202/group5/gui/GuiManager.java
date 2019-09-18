@@ -7,9 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.*;
+import seng202.group5.exceptions.InsufficientCashException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -78,8 +80,17 @@ public class GuiManager extends Application {
         Order tempOrder = new Order(new Stock());
         tempOrder.addItem(testItem, 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
-        thing.getHistory().getTransactionHistory().put(tempOrder.getID(),
-                                                       tempOrder);
+        try {
+            thing.getFinance().pay(tempOrder.getTotalCost(),
+                                   new ArrayList<>() {{
+                                       add(Money.parse("NZD 1000.00"));
+                                   }},
+                                   tempOrder.getDateTimeProcessed(),
+                                   tempOrder.getID());
+        } catch (InsufficientCashException e) {
+            e.printStackTrace();
+        }
+        thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
         return thing;
     }
 

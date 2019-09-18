@@ -12,8 +12,14 @@ import seng202.group5.AppEnvironment;
 
 import java.io.IOException;
 
+/**
+ * A controller class for other classes to implement
+ *
+ * @author Daniel Harris
+ */
 public class GeneralController {
 
+    /** The property that is shared between all the controllers to access the AppEnvironment */
     private AppEnvironment appEnvironment;
 
     @FXML
