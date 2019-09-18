@@ -98,7 +98,8 @@ public class OrderTest {
         ingredientIDs.put(ingredient.getID(), 1);
 
         Stock stock = new Stock();
-        stock.addNewIngredient(ingredient);
+        stock.addNewIngredient(ingredient, 2);
+        order = new Order(stock);
 
         Recipe recipe = new Recipe("Name", "Text", ingredients, ingredientIDs);
         MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true);
@@ -108,11 +109,16 @@ public class OrderTest {
 
         Money tempTotalCost = order.getTotalCost();
         order.addItem(item, 1);
+        stock = order.getStock();
         Order order = new Order(orderItems, tempTotalCost, "1", stock);
 
         assertTrue(order.modifyItemQuantity(item, 2));
 
         assertEquals(order.getOrderItems().get(item), 2);
+        assertFalse(order.modifyItemQuantity(item, 3));
+        assertEquals(order.getOrderItems().get(item), 2);
+
+
 
         MenuItem temp = new MenuItem();
         assertFalse(order.modifyItemQuantity(temp, 3));
