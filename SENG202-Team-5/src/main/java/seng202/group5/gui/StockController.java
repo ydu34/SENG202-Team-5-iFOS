@@ -92,7 +92,9 @@ public class StockController extends GeneralController {
             stage.setScene(new Scene(root, 600, 200));
             stage.initModality(Modality.APPLICATION_MODAL);
 
-            stage.show();
+            // Automatic refresh of the table
+            stage.showAndWait();
+            pseudoInitialize();
 
         }
         catch (IOException e) {
