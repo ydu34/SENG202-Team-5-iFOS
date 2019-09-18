@@ -3,6 +3,7 @@
  */
 package seng202.group5.gui;
 
+import com.sun.javafx.image.impl.General;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -82,6 +83,10 @@ public class StockController extends GeneralController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addStock.fxml"));
             Parent root = loader.load();
+
+            AddStockController controller = loader.<AddStockController>getController();
+            controller.setStock(getAppEnvironment().getStock());
+
             Stage stage = new Stage();
             stage.setTitle("Add An Ingredient");
             stage.setScene(new Scene(root, 600, 200));

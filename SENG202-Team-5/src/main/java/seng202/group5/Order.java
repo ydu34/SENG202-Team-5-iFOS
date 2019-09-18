@@ -41,7 +41,6 @@ public class Order {
     /**
      * The unique ID of the order given by the database
      **/
-    //TODO wont this always generate the id 1?
     private IDGenerator generator = new IDGenerator();
     private String id = generator.newID();
 
