@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <finance>
     <transactionHistory/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
-    <denomination/>
+    <denomination>NZD 50.00 NZD 20.00 NZD 10.00 NZD 5.00 NZD 2.00 NZD 1.00 NZD 0.50 NZD 0.20 NZD 0.10</denomination>
     <tempId>0</tempId>
 </finance>
