@@ -45,7 +45,7 @@
           <TableColumn fx:id="rowIngredient" prefWidth="223.0" text="Ingredients" />
             <TableColumn fx:id="rowQuantity" prefWidth="142.0" text="Quantity" />
             <TableColumn fx:id="rowUnits" minWidth="0.0" prefWidth="120.0" text="Units" />
-          <TableColumn fx:id="rowCategory" minWidth="0.0" prefWidth="228.0" text="Category " />
+          <TableColumn fx:id="rowCategory" minWidth="0.0" prefWidth="227.0" text="Category " />
         </columns>
       </TableView>
       <HBox prefHeight="100.0" prefWidth="200.0">
