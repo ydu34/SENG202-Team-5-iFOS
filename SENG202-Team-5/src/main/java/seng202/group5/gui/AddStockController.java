@@ -27,4 +27,10 @@ public class AddStockController {
     @FXML
     private Label warningLabel;
 
+
+    public void createIngredient(ActiveEvent event) {
+
+    }
+
+
 }
