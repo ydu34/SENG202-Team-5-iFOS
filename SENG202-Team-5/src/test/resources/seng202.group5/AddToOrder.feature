@@ -35,8 +35,9 @@ Feature: Add item to order
 
     Scenario: Order is canceled
         Given Order exists
+        And Burger is in order
         When Order is canceled
-        Then Order doesn’t exist
+        Then Order Does not contain burger
 
     Scenario: A Burger is removed from an order
         Given Order exists

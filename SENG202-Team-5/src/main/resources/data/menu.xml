@@ -1,4 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuManager>
-    <itemList/>
+    <itemList>
+        <entry>
+            <key>1222</key>
+            <value>
+                <itemName>Vege Burger</itemName>
+                <recipe>
+                    <name>Vege burger</name>
+                    <recipeText>Steps to make pad thai</recipeText>
+                    <ingredientIDs/>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                </recipe>
+                <markupCost/>
+                <generator/>
+                <id>1222</id>
+                <inMenu>true</inMenu>
+            </value>
+        </entry>
+        <entry>
+            <key>1221</key>
+            <value>
+                <itemName>Chicken Burger</itemName>
+                <recipe>
+                    <name>Chicken burger</name>
+                    <recipeText>1) Get some Chicken
+2) Get some cheese
+3) Throw the chicken on the grill and let it fry
+</recipeText>
+                    <ingredientIDs/>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                </recipe>
+                <markupCost/>
+                <generator/>
+                <id>1221</id>
+                <inMenu>true</inMenu>
+            </value>
+        </entry>
+    </itemList>
 </menuManager>

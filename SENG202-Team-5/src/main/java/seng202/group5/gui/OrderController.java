@@ -10,19 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.joda.money.Money;
-import seng202.group5.DietEnum;
 import seng202.group5.Ingredient;
 import seng202.group5.MenuItem;
 import seng202.group5.Recipe;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,6 +60,11 @@ public class OrderController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        allItems = new ArrayList<>();
+        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
+
+        item = allItems.get(0);
+        ingredient = "";
         showItems(new ActionEvent());
     }
 
@@ -75,7 +74,6 @@ public class OrderController extends GeneralController {
     }
 
     public ArrayList<MenuItem> filterItems() {
-        make_object();
         filteredButtons = new ArrayList<>();
         filteredButtons.add(itemButton);
         filteredButtons.add(itemButton2);
@@ -137,22 +135,7 @@ public class OrderController extends GeneralController {
 
     }
 
-
-    /**
-     * this method is juts a test as we are still trying to figure out how to convert the menuitem from the recipe xml to the recipe object.
-     * The method below adds makes a menuItem object, adds ingredients to it and the loop over the hash map <Ingredient, Integer> and displays the
-     * the list of all the ingredients present in that recipe under on the order screen under the ingredients method and the also return the recipe.
-     */
-    public void make_object() {
-        allItems = new ArrayList<>();
-        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-
-        item = allItems.get(0);
-
-        ingredient = "";
-    }
-
-    public void printIngredeints(MenuItem someItem){
+    public void printIngredients(MenuItem someItem){
         ingredient = "";
         for (Map.Entry<Ingredient, Integer> entry : someItem.getRecipe().getIngredientsAmount().entrySet()) {
             Ingredient ingredientObject = entry.getKey();
@@ -170,23 +153,9 @@ public class OrderController extends GeneralController {
      * @param scenePath
      */
     public void selectionScreen(ActionEvent event, String scenePath) {
-        //TODO this should be refactored somehow so it is using the code in GeneralController instead of being a copy
-        Parent selectionScene = null;
-        try {
-            FXMLLoader selectionLoader = new FXMLLoader(getClass().getResource(scenePath));
-            selectionScene = selectionLoader.load();
-            SelectionController controller = selectionLoader.getController();
-            System.out.println(item.getItemName());
-            controller.setMenuItem(item);
-            controller.setAppEnvironment(getAppEnvironment());
-            controller.pseudoInitialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-        oldStage.setScene(new Scene(selectionScene, prevWidth, prevHeight));
+        SelectionController controller = (SelectionController) changeScreen(event, scenePath);
+        System.out.println(item.getItemName());
+        controller.setMenuItem(item);
 
     }
 
@@ -207,7 +176,7 @@ public class OrderController extends GeneralController {
                 }
             }
             if (selectedItem != null) {
-                printIngredeints(selectedItem);
+                printIngredients(selectedItem);
                 ingredientText.setText(ingredient);
                 System.out.println(selectedItem.calculateFinalCost().getAmount());
                 System.out.println(String.valueOf(selectedItem.calculateFinalCost().getAmount()));

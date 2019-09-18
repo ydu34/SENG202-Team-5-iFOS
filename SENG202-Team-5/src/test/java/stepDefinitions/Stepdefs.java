@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -45,7 +46,7 @@ public class Stepdefs {
     @Given("Order exists")
     public void Order_exists() {
 
-        order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01");
+        order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01", stock);
 
     }
 
@@ -164,5 +165,11 @@ public class Stepdefs {
 
     @When("Order is viewed")
     public void orderIsViewed() {
+    }
+
+    @When("^Order is canceled$")
+    public void orderIsCanceled() {
+        // Write code here that turns the phrase above into concrete actions
+        order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01", stock);
     }
 }

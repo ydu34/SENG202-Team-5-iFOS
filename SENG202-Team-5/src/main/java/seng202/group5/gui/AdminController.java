@@ -1,9 +1,7 @@
 package seng202.group5.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,17 +10,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-
-import java.time.LocalDateTime;
 import seng202.group5.Finance;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +55,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Text fileNotificationText;
+
+    @FXML
+    private Button addButton;
 
     private Finance finance;
 
@@ -134,6 +134,21 @@ public class AdminController extends GeneralController {
         }
 
 
+    }
+
+    public void addRecipe() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
+            Parent root = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add a Recipe");
+            stage.setScene(new Scene(root, 600, 600));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

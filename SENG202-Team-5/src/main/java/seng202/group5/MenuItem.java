@@ -5,8 +5,10 @@ import org.joda.money.Money;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class contains methods to update the stock, removes the stock , calculates the making and selling price for the menu item.
@@ -65,7 +67,7 @@ public class    MenuItem {
      * @return the making cost of the recipe in the form of the money object in NZD
      */
     public Money calculateMakingCost() {
-        Money recipeMakingCost = Money.parse("NZD 00.00");
+        Money recipeMakingCost = Money.parse("NZD 0.00");
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
         for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
             Ingredient ingredient = eachIngredient.getKey();
@@ -106,6 +108,34 @@ public class    MenuItem {
 
     public void setMarkupCost(Money markupCost) {
         this.markupCost = markupCost;
+    }
+
+    public int hashcode() {
+        ArrayList<Object> tempList = new ArrayList<>();
+        tempList.addAll(recipe.getIngredientsAmount().values());
+        tempList.addAll(recipe.getIngredientsAmount().keySet());
+        tempList.add(recipe.getName());
+        tempList.addAll(recipe.getDietaryInformation());
+        tempList.add(id);
+        tempList.add(markupCost);
+        return Objects.hash(tempList);
+    }
+
+    public boolean equals(MenuItem other) {
+        return hashcode() == other.hashcode();
+    }
+
+    /**
+     * Creates a clone of this menu item, with a different instance of Recipe
+     *
+     * @return the clone of this menu item
+     */
+    public MenuItem clone() {
+        Recipe tempRecipe = new Recipe(recipe.getName(),
+                recipe.getRecipeText(),
+                (HashMap<Ingredient, Integer>) recipe.getIngredientsAmount().clone(),
+                (HashMap<String, Integer>) recipe.getIngredientIDs().clone());
+        return new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
     }
 
 }

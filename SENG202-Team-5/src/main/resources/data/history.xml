@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <history>
-    <transactionHistory/>
+    <transactionHistory>
+        <entry>
+            <key>ABC123</key>
+            <value>
+                <orderItems>
+                    <entry>
+                        <key>
+                            <itemName>Burger Item</itemName>
+                            <recipe>
+<name>Burger</name>
+<recipeText>Add items to burger</recipeText>
+<ingredientIDs/>
+                            </recipe>
+                            <markupCost/>
+                            <generator/>
+                            <id>14328</id>
+                            <inMenu>true</inMenu>
+                        </key>
+                        <value>4</value>
+                    </entry>
+                </orderItems>
+                <totalCost/>
+                <dateTimeProcessed>2019-09-18T16:32:05.779115</dateTimeProcessed>
+                <generator/>
+                <id>ABC123</id>
+            </value>
+        </entry>
+    </transactionHistory>
 </history>
