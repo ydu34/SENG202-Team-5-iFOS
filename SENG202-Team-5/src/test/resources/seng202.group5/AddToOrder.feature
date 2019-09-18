@@ -25,8 +25,8 @@ Feature: Add item to order
         And order contains chips
 
     Scenario: A Burger is added to an order without the necessary ingredients
-        Given Order exists
-        And Stock has 0 of Buns
+        Given Stock has 0 of Buns
+        And Order exists
         And A Burger contains buns
         And A Burger costs $5.00
         When Burger is added to order
@@ -53,12 +53,12 @@ Feature: Add item to order
         Then Order contains a burger
         And Orders total cost is $5.00
 
-    Scenario: Confirm an Order
-        Given Order exists
-        And A Burger costs $5.00
-        And Burger is in order
-        When Order is confirmed
-        Then Payment is requested
+#    Scenario: Confirm an Order
+#        Given Order exists
+#        And A Burger costs $5.00
+#        And Burger is in order
+#        When Order is confirmed
+#        Then Payment is requested
 
 
 

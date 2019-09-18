@@ -13,6 +13,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -115,7 +116,11 @@ public class Order {
      */
     public boolean addItem(MenuItem item, int quantity) {
         // Getting the HashMap of ingredients, quantities
-        HashMap<String, Integer> ingredients = item.getRecipe().getIngredientIDs();
+        HashMap<Ingredient, Integer> ingredientQuantities = item.getRecipe().getIngredientsAmount();
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        for (Ingredient ingredient : ingredientQuantities.keySet()) {
+            ingredients.put(ingredient.getID(), ingredientQuantities.get(ingredient));
+        }
         // Creating an ArrayList so that we can iterate through the ingredients
         Set<String> keySet = ingredients.keySet();
         ArrayList<String> listOfKeys = new ArrayList<>(keySet);
@@ -154,7 +159,11 @@ public class Order {
         if (orderItems.containsKey(item)) {
             int quantity = orderItems.get(item);
             // Getting the ingredient HashMap and creating an Arraylist to iterate through out of the keys in the HashMap
-            HashMap<String, Integer> ingredients = item.getRecipe().getIngredientIDs();
+            HashMap<Ingredient, Integer> ingredientQuantities = item.getRecipe().getIngredientsAmount();
+            HashMap<String, Integer> ingredients = new HashMap<>();
+            for (Ingredient ingredient : ingredientQuantities.keySet()) {
+                ingredients.put(ingredient.getID(), ingredientQuantities.get(ingredient));
+            }
             Set<String> keySet = ingredients.keySet();
             ArrayList<String> listOfKeys = new ArrayList<>(keySet);
 

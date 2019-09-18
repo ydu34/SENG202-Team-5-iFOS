@@ -14,6 +14,7 @@ import seng202.group5.*;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -71,11 +72,12 @@ public class Stepdefs {
 
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(double arg0) {
+        Money currentCost = manager.getItemList().get("testId").calculateMakingCost();
         manager.removeItem("testId");
         DecimalFormat df = new DecimalFormat("#.00");
         Money newArg = Money.parse("NZD " + df.format(arg0));
         manager.removeItem("testId");
-        manager.createItem("Burger", burgerRecipe, newArg, "testId", true);
+        manager.createItem("Burger", burgerRecipe, newArg.minus(currentCost), "testId", true);
         burger = manager.getItemList().get("testId");
     }
 
@@ -149,7 +151,9 @@ public class Stepdefs {
     public void burgerInTheOrderContainsBuns(int arg0) {
         boolean pass = false;
         for (MenuItem item : order.getOrderItems().keySet()) {
-            if (item.getID().equals("testId") && item.getRecipe().getIngredientsAmount().containsKey(buns)) {
+            if (item.getID().equals(burger.getID()) &&
+                    item.getRecipe().getIngredientsAmount().containsKey(buns) &&
+                    item.getRecipe().getIngredientsAmount().get(buns) == arg0) {
                 pass = true;
                 break;
             }

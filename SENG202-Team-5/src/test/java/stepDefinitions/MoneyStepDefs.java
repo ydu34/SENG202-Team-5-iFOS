@@ -52,7 +52,9 @@ public class MoneyStepDefs {
 
     @When("Orders is refunded")
     public void ordersIsRefunded() {
-        change = finance.refund("test0");
+        for (Transaction transaction : finance.getTransactions().values()) {
+            change = finance.refund(transaction.getTransactionID());
+        }
     }
 
     @And("Order has already been payed for")
