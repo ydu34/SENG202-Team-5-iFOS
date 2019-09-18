@@ -38,7 +38,7 @@ public class AdminController extends GeneralController {
     private DatePicker endDate;
 
     @FXML
-    private Text saleSummaryText;
+    private TextArea saleSummaryText;
 
     @FXML
     private Button selectFilesButton;
