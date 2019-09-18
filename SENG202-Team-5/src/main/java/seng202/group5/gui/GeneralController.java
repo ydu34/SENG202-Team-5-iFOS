@@ -44,12 +44,13 @@ public class GeneralController {
      * @param event
      * @param scenePath
      */
-    public void changeScreen(ActionEvent event, String scenePath){
+    public GeneralController changeScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
+        GeneralController controller = null;
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
             sampleScene = sampleLoader.load();
-            GeneralController controller = sampleLoader.getController();
+            controller = sampleLoader.getController();
             controller.setAppEnvironment(appEnvironment);
             controller.pseudoInitialize();
         } catch (IOException e) {
@@ -59,6 +60,7 @@ public class GeneralController {
         double prevHeight = ((Node) event.getSource()).getScene().getHeight();
         double prevWidth = ((Node) event.getSource()).getScene().getWidth();
         oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
+        return controller;
     }
 
     /**
