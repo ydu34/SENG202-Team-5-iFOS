@@ -1,6 +1,8 @@
 package seng202.group5.gui;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -58,7 +60,7 @@ public class HistoryController extends GeneralController {
     private TableColumn<Order, String> rowOrder;
 
     @FXML
-    private TableColumn<Order, Void> rowAction;
+    private TableColumn<Order, Button> rowAction;
 
     private HashMap<String, Transaction> orderIDTransactionIndex;
 
@@ -74,44 +76,40 @@ public class HistoryController extends GeneralController {
                 cellData.getValue().getDateTimeProcessed().toLocalDate().toString()));
         rowTime.setCellValueFactory(cellData -> {
             LocalTime time = cellData.getValue().getDateTimeProcessed().toLocalTime();
-            return new ReadOnlyStringWrapper(String.format("%d:%d", time.getHour(), time.getMinute()));
+            time = time.minusSeconds(time.getSecond());
+            time = time.minusNanos(time.getNano());
+            return new ReadOnlyStringWrapper(time.toString());
         });
         rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
-        rowAction.setCellFactory(createCellFactory());
-
-        //TODO make the refund button disabled if the order has already been refunded
-
-        historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
-    }
-
-    private Callback<TableColumn<Order, Void>, TableCell<Order, Void>> createCellFactory() {
-        return new Callback<>() {
+        rowAction.setCellValueFactory(param -> {
+            Button refundButton = new Button("Refund");
+            Order order = param.getValue();
+            refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).getRefunded());
+            refundButton.setOnAction((ActionEvent event) -> {
+                refundOrder(order);
+                refundButton.setDisable(true);
+            });
+            return new ReadOnlyObjectWrapper<>(refundButton);
+        });
+        rowAction.setCellFactory(new Callback<>() {
             @Override
-            public TableCell<Order, Void> call(final TableColumn<Order, Void> tableColumn) {
-                final TableCell<Order, Void> cell = new TableCell<>() {
-                    private final Button refundButton = new Button("Refund");
-
-                    {
-                        refundButton.setOnAction((ActionEvent event) -> {
-                            Order order = getTableView().getItems().get(getIndex());
-                            refundOrder(order);
-                            setDisable(true);
-                        });
-                    }
-
+            public TableCell<Order, Button> call(final TableColumn<Order, Button> tableColumn) {
+                final TableCell<Order, Button> cell = new TableCell<>() {
                     @Override
-                    public void updateItem(Void item, boolean empty) {
+                    public void updateItem(Button item, boolean empty) {
                         super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(refundButton);
+                            setGraphic(item);
                         }
                     }
                 };
                 return cell;
             }
-        };
+        });
+
+        historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
     }
 
     /**
