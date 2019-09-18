@@ -66,6 +66,11 @@ public class OrderController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        allItems = new ArrayList<>();
+        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
+
+        item = allItems.get(0);
+        ingredient = "";
         showItems(new ActionEvent());
     }
 
@@ -75,7 +80,6 @@ public class OrderController extends GeneralController {
     }
 
     public ArrayList<MenuItem> filterItems() {
-        make_object();
         filteredButtons = new ArrayList<>();
         filteredButtons.add(itemButton);
         filteredButtons.add(itemButton2);
@@ -135,21 +139,6 @@ public class OrderController extends GeneralController {
         // work with menuItemsList
 
 
-    }
-
-
-    /**
-     * this method is juts a test as we are still trying to figure out how to convert the menuitem from the recipe xml to the recipe object.
-     * The method below adds makes a menuItem object, adds ingredients to it and the loop over the hash map <Ingredient, Integer> and displays the
-     * the list of all the ingredients present in that recipe under on the order screen under the ingredients method and the also return the recipe.
-     */
-    public void make_object() {
-        allItems = new ArrayList<>();
-        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-
-        item = allItems.get(0);
-
-        ingredient = "";
     }
 
     public void printIngredeints(MenuItem someItem){
