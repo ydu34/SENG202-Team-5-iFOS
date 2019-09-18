@@ -39,13 +39,15 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, ComboBox> quantityCol;
 
-    @Override
-    public void pseudoInitialize() {
-        ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
-                getAppEnvironment().getStock().getIngredients().values());
+    private AppEnvironment appEnvironment;
+
+    @FXML
+    public void initialize() {
+        System.out.println(appEnvironment);
+        List<Ingredient> ingredients = new ArrayList<>(appEnvironment.getStock().getIngredients().values());
         ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ingredientsTable.setItems(ingredients);
-        System.out.println(getAppEnvironment().getStock().getIngredients().get("13"));
+        ingredientsTable.setItems(FXCollections.observableArrayList(ingredients));
+
     }
 
     public void saveRecipe() {
@@ -61,5 +63,8 @@ public class AddRecipeController extends GeneralController {
         stage.close();
     }
 
+    public void setAppEnvironment(AppEnvironment input) {
+        appEnvironment = input;
+    }
 
 }
