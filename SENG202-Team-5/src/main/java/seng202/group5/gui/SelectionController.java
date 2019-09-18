@@ -6,19 +6,29 @@ package seng202.group5.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seng202.group5.Ingredient;
 import seng202.group5.MenuItem;
 import seng202.group5.Recipe;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-public class SelectionController extends GeneralController {
+public class SelectionController extends GeneralController implements Initializable {
 
 
     @FXML
@@ -34,14 +44,30 @@ public class SelectionController extends GeneralController {
     private Button addIngredientButton;
 
     @FXML
-    private Text itemName;
+    private Text ingredientText;
+    @FXML
+    private Text itemNameText;
 
     @FXML
     private Button closeSelectionScreenButton;
 
-
+    private Spinner quantity;
+    @FXML
+    private Label ingredientName;
+    @FXML
+    private Spinner ingredientSpinner;
     @FXML
     public MenuItem item;
+    @FXML
+    public ComboBox ingredeintQuantity;
+    @FXML
+    public GridPane ingredientPane;
+    @FXML
+    private GridPane quantityPane;
+
+
+    @XmlTransient
+    private HashMap<Ingredient, Integer> ingredientsAmount;
 
 
     /**
@@ -60,20 +86,55 @@ public class SelectionController extends GeneralController {
      */
 
     public void setMenuItem(MenuItem newItem){
-        System.out.println(newItem);
+        //System.out.println(newItem);
         item = newItem;
         costText.setText(item.calculateFinalCost().toString());
         recipeText.setText(item.getRecipe().getRecipeText());
+        printIngredients(item);
+        itemNameText.setText(item.getItemName());
 
-
+       // quantity.setValue(1);
+        //ingredeintQuantity.setValue(1);
     }
 
     public void setItemName(){
-        System.out.println(recipe.getName());
-        itemName.setText(recipe.getName());
+        itemNameText.setText(item.getItemName());
     }
 
-    public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
+
+    public void printIngredients(MenuItem newItem) {
+        int row = 1;
+        int col = 1;
+
+        quantity = new Spinner(0,5,1);
+        quantityPane.setConstraints(quantity,1,1);
+        quantityPane.getChildren().add(quantity);
+        for (Map.Entry<Ingredient, Integer> entry : newItem.getRecipe().getIngredientsAmount().entrySet()) {
+            //ingredient = "";
+
+            Ingredient ingredientObject = entry.getKey();
+            Integer value = entry.getValue();
+            Spinner sp = new Spinner(0,5,1);
+            Label l = new Label(ingredientObject.getName());
+            sp.setMaxWidth(54);
+            ingredientPane.setConstraints(sp,1,row);
+            ingredientPane.setConstraints(l,0,row);
+            ingredientPane.getChildren().add(l);
+            ingredientPane.getChildren().add(sp);
+            row++;
+        }
+    }
+
+
+        public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/order.fxml");
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        quantity = new Spinner(0,100,0);
+//        ingredientSpinner.getValueFactory().setValue(1);
+
     }
 }
