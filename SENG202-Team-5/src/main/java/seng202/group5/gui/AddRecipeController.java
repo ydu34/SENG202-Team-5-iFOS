@@ -42,7 +42,7 @@ public class AddRecipeController extends GeneralController {
     private AppEnvironment appEnvironment;
 
     @FXML
-    public void initialize() {
+    public void pseudoInitialize() {
         System.out.println(appEnvironment);
         List<Ingredient> ingredients = new ArrayList<>(appEnvironment.getStock().getIngredients().values());
         ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));

@@ -164,12 +164,13 @@ public class AdminController extends GeneralController {
 
     public void addRecipe() {
         try {
-            System.out.println(getAppEnvironment());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
             Parent root = loader.load();
 
             AddRecipeController controller = loader.<AddRecipeController>getController();
+            System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
+            controller.pseudoInitialize();
 
             Stage stage = new Stage();
             stage.setTitle("Add a Recipe");
