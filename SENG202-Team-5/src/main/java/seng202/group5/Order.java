@@ -41,6 +41,7 @@ public class Order {
     /**
      * The unique ID of the order given by the database
      **/
+    //TODO wont this always generate the id 1?
     private IDGenerator generator = new IDGenerator();
     private String id = generator.newID();
 
@@ -122,6 +123,8 @@ public class Order {
 
         // For each ingredient we change the quantity to accommodate any extra's
         for (String id : listOfKeys) {
+            //TODO wont this bring up problems when trying to edit the ingredient counts for an item in the order?
+            // It would show the ingredients from multiple copies of an item
             ingredients.replace(id, ingredients.get(id) * quantity);
 
             // If we don't have enough in the Stock, we can't add it to order
@@ -137,7 +140,7 @@ public class Order {
         orderItems.put(item, quantity);
 
         // Add price of item to total cost
-        totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(quantity));
+        totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(quantity));
         return true;
     }
 
@@ -163,7 +166,7 @@ public class Order {
             orderItems.remove(item);
 
             // Minuses the price of the item from the total cost
-            totalCost = totalCost.minus(item.getMarkupCost());
+            totalCost = totalCost.minus(item.calculateFinalCost());
             return true;
         } else {
             return false;
@@ -182,7 +185,7 @@ public class Order {
         if (orderItems.containsKey(item)) {
             int currentNum = orderItems.get(item);
             int diff = quantity - currentNum;
-            totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(diff));
+            totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(diff));
             orderItems.replace(item, quantity);
             return true;
         } else {

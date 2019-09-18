@@ -159,8 +159,8 @@ public class AppEnvironment {
      *                                   to pay for the order
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
-        Money totalPayment = Money.parse("NZD 0");
-        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
+        //        Money totalPayment = Money.parse("NZD 0");
+        //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
         ArrayList<Money> change = new ArrayList<Money>();
         try {
             Order order = orderManager.getOrder();

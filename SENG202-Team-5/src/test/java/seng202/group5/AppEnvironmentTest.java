@@ -1,11 +1,16 @@
 package seng202.group5;
 
 import org.joda.money.Money;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.exceptions.NoOrderException;
 
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class AppEnvironmentTest {
 
@@ -27,13 +32,26 @@ class AppEnvironmentTest {
         cheeseBurgerIngredients = new HashMap<>();
         cheeseBurgerIngredients.put("1", 10);
         cheeseBurgerIngredients.put("2",5);
+        HashMap<Ingredient, Integer> cheeseBurgerIngredientMap = new HashMap<>();
         cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, Money.parse("NZD 5.0"), "1", true);
         cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
+
         Ingredient cheese = new Ingredient("Cheese", "Count", "Dairy", "1", Money.parse("NZD 0.10"));
+        cheeseBurgerIngredientMap.put(cheese, 10);
         Ingredient bun = new Ingredient("Bun", "Count", "Bread", "2", Money.parse("NZD 0.50"));
+        cheeseBurgerIngredientMap.put(bun, 5);
         Ingredient beefPattie = new Ingredient("Beef Pattie", "Count", "Meat", "3", Money.parse("NZD 1.0"));
         Ingredient lettuce = new Ingredient("Lettuce", "Count", "Vegetable", "4", Money.parse("NZD 0.2"));
         Ingredient tomatoSauce = new Ingredient("Tomato Sauce", "ml", "Sauce", "5", Money.parse("NZD 0.1"));
+
+        cheeseBurgerRecipe.setIngredientsAmount(cheeseBurgerIngredientMap);
+
+        handler.getStock().addNewIngredient(cheese, 100);
+        handler.getStock().addNewIngredient(bun, 100);
+        handler.getStock().addNewIngredient(beefPattie, 100);
+        handler.getStock().addNewIngredient(lettuce, 100);
+        handler.getStock().addNewIngredient(tomatoSauce, 100);
+        handler.getOrderManager().newOrder();
     }
 
     /**
@@ -72,6 +90,41 @@ class AppEnvironmentTest {
         history.getTransactionHistory().put("1", order);
         handler.objectToXml(History.class, history, "historyTest.xml", testDirectory);
     }
+
+    @Test
+    public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
+        Money changeSum = Money.parse("NZD 0");
+        try {
+            handler.getOrderManager().getOrder().addItem(cheeseBurger, 2);
+            ArrayList<Money> paymentAmount = new ArrayList<>();
+            paymentAmount.add(cheeseBurger.calculateFinalCost().multipliedBy(2));
+            paymentAmount.add(Money.parse("NZD 4.0"));
+            ArrayList<Money> change = handler.confirmPayment(paymentAmount);
+            for (Money x : change) changeSum = changeSum.plus(x);
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+            fail();
+        } catch (InsufficientCashException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        assertTrue(changeSum.isEqual(Money.parse("NZD 4.0")));
+    }
+
+    @Test
+    public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
+        try {
+            handler.getOrderManager().getOrder().addItem(cheeseBurger, 2);
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
+        ArrayList<Money> paymentAmount = new ArrayList<>();
+        paymentAmount.add(cheeseBurger.calculateFinalCost());
+        paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
+        assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
+    }
+
 
     // Test only works if stockTest.xml exists before running tests.
 //    @Test
