@@ -1,12 +1,18 @@
 package seng202.group5.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import org.joda.money.Money;
+
+import seng202.group5.AppEnvironment;
 import seng202.group5.Ingredient;
 import seng202.group5.Stock;
 
-import java.awt.*;
 
 public class AddStockController extends GeneralController {
 
@@ -31,10 +37,12 @@ public class AddStockController extends GeneralController {
     @FXML
     private Label warningLabel;
 
+    private Stock stock = super.getAppEnvironment().getStock();
 
-    public void createIngredient(ActiveEvent event) {
-        Stock stock = getAppEnvironment().getStock();
 
+
+    @FXML
+    public void createIngredient(ActionEvent actionEvent) {
         String name = nameField.getText();
 
         String unit = unitField.getText();
@@ -45,11 +53,15 @@ public class AddStockController extends GeneralController {
 
         int quantity = Integer.parseInt(quantityField.getText());
 
-        Ingredient ingredient = new Ingredient(name, unit, category, cost);
+        try {
+            Ingredient ingredient = new Ingredient(name, unit, category, cost);
+            stock.addNewIngredient(ingredient, quantity);
+        } catch (Exception e) {
+            warningLabel.setText("Error");
+        }
 
-        stock.addNewIngredient(ingredient, quantity);
+        warningLabel.setText("Created " + name);
 
     }
-
 
 }

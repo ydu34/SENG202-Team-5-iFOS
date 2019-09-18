@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.group5.Ingredient;
 import seng202.group5.Order;
@@ -84,10 +85,10 @@ public class StockController extends GeneralController {
             Stage stage = new Stage();
             stage.setTitle("Add An Ingredient");
             stage.setScene(new Scene(root, 600, 200));
-
-            //stage.initOwner(primaryStage);
+            stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.show();
+
         }
         catch (IOException e) {
             e.printStackTrace();
