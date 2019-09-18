@@ -4,6 +4,8 @@
 package seng202.group5.gui;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import seng202.group5.Order;
 import seng202.group5.Stock;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class StockController extends GeneralController {
 
@@ -30,19 +33,19 @@ public class StockController extends GeneralController {
     private TableView<Ingredient> stockTable;
 
     @FXML
-    private TableColumn rowID;
+    private TableColumn<Ingredient, String> rowID;
 
     @FXML
-    private TableColumn rowIngredient;
+    private TableColumn<Ingredient, String> rowIngredient;
 
     @FXML
-    private TableColumn rowQuantity;
+    private TableColumn<Ingredient, String> rowQuantity;
 
     @FXML
-    private TableColumn rowUnits;
+    private TableColumn<Ingredient, String> rowUnits;
 
     @FXML
-    private TableColumn rowCategory;
+    private TableColumn<Ingredient, String> rowCategory;
 
     @FXML
     private Button addButton;
@@ -56,12 +59,19 @@ public class StockController extends GeneralController {
     @Override
     public void pseudoInitialize() {
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
-                getAppEnvironment().getStock().getIngredients().values()
-        );
-        rowID.setCellValueFactory(new PropertyValueFactory("ID"));
-        rowIngredient.setCellValueFactory(new PropertyValueFactory("name"));
-        rowUnits.setCellValueFactory(new PropertyValueFactory("unit"));
-        rowCategory.setCellValueFactory(new PropertyValueFactory("category"));
+                getAppEnvironment().getStock().getIngredients().values());
+
+        HashMap<String, Integer> quantities = getAppEnvironment().getStock().getIngredientStock();
+
+        rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        rowIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
+        rowUnits.setCellValueFactory(new PropertyValueFactory<>("unit"));
+        rowCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        rowQuantity.setCellValueFactory(data -> {
+            int quantity = quantities.get(data.getValue().getID());
+            return new SimpleStringProperty(Integer.toString(quantity));
+        });
 
         stockTable.setItems(ingredients);
     }
@@ -70,10 +80,13 @@ public class StockController extends GeneralController {
     public void addIngredient(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addStock.fxml"));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Add An Ingredient");
             stage.setScene(new Scene(root, 600, 200));
+
+            //stage.initOwner();
+
             stage.show();
         }
         catch (IOException e) {
