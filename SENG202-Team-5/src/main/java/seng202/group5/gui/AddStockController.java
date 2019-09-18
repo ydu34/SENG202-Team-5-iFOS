@@ -1,12 +1,23 @@
 package seng202.group5.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import org.joda.money.Money;
+
+import seng202.group5.AppEnvironment;
 import seng202.group5.Ingredient;
 import seng202.group5.Stock;
 
-import java.awt.*;
+import javax.print.PrintException;
+
 
 public class AddStockController extends GeneralController {
 
@@ -31,25 +42,36 @@ public class AddStockController extends GeneralController {
     @FXML
     private Label warningLabel;
 
+    private Stock stock;
 
-    public void createIngredient(ActiveEvent event) {
-        Stock stock = getAppEnvironment().getStock();
 
-        String name = nameField.getText();
+    @FXML
+    public void createIngredient(ActionEvent actionEvent) {
+        try {
+            // Getting all the values through the textfields
+            String name = nameField.getText();
+            String unit = unitField.getText();
+            String category = categoryField.getText();
+            Money cost = Money.parse("NZD " + costField.getText());
+            int quantity = Integer.parseInt(quantityField.getText());
 
-        String unit = unitField.getText();
+            // Attempting to make an ingredient from data collected above
+            Ingredient ingredient = new Ingredient(name, unit, category, cost);
+            // Adding ingredient to the stock
+            stock.addNewIngredient(ingredient, quantity);
 
-        String category = categoryField.getText();
+            // Closing window
+            Stage stage = (Stage) createButton.getScene().getWindow();
+            stage.close();
 
-        Money cost = Money.parse("NZD " + costField.getText());
-
-        int quantity = Integer.parseInt(quantityField.getText());
-
-        Ingredient ingredient = new Ingredient(name, unit, category, cost);
-
-        stock.addNewIngredient(ingredient, quantity);
-
+        } catch (Exception e) {
+            warningLabel.setText("Error creating ingredient");
+            e.printStackTrace();
+        }
     }
 
+    public void setStock(Stock input) {
+        stock = input;
+    }
 
 }
