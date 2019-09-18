@@ -6,16 +6,24 @@ package seng202.group5.gui;
 
 
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import seng202.group5.History;
 import seng202.group5.Order;
 import seng202.group5.OrderManager;
 
+import java.io.IOException;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -188,6 +196,19 @@ public class HistoryController extends GeneralController {
                 historyTable.getItems().add(order);
             }
 
+        }
+    }
+
+    public void addNewOrder(Order order) {
+
+        HashMap<String, Order> history = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory();
+
+        if (history.containsKey(order.getID())) {
+            //TODO create a formal error display system
+            System.out.println("Order already exists in history!");
+        } else {
+            history.put(order.getID(), order);
+            updateVisibleOrders(new ActionEvent());
         }
     }
 

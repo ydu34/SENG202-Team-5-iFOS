@@ -67,7 +67,7 @@ class MenuItemTest {
             HashMap<Ingredient, Integer> ingredients = testRecipe.getIngredientsAmount();
             makingCost = m.calculateMakingCost();
             assertEquals(makingCost.getAmount(), actualCost_1.getAmount());
-}
+    }
 
     /**
      * The below test checks if the the calculate final cost method works the same way as anticipated.
@@ -90,4 +90,4 @@ class MenuItemTest {
             assertEquals(updatedSellingCost.getAmountMajorInt(),updatedFinalCost.getAmountMajorInt());
 
     }
-    }
+}
