@@ -12,6 +12,7 @@ import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,6 +111,13 @@ class AppEnvironmentTest {
         History history = new History();
         history.getTransactionHistory().put("1", order);
         handler.objectToXml(History.class, history, "historyTest.xml", testDirectory);
+    }
+
+    @Test
+    void testHistoryXmlToObjet() {
+        History history = new History();
+        history = (History) handler.xmlToObject(History.class, history, "historyTest.xml", testDirectory);
+        System.out.println(history.getTransactionHistory().get("1").getOrderItems().entrySet());
     }
 
     @Test
