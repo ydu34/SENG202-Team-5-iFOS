@@ -21,6 +21,8 @@ public class AddExtraIngredientController extends GeneralController {
     private Button confirmItemButton;
 
     @FXML
+    private MenuItem oldItem;
+    @FXML
     private MenuItem selectedItem;
 
     @FXML
@@ -86,9 +88,10 @@ public class AddExtraIngredientController extends GeneralController {
                     Ingredient ingredient = getTableView().getItems().get(getIndex());
                     int amount = selectedItem.getRecipe().getIngredientsAmount().getOrDefault(ingredient, 0);
                     Spinner<Integer> spinner = new Spinner<>();
+                    //TODO The limit of the spinner should be either 20 or the remaining quantity of items, whatever is smaller.
                     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, +20, amount));
 
-                    /**
+                    /*
                      * Updates the ingredient amount of the item. If the ingredient does not exist in the item,
                      * it adds the ingredient to the item. If the amount of an ingredient was set to 0, then it
                      * removes the ingredient from the map.
@@ -96,11 +99,12 @@ public class AddExtraIngredientController extends GeneralController {
                     spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
                         HashMap<Ingredient,Integer> ingredientAmountMap =
                                 selectedItem.getRecipe().getIngredientsAmount();
-                        ingredientAmountMap.put(ingredient, amount);
-                        if ((amount == 0) && (ingredientAmountMap.containsKey(ingredient))) {
+                        if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
                             ingredientAmountMap.remove(ingredient);
-                        } else if (amount != 0) {
-                            ingredientAmountMap.put(ingredient, amount);
+                        } else if (newValue != 0) {
+                            System.out.println(ingredientAmountMap);
+                            ingredientAmountMap.put(ingredient, newValue);
+                            System.out.println(ingredientAmountMap);
                         }
                     });
                     setGraphic(spinner);
@@ -113,9 +117,17 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
+     * Also updates the name of the item if it's ingredients are different to the unedited version.
      */
     public void updateItemIngredients(javafx.event.ActionEvent actionEvent) {
+        //TODO Currently adds "edited" to ingredients with their original recipe changed that have been added back into the system. Also needs to handle a change in stock.
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+        if ((selectedItem.getRecipe().getIngredientsAmount() != oldItem.getRecipe().getIngredientsAmount())
+                && !selectedItem.getEdited()) {
+            selectedItem.setEdited(true);
+        } else {
+            selectedItem.setEdited(false);
+        }
         controller.updateItem(selectedItem);
     }
 
@@ -143,6 +155,7 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     public void setMenuItem(MenuItem newItem) {
+        oldItem = newItem;
         selectedItem = newItem.clone();
 
     }

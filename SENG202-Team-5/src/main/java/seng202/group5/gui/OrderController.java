@@ -209,8 +209,6 @@ public class OrderController extends GeneralController {
        // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
        // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
 
-
-
     }
 
     /**
@@ -240,7 +238,7 @@ public class OrderController extends GeneralController {
         if (filteredItems != null) {
             for (MenuItem item : filteredItems) {
                 Button btn = (Button) actionEvent.getSource();
-                if (item.getItemName() == btn.getText()) {
+                if (item.getItemName().equals(btn.getText())) {
                     selectedItem = item;
                 }
             }
@@ -264,8 +262,9 @@ public class OrderController extends GeneralController {
      * Updates the given selected item in the order given from AddExtraIngredient.
      * @param updatedItem the new item with updated quantities and categories.
      */
-    public void  updateItem(MenuItem updatedItem) {
+    public void updateItem(MenuItem updatedItem) {
         item = updatedItem;
+        ingredientsTable();
     }
     /**
      * This method launches the selection screen when clicked on the the "Select" button.
