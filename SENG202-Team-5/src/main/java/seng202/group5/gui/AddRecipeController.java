@@ -1,7 +1,6 @@
 package seng202.group5.gui;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,7 +10,6 @@ import seng202.group5.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AddRecipeController extends GeneralController {
 
@@ -37,7 +35,7 @@ public class AddRecipeController extends GeneralController {
     private TableColumn<Ingredient, String> ingredientCol;
 
     @FXML
-    private TableColumn<Ingredient, ComboBox> quantityCol;
+    private TableColumn<Ingredient, Integer> quantityCol;
 
     private AppEnvironment appEnvironment;
 
@@ -46,6 +44,7 @@ public class AddRecipeController extends GeneralController {
         System.out.println(appEnvironment);
         List<Ingredient> ingredients = new ArrayList<>(appEnvironment.getStock().getIngredients().values());
         ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        quantityCol.setCellFactory(col -> new SpinnerTableCell<>(1,100,1,1));
         ingredientsTable.setItems(FXCollections.observableArrayList(ingredients));
 
     }
@@ -54,6 +53,7 @@ public class AddRecipeController extends GeneralController {
         String name = nameField.getText();
         String makingPrice = makingPriceField.getText();
         String totalPrice = totalPriceField.getText();
+
         closeScreen();
 
     }
