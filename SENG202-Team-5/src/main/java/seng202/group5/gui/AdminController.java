@@ -149,8 +149,6 @@ public class AdminController extends GeneralController {
                         break;
                     case "menu.xml": getAppEnvironment().menuXmlToObject(selectedFiles.get(i).getParent());
                         break;
-                    case "till.xml": getAppEnvironment().tillXmlToObject(selectedFiles.get(i).getParent());
-                        break;
                 }
 
             }

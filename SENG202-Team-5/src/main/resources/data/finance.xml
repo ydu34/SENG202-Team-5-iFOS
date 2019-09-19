@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <finance>
-    <transactionHistory/>
+    <transactionHistory>
+        <entry>
+            <key>12</key>
+            <value>
+                <datetime>2019-09-19T16:54:16.766961</datetime>
+                <change>NZD 0.00</change>
+                <totalPrice>NZD 0.00</totalPrice>
+                <generator/>
+                <transactionID>12</transactionID>
+                <isRefunded>false</isRefunded>
+                <orderID>ABC123</orderID>
+            </value>
+        </entry>
+    </transactionHistory>
     <denomination>NZD 50.00 NZD 20.00 NZD 10.00 NZD 5.00 NZD 2.00 NZD 1.00 NZD 0.50 NZD 0.20 NZD 0.10</denomination>
-    <tempId>0</tempId>
+    <till>
+        <denominations>
+            <entries key="NZD 0.10">0</entries>
+            <entries key="NZD 1000.00">1</entries>
+            <entries key="NZD 10.00">0</entries>
+            <entries key="NZD 2.00">0</entries>
+            <entries key="NZD 50.00">0</entries>
+            <entries key="NZD 5.00">0</entries>
+            <entries key="NZD 1.00">0</entries>
+            <entries key="NZD 0.20">0</entries>
+            <entries key="NZD 0.50">0</entries>
+            <entries key="NZD 20.00">0</entries>
+        </denominations>
+    </till>
 </finance>
