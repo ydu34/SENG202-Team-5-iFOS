@@ -1,5 +1,7 @@
 package seng202.group5.gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +13,8 @@ import org.joda.money.Money;
 import seng202.group5.DietEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
+
+import java.util.HashSet;
 
 
 public class AddStockController extends GeneralController {
@@ -52,16 +56,38 @@ public class AddStockController extends GeneralController {
 
     @FXML
     public void createIngredient(ActionEvent actionEvent) {
+
+        costField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+                    costField.setText(oldValue);
+                }
+            }
+        });
+
         try {
-            // Getting all the values through the textfields
+            // Getting all the values through the text fields
             String name = nameField.getText();
             String unit = unitField.getText();
             String category = categoryField.getText();
             Money cost = Money.parse("NZD " + costField.getText());
             int quantity = Integer.parseInt(quantityField.getText());
 
+            // Getting dietary information of ingredient through checkboxes
+            HashSet<DietEnum> dietRequirements = new HashSet<>();
+            if (veganCheck.isSelected()) {
+                dietRequirements.add(DietEnum.VEGAN);
+            }
+            if (vegetarianCheck.isSelected()) {
+                dietRequirements.add(DietEnum.VEGETARIAN);
+            }
+            if (glutenFreeCheck.isSelected()) {
+                dietRequirements.add(DietEnum.GLUTEN_FREE);
+            }
+
             // Attempting to make an ingredient from data collected above
-            ingredient = new Ingredient(name, unit, category, cost);
+            ingredient = new Ingredient(name, unit, category, cost, dietRequirements);
             addDietaryInformation();
             // Adding ingredient to the stock
             stock.addNewIngredient(ingredient, quantity);
@@ -71,7 +97,7 @@ public class AddStockController extends GeneralController {
             stage.close();
 
         } catch (Exception e) {
-            warningLabel.setText("Error creating ingredient");
+            warningLabel.setText("Error creating ingredient.");
             e.printStackTrace();
         }
     }

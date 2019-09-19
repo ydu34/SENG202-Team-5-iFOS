@@ -8,13 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import org.joda.money.Money;
+import seng202.group5.Order;
+import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
-import seng202.group5.Order;
 import seng202.group5.information.Recipe;
-import seng202.group5.exceptions.NoOrderException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,7 @@ public class OrderController extends GeneralController {
     private Recipe testRecipe2;
     @FXML
     private Label totalCostDisplay;
-    private String ingredient;
+
     @FXML
     private CheckBox vegan;
 
@@ -74,16 +72,22 @@ public class OrderController extends GeneralController {
 
     @FXML
     private Text costText;
+
     @FXML
     private Spinner<Integer> quantitySpinner;
 
+    @FXML
+    private Text menuItemName;
+
+    @FXML
+    private Button addItemButton;
 
     private Order currentOrder;
+
     private MenuItem selectedItem;
 
-
-
     private ArrayList<MenuItem> allItems;
+
     private ArrayList<MenuItem> filteredItems;
 
     @Override
@@ -91,7 +95,6 @@ public class OrderController extends GeneralController {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
         item = allItems.get(0);
-        ingredient = "";
         showItems(new ActionEvent());
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
@@ -99,6 +102,7 @@ public class OrderController extends GeneralController {
 
         }
         orderIDText.setText(currentOrder.getID());
+        addItemButton.setDisable(true);
 
     }
 
@@ -158,11 +162,11 @@ public class OrderController extends GeneralController {
     public void setMenuItem(MenuItem newItem){
 
         selectedItem = newItem;
-        System.out.println(selectedItem);
-        System.out.println(selectedItem.calculateFinalCost());
-        recipeText.setText(selectedItem.getRecipe().getRecipeText());
+        System.out.println(newItem);
+        System.out.println(newItem.calculateFinalCost());
+        recipeText.setText(newItem.getRecipe().getRecipeText());
         //printIngredients(selectedItem);
-        itemNameText.setText(selectedItem.getItemName() + "\n");
+        itemNameText.setText(newItem.getItemName() + "\n");
     }
 
 
@@ -220,7 +224,6 @@ public class OrderController extends GeneralController {
      */
     public void selectionScreen(ActionEvent event, String scenePath) {
         SelectionController controller = (SelectionController) changeScreen(event, scenePath);
-        System.out.println(item.getItemName());
         controller.setMenuItem(item);
 
     }
@@ -231,6 +234,7 @@ public class OrderController extends GeneralController {
      */
     @FXML
     public void getIngredients(ActionEvent actionEvent) {
+        addItemButton.setDisable(false);
         //make_object();
 
         MenuItem selectedItem = null;
@@ -254,6 +258,7 @@ public class OrderController extends GeneralController {
             }
 
         }
+        menuItemName.setText(item.getItemName());
         ingredientsTable();
     }
 
