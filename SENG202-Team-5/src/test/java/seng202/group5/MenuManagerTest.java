@@ -2,6 +2,11 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.*;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;

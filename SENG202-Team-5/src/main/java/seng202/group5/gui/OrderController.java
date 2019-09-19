@@ -5,22 +5,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.Ingredient;
-import seng202.group5.MenuItem;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 import seng202.group5.Order;
-import seng202.group5.Recipe;
+import seng202.group5.information.Recipe;
 import seng202.group5.exceptions.NoOrderException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -184,7 +179,10 @@ public class OrderController extends GeneralController {
     }
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        AddExtraIngredientController controller =
+                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        controller.setMenuItem(item);
+        controller.initializeTable();
     }
 
     public void addItemtoOrder() {
@@ -260,6 +258,15 @@ public class OrderController extends GeneralController {
         }
         ingredientsTable();
     }
+
+
+    /**
+     * Updates the given selected item in the order given from AddExtraIngredient.
+     * @param updatedItem the new item with updated quantities and categories.
+     */
+    public void  updateItem(MenuItem updatedItem) {
+        item = updatedItem;
+    }
     /**
      * This method launches the selection screen when clicked on the the "Select" button.
      *
@@ -268,4 +275,7 @@ public class OrderController extends GeneralController {
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         selectionScreen(actionEvent, "/gui/selection.fxml");
     }
+
+
+
 }

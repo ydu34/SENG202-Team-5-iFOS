@@ -1,8 +1,9 @@
 package seng202.group5;
 
+import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
+import seng202.group5.information.Ingredient;
 
-import java.security.DigestException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,19 +12,18 @@ public class IngredientTest {
 
     @Test
     public void testEquals() {
-        Ingredient ingredient1 = new Ingredient();
-        Ingredient ingredient2 = new Ingredient();
-        Ingredient ingredient3 = ingredient1;
+        Ingredient ingredient1 = new Ingredient("ing1", "g", "meat", Money.parse("NZD 0.10"));
+        Ingredient ingredient2 = new Ingredient("ing2", "g", "meat", Money.parse("NZD 0.10"));
 
-        assertTrue(ingredient1.equals(ingredient3));
+        assertTrue(ingredient1.equals(ingredient1));
         assertFalse(ingredient1.equals(ingredient2));
     }
 
     @Test
     public void testDietaryInfo() {
-        Ingredient ingredient = new Ingredient();
+        Ingredient ingredient = new Ingredient("ing1", "g", "meat", Money.parse("NZD 0.10"));
 
-        ArrayList<DietEnum> list = new ArrayList<DietEnum>();
+        ArrayList<DietEnum> list = new ArrayList<>();
         list.add(DietEnum.VEGETARIAN);
         list.add(DietEnum.GLUTEN_FREE);
 

@@ -2,9 +2,7 @@ package seng202.group5.gui;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,7 +15,7 @@ import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.*;
-import seng202.group5.MenuItem;
+import seng202.group5.information.Transaction;
 
 import java.io.IOException;
 import java.time.*;

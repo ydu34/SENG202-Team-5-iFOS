@@ -1,8 +1,9 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.Money;
 import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.Transaction;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -136,7 +137,7 @@ public class Finance {
         Money minimin = Money.parse("NZD 0.09");
         for (Money value: denomination)
         {
-            while (change.isGreaterThan(value) & till.getDenominations().get(value) > 0) {
+            while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {
 
                 totalChange.add(value);
                 change = change.minus(value);

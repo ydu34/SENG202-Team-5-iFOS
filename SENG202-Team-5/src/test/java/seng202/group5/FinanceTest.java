@@ -4,6 +4,9 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.Till;
+import seng202.group5.information.Transaction;
 
 import java.time.LocalDateTime;
 import java.util.*;

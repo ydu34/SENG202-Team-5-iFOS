@@ -1,4 +1,6 @@
-package seng202.group5;
+package seng202.group5.logic;
+
+import seng202.group5.information.Ingredient;
 
 import javax.xml.bind.annotation.*;
 import java.util.HashMap;

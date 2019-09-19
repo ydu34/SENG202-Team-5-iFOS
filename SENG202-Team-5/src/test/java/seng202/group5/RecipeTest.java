@@ -4,10 +4,11 @@ package seng202.group5;
 import org.joda.money.Money;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.Recipe;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 

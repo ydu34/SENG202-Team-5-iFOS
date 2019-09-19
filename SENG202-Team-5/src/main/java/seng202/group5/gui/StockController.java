@@ -3,16 +3,12 @@
  */
 package seng202.group5.gui;
 
-import com.sun.javafx.image.impl.General;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,9 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.group5.Ingredient;
-import seng202.group5.Order;
-import seng202.group5.Stock;
+import seng202.group5.information.Ingredient;
 
 import java.io.IOException;
 import java.util.HashMap;

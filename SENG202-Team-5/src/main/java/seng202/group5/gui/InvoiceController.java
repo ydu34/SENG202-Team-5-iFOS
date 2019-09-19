@@ -1,17 +1,15 @@
 package seng202.group5.gui;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
-import seng202.group5.Ingredient;
-import seng202.group5.MenuItem;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;

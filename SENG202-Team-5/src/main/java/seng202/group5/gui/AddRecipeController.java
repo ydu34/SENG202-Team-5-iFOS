@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import seng202.group5.AppEnvironment;
-import seng202.group5.Ingredient;
+import seng202.group5.information.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
