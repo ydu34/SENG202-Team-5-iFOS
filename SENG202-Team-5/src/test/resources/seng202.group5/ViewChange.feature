@@ -1,6 +1,7 @@
 Feature: View Change
   Scenario: Order is payed for
     Given Order Costs $7.50
+    And till starts with change
     When Payment of $10.00 is confirmed
     Then $2.50 is displayed to be returned
 
