@@ -130,7 +130,6 @@ public class Order {
             // this may bring up problems when trying to edit the ingredient counts for an item in the order
             // It would show the ingredients from multiple copies of an item
             //ingredients.replace(id, ingredients.get(id) * quantity);
-
             // If we don't have enough in the Stock, we can't add it to order
             if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
                 return false;
@@ -141,7 +140,11 @@ public class Order {
         for (String id : listOfKeys) {
             temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id) * quantity);
         }
-        orderItems.put(item, quantity);
+        if (orderItems.keySet().contains(item)) {
+            orderItems.put(item, orderItems.get(item) + quantity);
+        } else {
+            orderItems.put(item, quantity);
+        }
 
         // Add price of item to total cost
         totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(quantity));

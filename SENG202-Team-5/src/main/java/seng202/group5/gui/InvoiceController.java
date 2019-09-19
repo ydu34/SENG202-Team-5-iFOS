@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
+import seng202.group5.Ingredient;
 import seng202.group5.MenuItem;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
@@ -49,6 +50,8 @@ public class InvoiceController extends GeneralController {
 
     private Order currentOrder;
 
+    private Map<MenuItem, Integer> orderItemsMap;
+
     public void pseudoInitialize() {
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
@@ -61,7 +64,7 @@ public class InvoiceController extends GeneralController {
     }
 
     public void currentOrderTable() {
-        Map<MenuItem, Integer> orderItemsMap = currentOrder.getOrderItems();
+        orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
 
@@ -99,7 +102,14 @@ public class InvoiceController extends GeneralController {
                         totalChangeDisplay.setText("Change: " + totalChange);
                     }
 
+                    int quantity = 0;
                     super.getAppEnvironment().getHistory().setTransactionHistory(order.getID(), order);
+                    for(MenuItem item: order.getOrderItems().keySet()) {
+                        for (Ingredient i :item.getRecipe().getIngredientsAmount().keySet()) {
+                            quantity = item.getRecipe().getIngredientsAmount().get(i)*orderItemsMap.get(item);
+                            super.getAppEnvironment().getStock().reduceQuantity(i.getID(), quantity);
+                        }
+                    }
                     super.getAppEnvironment().getOrderManager().newOrder();
                 } catch (InsufficientCashException e) {
                     changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);

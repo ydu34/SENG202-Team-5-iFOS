@@ -63,9 +63,6 @@ public class SelectionController extends GeneralController {
     public GridPane ingredientPane;
     @FXML
     private GridPane quantityPane;
-
-
-
     private Order currentOrder;
 
     @XmlTransient
@@ -77,8 +74,6 @@ public class SelectionController extends GeneralController {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
         } catch (NoOrderException e) {
         }
-
-
     }
 
 
@@ -98,15 +93,12 @@ public class SelectionController extends GeneralController {
      */
 
     public void setMenuItem(MenuItem newItem){
-        //System.out.println(newItem);
+
         item = newItem;
         costText.setText(item.calculateFinalCost().toString());
         recipeText.setText(item.getRecipe().getRecipeText());
         printIngredients(item);
         itemNameText.setText(item.getItemName());
-
-       // quantity.setValue(1);
-        //ingredeintQuantity.setValue(1);
     }
 
     public void setItemName(){
@@ -121,7 +113,7 @@ public class SelectionController extends GeneralController {
 
 
         for (Map.Entry<Ingredient, Integer> entry : newItem.getRecipe().getIngredientsAmount().entrySet()) {
-            //ingredient = "";
+
 
             Ingredient ingredientObject = entry.getKey();
             Integer value = entry.getValue();
