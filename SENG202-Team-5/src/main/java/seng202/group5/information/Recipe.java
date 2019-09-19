@@ -46,7 +46,11 @@ public class Recipe {
      */
     private HashSet<DietEnum> dietaryInformation;
 
-    Recipe() {
+    public Recipe() {
+        name = "";
+        recipeText = "";
+        ingredientsAmount = new HashMap<>();
+        ingredientIDs = new HashMap<>();
     }
 
     /**

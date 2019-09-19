@@ -156,7 +156,10 @@
                            </rowConstraints>
                            <children>
                               <Button fx:id="selectFilesButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectFiles" prefHeight="46.0" prefWidth="210.0" text="Select Files to Import " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <TextArea prefHeight="231.0" prefWidth="358.0" text="The files imported must be named the folloiwng:&#10;stock.xml&#10;orders.xml&#10;history.xml&#10;finance.xml" />
+                              <TextArea editable="false" prefHeight="231.0" prefWidth="358.0" text="The files imported must be named the folloiwng:&#10;stock.xml&#10;orders.xml&#10;history.xml&#10;finance.xml">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font></TextArea>
                            </children>
                         </GridPane>
                         <Button fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="47.0" prefWidth="218.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
@@ -165,12 +168,13 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints maxHeight="322.8000122070313" minHeight="10.0" prefHeight="322.8000122070313" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="322.8000122070313" minHeight="10.0" prefHeight="61.600001525878895" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="322.8000122070313" minHeight="10.0" prefHeight="312.7999984741211" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="104.39999999999998" minHeight="10.0" prefHeight="40.00001220703126" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ListView fx:id="importFilesListView" prefHeight="200.0" prefWidth="200.0" />
-                              <GridPane prefHeight="48.0" prefWidth="400.0" GridPane.rowIndex="1">
+                              <ListView fx:id="importFilesListView" prefHeight="301.0" prefWidth="400.0" GridPane.rowIndex="1" />
+                              <GridPane prefHeight="48.0" prefWidth="400.0" GridPane.rowIndex="2">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -183,6 +187,11 @@
                                     <Button fx:id="clearListButton" mnemonicParsing="false" onAction="#clearList" prefHeight="26.0" prefWidth="245.0" text="Clear selected files " GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Files" textAlignment="CENTER" wrappingWidth="400.70941162109375">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </GridPane>
                         <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="402.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />

@@ -46,7 +46,10 @@ public class    MenuItem {
     private TypeEnum itemType;
 
 
-    MenuItem() {
+    public MenuItem() {
+        itemName = "";
+        recipe = new Recipe();
+        markupCost = null;
     }
 
     /**
