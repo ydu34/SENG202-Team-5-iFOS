@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class    MenuItem {
+public class MenuItem {
 
     /**
      * Name of the dish/item on the menu.

@@ -99,7 +99,8 @@ public class OrderController extends GeneralController {
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
         } catch (NoOrderException e) {
-
+            //TODO: Implement me!
+            System.out.println(e);
         }
         orderIDText.setText(currentOrder.getID());
         addItemButton.setDisable(true);
@@ -182,13 +183,6 @@ public class OrderController extends GeneralController {
 
     }
 
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        AddExtraIngredientController controller =
-                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-        controller.setMenuItem(item);
-        controller.initializeTable();
-    }
-
     public void addItemtoOrder() {
         Integer quantity = quantitySpinner.getValue();
         currentOrder.addItem(item, quantity); // Not working so temporary add manually
@@ -225,7 +219,6 @@ public class OrderController extends GeneralController {
     public void selectionScreen(ActionEvent event, String scenePath) {
         SelectionController controller = (SelectionController) changeScreen(event, scenePath);
         controller.setMenuItem(item);
-
     }
 
     /**
@@ -248,11 +241,8 @@ public class OrderController extends GeneralController {
             }
             if (selectedItem != null) {
                // ingredientText.setText(ingredient);
-                System.out.println(selectedItem.calculateFinalCost().getAmount());
-                System.out.println(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
                 totalCostDisplay.setText(String.valueOf(selectedItem.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount()));
                 item = selectedItem;
-                System.out.println(item);
                 setMenuItem(item);
 
             }
@@ -268,9 +258,28 @@ public class OrderController extends GeneralController {
      * @param updatedItem the new item with updated quantities and categories.
      */
     public void updateItem(MenuItem updatedItem) {
+        //TODO add item to order button is disabled on completing this action when returning to the Order screen, must click on button of original item to reenable.
         item = updatedItem;
         ingredientsTable();
     }
+
+    /**
+     * This method launches the selection screen for the selected menu item and passes the recipe and object from the
+     * from the current class to the the Selection controller class.
+     *
+     * @param event
+     * @param scenePath
+     */
+    public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
+        AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);
+        controller.setMenuItem(item);
+        controller.initializeTable();
+    }
+
+    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+        addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+    }
+
     /**
      * This method launches the selection screen when clicked on the the "Select" button.
      *
