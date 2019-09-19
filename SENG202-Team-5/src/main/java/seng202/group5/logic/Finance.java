@@ -137,7 +137,7 @@ public class Finance {
         Money minimin = Money.parse("NZD 0.09");
         for (Money value: denomination)
         {
-            while (change.isGreaterThan(value) & till.getDenominations().get(value) > 0) {
+            while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {
 
                 totalChange.add(value);
                 change = change.minus(value);
