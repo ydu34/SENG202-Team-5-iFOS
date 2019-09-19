@@ -123,7 +123,7 @@ public class OrderTest {
         assertEquals(order.getOrderItems().get(item), 2);
 
 
-        MenuItem temp = new MenuItem(null, null, null, false);
+        MenuItem temp = new MenuItem(null, null, null, false, null);
         assertFalse(order.modifyItemQuantity(temp, 3));
     }
 

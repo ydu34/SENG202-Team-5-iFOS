@@ -2,6 +2,7 @@ package seng202.group5.information;
 
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
+import seng202.group5.TypeEnum;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -42,6 +43,8 @@ public class    MenuItem {
      */
     private boolean inMenu;
 
+    private TypeEnum itemType;
+
 
     MenuItem() {
     }
@@ -51,6 +54,7 @@ public class    MenuItem {
      * @param tempRecipe   is the recipe for a an item on the menu
      * @param tempMarkupCost   is the cost added to the ingredient cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
+     * @param tempInMenu whether or not the item is in the menu
      */
     @Deprecated(since = "ID is made using ID Maker now, this may be useful for tests though")
     public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
@@ -59,13 +63,22 @@ public class    MenuItem {
         markupCost = tempMarkupCost;
         id = uniqueId;
         inMenu = tempInMenu;
+        itemType = TypeEnum.MAIN;
     }
 
-    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, boolean tempInMenu) {
+    /**
+     * @param tempItemName   is the name of an item on the menu
+     * @param tempRecipe     is the recipe for a an item on the menu
+     * @param tempMarkupCost is the cost added to the ingredient cost of the menu item
+     * @param tempInMenu     whether or not the item is in the menu
+     * @param itemType       the type of the item
+     */
+    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, boolean tempInMenu, TypeEnum itemType) {
         itemName = tempItemName;
         recipe = tempRecipe;
         markupCost = tempMarkupCost;
         inMenu = tempInMenu;
+        this.itemType = itemType;
     }
 
 
@@ -146,6 +159,13 @@ public class    MenuItem {
         return new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
     }
 
+    public TypeEnum getType() {
+        return itemType;
+    }
+
+    public void setType(TypeEnum itemType) {
+        this.itemType = itemType;
+    }
 }
 
 

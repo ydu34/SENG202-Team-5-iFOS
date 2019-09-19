@@ -31,7 +31,7 @@ public class IDGeneratorTest {
     public void testClassIDs() {
         Ingredient ingredient = new Ingredient(null, null, null, Money.parse("NZD 0.10"));
         Order order = new Order(new Stock());
-        MenuItem item = new MenuItem(null, null, Money.parse("NZD 0.10"), false);
+        MenuItem item = new MenuItem(null, null, Money.parse("NZD 0.10"), false, null);
         Transaction transaction = new Transaction(null, null, null, null);
 
         ArrayList<String> ids = new ArrayList<String>();
