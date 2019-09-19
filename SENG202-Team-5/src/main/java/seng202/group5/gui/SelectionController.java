@@ -74,29 +74,29 @@ public class SelectionController extends GeneralController {
      *
      * @param actionEvent The action of clicking or pressing the button.
      */
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        AddExtraIngredientsScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-    }
-
-    public void AddExtraIngredientsScreen(ActionEvent event, String scenePath) {
-        //TODO this should be refactored somehow so it is using the code in GeneralController instead of being a copy
-        Parent extraIngredientsScene = null;
-        try {
-            FXMLLoader extraIngredientsLoader = new FXMLLoader(getClass().getResource(scenePath));
-            extraIngredientsScene = extraIngredientsLoader.load();
-            AddExtraIngredientController controller = extraIngredientsLoader.getController();
-            controller.setMenuItem(item);
-            controller.setAppEnvironment(getAppEnvironment());
-            controller.pseudoInitialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-        oldStage.setScene(new Scene(extraIngredientsScene, prevWidth, prevHeight));
-
-    }
+//    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+//        AddExtraIngredientsScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+//    }
+//
+//    public void AddExtraIngredientsScreen(ActionEvent event, String scenePath) {
+//        //TODO this should be refactored somehow so it is using the code in GeneralController instead of being a copy
+//        Parent extraIngredientsScene = null;
+//        try {
+//            FXMLLoader extraIngredientsLoader = new FXMLLoader(getClass().getResource(scenePath));
+//            extraIngredientsScene = extraIngredientsLoader.load();
+//            AddExtraIngredientController controller = extraIngredientsLoader.getController();
+//            controller.setMenuItem(item);
+//            controller.setAppEnvironment(getAppEnvironment());
+//            controller.pseudoInitialize();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
+//        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
+//        oldStage.setScene(new Scene(extraIngredientsScene, prevWidth, prevHeight));
+//
+//    }
 
 
     /**

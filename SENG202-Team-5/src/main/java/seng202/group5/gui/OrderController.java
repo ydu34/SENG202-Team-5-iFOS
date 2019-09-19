@@ -179,7 +179,10 @@ public class OrderController extends GeneralController {
     }
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        AddExtraIngredientController controller =
+                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        controller.setMenuItem(item);
+        controller.initializeTable();
     }
 
     public void addItemtoOrder() {

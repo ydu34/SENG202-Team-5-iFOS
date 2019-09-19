@@ -56,10 +56,15 @@ public class AddExtraIngredientController extends GeneralController {
             int quantity = quantities.get(data.getValue().getID());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
-        initializeSelectedIngredients();
+        }
+
+
+        public void initializeTable() {
+            initializeSelectedIngredients();
         initializeRemainingIngredients();
         initializeSpinners();
         ingredientsTable.setItems(itemIngredients);
+
         }
 
 
@@ -119,6 +124,7 @@ public class AddExtraIngredientController extends GeneralController {
      * Takes the selected MenuItem and adds its ingredients required to the tableview.
      */
     public void initializeSelectedIngredients() {
+        System.out.println(selectedItem);
         selectedIngredientSet = selectedItem.getRecipe().getIngredientsAmount().keySet();
         itemIngredients = FXCollections.observableArrayList(
                 selectedIngredientSet);
@@ -137,8 +143,9 @@ public class AddExtraIngredientController extends GeneralController {
         }
     }
 
-    public void setMenuItem(MenuItem newItem){
+    public void setMenuItem(MenuItem newItem) {
         selectedItem = newItem.clone();
+
     }
 
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) { // This does not remember the order
