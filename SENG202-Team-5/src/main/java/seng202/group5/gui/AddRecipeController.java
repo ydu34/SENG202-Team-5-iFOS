@@ -85,10 +85,10 @@ public class AddRecipeController extends GeneralController {
     }
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        AddExtraIngredientController controller =
-                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-        controller.setMenuItem(item);
-        controller.initializeTable();
+//        AddExtraIngredientController controller =
+//                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+//        controller.setMenuItem(item);
+//        controller.initializeTable();
     }
 
 }
