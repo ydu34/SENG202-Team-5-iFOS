@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class    MenuItem {
+public class MenuItem {
 
     /**
      * Name of the dish/item on the menu.
@@ -44,7 +44,7 @@ public class    MenuItem {
     private boolean inMenu;
 
     private TypeEnum itemType;
-
+    private boolean edited;
 
     public MenuItem() {
         itemName = "";
@@ -67,6 +67,7 @@ public class    MenuItem {
         id = uniqueId;
         inMenu = tempInMenu;
         itemType = TypeEnum.MAIN;
+        edited = false;
     }
 
     /**
@@ -82,6 +83,7 @@ public class    MenuItem {
         markupCost = tempMarkupCost;
         inMenu = tempInMenu;
         this.itemType = itemType;
+        edited = false;
     }
 
 
@@ -121,7 +123,11 @@ public class    MenuItem {
     }
 
     public String getItemName() {
-        return itemName;
+        if (edited) {
+            return "{Edited} " + itemName;
+        } else {
+            return itemName;
+        }
     }
 
     public Recipe getRecipe() {
@@ -166,8 +172,19 @@ public class    MenuItem {
         return itemType;
     }
 
+    public boolean getEdited() {
+        return edited;
+    }
+
     public void setType(TypeEnum itemType) {
         this.itemType = itemType;
+    }
+
+    public void setItemName(String tempName) {
+        itemName = tempName;
+    }
+    public void setEdited(boolean tempEdited) {
+        edited = tempEdited;
     }
 }
 
