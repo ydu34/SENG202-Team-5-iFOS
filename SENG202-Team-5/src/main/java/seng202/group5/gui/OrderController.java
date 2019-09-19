@@ -220,6 +220,15 @@ public class OrderController extends GeneralController {
         }
         ingredientsTable();
     }
+
+
+    /**
+     * Updates the given selected item in the order given from AddExtraIngredient.
+     * @param updatedItem the new item with updated quantities and categories.
+     */
+    public void  updateItem(MenuItem updatedItem) {
+        item = updatedItem;
+    }
     /**
      * This method launches the selection screen when clicked on the the "Select" button.
      *
@@ -228,4 +237,7 @@ public class OrderController extends GeneralController {
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         selectionScreen(actionEvent, "/gui/selection.fxml");
     }
+
+
+
 }
