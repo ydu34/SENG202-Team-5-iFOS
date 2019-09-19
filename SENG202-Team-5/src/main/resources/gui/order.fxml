@@ -49,7 +49,7 @@
                                             <children>
                                                 <Button fx:id="itemButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="Item_1" />
                                                 <Button fx:id="itemButton2" layoutX="195.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="item_2" />
-                                            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="517.0" maxWidth="1.7976931348623157E308" prefHeight="53.0" prefWidth="112.0" text="Cost:" textAlignment="CENTER" wrapText="true">
+                                            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="536.0" maxWidth="1.7976931348623157E308" prefHeight="53.0" prefWidth="112.0" text="Cost:" textAlignment="CENTER" wrapText="true">
                                                 <font>
                                                     <Font size="18.0" />
                                                 </font>
@@ -73,7 +73,7 @@
                         </TabPane>
                     </center>
                     <left>
-                        <VBox prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+                        <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
                                 <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Sort by">
                                     <items>
@@ -99,35 +99,7 @@
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </CheckBox>
-                        <Text fx:id="orderIDText" strokeType="OUTSIDE" strokeWidth="0.0" text="temp" wrappingWidth="120.0" />
-                        <Spinner fx:id="quantitySpinner" onDragDetected="#addItemtoOrder">
-                                <valueFactory>
-                                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="1" />
-                                </valueFactory>
-                        </Spinner>
-                        <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemtoOrder" prefHeight="26.0" prefWidth="72.0" text="Add" />
-                                <Button fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" text="Extra Ingredient" />
-                     </children>
-                        </VBox>
-                    </left>
-                    <right>
-                        <VBox maxWidth="-Infinity" prefHeight="200.0" BorderPane.alignment="CENTER">
-                            <children>
-                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="190.0" text="Ingredients" textAlignment="CENTER" wrapText="true">
-                                    <font>
-                                        <Font size="24.0" />
-                                    </font>
-                                    <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </VBox.margin>
-                                </Label>
-                        <TableView fx:id="ingredientInfoTable" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="434.0" prefWidth="210.0" VBox.vgrow="ALWAYS">
-                          <columns>
-                            <TableColumn fx:id="ingredientNameCol" prefWidth="122.0" text="Ingredeint" />
-                            <TableColumn fx:id="ingredientQuantityCol" prefWidth="87.0" text="Quantity" />
-                          </columns>
-                        </TableView>
-                        <TextFlow prefHeight="451.0" prefWidth="210.0">
+                        <TextFlow prefHeight="403.0" prefWidth="200.0">
                            <children>
                               <Text fx:id="itemNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipe" wrappingWidth="86.0400390625" />
                               <Text fx:id="recipeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
@@ -136,6 +108,34 @@
                               <Insets />
                            </VBox.margin>
                         </TextFlow>
+                     </children>
+                        </VBox>
+                    </left>
+                    <right>
+                        <VBox maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0" text="Ingredients" textAlignment="CENTER" wrapText="true">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </Label>
+                        <TableView fx:id="ingredientInfoTable" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="210.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="ingredientNameCol" prefWidth="122.0" text="Ingredeint" />
+                            <TableColumn fx:id="ingredientQuantityCol" prefWidth="87.0" text="Quantity" />
+                          </columns>
+                        </TableView>
+                        <Text fx:id="orderIDText" strokeType="OUTSIDE" strokeWidth="0.0" text="temp" wrappingWidth="120.0" />
+                        <Spinner fx:id="quantitySpinner" onDragDetected="#addItemtoOrder">
+                                <valueFactory>
+                                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="1" />
+                                </valueFactory>
+                        </Spinner>
+                        <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemtoOrder" prefHeight="26.0" prefWidth="72.0" text="Add" />
+                                <Button fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" text="Extra Ingredient" />
                             </children>
                         </VBox>
                     </right>
