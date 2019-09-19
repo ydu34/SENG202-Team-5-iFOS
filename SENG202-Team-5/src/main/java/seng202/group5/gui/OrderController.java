@@ -1,15 +1,16 @@
 package seng202.group5.gui;
 
 //import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.group5.Ingredient;
@@ -20,6 +21,7 @@ import seng202.group5.exceptions.NoOrderException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +61,15 @@ public class OrderController extends GeneralController {
 
     @FXML
     private Text orderIDText;
+
+    @FXML
+    private TableView<Ingredient> ingredientInfoTable;
+
+    @FXML
+    private TableColumn<Ingredient, String> ingredientNameCol;
+
+    @FXML
+    private TableColumn<Ingredient, String> ingredientQuantityCol;
 
     private Order currentOrder;
 
@@ -149,13 +160,22 @@ public class OrderController extends GeneralController {
 
     }
 
-    public void printIngredients(MenuItem someItem){
-        ingredient = "";
-        for (Map.Entry<Ingredient, Integer> entry : someItem.getRecipe().getIngredientsAmount().entrySet()) {
-            Ingredient ingredientObject = entry.getKey();
-            Integer value = entry.getValue();
-            ingredient += ingredientObject.getName() + "   (" + value + ")\n";
-        }
+    public void ingredientsTable() {
+        Recipe currentRecipe = item.getRecipe();
+        Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
+        List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
+        ingredientNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        ingredientQuantityCol.setCellValueFactory(data ->{
+            int quantity = recipeIngredientsMap.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+        });
+
+        ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
+        //this code removes the scroll bar buts ends up adding an extra column
+       // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
+       // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
+
+
 
     }
 
@@ -190,19 +210,16 @@ public class OrderController extends GeneralController {
                 }
             }
             if (selectedItem != null) {
-                printIngredients(selectedItem);
                 ingredientText.setText(ingredient);
                 System.out.println(selectedItem.calculateFinalCost().getAmount());
                 System.out.println(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
                 totalCostDisplay.setText(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
                 item = selectedItem;
-                System.out.println(item.getItemName());
             }
 
         }
+        ingredientsTable();
     }
-
-
     /**
      * This method launches the selection screen when clicked on the the "Select" button.
      *
@@ -211,6 +228,4 @@ public class OrderController extends GeneralController {
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         selectionScreen(actionEvent, "/gui/selection.fxml");
     }
-
-
 }
