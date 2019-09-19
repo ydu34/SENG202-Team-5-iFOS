@@ -1,6 +1,8 @@
-package seng202.group5;
+package seng202.group5.information;
 
 import org.joda.money.Money;
+import seng202.group5.DietEnum;
+import seng202.group5.IDGenerator;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;

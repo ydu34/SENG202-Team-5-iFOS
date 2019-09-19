@@ -3,6 +3,9 @@ package seng202.group5;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import seng202.group5.adapters.LocalDateTimeAdapter;
+import seng202.group5.logic.Stock;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -13,7 +16,6 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -90,9 +92,8 @@ public class Order {
      * The builder for an Order object with no initial values.
      */
     public Order(Stock tempStock) {
-        orderItems = new HashMap<MenuItem, Integer>();
+        orderItems = new HashMap<>();
         totalCost = Money.zero(CurrencyUnit.of("NZD"));
-        id = "ABC123"; // THIS NEEDS TO BE CHANGED, CURRENTLY HAS DEFAULT VALUE SINCE THERE IS NO ID MAKER YET
         temporaryStock = tempStock.clone();
     }
 

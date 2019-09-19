@@ -1,6 +1,7 @@
-package seng202.group5;
+package seng202.group5.information;
 
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -51,12 +52,19 @@ public class    MenuItem {
      * @param tempMarkupCost   is the cost added to the ingredient cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
      */
-
+    @Deprecated(since = "ID is made using ID Maker now, this may be useful for tests though")
     public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
         itemName = tempItemName;
         recipe = tempRecipe;
         markupCost = tempMarkupCost;
         id = uniqueId;
+        inMenu = tempInMenu;
+    }
+
+    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, boolean tempInMenu) {
+        itemName = tempItemName;
+        recipe = tempRecipe;
+        markupCost = tempMarkupCost;
         inMenu = tempInMenu;
     }
 

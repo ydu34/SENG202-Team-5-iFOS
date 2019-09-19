@@ -3,6 +3,7 @@ package seng202.group5;
 import org.joda.money.Money;
 import org.junit.jupiter.api.*;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.logic.Till;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -14,8 +14,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.Finance;
-import seng202.group5.MenuItem;
+import seng202.group5.logic.Finance;
+import seng202.group5.information.MenuItem;
 
 import java.io.File;
 import java.io.IOException;

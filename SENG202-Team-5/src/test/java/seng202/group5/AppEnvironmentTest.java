@@ -5,6 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.logic.History;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Stock;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;

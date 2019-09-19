@@ -3,27 +3,19 @@
  */
 package seng202.group5.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import seng202.group5.*;
-import seng202.group5.MenuItem;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.Recipe;
 
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 public class SelectionController extends GeneralController {
 
