@@ -12,6 +12,12 @@ import seng202.group5.information.Ingredient;
 
 import java.util.*;
 
+/**
+ * Handles adding and removing ingredients and items from the selected item it is passed.
+ * TODO: Add handling for dietary requirements if a selected ingredients breaks the selected dietary rule.
+ * TODO: Add method to handle and change the names of a menu item given that it is edited, eg Chicken Burger {+1 Cheese}
+ * @author James Kwok
+ */
 public class AddExtraIngredientController extends GeneralController {
 
     @FXML
@@ -19,6 +25,9 @@ public class AddExtraIngredientController extends GeneralController {
 
     @FXML
     private Button confirmItemButton;
+
+    @FXML
+    private Button backButton;
 
     @FXML
     private MenuItem oldItem;
@@ -60,15 +69,15 @@ public class AddExtraIngredientController extends GeneralController {
         });
         }
 
-
-        public void initializeTable() {
+    /**
+     * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
+     */
+    public void initializeTable() {
             initializeSelectedIngredients();
         initializeRemainingIngredients();
         initializeSpinners();
         ingredientsTable.setItems(itemIngredients);
-
         }
-
 
     /**
      * Creates the spinners that contain the ingredient objects.
@@ -102,9 +111,7 @@ public class AddExtraIngredientController extends GeneralController {
                         if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
                             ingredientAmountMap.remove(ingredient);
                         } else if (newValue != 0) {
-                            System.out.println(ingredientAmountMap);
                             ingredientAmountMap.put(ingredient, newValue);
-                            System.out.println(ingredientAmountMap);
                         }
                     });
                     setGraphic(spinner);
@@ -112,7 +119,6 @@ public class AddExtraIngredientController extends GeneralController {
                 }
             }
         });
-
     }
 
     /**
@@ -135,7 +141,6 @@ public class AddExtraIngredientController extends GeneralController {
      * Takes the selected MenuItem and adds its ingredients required to the tableview.
      */
     public void initializeSelectedIngredients() {
-        System.out.println(selectedItem);
         selectedIngredientSet = selectedItem.getRecipe().getIngredientsAmount().keySet();
         itemIngredients = FXCollections.observableArrayList(
                 selectedIngredientSet);
@@ -160,8 +165,12 @@ public class AddExtraIngredientController extends GeneralController {
 
     }
 
-    public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) { // This does not remember the order
-        changeScreen(actionEvent, "/gui/selection.fxml");
+    /**
+     * Returns to the order screen, returning the original item as the selected item.
+     */
+    public void revertToOrder(javafx.event.ActionEvent actionEvent) {
+        OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+        controller.updateItem(oldItem);
     }
 
 }
