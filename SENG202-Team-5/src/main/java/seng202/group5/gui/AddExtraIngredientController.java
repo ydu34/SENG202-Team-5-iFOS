@@ -95,7 +95,6 @@ public class AddExtraIngredientController extends GeneralController {
      */
     public void initializeRemainingIngredients() {
         Collection<Ingredient> allIngredientList = getAppEnvironment().getStock().getIngredients().values();
-        ArrayList<Ingredient> ingredientsNotInTable = new ArrayList<>();
         for (Ingredient ingredient : allIngredientList) {
             if (!selectedIngredientSet.contains(ingredient)) {
                 itemIngredients.add(ingredient);
