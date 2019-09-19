@@ -52,6 +52,21 @@ class AppEnvironmentTest {
         handler.getStock().addNewIngredient(lettuce, 100);
         handler.getStock().addNewIngredient(tomatoSauce, 100);
         handler.getOrderManager().newOrder();
+        ArrayList<Money> denomination = new ArrayList<>();
+
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
+
+        for (Money value: denomination) {
+            handler.getFinance().getTill().addDenomination(value, 10);
+        }
     }
 
     /**

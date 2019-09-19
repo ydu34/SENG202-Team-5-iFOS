@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import cucumber.api.PendingException;
 import org.joda.money.Money;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -19,7 +20,6 @@ public class MoneyStepDefs {
     private ArrayList<Money> change;
     private Finance finance;
     private Money cost;
-    private Till till;
 
 
     @Before
@@ -66,22 +66,42 @@ public class MoneyStepDefs {
 
     @Given("till starts with {int} ${double} notes")
     public void tillStartsWith$Notes(int arg0, double arg1) {
+        ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD "+ arg1));
+        finance.setTill(new Till(denomination));
 
-        till = new Till();
-        till.addDenomination(Money.parse("NZD "+ arg1), arg0);
+        finance.getTill().addDenomination(Money.parse("NZD "+ arg1), arg0);
 
     }
 
     @When("an order is payed for with {int} ${double} note")
     public void anOrderIsPayedForWith$Note(int arg0, double arg1) {
-        till.addDenomination(Money.parse("NZD "+ arg1), arg0);
+        finance.getTill().addDenomination(Money.parse("NZD "+ arg1), arg0);
     }
 
     @Then("till has {int} ${double} notes")
     public void tillHas$Notes(int arg0, double arg1) {
         HashMap<Money, Integer> expected = new HashMap<>();
         expected.put(Money.parse("NZD "+ arg1), arg0);
-        assertEquals(expected, till.getDenominations());
+        assertEquals(expected, finance.getTill().getDenominations());
 
+    }
+
+    @And("till starts with change")
+    public void tillStartsWithChange() {
+        ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
+        finance.setTill(new Till(denomination));
+        for (Money value: denomination) {
+            finance.getTill().addDenomination(value, 10);
+        }
     }
 }
