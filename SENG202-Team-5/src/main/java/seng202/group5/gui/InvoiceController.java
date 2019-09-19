@@ -31,8 +31,6 @@ public class InvoiceController extends GeneralController {
     @FXML
     private Text changeDisplay;
 
-    @FXML
-    private Text orderDisplay;
 
     @FXML
     private TableView<MenuItem> currentOrderTable;
@@ -122,11 +120,11 @@ public class InvoiceController extends GeneralController {
     }
     @FXML
     private void cancelOrder() {
-        clearPayment();
-        totalCost = Money.parse("NZD 0");
-        totalCostDisplay.setText("Total Cost: "+ totalCost);
-        orderDisplay.setText("");
+//        clearPayment();
+//        totalCost = Money.parse("NZD 0");
+//        totalCostDisplay.setText("Total Cost: "+ totalCost);
         super.getAppEnvironment().getOrderManager().newOrder();
+        pseudoInitialize();
     }
 
     @FXML
