@@ -122,7 +122,6 @@ public class Finance {
 
         long daysBetween = ChronoUnit.DAYS.between(startDate.toLocalDate(), endDate.toLocalDate()) + 1;
         totals.add(total.dividedBy(daysBetween, RoundingMode.DOWN));
-        System.out.println(totals);
         return totals;
     }
     /**
@@ -137,7 +136,6 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
         change = change.plus(Money.parse("NZD 0.03"));
 
-        System.out.println(change);
         Money minimin = Money.parse("NZD 0.09");
         for (Money value: denomination)
         {
