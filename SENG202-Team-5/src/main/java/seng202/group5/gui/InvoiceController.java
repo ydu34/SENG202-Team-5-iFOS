@@ -1,14 +1,24 @@
 package seng202.group5.gui;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
+import seng202.group5.MenuItem;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class InvoiceController extends GeneralController {
 
@@ -24,19 +34,46 @@ public class InvoiceController extends GeneralController {
     @FXML
     private Text orderDisplay;
 
+    @FXML
+    private TableView<MenuItem> currentOrderTable;
+
+    @FXML
+    private TableColumn<MenuItem, String> itemNameCol;
+
+    @FXML
+    private TableColumn<MenuItem, String> itemQuantityCol;
+
     private Money totalCost;
 
     private ArrayList<Money> payment = new ArrayList<>();
 
     private Money total = Money.parse("NZD 0");
 
+    private Order currentOrder;
+
     public void pseudoInitialize() {
         try {
-            totalCost = super.getAppEnvironment().getOrderManager().getOrder().getTotalCost();
-        } catch (NoOrderException ignored) {
-            totalCost = Money.parse("NZD 0");
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        } catch (NoOrderException e) {
         }
+        totalCost = currentOrder.getTotalCost();
+
         totalCostDisplay.setText("Total Cost: "+ totalCost);
+        currentOrderTable();
+    }
+
+    public void currentOrderTable() {
+        Map<MenuItem, Integer> orderItemsMap = currentOrder.getOrderItems();
+        List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
+        itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+
+        itemQuantityCol.setCellValueFactory(data -> {
+            int quantity = orderItemsMap.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+
+        });
+
+        currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
     }
     public void payCash() {
         try {

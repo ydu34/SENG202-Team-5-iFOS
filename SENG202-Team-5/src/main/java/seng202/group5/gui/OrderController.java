@@ -10,10 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.group5.Ingredient;
 import seng202.group5.MenuItem;
+import seng202.group5.Order;
 import seng202.group5.Recipe;
+import seng202.group5.exceptions.NoOrderException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +57,11 @@ public class OrderController extends GeneralController {
     @FXML
     private ArrayList<Button> filteredButtons;
 
+    @FXML
+    private Text orderIDText;
+
+    private Order currentOrder;
+
 
     private ArrayList<MenuItem> allItems;
     private ArrayList<MenuItem> filteredItems;
@@ -66,6 +74,13 @@ public class OrderController extends GeneralController {
         item = allItems.get(0);
         ingredient = "";
         showItems(new ActionEvent());
+        try {
+             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        } catch (NoOrderException e) {
+
+        }
+        orderIDText.setText(currentOrder.getID());
+
     }
 
     public void checkDietryInfo(ActionEvent event) {
@@ -124,8 +139,7 @@ public class OrderController extends GeneralController {
 
 
     /**
-     * Still trying to work this code out. Please dont delete it.
-     */
+     * Still trying to work this code out. Please dont delete it. */
     @FXML
     public void showItems(ActionEvent event) {
         ArrayList<MenuItem> itemsToShow = new ArrayList<>();

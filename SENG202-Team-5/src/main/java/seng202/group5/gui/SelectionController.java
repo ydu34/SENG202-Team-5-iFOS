@@ -10,16 +10,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import seng202.group5.Ingredient;
+import seng202.group5.*;
 import seng202.group5.MenuItem;
-import seng202.group5.Recipe;
+import seng202.group5.exceptions.NoOrderException;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.IOException;
@@ -28,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class SelectionController extends GeneralController implements Initializable {
+public class SelectionController extends GeneralController {
 
 
     @FXML
@@ -51,7 +48,9 @@ public class SelectionController extends GeneralController implements Initializa
     @FXML
     private Button closeSelectionScreenButton;
 
-    private Spinner quantity;
+    @FXML
+    private Spinner<Integer> quantitySpinner;
+
     @FXML
     private Label ingredientName;
     @FXML
@@ -66,8 +65,21 @@ public class SelectionController extends GeneralController implements Initializa
     private GridPane quantityPane;
 
 
+
+    private Order currentOrder;
+
     @XmlTransient
     private HashMap<Ingredient, Integer> ingredientsAmount;
+
+    @Override
+    public void pseudoInitialize() {
+        try {
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        } catch (NoOrderException e) {
+        }
+
+
+    }
 
 
     /**
@@ -106,9 +118,8 @@ public class SelectionController extends GeneralController implements Initializa
         int row = 1;
         int col = 1;
 
-        quantity = new Spinner(0,5,1);
-        quantityPane.setConstraints(quantity,1,1);
-        quantityPane.getChildren().add(quantity);
+
+
         for (Map.Entry<Ingredient, Integer> entry : newItem.getRecipe().getIngredientsAmount().entrySet()) {
             //ingredient = "";
 
@@ -126,15 +137,19 @@ public class SelectionController extends GeneralController implements Initializa
     }
 
 
-        public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
+    public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
+        Integer quantity = quantitySpinner.getValue();
+//        currentOrder.addItem(item, quantity); // Not working so temporary add manually
+        currentOrder.getOrderItems().put(item, quantity);
+        System.out.println(currentOrder.getOrderItems());
         changeScreen(actionEvent, "/gui/order.fxml");
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        quantity = new Spinner(0,100,0);
-//        ingredientSpinner.getValueFactory().setValue(1);
-
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        quantity = new Spinner(0,100,0);
+////        ingredientSpinner.getValueFactory().setValue(1);
+//
+//    }
 }
