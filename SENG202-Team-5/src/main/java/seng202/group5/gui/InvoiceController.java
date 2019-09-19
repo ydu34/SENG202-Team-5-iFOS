@@ -84,12 +84,23 @@ public class InvoiceController extends GeneralController {
                     ArrayList<Money> change = super.getAppEnvironment().getFinance().pay(totalCost, payment, LocalDateTime.now(), order.getID());
                     String display = "";
                     Money totalChange = Money.parse("NZD 0.00");
+                    Money totalPayment = Money.parse("NZD 0.00");
                     for (Money money : change) {
                         display += money + "\n";
                         totalChange = totalChange.plus(money);
                     }
+                    for (Money money : payment) {
+                        totalPayment = totalPayment.plus(money);
+                    }
                     changeDisplay.setText(display);
-                    totalChangeDisplay.setText("Change: " + totalChange);
+                    if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
+                        totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
+                    } else {
+                        totalChangeDisplay.setText("Change: " + totalChange);
+                    }
+
+                    super.getAppEnvironment().getHistory().setTransactionHistory(order.getID(), order);
+                    super.getAppEnvironment().getOrderManager().newOrder();
                 } catch (InsufficientCashException e) {
                     changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
 
