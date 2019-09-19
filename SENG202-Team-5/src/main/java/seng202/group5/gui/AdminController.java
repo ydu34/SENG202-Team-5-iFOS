@@ -104,7 +104,7 @@ public class AdminController extends GeneralController {
         LocalDateTime sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MAX);
         if (!eDate.isBefore(sDate)) {
             ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
-            saleSummaryText.setText("Testresult\nTotal cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
+            saleSummaryText.setText("Total cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
         } else {
             saleSummaryText.setText("End date is before start date");
         }

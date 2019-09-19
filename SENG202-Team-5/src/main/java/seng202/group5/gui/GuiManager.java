@@ -33,10 +33,10 @@ public class GuiManager extends Application {
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
         Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
-        Stock stock = new Stock();
+        Stock stock = thing.getStock();
         stock.addNewIngredient(test);
-        thing.setStock(stock);
-        thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
+//        thing.setStock(stock);
+//        thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
 
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
         Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
@@ -64,6 +64,7 @@ public class GuiManager extends Application {
 
         thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+        thing.getOrderManager().newOrder();
 
         MenuItem testItem = new MenuItem(
                 "Burger Item",

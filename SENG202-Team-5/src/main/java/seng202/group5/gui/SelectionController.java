@@ -139,8 +139,8 @@ public class SelectionController extends GeneralController {
 
     public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
         Integer quantity = quantitySpinner.getValue();
-//        currentOrder.addItem(item, quantity); // Not working so temporary add manually
-        currentOrder.getOrderItems().put(item, quantity);
+        currentOrder.addItem(item, quantity); // Not working so temporary add manually
+        //currentOrder.getOrderItems().put(item, quantity);
         System.out.println(currentOrder.getOrderItems());
         changeScreen(actionEvent, "/gui/order.fxml");
 
