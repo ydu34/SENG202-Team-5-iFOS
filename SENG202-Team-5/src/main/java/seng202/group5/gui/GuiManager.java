@@ -30,7 +30,7 @@ public class GuiManager extends Application {
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
-        primaryStage.setScene(new Scene(root, 850, 950));
+        primaryStage.setScene(new Scene(root, 1920, 1080));
         primaryStage.show();
     }
 
