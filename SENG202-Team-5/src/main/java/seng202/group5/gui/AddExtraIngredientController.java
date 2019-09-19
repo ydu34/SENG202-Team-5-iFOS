@@ -32,7 +32,7 @@ public class AddExtraIngredientController extends GeneralController {
         }
 
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) { // This does not remember the order
-        changeScreen(actionEvent, "/gui/selection.fxml");
+        changeScreen(actionEvent, "/gui/order.fxml");
     }
 
     /**

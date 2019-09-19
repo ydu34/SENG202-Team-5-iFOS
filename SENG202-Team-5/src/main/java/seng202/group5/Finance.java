@@ -33,6 +33,7 @@ public class Finance {
     public Finance() {
         transactionHistory = new HashMap<>();
         denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 100.00"));
         denomination.add(Money.parse("NZD 50.00"));
         denomination.add(Money.parse("NZD 20.00"));
         denomination.add(Money.parse("NZD 10.00"));

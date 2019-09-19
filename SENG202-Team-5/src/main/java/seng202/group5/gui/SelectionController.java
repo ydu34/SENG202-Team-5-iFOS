@@ -109,9 +109,6 @@ public class SelectionController extends GeneralController {
     public void printIngredients(MenuItem newItem) {
         int row = 1;
         int col = 1;
-
-
-
         for (Map.Entry<Ingredient, Integer> entry : newItem.getRecipe().getIngredientsAmount().entrySet()) {
 
 
