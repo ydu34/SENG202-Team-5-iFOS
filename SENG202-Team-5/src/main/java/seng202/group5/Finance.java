@@ -31,11 +31,10 @@ public class Finance {
     /**
      * Temporary id generator for testing purposes.
      */
-    private int tempId;
+    private Till till;
     
 
     public Finance() {
-        tempId = 0;
         transactionHistory = new HashMap<>();
         denomination = new ArrayList<>();
         denomination.add(Money.parse("NZD 50.00"));
@@ -47,6 +46,7 @@ public class Finance {
         denomination.add(Money.parse("NZD 0.50"));
         denomination.add(Money.parse("NZD 0.20"));
         denomination.add(Money.parse("NZD 0.10"));
+        till = new Till(denomination);
     }
 
     /**
@@ -61,7 +61,6 @@ public class Finance {
         if (!refundedOrder.getRefunded()) {
             refundedOrder.refund();
             refund = refundedOrder.getTotalPrice();
-            //TODO remove money from till
         }
         return calcChange(refund);
     }
@@ -86,6 +85,11 @@ public class Finance {
         if (totalCost.isGreaterThan(payedSum) || totalCost.isNegative()) {
             throw new InsufficientCashException();
         }
+
+        for (Money money: amountPayed)
+        {
+            till.addDenomination(money, 1);
+        }
         ArrayList<Money> change = calcChange(payedSum.minus(totalCost));
         for (Money money: change)
         {
@@ -93,7 +97,7 @@ public class Finance {
         }
         Transaction transaction = new Transaction(datetime, changeSum, totalCost, orderID);
         transactionHistory.put(transaction.getTransactionID(), transaction);
-        //TODO add money into till
+
         return change;
     }
 
@@ -133,14 +137,18 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
         change = change.plus(Money.parse("NZD 0.03"));
 
+        System.out.println(change);
         Money minimin = Money.parse("NZD 0.09");
-        while (change.isGreaterThan(minimin)) {
-            for (Money value: denomination)
-            {
-                while (change.isGreaterThan(value)) {
+        for (Money value: denomination)
+        {
+            while (change.isGreaterThan(value) & till.getDenominations().get(value) > 0) {
 
-                    totalChange.add(value);
-                    change = change.minus(value);
+                totalChange.add(value);
+                change = change.minus(value);
+                try {
+                    till.removeDenomination(value, 1);
+                } catch (InsufficientCashException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -150,5 +158,11 @@ public class Finance {
     public HashMap<String, Transaction> getTransactions() {
         return (HashMap<String, Transaction>) transactionHistory.clone();
     }
+    public Till getTill() {
+        return till;
+    }
 
+    public void setTill(Till till) {
+        this.till = till;
+    }
 }
