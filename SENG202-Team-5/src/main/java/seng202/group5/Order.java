@@ -3,6 +3,7 @@ package seng202.group5;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import seng202.group5.adapters.LocalDateTimeAdapter;
+import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -36,6 +37,7 @@ public class Order {
     /**
      * The current total cost of the order including the discount
      **/
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
     @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)

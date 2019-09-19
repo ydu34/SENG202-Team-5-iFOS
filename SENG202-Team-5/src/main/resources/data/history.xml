@@ -2,13 +2,13 @@
 <history>
     <transactionHistory>
         <entry>
-            <key>ABC123</key>
+            <key>11</key>
             <value>
                 <orderItems/>
-                <totalCost/>
-                <dateTimeProcessed>2019-09-19T16:54:16.766961</dateTimeProcessed>
+                <totalCost>NZD 0.00</totalCost>
+                <dateTimeProcessed>2019-09-20T10:26:41.257496</dateTimeProcessed>
                 <generator/>
-                <id>ABC123</id>
+                <id>11</id>
             </value>
         </entry>
     </transactionHistory>

@@ -39,6 +39,11 @@ public class GuiManager extends Application {
 
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
+        addTestData(thing);
+        return thing;
+    }
+
+    public void addTestData(AppEnvironment thing) {
         Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
         Stock stock = thing.getStock();
         stock.addNewIngredient(test);
@@ -97,7 +102,7 @@ public class GuiManager extends Application {
             e.printStackTrace();
         }
         thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
-        return thing;
+
     }
 
     public static void main(String[] args) {

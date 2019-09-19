@@ -27,8 +27,8 @@
                 <unit>kg</unit>
                 <category>dairy</category>
                 <price/>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -38,8 +38,8 @@
                 <unit>kg</unit>
                 <category>vege</category>
                 <price/>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
     </ingredients>

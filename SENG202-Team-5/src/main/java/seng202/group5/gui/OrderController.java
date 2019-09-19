@@ -94,7 +94,9 @@ public class OrderController extends GeneralController {
     public void pseudoInitialize() {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-        item = allItems.get(0);
+        if (allItems.size() > 0) {
+            item = allItems.get(0);
+        }
         showItems(new ActionEvent());
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();

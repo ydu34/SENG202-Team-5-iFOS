@@ -3,10 +3,12 @@ package seng202.group5.information;
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 import seng202.group5.TypeEnum;
+import seng202.group5.adapters.MoneyAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +34,7 @@ public class MenuItem {
     /**
      * The final cost of the menu item that after the mark up
      */
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money markupCost;
     /**
      * The unique id related to every item on the menu
