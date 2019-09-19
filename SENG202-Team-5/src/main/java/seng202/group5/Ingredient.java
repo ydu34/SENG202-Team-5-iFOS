@@ -49,10 +49,25 @@ public class Ingredient {
     /**
      * A HashSet to store dietary information about the recipe
      */
-    @XmlTransient
     private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
     Ingredient() {
+    }
+
+    public Ingredient(String tempName, String tempUnit, String tempCategory, Money tempPrice) {
+        name = tempName;
+        unit = tempUnit;
+        category = tempCategory;
+        price = tempPrice;
+        dietaryInformation = new HashSet<>();
+    }
+
+    public Ingredient(String tempName, String tempUnit, String tempCategory, Money tempPrice, HashSet<DietEnum> dietInfo) {
+        name = tempName;
+        unit = tempUnit;
+        category = tempCategory;
+        price = tempPrice;
+        dietaryInformation = dietInfo;
     }
 
     public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice) {

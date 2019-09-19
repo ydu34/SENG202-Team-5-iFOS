@@ -33,7 +33,7 @@ public class IDGeneratorTest {
         ids.add(ingredient.getID());
         ids.add(order.getID());
         ids.add(item.getID());
-        ids.add(transaction.getOrderNum());
+        ids.add(transaction.getTransactionID());
 
         for (int i = 0; i < 4; i++) {
             for (String idd : ids) {

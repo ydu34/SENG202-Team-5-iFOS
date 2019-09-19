@@ -46,11 +46,11 @@ public class Stock {
      */
     public void addNewIngredient(Ingredient ingredient, int quantity) {
         if (ingredients.containsKey(ingredient.getID())) {
-            return;
+            ingredientStock.put(ingredient.getID(), ingredientStock.get(ingredient.getID() + quantity));
+        } else {
+            ingredients.put(ingredient.getID(), ingredient);
+            ingredientStock.put(ingredient.getID(), quantity);
         }
-
-        ingredients.put(ingredient.getID(), ingredient);
-        ingredientStock.put(ingredient.getID(), quantity);
     }
 
 
@@ -79,6 +79,12 @@ public class Stock {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void reduceQuantity(String id, int quantity){
+        if (ingredientStock.containsKey(id)) {
+            ingredientStock.replace(id, ingredientStock.get(id) - quantity);
         }
     }
 

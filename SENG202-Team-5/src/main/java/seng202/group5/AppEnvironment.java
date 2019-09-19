@@ -38,7 +38,7 @@ public class AppEnvironment {
         history = new History();
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock, history);
-        till = new Till();
+        till = finance.getTill();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
@@ -137,7 +137,8 @@ public class AppEnvironment {
     }
 
     public void tillXmlToObject(String fileDirectory) {
-        till = (Till) xmlToObject(Till.class, till, "till.xml", fileDirectory);
+        finance.setTill((Till) xmlToObject(Till.class, till, "till.xml", fileDirectory));
+        till = finance.getTill();
     }
 
     public void allObjectsToXml(String fileDirectory) {
@@ -159,8 +160,8 @@ public class AppEnvironment {
      *                                   to pay for the order
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
-        Money totalPayment = Money.parse("NZD 0");
-        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
+        //        Money totalPayment = Money.parse("NZD 0");
+        //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
         ArrayList<Money> change = new ArrayList<Money>();
         try {
             Order order = orderManager.getOrder();
@@ -172,7 +173,8 @@ public class AppEnvironment {
 
             change = finance.pay(order.getTotalCost(),
                                  denominations,
-                                 order.getDateTimeProcessed());
+                                 order.getDateTimeProcessed(),
+                                 order.getID());
 
         } catch (NoOrderException e) {
             e.printStackTrace();

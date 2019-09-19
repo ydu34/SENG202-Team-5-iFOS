@@ -1,24 +1,35 @@
 package seng202.group5.gui;
 
-/**
- * @author Shivin Gaba, Daniel Harris
- */
-
-
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
-import seng202.group5.History;
-import seng202.group5.Order;
-import seng202.group5.OrderManager;
+import org.joda.money.Money;
+import seng202.group5.*;
+import seng202.group5.MenuItem;
 
+import java.io.IOException;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * A controller to manage the History screen
+ *
+ * @author Shivin Gaba, Daniel Harris
+ */
 public class HistoryController extends GeneralController {
 
 
@@ -28,41 +39,112 @@ public class HistoryController extends GeneralController {
     @FXML
     private DatePicker historyEndDatePicker;
 
+    /**
+     * The TextField for searching for an order by ID
+     */
     @FXML
     private TextField historySearchbar;
 
+    /**
+     * The table that displays the history of the orders
+     */
     @FXML
     private TableView<Order> historyTable;
 
     @FXML
-    private TableColumn rowID;
+    private TableColumn<Order, String> rowID;
 
     @FXML
-    private TableColumn rowDate;
+    private TableColumn<Order, String> rowDate;
 
     @FXML
-    private TableColumn rowTime;
+    private TableColumn<Order, String> rowTime;
 
     @FXML
-    private TableColumn rowOrder;
+    private TableColumn<Order, String> rowOrder;
 
     @FXML
-    private TableColumn rowAction;
+    private TableColumn<Order, Button> rowAction;
+
+    private HashMap<String, Transaction> orderIDTransactionIndex = new HashMap<>();
+    private ArrayList<Order> toBeRefunded = new ArrayList<>();
 
     @Override
     public void pseudoInitialize() {
+        for (Transaction transaction : getAppEnvironment().getFinance().getTransactions().values()) {
+            orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
+        }
+
         rowID.setCellValueFactory(new PropertyValueFactory<>("iD"));
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
-                ((TableColumn.CellDataFeatures<Order, String>) cellData).getValue().getDateTimeProcessed().
-                        toLocalDate().toString()));
+                cellData.getValue().getDateTimeProcessed().toLocalDate().toString()));
         rowTime.setCellValueFactory(cellData -> {
-            LocalTime time = ((TableColumn.CellDataFeatures<Order, String>) cellData).getValue()
-                    .getDateTimeProcessed().toLocalTime();
-            return new ReadOnlyStringWrapper(String.format("%d:%d", time.getHour(), time.getMinute()));
+            LocalTime time = cellData.getValue().getDateTimeProcessed().toLocalTime();
+            time = time.minusSeconds(time.getSecond());
+            time = time.minusNanos(time.getNano());
+            return new ReadOnlyStringWrapper(time.toString());
         });
         rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        rowAction.setCellValueFactory(param -> {
+            Button refundButton = new Button("Refund");
+            Order order = param.getValue();
+            refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).getRefunded());
+            refundButton.setOnAction((ActionEvent event) -> {
+                refundOrder(order, refundButton);
+                refundButton.setDisable(true);
+            });
+            return new ReadOnlyObjectWrapper<>(refundButton);
+        });
+        rowAction.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Order, Button> call(final TableColumn<Order, Button> tableColumn) {
+                final TableCell<Order, Button> cell = new TableCell<>() {
+                    @Override
+                    public void updateItem(Button item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(item);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
 
         historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
+    }
+
+    /**
+     * Refunds the given order
+     *
+     * @param orderToRefund the order to refund
+     */
+    private void refundOrder(Order orderToRefund, Button button) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/refundOrder.fxml"));
+            Parent root = loader.load();
+
+            ConfirmRefundController controller = loader.getController();
+            controller.setSource(this);
+            controller.setButton(button);
+            controller.setText(orderToRefund.getID());
+
+            Stage stage = new Stage();
+            stage.setTitle("Confirm refund");
+            stage.setScene(new Scene(root, 600, 200));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void confirmOrder(String orderID) {
+        for (Money coin : getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID())) {
+            System.out.println(coin);
+        }
     }
 
     /**
@@ -188,6 +270,19 @@ public class HistoryController extends GeneralController {
                 historyTable.getItems().add(order);
             }
 
+        }
+    }
+
+    public void addNewOrder(Order order) {
+
+        HashMap<String, Order> history = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory();
+
+        if (history.containsKey(order.getID())) {
+            //TODO create a formal error display system
+            System.out.println("Order already exists in history!");
+        } else {
+            history.put(order.getID(), order);
+            updateVisibleOrders(new ActionEvent());
         }
     }
 

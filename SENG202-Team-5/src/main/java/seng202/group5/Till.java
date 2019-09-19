@@ -65,7 +65,7 @@ public class Till {
             if (denominations.get(value) < count) {
                 throw new InsufficientCashException("Not enough denominations exist.");
             } else {
-                count -= denominations.get(value);
+                count = denominations.get(value) - count;
                 denominations.put(value, count);
             }
         }

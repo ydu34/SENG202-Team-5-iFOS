@@ -1,10 +1,7 @@
 package seng202.group5;
 
 import org.joda.money.Money;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
 
@@ -25,13 +22,28 @@ public class FinanceTest {
         payed.add(Money.parse("NZD 10.00"));
         payed.add(Money.parse("NZD 5.00"));
         payed.add(Money.parse("NZD 5.00"));
+        ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
+        testFinance.setTill(new Till(denomination));
+        for (Money value: denomination) {
+            testFinance.getTill().addDenomination(value, 10);
+        }
+
 
     }
 
     @Test
     public void testPay() throws InsufficientCashException {
         ArrayList<Money> result;
-        result = testFinance.pay(Money.parse("NZD 16.75"), payed, LocalDateTime.now());
+        result = testFinance.pay(Money.parse("NZD 16.75"), payed, LocalDateTime.now(), "");
         ArrayList<Money> expectedResult = new ArrayList<>();
         expectedResult.add(Money.parse("NZD 2.00"));
         expectedResult.add(Money.parse("NZD 1.00"));
@@ -42,7 +54,7 @@ public class FinanceTest {
     @Test
     public void testPayRounding() throws InsufficientCashException {
         ArrayList<Money> result;
-        result = testFinance.pay(Money.parse("NZD 19.01"), payed, LocalDateTime.now());
+        result = testFinance.pay(Money.parse("NZD 19.01"), payed, LocalDateTime.now(), "");
         ArrayList<Money> expectedResult = new ArrayList<>();
         expectedResult.add(Money.parse("NZD 1.00"));
         assertEquals(expectedResult, result);
@@ -51,7 +63,7 @@ public class FinanceTest {
     public void testPaymentError() {
 
         assertThrows(InsufficientCashException.class, () -> {
-            testFinance.pay(Money.parse("NZD 25.00"), payed, LocalDateTime.now());
+            testFinance.pay(Money.parse("NZD 25.00"), payed, LocalDateTime.now(), "");
         });
 
     }
@@ -60,25 +72,27 @@ public class FinanceTest {
     public void testCostError() {
 
         assertThrows(InsufficientCashException.class, () -> {
-            testFinance.pay(Money.parse("NZD -25.00"), payed, LocalDateTime.now());
+            testFinance.pay(Money.parse("NZD -25.00"), payed, LocalDateTime.now(), "");
         });
 
     }
     @Test
     public void testRefund() throws InsufficientCashException {
-        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now());
+        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now(), "");
         ArrayList<Money> moneyRefund = new ArrayList<>();
         moneyRefund.add(Money.parse("NZD 10.00"));
         moneyRefund.add(Money.parse("NZD 5.00"));
-        assertEquals(testFinance.refund("test0"), moneyRefund);
+        for (Transaction transaction : testFinance.getTransactions().values()) {
+            assertEquals(testFinance.refund(transaction.getTransactionID()), moneyRefund);
+        }
     }
 
     @Test
     public void testTotalCalculator() throws InsufficientCashException {
         ArrayList<Money> total = new ArrayList<>();
-        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now());
-        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now());
-        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now());
+        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now(), "");
+        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now(), "");
+        testFinance.pay(Money.parse("NZD 15.00"), payed, LocalDateTime.now(), "");
         LocalDateTime startDate = LocalDateTime.now().minusDays(1);
         LocalDateTime endDate = LocalDateTime.now();
         total.add(Money.parse("NZD 45.00"));

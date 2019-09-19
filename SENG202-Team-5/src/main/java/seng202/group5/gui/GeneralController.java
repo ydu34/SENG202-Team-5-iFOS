@@ -12,8 +12,14 @@ import seng202.group5.AppEnvironment;
 
 import java.io.IOException;
 
+/**
+ * A controller class for other classes to implement
+ *
+ * @author Daniel Harris
+ */
 public class GeneralController {
 
+    /** The property that is shared between all the controllers to access the AppEnvironment */
     private AppEnvironment appEnvironment;
 
     @FXML
@@ -44,12 +50,13 @@ public class GeneralController {
      * @param event
      * @param scenePath
      */
-    public void changeScreen(ActionEvent event, String scenePath){
+    public GeneralController changeScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
+        GeneralController controller = null;
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
             sampleScene = sampleLoader.load();
-            GeneralController controller = sampleLoader.getController();
+            controller = sampleLoader.getController();
             controller.setAppEnvironment(appEnvironment);
             controller.pseudoInitialize();
         } catch (IOException e) {
@@ -59,6 +66,7 @@ public class GeneralController {
         double prevHeight = ((Node) event.getSource()).getScene().getHeight();
         double prevWidth = ((Node) event.getSource()).getScene().getWidth();
         oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
+        return controller;
     }
 
     /**

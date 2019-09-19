@@ -7,9 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.*;
+import seng202.group5.exceptions.InsufficientCashException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -30,11 +32,11 @@ public class GuiManager extends Application {
 
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
-        Ingredient test = new Ingredient("test", "mg", "flour", "ABC123", Money.parse("NZD 7.00"));
-        Stock stock = new Stock();
+        Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
+        Stock stock = thing.getStock();
         stock.addNewIngredient(test);
-        thing.setStock(stock);
-        thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
+//        thing.setStock(stock);
+//        thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
 
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
         Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
@@ -45,13 +47,13 @@ public class GuiManager extends Application {
             add(DietEnum.GLUTEN_FREE);
             add(DietEnum.VEGETARIAN);
         }};
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", "15", Money.parse("NZD 10"), ingredientInfo1);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "14", Money.parse("NZD 5"), ingredientInfo2);
+        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", Money.parse("NZD 10"), ingredientInfo1);
+        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", Money.parse("NZD 5"), ingredientInfo2);
         HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
             add(DietEnum.VEGETARIAN);
         }};
-        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", "13", Money.parse("NZD 10"), ingredientInfo3);
+        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", Money.parse("NZD 10"), ingredientInfo3);
         testRecipe.addIngredient(chickenpatty, 1);
         testRecipe.addIngredient(cheese, 1);
         testRecipe2.addIngredient(vegePatty, 1);
@@ -62,6 +64,7 @@ public class GuiManager extends Application {
 
         thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+        thing.getOrderManager().newOrder();
 
         MenuItem testItem = new MenuItem(
                 "Burger Item",
@@ -78,8 +81,17 @@ public class GuiManager extends Application {
         Order tempOrder = new Order(new Stock());
         tempOrder.addItem(testItem, 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
-        thing.getHistory().getTransactionHistory().put(tempOrder.getID(),
-                                                       tempOrder);
+        try {
+            thing.getFinance().pay(tempOrder.getTotalCost(),
+                                   new ArrayList<>() {{
+                                       add(Money.parse("NZD 1000.00"));
+                                   }},
+                                   tempOrder.getDateTimeProcessed(),
+                                   tempOrder.getID());
+        } catch (InsufficientCashException e) {
+            e.printStackTrace();
+        }
+        thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
         return thing;
     }
 

@@ -2,12 +2,35 @@
 <stock>
     <ingredients>
         <entry>
-            <key>12</key>
-            <value id="12">
+            <key>13</key>
+            <value id="13">
+                <name>vegetables</name>
+                <unit>kg</unit>
+                <category>vege</category>
+                <price/>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>14</key>
+            <value id="14">
+                <name>cheese</name>
+                <unit>kg</unit>
+                <category>dairy</category>
+                <price/>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>15</key>
+            <value id="15">
                 <name>chicken</name>
                 <unit>kg</unit>
                 <category>meat</category>
                 <price/>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -22,7 +45,15 @@
     </ingredients>
     <ingredientStock>
         <entry>
-            <key>12</key>
+            <key>13</key>
+            <value>150</value>
+        </entry>
+        <entry>
+            <key>14</key>
+            <value>200</value>
+        </entry>
+        <entry>
+            <key>15</key>
             <value>100</value>
         </entry>
         <entry>

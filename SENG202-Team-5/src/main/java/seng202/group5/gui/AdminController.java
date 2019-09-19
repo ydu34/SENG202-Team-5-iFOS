@@ -1,12 +1,13 @@
 package seng202.group5.gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -14,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.Finance;
+import seng202.group5.MenuItem;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +38,7 @@ public class AdminController extends GeneralController {
     private DatePicker endDate;
 
     @FXML
-    private Text saleSummaryText;
+    private TextArea saleSummaryText;
 
     @FXML
     private Button selectFilesButton;
@@ -63,9 +65,33 @@ public class AdminController extends GeneralController {
 
     private List<File> selectedFiles;
 
+    @FXML
+    private TableView<MenuItem> itemTable;
+
+    @FXML
+    private TableColumn<MenuItem, String> nameCol;
+
+    @FXML
+    private TableColumn dietaryCol;
+
+    @FXML
+    private TableColumn<MenuItem, String> sellingPriceCol;
+
+
+
     @Override
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
+        recipeTableInitialize();
+
+    }
+
+    public void recipeTableInitialize() {
+        ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
+
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("markupCost"));
+        itemTable.setItems(items);
     }
 
     public void selectTime(javafx.event.ActionEvent actionEvent) {
@@ -78,7 +104,7 @@ public class AdminController extends GeneralController {
         LocalDateTime sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MAX);
         if (!eDate.isBefore(sDate)) {
             ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
-            saleSummaryText.setText("Testresult\nTotal cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
+            saleSummaryText.setText("Total cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
         } else {
             saleSummaryText.setText("End date is before start date");
         }
@@ -139,11 +165,17 @@ public class AdminController extends GeneralController {
     public void addRecipe() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
+
+            AddRecipeController controller = loader.<AddRecipeController>getController();
+            System.out.println(getAppEnvironment());
+            controller.setAppEnvironment(getAppEnvironment());
+            controller.pseudoInitialize();
+
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Add a Recipe");
             stage.setScene(new Scene(root, 600, 600));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         }
         catch (IOException e) {

@@ -15,7 +15,7 @@ public class TransactionTest {
     @BeforeEach
     public void init() {
         testDateTime = LocalDateTime.now();
-        testTransaction = new Transaction(testDateTime, Money.parse("NZD 20.00"), Money.parse("NZD 30.00"));
+        testTransaction = new Transaction(testDateTime, Money.parse("NZD 20.00"), Money.parse("NZD 30.00"), "");
     }
 
     @Test

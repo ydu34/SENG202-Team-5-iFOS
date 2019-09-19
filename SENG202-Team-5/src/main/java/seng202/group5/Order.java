@@ -13,6 +13,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -115,29 +116,38 @@ public class Order {
      */
     public boolean addItem(MenuItem item, int quantity) {
         // Getting the HashMap of ingredients, quantities
-        HashMap<String, Integer> ingredients = item.getRecipe().getIngredientIDs();
+        HashMap<Ingredient, Integer> ingredientQuantities = item.getRecipe().getIngredientsAmount();
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        for (Ingredient ingredient : ingredientQuantities.keySet()) {
+            ingredients.put(ingredient.getID(), ingredientQuantities.get(ingredient));
+        }
         // Creating an ArrayList so that we can iterate through the ingredients
         Set<String> keySet = ingredients.keySet();
-        ArrayList<String> listOfKeys = new ArrayList<String>(keySet);
+        ArrayList<String> listOfKeys = new ArrayList<>(keySet);
 
         // For each ingredient we change the quantity to accommodate any extra's
         for (String id : listOfKeys) {
-            ingredients.replace(id, ingredients.get(id) * quantity);
-
+            // this may bring up problems when trying to edit the ingredient counts for an item in the order
+            // It would show the ingredients from multiple copies of an item
+            //ingredients.replace(id, ingredients.get(id) * quantity);
             // If we don't have enough in the Stock, we can't add it to order
-            if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id)) {
+            if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
                 return false;
             }
         }
 
         // Finally removing ingredient amounts from stock
         for (String id : listOfKeys) {
-            temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id));
+            temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id) * quantity);
         }
-        orderItems.put(item, quantity);
+        if (orderItems.keySet().contains(item)) {
+            orderItems.put(item, orderItems.get(item) + quantity);
+        } else {
+            orderItems.put(item, quantity);
+        }
 
         // Add price of item to total cost
-        totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(quantity));
+        totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(quantity));
         return true;
     }
 
@@ -150,20 +160,25 @@ public class Order {
      */
     public boolean removeItem(MenuItem item) {
         if (orderItems.containsKey(item)) {
+            int quantity = orderItems.get(item);
             // Getting the ingredient HashMap and creating an Arraylist to iterate through out of the keys in the HashMap
-            HashMap<String, Integer> ingredients = item.getRecipe().getIngredientIDs();
+            HashMap<Ingredient, Integer> ingredientQuantities = item.getRecipe().getIngredientsAmount();
+            HashMap<String, Integer> ingredients = new HashMap<>();
+            for (Ingredient ingredient : ingredientQuantities.keySet()) {
+                ingredients.put(ingredient.getID(), ingredientQuantities.get(ingredient));
+            }
             Set<String> keySet = ingredients.keySet();
-            ArrayList<String> listOfKeys = new ArrayList<String>(keySet);
+            ArrayList<String> listOfKeys = new ArrayList<>(keySet);
 
             // Adding the ingredients back into the stock
             for (String id : listOfKeys) {
-                temporaryStock.modifyQuantity(id, temporaryStock.getIngredientQuantity(id) + ingredients.get(id));
+                temporaryStock.modifyQuantity(id, temporaryStock.getIngredientQuantity(id) + ingredients.get(id) * quantity);
             }
 
             orderItems.remove(item);
 
             // Minuses the price of the item from the total cost
-            totalCost = totalCost.minus(item.getMarkupCost());
+            totalCost = totalCost.minus(item.calculateFinalCost().multipliedBy(quantity));
             return true;
         } else {
             return false;
@@ -180,11 +195,14 @@ public class Order {
      */
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
         if (orderItems.containsKey(item)) {
-            int currentNum = orderItems.get(item);
-            int diff = quantity - currentNum;
-            totalCost = totalCost.plus(item.getMarkupCost().multipliedBy(diff));
-            orderItems.replace(item, quantity);
-            return true;
+            int currentCount = orderItems.get(item);
+            removeItem(item);
+            if (!addItem(item, quantity)) {
+                addItem(item, currentCount);
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return false;
         }

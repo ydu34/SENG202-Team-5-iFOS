@@ -1,22 +1,27 @@
 package seng202.group5.gui;
 
 //import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.group5.Ingredient;
 import seng202.group5.MenuItem;
+import seng202.group5.Order;
 import seng202.group5.Recipe;
+import seng202.group5.exceptions.NoOrderException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,13 +59,39 @@ public class OrderController extends GeneralController {
     @FXML
     private ArrayList<Button> filteredButtons;
 
+    @FXML
+    private Text orderIDText;
+
+    @FXML
+    private TableView<Ingredient> ingredientInfoTable;
+
+    @FXML
+    private TableColumn<Ingredient, String> ingredientNameCol;
+
+    @FXML
+    private TableColumn<Ingredient, String> ingredientQuantityCol;
+
+    private Order currentOrder;
+
 
     private ArrayList<MenuItem> allItems;
     private ArrayList<MenuItem> filteredItems;
 
     @Override
     public void pseudoInitialize() {
+        allItems = new ArrayList<>();
+        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
+
+        item = allItems.get(0);
+        ingredient = "";
         showItems(new ActionEvent());
+        try {
+             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        } catch (NoOrderException e) {
+
+        }
+        orderIDText.setText(currentOrder.getID());
+
     }
 
     public void checkDietryInfo(ActionEvent event) {
@@ -69,7 +100,6 @@ public class OrderController extends GeneralController {
     }
 
     public ArrayList<MenuItem> filterItems() {
-        make_object();
         filteredButtons = new ArrayList<>();
         filteredButtons.add(itemButton);
         filteredButtons.add(itemButton2);
@@ -120,8 +150,7 @@ public class OrderController extends GeneralController {
 
 
     /**
-     * Still trying to work this code out. Please dont delete it.
-     */
+     * Still trying to work this code out. Please dont delete it. */
     @FXML
     public void showItems(ActionEvent event) {
         ArrayList<MenuItem> itemsToShow = new ArrayList<>();
@@ -131,28 +160,22 @@ public class OrderController extends GeneralController {
 
     }
 
+    public void ingredientsTable() {
+        Recipe currentRecipe = item.getRecipe();
+        Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
+        List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
+        ingredientNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        ingredientQuantityCol.setCellValueFactory(data ->{
+            int quantity = recipeIngredientsMap.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+        });
 
-    /**
-     * this method is juts a test as we are still trying to figure out how to convert the menuitem from the recipe xml to the recipe object.
-     * The method below adds makes a menuItem object, adds ingredients to it and the loop over the hash map <Ingredient, Integer> and displays the
-     * the list of all the ingredients present in that recipe under on the order screen under the ingredients method and the also return the recipe.
-     */
-    public void make_object() {
-        allItems = new ArrayList<>();
-        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
+        ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
+        //this code removes the scroll bar buts ends up adding an extra column
+       // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
+       // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
 
-        item = allItems.get(0);
 
-        ingredient = "";
-    }
-
-    public void printIngredients(MenuItem someItem){
-        ingredient = "";
-        for (Map.Entry<Ingredient, Integer> entry : someItem.getRecipe().getIngredientsAmount().entrySet()) {
-            Ingredient ingredientObject = entry.getKey();
-            Integer value = entry.getValue();
-            ingredient += ingredientObject.getName() + "   (" + value + ")\n";
-        }
 
     }
 
@@ -164,23 +187,9 @@ public class OrderController extends GeneralController {
      * @param scenePath
      */
     public void selectionScreen(ActionEvent event, String scenePath) {
-        //TODO this should be refactored somehow so it is using the code in GeneralController instead of being a copy
-        Parent selectionScene = null;
-        try {
-            FXMLLoader selectionLoader = new FXMLLoader(getClass().getResource(scenePath));
-            selectionScene = selectionLoader.load();
-            SelectionController controller = selectionLoader.getController();
-            System.out.println(item.getItemName());
-            controller.setMenuItem(item);
-            controller.setAppEnvironment(getAppEnvironment());
-            controller.pseudoInitialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-        oldStage.setScene(new Scene(selectionScene, prevWidth, prevHeight));
+        SelectionController controller = (SelectionController) changeScreen(event, scenePath);
+        System.out.println(item.getItemName());
+        controller.setMenuItem(item);
 
     }
 
@@ -201,19 +210,16 @@ public class OrderController extends GeneralController {
                 }
             }
             if (selectedItem != null) {
-                printIngredients(selectedItem);
                 ingredientText.setText(ingredient);
                 System.out.println(selectedItem.calculateFinalCost().getAmount());
                 System.out.println(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
                 totalCostDisplay.setText(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
                 item = selectedItem;
-                System.out.println(item.getItemName());
             }
 
         }
+        ingredientsTable();
     }
-
-
     /**
      * This method launches the selection screen when clicked on the the "Select" button.
      *
@@ -222,6 +228,4 @@ public class OrderController extends GeneralController {
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         selectionScreen(actionEvent, "/gui/selection.fxml");
     }
-
-
 }
