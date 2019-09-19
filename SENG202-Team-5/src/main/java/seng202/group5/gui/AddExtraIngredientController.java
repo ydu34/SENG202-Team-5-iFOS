@@ -115,7 +115,6 @@ public class AddExtraIngredientController extends GeneralController {
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
      */
     public void updateItemIngredients(javafx.event.ActionEvent actionEvent) {
-        //TODO Implement for when the extra ingredients are confirmed.
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
         controller.updateItem(selectedItem);
     }
