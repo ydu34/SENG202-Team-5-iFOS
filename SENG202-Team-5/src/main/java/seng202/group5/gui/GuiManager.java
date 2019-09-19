@@ -1,5 +1,6 @@
 package seng202.group5.gui;
 
+import com.sun.glass.ui.Screen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +31,9 @@ public class GuiManager extends Application {
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
-        primaryStage.setScene(new Scene(root, 1920, 1080));
+        Integer height = Screen.getMainScreen().getHeight();
+        Integer width = Screen.getMainScreen().getWidth();
+        primaryStage.setScene(new Scene(root, width, height));
         primaryStage.show();
     }
 
