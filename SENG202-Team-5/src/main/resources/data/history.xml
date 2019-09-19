@@ -4,25 +4,9 @@
         <entry>
             <key>ABC123</key>
             <value>
-                <orderItems>
-                    <entry>
-                        <key>
-                            <itemName>Burger Item</itemName>
-                            <recipe>
-<name>Burger</name>
-<recipeText>Add items to burger</recipeText>
-<ingredientIDs/>
-                            </recipe>
-                            <markupCost/>
-                            <generator/>
-                            <id>14328</id>
-                            <inMenu>true</inMenu>
-                        </key>
-                        <value>4</value>
-                    </entry>
-                </orderItems>
+                <orderItems/>
                 <totalCost/>
-                <dateTimeProcessed>2019-09-18T21:14:35.969266</dateTimeProcessed>
+                <dateTimeProcessed>2019-09-19T16:54:16.766961</dateTimeProcessed>
                 <generator/>
                 <id>ABC123</id>
             </value>

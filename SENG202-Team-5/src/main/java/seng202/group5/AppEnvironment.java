@@ -48,7 +48,6 @@ public class AppEnvironment {
         acceptedFiles.add("menu.xml");
         acceptedFiles.add("history.xml");
         acceptedFiles.add("finance.xml");
-        acceptedFiles.add("till.xml");
     }
 
     /**
@@ -140,17 +139,11 @@ public class AppEnvironment {
         menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", fileDirectory);
     }
 
-    public void tillXmlToObject(String fileDirectory) {
-        finance.setTill((Till) xmlToObject(Till.class, till, "till.xml", fileDirectory));
-        till = finance.getTill();
-    }
-
     public void allObjectsToXml(String fileDirectory) {
         objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
         objectToXml(History.class, history, "history.xml", fileDirectory);
         objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
         objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
-        objectToXml(Till.class, till, "till.xml", fileDirectory);
     }
 
     /**

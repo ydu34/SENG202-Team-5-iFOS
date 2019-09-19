@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.joda.money.Money;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.Order;
@@ -27,8 +29,7 @@ public class OrderController extends GeneralController {
 
     public Recipe testRecipe;
 
-    @FXML
-    private Label ingredientText;
+
 
     @FXML
     private Button itemButton;
@@ -65,7 +66,21 @@ public class OrderController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, String> ingredientQuantityCol;
 
+    @FXML
+    private Text itemNameText;
+
+    @FXML
+    private Text recipeText;
+
+    @FXML
+    private Text costText;
+    @FXML
+    private Spinner<Integer> quantitySpinner;
+
+
     private Order currentOrder;
+    private MenuItem selectedItem;
+
 
 
     private ArrayList<MenuItem> allItems;
@@ -75,7 +90,6 @@ public class OrderController extends GeneralController {
     public void pseudoInitialize() {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-
         item = allItems.get(0);
         ingredient = "";
         showItems(new ActionEvent());
@@ -141,6 +155,16 @@ public class OrderController extends GeneralController {
 
     }
 
+    public void setMenuItem(MenuItem newItem){
+
+        selectedItem = newItem;
+        System.out.println(selectedItem);
+        System.out.println(selectedItem.calculateFinalCost());
+        recipeText.setText(selectedItem.getRecipe().getRecipeText());
+        //printIngredients(selectedItem);
+        itemNameText.setText(selectedItem.getItemName() + "\n");
+    }
+
 
 
     /**
@@ -151,6 +175,19 @@ public class OrderController extends GeneralController {
         itemsToShow = filterItems();
         // work with menuItemsList
 
+
+    }
+
+    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+        changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+    }
+
+    public void addItemtoOrder() {
+        Integer quantity = quantitySpinner.getValue();
+        currentOrder.addItem(item, quantity); // Not working so temporary add manually
+        //currentOrder.getOrderItems().put(item, quantity);
+        System.out.println(currentOrder.getOrderItems());
+     //   changeScreen(actionEvent, "/gui/order.fxml");
 
     }
 
@@ -194,6 +231,7 @@ public class OrderController extends GeneralController {
     @FXML
     public void getIngredients(ActionEvent actionEvent) {
         //make_object();
+
         MenuItem selectedItem = null;
 
         if (filteredItems != null) {
@@ -204,11 +242,14 @@ public class OrderController extends GeneralController {
                 }
             }
             if (selectedItem != null) {
-                ingredientText.setText(ingredient);
+               // ingredientText.setText(ingredient);
                 System.out.println(selectedItem.calculateFinalCost().getAmount());
                 System.out.println(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
-                totalCostDisplay.setText(String.valueOf(selectedItem.calculateFinalCost().getAmount()));
+                totalCostDisplay.setText(String.valueOf(selectedItem.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount()));
                 item = selectedItem;
+                System.out.println(item);
+                setMenuItem(item);
+
             }
 
         }
