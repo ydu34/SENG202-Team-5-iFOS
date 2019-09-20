@@ -56,6 +56,7 @@ public class Order {
     private Stock temporaryStock;
 
     Order() {
+        orderItems = new HashMap<>();
     }
 
 
