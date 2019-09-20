@@ -4,6 +4,9 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.Till;
+import seng202.group5.information.Transaction;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -22,6 +25,21 @@ public class FinanceTest {
         payed.add(Money.parse("NZD 10.00"));
         payed.add(Money.parse("NZD 5.00"));
         payed.add(Money.parse("NZD 5.00"));
+        ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
+        testFinance.setTill(new Till(denomination));
+        for (Money value: denomination) {
+            testFinance.getTill().addDenomination(value, 10);
+        }
+
 
     }
 
@@ -67,7 +85,7 @@ public class FinanceTest {
         ArrayList<Money> moneyRefund = new ArrayList<>();
         moneyRefund.add(Money.parse("NZD 10.00"));
         moneyRefund.add(Money.parse("NZD 5.00"));
-        for (Transaction transaction : testFinance.getTransactions().values()) {
+        for (Transaction transaction : testFinance.getTransactionHistoryClone().values()) {
             assertEquals(testFinance.refund(transaction.getTransactionID()), moneyRefund);
         }
     }

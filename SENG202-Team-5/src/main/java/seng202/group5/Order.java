@@ -3,6 +3,10 @@ package seng202.group5;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import seng202.group5.adapters.LocalDateTimeAdapter;
+import seng202.group5.adapters.MoneyAdapter;
+import seng202.group5.logic.Stock;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -13,7 +17,6 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -34,6 +37,7 @@ public class Order {
     /**
      * The current total cost of the order including the discount
      **/
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
     @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
@@ -52,6 +56,7 @@ public class Order {
     private Stock temporaryStock;
 
     Order() {
+        orderItems = new HashMap<>();
     }
 
 
@@ -90,9 +95,8 @@ public class Order {
      * The builder for an Order object with no initial values.
      */
     public Order(Stock tempStock) {
-        orderItems = new HashMap<MenuItem, Integer>();
+        orderItems = new HashMap<>();
         totalCost = Money.zero(CurrencyUnit.of("NZD"));
-        id = "ABC123"; // THIS NEEDS TO BE CHANGED, CURRENTLY HAS DEFAULT VALUE SINCE THERE IS NO ID MAKER YET
         temporaryStock = tempStock.clone();
     }
 
@@ -127,10 +131,6 @@ public class Order {
 
         // For each ingredient we change the quantity to accommodate any extra's
         for (String id : listOfKeys) {
-            // this may bring up problems when trying to edit the ingredient counts for an item in the order
-            // It would show the ingredients from multiple copies of an item
-            //ingredients.replace(id, ingredients.get(id) * quantity);
-
             // If we don't have enough in the Stock, we can't add it to order
             if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
                 return false;
@@ -141,7 +141,11 @@ public class Order {
         for (String id : listOfKeys) {
             temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id) * quantity);
         }
-        orderItems.put(item, quantity);
+        if (orderItems.keySet().contains(item)) {
+            orderItems.put(item, orderItems.get(item) + quantity);
+        } else {
+            orderItems.put(item, quantity);
+        }
 
         // Add price of item to total cost
         totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(quantity));

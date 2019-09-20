@@ -1,4 +1,6 @@
-package seng202.group5;
+package seng202.group5.logic;
+
+import seng202.group5.information.Ingredient;
 
 import javax.xml.bind.annotation.*;
 import java.util.HashMap;
@@ -79,6 +81,12 @@ public class Stock {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void reduceQuantity(String id, int quantity){
+        if (ingredientStock.containsKey(id)) {
+            ingredientStock.replace(id, ingredientStock.get(id) - quantity);
         }
     }
 

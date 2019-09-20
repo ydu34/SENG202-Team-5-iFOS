@@ -14,11 +14,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.Finance;
-import seng202.group5.MenuItem;
+import seng202.group5.logic.Finance;
+import seng202.group5.information.MenuItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -100,11 +101,21 @@ public class AdminController extends GeneralController {
 
     @FXML
     public void viewHistory() {
-        LocalDateTime eDate = LocalDateTime.of(endDate.getValue(), LocalTime.MIN);
-        LocalDateTime sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MAX);
+        LocalDateTime eDate;
+        LocalDateTime sDate;
+        if (endDate.getValue() != null) {
+            eDate = LocalDateTime.of(endDate.getValue(), LocalTime.MAX);
+        } else {
+            eDate = LocalDateTime.of(LocalDate.MAX, LocalTime.MAX);
+        }
+        if (startDate.getValue() != null) {
+            sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MIN);
+        } else {
+            sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
+        }
         if (!eDate.isBefore(sDate)) {
             ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
-            saleSummaryText.setText("Testresult\nTotal cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
+            saleSummaryText.setText("Total cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
         } else {
             saleSummaryText.setText("End date is before start date");
         }
@@ -148,8 +159,6 @@ public class AdminController extends GeneralController {
                     case "finance.xml": getAppEnvironment().financeXmlToObject(selectedFiles.get(i).getParent());
                         break;
                     case "menu.xml": getAppEnvironment().menuXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "till.xml": getAppEnvironment().tillXmlToObject(selectedFiles.get(i).getParent());
                         break;
                 }
 

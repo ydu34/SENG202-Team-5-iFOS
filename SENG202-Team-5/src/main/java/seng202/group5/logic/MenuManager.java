@@ -1,8 +1,12 @@
-package seng202.group5;
+package seng202.group5.logic;
 
-import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 
@@ -12,6 +16,7 @@ import java.util.HashMap;
  * @author James Kwok
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MenuManager {
 
     private HashMap<String, MenuItem> itemList;

@@ -3,6 +3,10 @@ package seng202.group5;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.logic.*;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -38,13 +42,12 @@ public class AppEnvironment {
         history = new History();
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock, history);
-        till = new Till();
+        till = finance.getTill();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
         acceptedFiles.add("history.xml");
         acceptedFiles.add("finance.xml");
-        acceptedFiles.add("till.xml");
     }
 
     /**
@@ -136,16 +139,11 @@ public class AppEnvironment {
         menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", fileDirectory);
     }
 
-    public void tillXmlToObject(String fileDirectory) {
-        till = (Till) xmlToObject(Till.class, till, "till.xml", fileDirectory);
-    }
-
     public void allObjectsToXml(String fileDirectory) {
         objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
         objectToXml(History.class, history, "history.xml", fileDirectory);
         objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
         objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
-        objectToXml(Till.class, till, "till.xml", fileDirectory);
     }
 
     /**

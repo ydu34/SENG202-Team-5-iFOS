@@ -5,6 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
+import seng202.group5.logic.History;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Stock;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -52,6 +58,21 @@ class AppEnvironmentTest {
         handler.getStock().addNewIngredient(lettuce, 100);
         handler.getStock().addNewIngredient(tomatoSauce, 100);
         handler.getOrderManager().newOrder();
+        ArrayList<Money> denomination = new ArrayList<>();
+
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
+
+        for (Money value: denomination) {
+            handler.getFinance().getTill().addDenomination(value, 10);
+        }
     }
 
     /**
@@ -91,6 +112,7 @@ class AppEnvironmentTest {
         handler.objectToXml(History.class, history, "historyTest.xml", testDirectory);
     }
 
+
     @Test
     public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
         Money changeSum = Money.parse("NZD 0");
@@ -124,7 +146,13 @@ class AppEnvironmentTest {
         paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
         assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
     }
-
+//
+//    @Test
+//    void testHistoryXmlToObjet() {
+//        History history = new History();
+//        history = (History) handler.xmlToObject(History.class, history, "historyTest.xml", testDirectory);
+//        System.out.println(history.getTransactionHistory().get("1").getOrderItems().entrySet());
+//    }
 
     // Test only works if stockTest.xml exists before running tests.
 //    @Test

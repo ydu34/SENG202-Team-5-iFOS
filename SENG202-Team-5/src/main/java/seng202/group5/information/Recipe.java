@@ -1,4 +1,6 @@
-package seng202.group5;
+package seng202.group5.information;
+
+import seng202.group5.DietEnum;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -44,7 +46,11 @@ public class Recipe {
      */
     private HashSet<DietEnum> dietaryInformation;
 
-    Recipe() {
+    public Recipe() {
+        name = "";
+        recipeText = "";
+        ingredientsAmount = new HashMap<>();
+        ingredientIDs = new HashMap<>();
     }
 
     /**
@@ -70,7 +76,7 @@ public class Recipe {
         for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
     }
 
-    Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
+    public Recipe(String tempName, String tempRecipeText, HashMap<Ingredient, Integer> tempIngredientsAmount, HashMap<String, Integer> tempIngredientIDs) {
         name = tempName;
         recipeText = tempRecipeText;
         ingredientsAmount = tempIngredientsAmount;

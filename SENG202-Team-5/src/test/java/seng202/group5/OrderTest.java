@@ -3,6 +3,10 @@ package seng202.group5;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seng202.group5.logic.Stock;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 
 import java.math.RoundingMode;
 import java.util.*;
@@ -119,8 +123,7 @@ public class OrderTest {
         assertEquals(order.getOrderItems().get(item), 2);
 
 
-
-        MenuItem temp = new MenuItem();
+        MenuItem temp = new MenuItem(null, null, null, false, null);
         assertFalse(order.modifyItemQuantity(temp, 3));
     }
 

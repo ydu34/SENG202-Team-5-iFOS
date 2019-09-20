@@ -1,17 +1,18 @@
 package seng202.group5.gui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import seng202.group5.AppEnvironment;
-import seng202.group5.Ingredient;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AddRecipeController extends GeneralController {
 
@@ -37,16 +38,31 @@ public class AddRecipeController extends GeneralController {
     private TableColumn<Ingredient, String> ingredientCol;
 
     @FXML
-    private TableColumn<Ingredient, ComboBox> quantityCol;
+    private TableColumn<Ingredient, String> quantityCol;
+
+    @FXML
+    private Button addIngredientButton;
 
     private AppEnvironment appEnvironment;
 
+    private MenuItem item;
+
     @FXML
     public void pseudoInitialize() {
-        System.out.println(appEnvironment);
-        List<Ingredient> ingredients = new ArrayList<>(appEnvironment.getStock().getIngredients().values());
+        newRecipe();
+        List<Ingredient> ingredients = new ArrayList<>(item.getRecipe().getIngredientsAmount().keySet());
+        HashMap<Ingredient, Integer> quantities = item.getRecipe().getIngredientsAmount();
         ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        quantityCol.setCellValueFactory(data -> {
+            int quantity = quantities.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+        });
         ingredientsTable.setItems(FXCollections.observableArrayList(ingredients));
+    }
+
+    public void newRecipe() {
+        item = new MenuItem();
+
 
     }
 
@@ -54,6 +70,7 @@ public class AddRecipeController extends GeneralController {
         String name = nameField.getText();
         String makingPrice = makingPriceField.getText();
         String totalPrice = totalPriceField.getText();
+
         closeScreen();
 
     }
@@ -65,6 +82,13 @@ public class AddRecipeController extends GeneralController {
 
     public void setAppEnvironment(AppEnvironment input) {
         appEnvironment = input;
+    }
+
+    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+//        AddExtraIngredientController controller =
+//                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+//        controller.setMenuItem(item);
+//        controller.initializeTable();
     }
 
 }

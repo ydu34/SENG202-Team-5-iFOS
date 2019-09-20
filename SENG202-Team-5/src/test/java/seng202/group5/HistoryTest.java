@@ -4,6 +4,9 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.*;
 import seng202.group5.exceptions.NoPastOrderException;
+import seng202.group5.logic.History;
+import seng202.group5.information.MenuItem;
+
 import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 

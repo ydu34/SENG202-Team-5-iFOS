@@ -1,6 +1,7 @@
-package seng202.group5;
+package seng202.group5.information;
 
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
 import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
 
@@ -26,21 +27,21 @@ public class Transaction {
     private Money totalPrice;
     private IDGenerator generator = new IDGenerator();
     private String transactionID = generator.newID();
-    private Boolean isRefunded;
+    private Boolean refunded;
     private String orderID;
 
     Transaction() {}
 
     public Transaction(LocalDateTime newDateTime, Money newChange, Money newTotalPrice, String orderID) {
-        isRefunded = false;
+        refunded = false;
         datetime = newDateTime;
         change = newChange;
         totalPrice = newTotalPrice;
         this.orderID = orderID;
     }
 
-    public Boolean getRefunded() {
-        return isRefunded;
+    public Boolean isRefunded() {
+        return refunded;
     }
     public Money getTotalPrice() {
         return totalPrice;
@@ -57,11 +58,12 @@ public class Transaction {
         return datetime;
     }
     public void refund() {
-        isRefunded = true;
+        refunded = true;
     }
 
     public String getOrderID() {
         return orderID;
     }
+
 
 }

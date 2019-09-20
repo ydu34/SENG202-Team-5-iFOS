@@ -1,10 +1,14 @@
-package seng202.group5;
+package seng202.group5.information;
 
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
+import seng202.group5.TypeEnum;
+import seng202.group5.adapters.MoneyAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +17,11 @@ import java.util.Objects;
 /**
  * This class contains methods to update the stock, removes the stock , calculates the making and selling price for the menu item.
  *
- * @author Shivin Gaba, James Kwok
+ * @author Shivin Gaba, James Kwok, Yu Duan
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class    MenuItem {
+public class MenuItem {
 
     /**
      * Name of the dish/item on the menu.
@@ -30,6 +34,7 @@ public class    MenuItem {
     /**
      * The final cost of the menu item that after the mark up
      */
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money markupCost;
     /**
      * The unique id related to every item on the menu
@@ -41,8 +46,13 @@ public class    MenuItem {
      */
     private boolean inMenu;
 
+    private TypeEnum itemType;
+    private boolean edited;
 
-    MenuItem() {
+    public MenuItem() {
+        itemName = "";
+        recipe = new Recipe();
+        markupCost = null;
     }
 
     /**
@@ -50,14 +60,33 @@ public class    MenuItem {
      * @param tempRecipe   is the recipe for a an item on the menu
      * @param tempMarkupCost   is the cost added to the ingredient cost of the menu item
      * @param uniqueId     is the unique id related to each menu item
+     * @param tempInMenu whether or not the item is in the menu
      */
-
+    @Deprecated(since = "ID is made using ID Maker now, this may be useful for tests though")
     public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
         itemName = tempItemName;
         recipe = tempRecipe;
         markupCost = tempMarkupCost;
         id = uniqueId;
         inMenu = tempInMenu;
+        itemType = TypeEnum.MAIN;
+        edited = false;
+    }
+
+    /**
+     * @param tempItemName   is the name of an item on the menu
+     * @param tempRecipe     is the recipe for a an item on the menu
+     * @param tempMarkupCost is the cost added to the ingredient cost of the menu item
+     * @param tempInMenu     whether or not the item is in the menu
+     * @param itemType       the type of the item
+     */
+    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, boolean tempInMenu, TypeEnum itemType) {
+        itemName = tempItemName;
+        recipe = tempRecipe;
+        markupCost = tempMarkupCost;
+        inMenu = tempInMenu;
+        this.itemType = itemType;
+        edited = false;
     }
 
 
@@ -97,7 +126,11 @@ public class    MenuItem {
     }
 
     public String getItemName() {
-        return itemName;
+        if (edited) {
+            return "{Edited} " + itemName;
+        } else {
+            return itemName;
+        }
     }
 
     public Recipe getRecipe() {
@@ -138,6 +171,24 @@ public class    MenuItem {
         return new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
     }
 
+    public TypeEnum getItemType() {
+        return itemType;
+    }
+
+    public boolean isEdited() {
+        return edited;
+    }
+
+    public void setType(TypeEnum itemType) {
+        this.itemType = itemType;
+    }
+
+    public void setItemName(String tempName) {
+        itemName = tempName;
+    }
+    public void setEdited(boolean tempEdited) {
+        edited = tempEdited;
+    }
 }
 
 

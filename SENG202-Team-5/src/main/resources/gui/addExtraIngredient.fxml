@@ -11,31 +11,32 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AddExtraIngredientController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1600.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="997.0" minHeight="0.0" prefHeight="997.0" vgrow="ALWAYS" />
     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.vgrow="ALWAYS">
+      <TableView fx:id="ingredientsTable" prefHeight="200.0" prefWidth="1920.0" GridPane.vgrow="ALWAYS">
         <columns>
-          <TableColumn prefWidth="614.0" text="Ingredient" />
-            <TableColumn prefWidth="425.0" text="Categories" />
-          <TableColumn prefWidth="570.0" text="Quantity" />
-            <TableColumn prefWidth="310.0" text="Selected" />
+            <TableColumn fx:id="rowIngredient" prefWidth="207.0" text="Ingredient ID" />
+          <TableColumn fx:id="columnIngredientName" prefWidth="603.0" text="Ingredient" />
+            <TableColumn fx:id="columnCategory" prefWidth="637.0" text="Categories" />
+          <TableColumn fx:id="columnQuantity" prefWidth="212.0" text="Quantity" />
+            <TableColumn fx:id="columnSpinner" prefWidth="260.0" text="Selected" />
         </columns>
       </TableView>
       <BorderPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="800.0" prefHeight="60.0" prefWidth="800.0" GridPane.rowIndex="1">
          <right>
-            <Button mnemonicParsing="false" onAction="#updateItemIngredients" text="Confirm" translateX="-60.0" BorderPane.alignment="CENTER">
+            <Button fx:id="confirmItemButton" mnemonicParsing="false" onAction="#updateItemIngredients" text="Confirm" translateX="-60.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
          </right>
          <left>
-            <Button mnemonicParsing="false" onAction="#launchSelectionScreen" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#revertToOrder" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>

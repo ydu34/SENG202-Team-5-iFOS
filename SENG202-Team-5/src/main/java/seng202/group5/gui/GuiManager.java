@@ -1,5 +1,6 @@
 package seng202.group5.gui;
 
+import com.sun.glass.ui.Screen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,10 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.logic.Stock;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -26,17 +31,22 @@ public class GuiManager extends Application {
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
-        primaryStage.setScene(new Scene(root, 800, 600));
+        Integer height = Screen.getMainScreen().getHeight();
+        Integer width = Screen.getMainScreen().getWidth();
+        primaryStage.setScene(new Scene(root, width, height));
         primaryStage.show();
     }
 
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
+        addTestData(thing);
+        return thing;
+    }
+
+    public void addTestData(AppEnvironment thing) {
         Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
-        Stock stock = new Stock();
+        Stock stock = thing.getStock();
         stock.addNewIngredient(test);
-        thing.setStock(stock);
-        thing.setOrderManager(new OrderManager(thing.getStock(), thing.getHistory()));
 
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
         Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
@@ -64,6 +74,7 @@ public class GuiManager extends Application {
 
         thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+        thing.getOrderManager().newOrder();
 
         MenuItem testItem = new MenuItem(
                 "Burger Item",
@@ -91,7 +102,7 @@ public class GuiManager extends Application {
             e.printStackTrace();
         }
         thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
-        return thing;
+
     }
 
     public static void main(String[] args) {

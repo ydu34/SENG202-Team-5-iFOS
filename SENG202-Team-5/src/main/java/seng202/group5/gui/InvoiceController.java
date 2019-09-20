@@ -1,14 +1,23 @@
 package seng202.group5.gui;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class InvoiceController extends GeneralController {
 
@@ -21,8 +30,15 @@ public class InvoiceController extends GeneralController {
     @FXML
     private Text changeDisplay;
 
+
     @FXML
-    private Text orderDisplay;
+    private TableView<MenuItem> currentOrderTable;
+
+    @FXML
+    private TableColumn<MenuItem, String> itemNameCol;
+
+    @FXML
+    private TableColumn<MenuItem, String> itemQuantityCol;
 
     private Money totalCost;
 
@@ -30,13 +46,33 @@ public class InvoiceController extends GeneralController {
 
     private Money total = Money.parse("NZD 0");
 
+    private Order currentOrder;
+
+    private Map<MenuItem, Integer> orderItemsMap;
+
     public void pseudoInitialize() {
         try {
-            totalCost = super.getAppEnvironment().getOrderManager().getOrder().getTotalCost();
-        } catch (NoOrderException ignored) {
-            totalCost = Money.parse("NZD 0");
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        } catch (NoOrderException e) {
         }
+        totalCost = currentOrder.getTotalCost();
+
         totalCostDisplay.setText("Total Cost: "+ totalCost);
+        currentOrderTable();
+    }
+
+    public void currentOrderTable() {
+        orderItemsMap = currentOrder.getOrderItems();
+        List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
+        itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+
+        itemQuantityCol.setCellValueFactory(data -> {
+            int quantity = orderItemsMap.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+
+        });
+
+        currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
     }
     public void payCash() {
         try {
@@ -46,15 +82,24 @@ public class InvoiceController extends GeneralController {
                 System.out.println((getAppEnvironment().getOrderManager().getOrder().getTotalCost()));
                 try {
                     Order order = getAppEnvironment().getOrderManager().getOrder();
-                    ArrayList<Money> change = super.getAppEnvironment().getFinance().pay(totalCost, payment, LocalDateTime.now(), order.getID());
+                    ArrayList<Money> change = getAppEnvironment().confirmPayment(payment);
                     String display = "";
                     Money totalChange = Money.parse("NZD 0.00");
+                    Money totalPayment = Money.parse("NZD 0.00");
                     for (Money money : change) {
                         display += money + "\n";
                         totalChange = totalChange.plus(money);
                     }
+                    for (Money money : payment) {
+                        totalPayment = totalPayment.plus(money);
+                    }
                     changeDisplay.setText(display);
-                    totalChangeDisplay.setText("Change: " + totalChange);
+                    if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
+                        totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
+                    } else {
+                        totalChangeDisplay.setText("Change: " + totalChange);
+                    }
+
                 } catch (InsufficientCashException e) {
                     changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
 
@@ -85,11 +130,11 @@ public class InvoiceController extends GeneralController {
     }
     @FXML
     private void cancelOrder() {
-        clearPayment();
-        totalCost = Money.parse("NZD 0");
-        totalCostDisplay.setText("Total Cost: "+ totalCost);
-        orderDisplay.setText("");
+//        clearPayment();
+//        totalCost = Money.parse("NZD 0");
+//        totalCostDisplay.setText("Total Cost: "+ totalCost);
         super.getAppEnvironment().getOrderManager().newOrder();
+        pseudoInitialize();
     }
 
     @FXML
