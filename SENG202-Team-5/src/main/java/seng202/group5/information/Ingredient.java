@@ -3,8 +3,10 @@ package seng202.group5.information;
 import org.joda.money.Money;
 import seng202.group5.DietEnum;
 import seng202.group5.IDGenerator;
+import seng202.group5.adapters.MoneyAdapter;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -33,7 +35,7 @@ public class Ingredient {
      **/
     private String category;
 
-    @XmlTransient
+    @XmlElement
     private IDGenerator generator = new IDGenerator();
 
     /**
@@ -45,6 +47,7 @@ public class Ingredient {
     /**
      * The price for a single unit of a ingredient
      **/
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money price;
 
 

@@ -7,7 +7,10 @@
                 <name>test</name>
                 <unit>mg</unit>
                 <category>flour</category>
-                <price/>
+                <generator>
+                    <id>13</id>
+                </generator>
+                <price>NZD 7.00</price>
             </value>
         </entry>
         <entry>
@@ -16,7 +19,10 @@
                 <name>chicken</name>
                 <unit>kg</unit>
                 <category>meat</category>
-                <price/>
+                <generator>
+                    <id>13</id>
+                </generator>
+                <price>NZD 10.00</price>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
@@ -26,7 +32,10 @@
                 <name>cheese</name>
                 <unit>kg</unit>
                 <category>dairy</category>
-                <price/>
+                <generator>
+                    <id>13</id>
+                </generator>
+                <price>NZD 5.00</price>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
@@ -37,7 +46,10 @@
                 <name>vegetables</name>
                 <unit>kg</unit>
                 <category>vege</category>
-                <price/>
+                <generator>
+                    <id>13</id>
+                </generator>
+                <price>NZD 10.00</price>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
