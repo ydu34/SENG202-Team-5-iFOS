@@ -186,6 +186,7 @@ public class OrderController extends GeneralController {
         if (vegetarian.isSelected()) {
             for (MenuItem item : filteredMenuItems) {
                 if (!item.getRecipe().isVegetarian()) {
+                    item.getItemName();
                     filteredMenuItems.remove(item);
                 }
             }
@@ -205,6 +206,7 @@ public class OrderController extends GeneralController {
 
         populateTilePane(filteredMenuItems);
 
+        System.out.println(filteredMenuItems);
         return filteredMenuItems;
 
     }
