@@ -17,7 +17,7 @@ public class MenuXmlTest {
     String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
 
     @BeforeEach
-    public void testUnmarshallStock() {
+    public void testUnmarshallMenu() {
         appEnvironment.menuXmlToObject(testDirectory);
         menuManager = appEnvironment.getMenuManager();
         assertEquals(2, menuManager.getItemList().size());
@@ -38,7 +38,7 @@ public class MenuXmlTest {
     @Test
     public void testMenuItemRecipeTestIsInMenuManager() {
         String recipeText = menuManager.getItemList().get("1222").getRecipe().getRecipeText();
-        assertEquals("Steps to make Vege burger", recipeText);
+        assertEquals("Steps to make pad thai", recipeText);
     }
 
     @Test

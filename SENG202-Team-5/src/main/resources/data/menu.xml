@@ -9,8 +9,8 @@
                     <name>Vege burger</name>
                     <recipeText>Steps to make pad thai</recipeText>
                     <ingredientIDs/>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 7.00</markupCost>
                 <generator>

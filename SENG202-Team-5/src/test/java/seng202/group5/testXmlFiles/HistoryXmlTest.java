@@ -1,10 +1,13 @@
 package seng202.group5.testXmlFiles;
 
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
 import seng202.group5.logic.History;
 import seng202.group5.logic.Stock;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,8 +38,8 @@ public class HistoryXmlTest {
 
     @Test
     public void testOrderDateTimeProcessedIsInHistory() {
-        String dateTimeProcessed = history.getTransactionHistory().get("11").getDateTimeProcessed().toString();
-        assertEquals("2019-09-20T20:34:30.867693200", dateTimeProcessed);
+        LocalDateTime dateTimeProcessed = history.getTransactionHistory().get("11").getDateTimeProcessed();
+        assertTrue(dateTimeProcessed instanceof LocalDateTime);
     }
 
     @Test

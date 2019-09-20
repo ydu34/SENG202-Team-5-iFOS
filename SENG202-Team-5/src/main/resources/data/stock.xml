@@ -36,8 +36,8 @@
                     <id>13</id>
                 </generator>
                 <price>NZD 5.00</price>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -50,8 +50,8 @@
                     <id>13</id>
                 </generator>
                 <price>NZD 10.00</price>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
     </ingredients>

@@ -4,14 +4,14 @@
         <entry>
             <key>12</key>
             <value>
-                <datetime>2019-09-20T20:34:30.867693200</datetime>
+                <datetime>2019-09-20T21:58:38.559968700</datetime>
                 <change>NZD 0.00</change>
                 <totalPrice>NZD 0.00</totalPrice>
                 <generator>
                     <id>13</id>
                 </generator>
                 <transactionID>12</transactionID>
-                <isRefunded>false</isRefunded>
+                <refunded>false</refunded>
                 <orderID>11</orderID>
             </value>
         </entry>
