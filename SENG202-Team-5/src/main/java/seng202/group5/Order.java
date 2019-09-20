@@ -133,6 +133,7 @@ public class Order {
             // this may bring up problems when trying to edit the ingredient counts for an item in the order
             // It would show the ingredients from multiple copies of an item
             //ingredients.replace(id, ingredients.get(id) * quantity);
+
             // If we don't have enough in the Stock, we can't add it to order
             if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
                 return false;
