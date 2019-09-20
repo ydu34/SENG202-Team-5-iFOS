@@ -134,7 +134,7 @@ public class AddExtraIngredientController extends GeneralController {
         } else {
             selectedItem.setEdited(false);
         }
-        controller.updateItem(selectedItem);
+        controller.setMenuItem(selectedItem);
     }
 
     /**
@@ -170,7 +170,7 @@ public class AddExtraIngredientController extends GeneralController {
      */
     public void revertToOrder(javafx.event.ActionEvent actionEvent) {
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-        controller.updateItem(oldItem);
+        controller.setMenuItem(oldItem);
     }
 
 }

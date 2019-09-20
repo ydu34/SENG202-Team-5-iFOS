@@ -82,9 +82,10 @@ public class OrderController extends GeneralController {
     @FXML
     private Button addItemButton;
 
-    private Order currentOrder;
+    @FXML
+    private Button addExtraIngredient;
 
-    private MenuItem selectedItem;
+    private Order currentOrder;
 
     private ArrayList<MenuItem> allItems;
 
@@ -94,9 +95,6 @@ public class OrderController extends GeneralController {
     public void pseudoInitialize() {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-        if (allItems.size() > 0) {
-            item = allItems.get(0);
-        }
         showItems(new ActionEvent());
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
@@ -106,6 +104,7 @@ public class OrderController extends GeneralController {
         }
         orderIDText.setText(currentOrder.getID());
         addItemButton.setDisable(true);
+        addExtraIngredient.setDisable(true);
 
     }
 
@@ -162,13 +161,23 @@ public class OrderController extends GeneralController {
 
     }
 
-    public void setMenuItem(MenuItem newItem){
+    /**
+     * Updates the given selected item in the order.
+     *
+     * @param newItem the new item with updated quantities and categories.
+     */
+    public void setMenuItem(MenuItem newItem) {
 
-        selectedItem = newItem;
+        item = newItem;
+        ingredientsTable();
+        addItemButton.setDisable(false);
+        addExtraIngredient.setDisable(false);
+        totalCostDisplay.setText(item.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount().toString());
+        menuItemName.setText(item.getItemName());
+
         System.out.println(newItem);
         System.out.println(newItem.calculateFinalCost());
         recipeText.setText(newItem.getRecipe().getRecipeText());
-        //printIngredients(selectedItem);
         itemNameText.setText(newItem.getItemName() + "\n");
     }
 
@@ -224,8 +233,8 @@ public class OrderController extends GeneralController {
     }
 
     /**
-     * This method calls the make_object() method and sets the text in the Ingredient panel to the list of ingredient
-     * present in the recipe  and also updates the totalCostDisplay to the selling cost of that menuitem.
+     * This method sets the text in the Ingredient panel to the list of ingredient
+     * present in the recipe and also updates the totalCostDisplay to the selling cost of that item.
      */
     @FXML
     public void getIngredients(ActionEvent actionEvent) {
@@ -242,28 +251,12 @@ public class OrderController extends GeneralController {
                 }
             }
             if (selectedItem != null) {
-               // ingredientText.setText(ingredient);
-                totalCostDisplay.setText(String.valueOf(selectedItem.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount()));
-                item = selectedItem;
-                setMenuItem(item);
-
+                setMenuItem(selectedItem);
             }
 
         }
-        menuItemName.setText(item.getItemName());
-        ingredientsTable();
     }
 
-
-    /**
-     * Updates the given selected item in the order given from AddExtraIngredient.
-     * @param updatedItem the new item with updated quantities and categories.
-     */
-    public void updateItem(MenuItem updatedItem) {
-        //TODO add item to order button is disabled on completing this action when returning to the Order screen, must click on button of original item to reenable.
-        item = updatedItem;
-        ingredientsTable();
-    }
 
     /**
      * This method launches the selection screen for the selected menu item and passes the recipe and object from the
