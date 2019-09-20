@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -55,7 +56,16 @@
                                 </Tab>
                                 <Tab text="Sides">
                                     <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                            <children>
+                                                <TilePane fx:id="tilePane" hgap="5.0" layoutX="34.0" layoutY="88.0"
+                                                          maxHeight="1.7976931348623157E308"
+                                                          maxWidth="1.7976931348623157E308" prefTileHeight="100.0"
+                                                          prefTileWidth="100.0" vgap="5.0" AnchorPane.bottomAnchor="0.0"
+                                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                          AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
                                     </content>
                                 </Tab>
                                 <Tab text="Beverages ">
@@ -102,7 +112,8 @@
                               <Insets />
                            </VBox.margin>
                         </TextFlow>
-                        <Text fx:id="orderIDText" strokeType="OUTSIDE" strokeWidth="0.0" text="temp" wrappingWidth="294.0" />
+                                <Text fx:id="orderIDText" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="temp" wrappingWidth="294.0"/>
                      </children>
                         </VBox>
                     </left>
@@ -119,7 +130,7 @@
                                 </Label>
                         <TableView fx:id="ingredientInfoTable" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="210.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="ingredientNameCol" prefWidth="218.0" text="Ingredeint" />
+                              <TableColumn fx:id="ingredientNameCol" prefWidth="218.0" text="Ingredient"/>
                             <TableColumn fx:id="ingredientQuantityCol" prefWidth="81.0" text="Quantity" />
                           </columns>
                            <columnResizePolicy>
@@ -138,12 +149,15 @@
                               <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="116.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Spinner fx:id="quantitySpinner" onDragDetected="#addItemtoOrder" prefHeight="26.0" prefWidth="159.0" GridPane.rowIndex="1">
+                               <Spinner fx:id="quantitySpinner" onDragDetected="#addItemToOrder" prefHeight="26.0"
+                                        prefWidth="159.0" GridPane.rowIndex="1">
                                       <valueFactory>
                                           <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="1" />
                                       </valueFactory>
                               </Spinner>
-                              <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemtoOrder" prefHeight="26.0" prefWidth="72.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                               <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemToOrder"
+                                       prefHeight="26.0" prefWidth="72.0" text="Add" GridPane.columnIndex="1"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
                                       <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="53.0" prefWidth="159.0" text="Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                                           <font>
                                               <Font size="18.0" />

@@ -3,10 +3,15 @@ package seng202.group5.gui;
 //import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import seng202.group5.Order;
 import seng202.group5.exceptions.NoOrderException;
@@ -14,9 +19,7 @@ import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The OrderController includes all the methods related to the every button on the order screen.
@@ -85,6 +88,9 @@ public class OrderController extends GeneralController {
     @FXML
     private Button addExtraIngredient;
 
+    @FXML
+    private TilePane tilePane;
+
     private Order currentOrder;
 
     private ArrayList<MenuItem> allItems;
@@ -105,12 +111,25 @@ public class OrderController extends GeneralController {
         orderIDText.setText(currentOrder.getID());
         addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
-
     }
 
-    public void checkDietryInfo(ActionEvent event) {
-        // get values of checkboxes here
-        // call showItems with those vlaues as parameter
+    /**
+     * Adds all the menu items in the menu to the tile pane
+     */
+    public void populateTilePane(Collection<MenuItem> items) {
+        if (tilePane != null) {
+            ObservableList<Node> buttons = tilePane.getChildren();
+            ArrayList<MenuItem> sortedItems = new ArrayList<>(items);
+            sortedItems.sort(Comparator.comparing(MenuItem::getItemName));
+            for (MenuItem item : items) {
+                Button tempButton = new Button(item.getItemName());
+                tempButton.setPrefWidth(136);
+                tempButton.setPrefHeight(50);
+                tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
+                buttons.add(tempButton);
+            }
+        }
+
     }
 
     public ArrayList<MenuItem> filterItems() {
@@ -124,21 +143,21 @@ public class OrderController extends GeneralController {
 
 
         if (glutenFree.isSelected()) {
-            for (MenuItem item : allItems) {
+            for (MenuItem item : filteredMenuItems) {
                 if (!item.getRecipe().isGlutenFree()) {
                     filteredMenuItems.remove(item);
                 }
             }
         }
         if (vegan.isSelected()) {
-            for (MenuItem item : allItems) {
+            for (MenuItem item : filteredMenuItems) {
                 if (!item.getRecipe().isVegan()) {
                     filteredMenuItems.remove(item);
                 }
             }
         }
         if (vegetarian.isSelected()) {
-            for (MenuItem item : allItems) {
+            for (MenuItem item : filteredMenuItems) {
                 if (!item.getRecipe().isVegetarian()) {
                     filteredMenuItems.remove(item);
                 }
@@ -157,6 +176,8 @@ public class OrderController extends GeneralController {
         }
         filteredItems = filteredMenuItems;
 
+        populateTilePane(filteredMenuItems);
+
         return filteredMenuItems;
 
     }
@@ -169,7 +190,7 @@ public class OrderController extends GeneralController {
     public void setMenuItem(MenuItem newItem) {
 
         item = newItem;
-        ingredientsTable();
+        populateIngredientsTable();
         addItemButton.setDisable(false);
         addExtraIngredient.setDisable(false);
         totalCostDisplay.setText(item.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount().toString());
@@ -179,6 +200,7 @@ public class OrderController extends GeneralController {
         System.out.println(newItem.calculateFinalCost());
         recipeText.setText(newItem.getRecipe().getRecipeText());
         itemNameText.setText(newItem.getItemName() + "\n");
+        System.out.println(item);
     }
 
 
@@ -194,16 +216,15 @@ public class OrderController extends GeneralController {
 
     }
 
-    public void addItemtoOrder() {
+    public void addItemToOrder() {
         Integer quantity = quantitySpinner.getValue();
-        currentOrder.addItem(item, quantity); // Not working so temporary add manually
-        //currentOrder.getOrderItems().put(item, quantity);
+        currentOrder.addItem(item, quantity);
         System.out.println(currentOrder.getOrderItems());
      //   changeScreen(actionEvent, "/gui/order.fxml");
 
     }
 
-    public void ingredientsTable() {
+    public void populateIngredientsTable() {
         Recipe currentRecipe = item.getRecipe();
         Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
         List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
