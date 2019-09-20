@@ -129,7 +129,7 @@ public class AddExtraIngredientController extends GeneralController {
         //TODO Currently adds "edited" to ingredients with their original recipe changed that have been added back into the system. Also needs to handle a change in stock.
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
         if ((selectedItem.getRecipe().getIngredientsAmount() != oldItem.getRecipe().getIngredientsAmount())
-                && !selectedItem.getEdited()) {
+                && !selectedItem.isEdited()) {
             selectedItem.setEdited(true);
         } else {
             selectedItem.setEdited(false);

@@ -17,7 +17,7 @@ import java.util.Objects;
 /**
  * This class contains methods to update the stock, removes the stock , calculates the making and selling price for the menu item.
  *
- * @author Shivin Gaba, James Kwok
+ * @author Shivin Gaba, James Kwok, Yu Duan
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -171,11 +171,11 @@ public class MenuItem {
         return new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
     }
 
-    public TypeEnum getType() {
+    public TypeEnum getItemType() {
         return itemType;
     }
 
-    public boolean getEdited() {
+    public boolean isEdited() {
         return edited;
     }
 
