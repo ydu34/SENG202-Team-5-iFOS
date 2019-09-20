@@ -56,7 +56,7 @@ public class Finance {
     public ArrayList<Money> refund(String ID) {
         Transaction refundedOrder = transactionHistory.get(ID);
         Money refund = Money.parse("NZD 0");
-        if (!refundedOrder.getRefunded()) {
+        if (!refundedOrder.isRefunded()) {
             refundedOrder.refund();
             refund = refundedOrder.getTotalPrice();
         }
@@ -111,7 +111,7 @@ public class Finance {
         for (Transaction order : transactionHistory.values()) {
             if (order.getDateTime().compareTo(startDate) >= 0 &&
                     order.getDateTime().compareTo(endDate) <= 0 &&
-                    !order.getRefunded()) {
+                    !order.isRefunded()) {
                 total = total.plus(order.getTotalPrice());
             }
         }
@@ -151,7 +151,7 @@ public class Finance {
         return totalChange;
     }
 
-    public HashMap<String, Transaction> getTransactions() {
+    public HashMap<String, Transaction> getTransactionHistoryClone() {
         return (HashMap<String, Transaction>) transactionHistory.clone();
     }
     public Till getTill() {
@@ -160,5 +160,13 @@ public class Finance {
 
     public void setTill(Till till) {
         this.till = till;
+    }
+
+    public HashMap<String, Transaction> getTransactionHistory() {
+        return transactionHistory;
+    }
+
+    public ArrayList<Money> getDenomination() {
+        return denomination;
     }
 }

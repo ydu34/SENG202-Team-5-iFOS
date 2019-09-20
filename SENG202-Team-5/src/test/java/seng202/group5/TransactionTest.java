@@ -38,9 +38,9 @@ public class TransactionTest {
 
     @Test
     public void testGetAndSetRefunded(){
-        assertFalse(testTransaction.getRefunded());
+        assertFalse(testTransaction.isRefunded());
         testTransaction.refund();
-        assertTrue(testTransaction.getRefunded());
+        assertTrue(testTransaction.isRefunded());
 
     }
 }

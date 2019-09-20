@@ -85,7 +85,7 @@ public class FinanceTest {
         ArrayList<Money> moneyRefund = new ArrayList<>();
         moneyRefund.add(Money.parse("NZD 10.00"));
         moneyRefund.add(Money.parse("NZD 5.00"));
-        for (Transaction transaction : testFinance.getTransactions().values()) {
+        for (Transaction transaction : testFinance.getTransactionHistoryClone().values()) {
             assertEquals(testFinance.refund(transaction.getTransactionID()), moneyRefund);
         }
     }

@@ -53,7 +53,7 @@ public class MoneyStepDefs {
 
     @When("Orders is refunded")
     public void ordersIsRefunded() {
-        for (Transaction transaction : finance.getTransactions().values()) {
+        for (Transaction transaction : finance.getTransactionHistoryClone().values()) {
             change = finance.refund(transaction.getTransactionID());
         }
     }

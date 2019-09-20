@@ -69,7 +69,7 @@ public class HistoryController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
-        for (Transaction transaction : getAppEnvironment().getFinance().getTransactions().values()) {
+        for (Transaction transaction : getAppEnvironment().getFinance().getTransactionHistoryClone().values()) {
             orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
         }
 
@@ -86,7 +86,7 @@ public class HistoryController extends GeneralController {
         rowAction.setCellValueFactory(param -> {
             Button refundButton = new Button("Refund");
             Order order = param.getValue();
-            refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).getRefunded());
+            refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).isRefunded());
             refundButton.setOnAction((ActionEvent event) -> {
                 refundOrder(order, refundButton);
                 refundButton.setDisable(true);

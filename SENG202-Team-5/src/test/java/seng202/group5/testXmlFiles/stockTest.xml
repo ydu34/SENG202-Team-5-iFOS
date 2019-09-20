@@ -7,7 +7,10 @@
                 <name>Milk</name>
                 <unit>L</unit>
                 <category>Liquid</category>
-                <price/>
+                <generator>
+                    <id>51</id>
+                </generator>
+                <price>NZD 4.00</price>
             </value>
         </entry>
         <entry>
@@ -16,7 +19,10 @@
                 <name>Apple</name>
                 <unit>kg</unit>
                 <category>Fruit</category>
-                <price/>
+                <generator>
+                    <id>51</id>
+                </generator>
+                <price>NZD 1.00</price>
             </value>
         </entry>
     </ingredients>

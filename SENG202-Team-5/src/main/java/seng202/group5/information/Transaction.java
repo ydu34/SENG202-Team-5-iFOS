@@ -27,21 +27,21 @@ public class Transaction {
     private Money totalPrice;
     private IDGenerator generator = new IDGenerator();
     private String transactionID = generator.newID();
-    private Boolean isRefunded;
+    private Boolean refunded;
     private String orderID;
 
     Transaction() {}
 
     public Transaction(LocalDateTime newDateTime, Money newChange, Money newTotalPrice, String orderID) {
-        isRefunded = false;
+        refunded = false;
         datetime = newDateTime;
         change = newChange;
         totalPrice = newTotalPrice;
         this.orderID = orderID;
     }
 
-    public Boolean getRefunded() {
-        return isRefunded;
+    public Boolean isRefunded() {
+        return refunded;
     }
     public Money getTotalPrice() {
         return totalPrice;
@@ -58,11 +58,12 @@ public class Transaction {
         return datetime;
     }
     public void refund() {
-        isRefunded = true;
+        refunded = true;
     }
 
     public String getOrderID() {
         return orderID;
     }
+
 
 }
