@@ -125,10 +125,12 @@ public class AppEnvironment {
 
     public void stockXmlToObject(String fileDirectory) {
         stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", fileDirectory);
+        orderManager.setStock(stock);
     }
 
     public void historyXmlToObject(String fileDirectory) {
         history = (History) xmlToObject(History.class, history, "history.xml", fileDirectory);
+        orderManager.setCurrentHistory(history);
     }
 
     public void financeXmlToObject(String fileDirectory) {

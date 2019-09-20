@@ -126,4 +126,7 @@ public class OrderManager {
         return currentHistory;
     }
 
+    public void setCurrentHistory(History currentHistory) {
+        this.currentHistory = currentHistory;
+    }
 }

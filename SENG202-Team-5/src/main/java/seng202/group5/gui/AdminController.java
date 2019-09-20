@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.logic.Finance;
 import seng202.group5.information.MenuItem;
+import seng202.group5.logic.OrderManager;
 
 import java.io.File;
 import java.io.IOException;
