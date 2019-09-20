@@ -79,10 +79,11 @@
                     <left>
                         <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Sort by">
+                                <MenuButton fx:id="sortingBox" mnemonicParsing="false" prefHeight="31.0"
+                                            prefWidth="140.0" text="Sort by">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                                        <MenuItem mnemonicParsing="false" onAction="#sortItemsName" text="Name"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#sortItemsPrice" text="Price"/>
                                     </items>
                                     <VBox.margin>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

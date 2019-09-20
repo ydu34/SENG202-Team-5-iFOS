@@ -91,11 +91,20 @@ public class OrderController extends GeneralController {
     @FXML
     private TilePane tilePane;
 
+    @FXML
+    private MenuButton sortingBox;
+
     private Order currentOrder;
 
     private ArrayList<MenuItem> allItems;
 
     private ArrayList<MenuItem> filteredItems;
+    private SORT_TYPE sortingType = SORT_TYPE.NAME;
+
+    public void sortItemsName(ActionEvent event) {
+        sortingType = SORT_TYPE.NAME;
+        filterItems();
+    }
 
     @Override
     public void pseudoInitialize() {
@@ -113,15 +122,28 @@ public class OrderController extends GeneralController {
         addExtraIngredient.setDisable(true);
     }
 
+    public void sortItemsPrice(ActionEvent event) {
+        sortingType = SORT_TYPE.PRICE;
+        filterItems();
+    }
+
     /**
      * Adds all the menu items in the menu to the tile pane
+     * @param items the items to add to the pane
      */
     public void populateTilePane(Collection<MenuItem> items) {
         if (tilePane != null) {
             ObservableList<Node> buttons = tilePane.getChildren();
+            buttons.clear();
             ArrayList<MenuItem> sortedItems = new ArrayList<>(items);
-            sortedItems.sort(Comparator.comparing(MenuItem::getItemName));
-            for (MenuItem item : items) {
+
+            if (sortingType == SORT_TYPE.NAME) {
+                sortedItems.sort(Comparator.comparing(MenuItem::getItemName));
+            } else if (sortingType == SORT_TYPE.PRICE) {
+                sortedItems.sort(Comparator.comparing(MenuItem::calculateFinalCost));
+            }
+
+            for (MenuItem item : sortedItems) {
                 Button tempButton = new Button(item.getItemName());
                 tempButton.setPrefWidth(136);
                 tempButton.setPrefHeight(50);
@@ -130,6 +152,11 @@ public class OrderController extends GeneralController {
             }
         }
 
+    }
+
+    private enum SORT_TYPE {
+        NAME,
+        PRICE
     }
 
     public ArrayList<MenuItem> filterItems() {
