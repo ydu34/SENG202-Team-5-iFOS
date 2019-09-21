@@ -131,7 +131,7 @@ public class MenuItem {
 
     public String getItemName() {
         if (edited) {
-            return  itemName;
+            return  "Edited\n" +itemName;
         } else {
             return itemName;
         }

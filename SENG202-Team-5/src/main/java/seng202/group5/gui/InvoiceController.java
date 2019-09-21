@@ -3,6 +3,7 @@ package seng202.group5.gui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,6 +45,9 @@ public class InvoiceController extends GeneralController {
     @FXML
     private TableColumn<MenuItem,Money> itemPriceCol;
 
+    @FXML
+    private Button eftposButton;
+
     private Money totalCost;
 
     private ArrayList<Money> payment = new ArrayList<>();
@@ -63,7 +67,13 @@ public class InvoiceController extends GeneralController {
 
         totalCostDisplay.setText("Total Cost: "+ totalCost);
         currentOrderTable();
+        eftposButton.setDisable(true);
     }
+
+    /**
+     * This method goes through the list which contains the list of menu items for the current order and displays the menu item
+     * and the price and its quantity on the in the table view.
+     */
 
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
