@@ -7,8 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import seng202.group5.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
+import seng202.group5.logic.Stock;
 
 import java.util.*;
 
@@ -31,8 +33,15 @@ public class AddExtraIngredientController extends GeneralController {
 
     @FXML
     private MenuItem oldItem;
+
     @FXML
     private MenuItem selectedItem;
+
+    @FXML
+    private Order currentOrder;
+
+    @FXML
+    private Stock updatedStock;
 
     @FXML
     private TableView<Ingredient> ingredientsTable;
@@ -56,9 +65,22 @@ public class AddExtraIngredientController extends GeneralController {
 
     private ObservableList<Ingredient> itemIngredients;
 
-    @Override
-    public void pseudoInitialize() {
-        HashMap<String, Integer> quantities = getAppEnvironment().getStock().getIngredientStock();
+    /**
+     * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
+     */
+    public void initializeTable() {
+        initializeColumns();
+        initializeSelectedIngredients();
+        initializeRemainingIngredients();
+        initializeSpinners();
+        ingredientsTable.setItems(itemIngredients);
+    }
+
+    /**
+     * Sets up value factories in each column which take ingredients and populate the table with their data.
+     */
+    public void initializeColumns() {
+        HashMap<String, Integer> quantities = updatedStock.getIngredientStock();
         columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -67,17 +89,7 @@ public class AddExtraIngredientController extends GeneralController {
             int quantity = quantities.get(data.getValue().getID());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
-        }
-
-    /**
-     * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
-     */
-    public void initializeTable() {
-            initializeSelectedIngredients();
-        initializeRemainingIngredients();
-        initializeSpinners();
-        ingredientsTable.setItems(itemIngredients);
-        }
+    }
 
     /**
      * Creates the spinners that contain the ingredient objects.
@@ -94,11 +106,20 @@ public class AddExtraIngredientController extends GeneralController {
                 if (empty) {
                     setText(null);
                 } else {
+                    int maxAmount = 20;
                     Ingredient ingredient = getTableView().getItems().get(getIndex());
-                    int amount = selectedItem.getRecipe().getIngredientsAmount().getOrDefault(ingredient, 0);
+                    HashMap<Ingredient, Integer> ingredientAmounts = selectedItem.getRecipe().getIngredientsAmount();
+                    Integer index = getIndex();
+                    Integer quantity = Integer.parseInt(columnQuantity.getCellObservableValue(index).getValue());
+                    if (quantity < 0) {
+                        quantity = 0;
+                    }
+                    maxAmount = Math.min(maxAmount, quantity);
+
+                    int selectedAmount = ingredientAmounts.getOrDefault(ingredient, 0);
                     Spinner<Integer> spinner = new Spinner<>();
-                    //TODO The limit of the spinner should be either 20 or the remaining quantity of items, whatever is smaller.
-                    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, +20, amount));
+                    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0, maxAmount, selectedAmount));
 
                     /*
                      * Updates the ingredient amount of the item. If the ingredient does not exist in the item,
@@ -126,7 +147,9 @@ public class AddExtraIngredientController extends GeneralController {
      * Also updates the name of the item if it's ingredients are different to the unedited version.
      */
     public void updateItemIngredients(javafx.event.ActionEvent actionEvent) {
-        //TODO Currently adds "edited" to ingredients with their original recipe changed that have been added back into the system. Also needs to handle a change in stock.
+        //TODO: Does not handle the case of an item changing ingredients, then changing back to the original item. Old item
+        //should be the original item...
+        //Fix should be looking for the ID of the item, and comparing item lists. Coming soon!
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
         if ((selectedItem.getRecipe().getIngredientsAmount() != oldItem.getRecipe().getIngredientsAmount())
                 && !selectedItem.isEdited()) {
@@ -147,11 +170,30 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     /**
+     *Sets updatedStock to a copy of the current stock. Calculates the updated stock values taking into account
+     * the items that currently exist in the order.
+     */
+    public void updateStock() {
+        updatedStock = getAppEnvironment().getStock().clone();
+        if (currentOrder != null) {
+                for (MenuItem item : currentOrder.getOrderItems().keySet()) {
+                    HashMap<Ingredient, Integer> ingredientAmounts = item.getRecipe().getIngredientsAmount();
+                    for (Ingredient currentIngredient : ingredientAmounts.keySet()) {
+                        Integer amount = ingredientAmounts.get(currentIngredient);
+                        Integer updatedStockAmount =
+                                updatedStock.getIngredientQuantity(currentIngredient.getID()) - amount;
+                        updatedStock.modifyQuantity(currentIngredient.getID(), updatedStockAmount);
+                    }
+                }
+        }
+    }
+
+    /**
      * Takes the Stock and adds each ingredient that doesn't exist in the table view into it.
      * Furthermore adds ingredients with 0 units left, but prevents the user from adding it to the MenuItem.
      */
     public void initializeRemainingIngredients() {
-        Collection<Ingredient> allIngredientList = getAppEnvironment().getStock().getIngredients().values();
+        Collection<Ingredient> allIngredientList = updatedStock.getIngredients().values();
         for (Ingredient ingredient : allIngredientList) {
             if (!selectedIngredientSet.contains(ingredient)) {
                 itemIngredients.add(ingredient);
@@ -162,7 +204,9 @@ public class AddExtraIngredientController extends GeneralController {
     public void setMenuItem(MenuItem newItem) {
         oldItem = newItem;
         selectedItem = newItem.clone();
-
+    }
+    public void setCurrentOrder(Order tempOrder) {
+        currentOrder = tempOrder;
     }
 
     /**
