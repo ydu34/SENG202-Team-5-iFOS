@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MenuXmlTest {
     AppEnvironment appEnvironment = new AppEnvironment();
     MenuManager menuManager;
-    String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
+    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
     @BeforeEach
     public void testUnmarshallMenu() {

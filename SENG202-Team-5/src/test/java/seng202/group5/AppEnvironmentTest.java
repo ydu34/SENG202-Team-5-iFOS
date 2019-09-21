@@ -29,7 +29,7 @@ class AppEnvironmentTest {
     Ingredient beefPattie;
     Ingredient lettuce;
     Ingredient tomatoSauce;
-    String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
+    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
     @BeforeEach
     void init() {

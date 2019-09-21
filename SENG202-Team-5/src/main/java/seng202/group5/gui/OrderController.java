@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import seng202.group5.Order;
+import seng202.group5.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -28,17 +29,8 @@ import java.util.*;
  */
 public class OrderController extends GeneralController {
 
-    public Recipe testRecipe;
-
-
-
-    @FXML
-    private Button itemButton;
-
-    @FXML
-    private Button itemButton2;
     private MenuItem item;
-  //  private MenuItem item2;
+
     @FXML
     private Recipe testRecipe2;
     @FXML
@@ -52,8 +44,15 @@ public class OrderController extends GeneralController {
 
     @FXML
     private CheckBox glutenFree;
+
     @FXML
-    private ArrayList<Button> filteredButtons;
+    private CheckBox mains;
+
+    @FXML
+    private CheckBox sides;
+
+    @FXML
+    private CheckBox beverages;
 
     @FXML
     private Text orderIDText;
@@ -160,48 +159,61 @@ public class OrderController extends GeneralController {
     }
 
     public ArrayList<MenuItem> filterItems() {
-        filteredButtons = new ArrayList<>();
-        filteredButtons.add(itemButton);
-        filteredButtons.add(itemButton2);
         ArrayList<MenuItem> filteredMenuItems = new ArrayList<>();
         if (allItems != null) {
             filteredMenuItems = new ArrayList<>(allItems);
         }
+        filteredItems = new ArrayList<>(filteredMenuItems);
 
 
         if (glutenFree.isSelected()) {
-            for (MenuItem item : filteredMenuItems) {
+            for (MenuItem item : filteredItems) {
                 if (!item.getRecipe().isGlutenFree()) {
                     filteredMenuItems.remove(item);
                 }
             }
         }
+        filteredItems = new ArrayList<>(filteredMenuItems);
         if (vegan.isSelected()) {
-            for (MenuItem item : filteredMenuItems) {
+            for (MenuItem item : filteredItems) {
                 if (!item.getRecipe().isVegan()) {
                     filteredMenuItems.remove(item);
                 }
             }
         }
+        filteredItems = new ArrayList<>(filteredMenuItems);
         if (vegetarian.isSelected()) {
-            for (MenuItem item : filteredMenuItems) {
+            for (MenuItem item : filteredItems) {
                 if (!item.getRecipe().isVegetarian()) {
-                    item.getItemName();
                     filteredMenuItems.remove(item);
                 }
             }
         }
-        int i;
-        for (i=0; i<filteredMenuItems.size(); i++){
-            System.out.println(i);
-            filteredButtons.get(i).setText(filteredMenuItems.get(i).getItemName());
-            filteredButtons.get(i).setVisible(true);
-
+        filteredItems = new ArrayList<>(filteredMenuItems);
+        if (!mains.isSelected()) {
+            for (MenuItem item : filteredItems) {
+                if (item.getItemType() == TypeEnum.MAIN) {
+                    filteredMenuItems.remove(item);
+                }
+            }
         }
-        for (i=filteredMenuItems.size(); i<filteredButtons.size(); i++){
-            filteredButtons.get(i).setVisible(false);
-
+        filteredItems = new ArrayList<>(filteredMenuItems);
+        if (!sides.isSelected()) {
+            for (MenuItem item : filteredItems) {
+                if (item.getItemType() == TypeEnum.SIDE) {
+                    filteredMenuItems.remove(item);
+                }
+            }
         }
+        filteredItems = new ArrayList<>(filteredMenuItems);
+        if (!beverages.isSelected()) {
+            for (MenuItem item : filteredItems) {
+                if (item.getItemType() == TypeEnum.BEVERAGE) {
+                    filteredMenuItems.remove(item);
+                }
+            }
+        }
+
         filteredItems = filteredMenuItems;
 
         populateTilePane(filteredMenuItems);
@@ -289,7 +301,6 @@ public class OrderController extends GeneralController {
     @FXML
     public void getIngredients(ActionEvent actionEvent) {
         addItemButton.setDisable(false);
-        //make_object();
 
         MenuItem selectedItem = null;
 
