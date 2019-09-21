@@ -9,6 +9,7 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.Disabled;
 import seng202.group5.*;
+import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
@@ -174,9 +175,39 @@ public class Stepdefs {
     public void orderIsViewed() {
     }
 
-    @When("^Order is canceled$")
-    public void orderIsCanceled() {
-        // Write code here that turns the phrase above into concrete actions
+    @When("^Order is cancelled$")
+    public void orderIsCancelled() {
         order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01", stock);
+    }
+
+    @When("New Order is created")
+    public void newOrderIsCreated() {
+        order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01", stock);
+    }
+    @Then("Order is empty")
+    public void orderIsEmpty() {
+        assertTrue(order.getOrderItems().isEmpty());
+    }
+
+    @When("A new recipe is created")
+    public void aNewRecipeIsCreated() {
+        burgerRecipe = manager.createRecipe("recipe", new HashMap<>(), "Text");
+    }
+
+    @Given("There is a menu")
+    public void thereIsAMenu() {
+        manager = new MenuManager();
+
+    }
+
+    @And("A new item is created for that recipe")
+    public void aNewItemIsCreatedForThatRecipe() {
+        manager.createItem("recipeTest", burgerRecipe, Money.parse("NZD 0.00"),"recipeTestId", true);
+
+    }
+
+    @Then("The new recipe is in the menu")
+    public void theNewRecipeIsInTheMenu() {
+        assertTrue(manager.getItemList().containsKey("recipeTestId"));
     }
 }
