@@ -15,3 +15,9 @@ Feature: View Change
     And Order has already been payed for
     When Orders is refunded
     Then $10.00 is displayed to be returned
+
+  Scenario: View sales data
+    Given Order Costs $10.00
+    And Order has already been payed for
+    When Sales data is viewed
+    Then Order is in sales data

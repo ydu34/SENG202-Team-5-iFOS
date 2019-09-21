@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MoneyStepDefs {
     private ArrayList<Money> change;
     private Finance finance;
     private Money cost;
+    private ArrayList<Money> salesData;
 
 
     @Before
@@ -104,5 +106,15 @@ public class MoneyStepDefs {
         for (Money value: denomination) {
             finance.getTill().addDenomination(value, 10);
         }
+    }
+
+    @When("Sales data is viewed")
+    public void salesDataIsViewed() {
+        salesData = finance.totalCalculator(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
+    }
+
+    @Then("Order is in sales data")
+    public void orderIsInSalesData() {
+        assertTrue(salesData.get(0).isGreaterThan(Money.parse("NZD 0.00")));
     }
 }

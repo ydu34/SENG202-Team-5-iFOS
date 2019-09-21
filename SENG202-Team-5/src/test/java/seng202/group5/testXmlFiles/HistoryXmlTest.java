@@ -1,11 +1,9 @@
 package seng202.group5.testXmlFiles;
 
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
 import seng202.group5.logic.History;
-import seng202.group5.logic.Stock;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +14,7 @@ public class HistoryXmlTest {
 
     AppEnvironment appEnvironment = new AppEnvironment();
     History history;
-    String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
+    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
     @BeforeEach
     public void testUnmarshalHistory() {

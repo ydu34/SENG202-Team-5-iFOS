@@ -13,7 +13,7 @@ public class FinanceXmlTest {
 
     AppEnvironment appEnvironment = new AppEnvironment();
     Finance finance;
-    String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
+    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
     @BeforeEach
     public void testUnmarshallFinance() {

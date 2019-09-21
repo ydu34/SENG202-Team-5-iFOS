@@ -1,24 +1,22 @@
 package seng202.group5.testXmlFiles;
 
-import org.joda.money.Money;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
 import seng202.group5.DietEnum;
-import seng202.group5.IDGenerator;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
 
 import java.util.HashSet;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StockXmlTest {
     AppEnvironment appEnvironment = new AppEnvironment();
     Stock stock;
-    String testDirectory = System.getProperty("user.dir") + "\\src\\test\\java\\seng202\\group5\\testXmlFiles";
+    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
     @BeforeEach
     public void testUnmarshallStock() {
