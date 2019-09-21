@@ -11,7 +11,7 @@
 
   <xs:complexType name="menuManager">
     <xs:sequence>
-      <xs:element name="itemList">
+      <xs:element name="itemMap">
         <xs:complexType>
           <xs:sequence>
             <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
