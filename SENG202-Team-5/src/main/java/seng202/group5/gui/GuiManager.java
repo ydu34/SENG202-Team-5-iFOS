@@ -47,7 +47,7 @@ public class GuiManager extends Application {
         Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
         Stock stock = thing.getStock();
         stock.addNewIngredient(test);
-
+        stock.modifyQuantity(test.getID(), 1);
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
         Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
