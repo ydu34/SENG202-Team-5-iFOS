@@ -49,6 +49,8 @@ public class MenuItem {
     private TypeEnum itemType;
     private boolean edited;
 
+    private Money totalCost = Money.parse("NZD 0.00");
+
     public MenuItem() {
         itemName = "";
         recipe = new Recipe();
@@ -113,6 +115,8 @@ public class MenuItem {
      * @return the selling cost of the menu item in the form of the Money object in NZD
      */
     public Money calculateFinalCost() {
+        totalCost = calculateMakingCost().plus(markupCost);
+        System.out.println("total_cost" + totalCost);
         return calculateMakingCost().plus(markupCost);
 
     }
@@ -127,7 +131,7 @@ public class MenuItem {
 
     public String getItemName() {
         if (edited) {
-            return "{Edited} " + itemName;
+            return  itemName;
         } else {
             return itemName;
         }
@@ -188,6 +192,14 @@ public class MenuItem {
     }
     public void setEdited(boolean tempEdited) {
         edited = tempEdited;
+    }
+
+    public Money getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Money totalCost) {
+        this.totalCost = totalCost;
     }
 }
 

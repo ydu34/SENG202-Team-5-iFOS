@@ -3,6 +3,7 @@ package seng202.group5.gui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,6 +41,9 @@ public class InvoiceController extends GeneralController {
     @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
 
+    @FXML
+    private TableColumn<MenuItem,Money> itemPriceCol;
+
     private Money totalCost;
 
     private ArrayList<Money> payment = new ArrayList<>();
@@ -63,8 +67,12 @@ public class InvoiceController extends GeneralController {
 
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
+        System.out.println("order" +currentOrder.getID());
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
+
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+
+        itemPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
 
         itemQuantityCol.setCellValueFactory(data -> {
             int quantity = orderItemsMap.get(data.getValue());

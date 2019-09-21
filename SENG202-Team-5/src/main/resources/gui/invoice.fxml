@@ -55,8 +55,9 @@
                    </Button>
                   <TableView fx:id="currentOrderTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn fx:id="itemNameCol" prefWidth="166.0" text="Item" />
-                      <TableColumn fx:id="itemQuantityCol" prefWidth="133.0" text="Quantity" />
+                      <TableColumn fx:id="itemNameCol" prefWidth="117.0" text="Item" />
+                      <TableColumn fx:id="itemQuantityCol" prefWidth="107.0" text="Quantity" />
+                        <TableColumn fx:id="itemPriceCol" prefWidth="75.0" text="Price " />
                     </columns>
                   </TableView>
                </children>
