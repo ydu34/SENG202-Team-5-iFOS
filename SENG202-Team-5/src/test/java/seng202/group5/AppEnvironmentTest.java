@@ -92,12 +92,12 @@ class AppEnvironmentTest {
         handler.setStock(stock);
 
         MenuManager menuManager = new MenuManager();
-        menuManager.setItemList(new HashMap<String, MenuItem>());
-        menuManager.getItemList().put("1", cheeseBurger);
+        menuManager.setItemMap(new HashMap<String, MenuItem>());
+        menuManager.getItemMap().put("1", cheeseBurger);
 
 
         handler.objectToXml(MenuManager.class, menuManager, "menuTest.xml", testDirectory);
-        HashMap<String, MenuItem> menuItems = menuManager.getItemList();
+        HashMap<String, MenuItem> menuItems = menuManager.getItemMap();
         handler.handleMenu(menuItems);
         System.out.print(menuItems.get("1").getRecipe().getIngredientsAmount());
     }

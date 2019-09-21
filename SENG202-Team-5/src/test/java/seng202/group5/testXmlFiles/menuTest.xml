@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuManager>
-    <itemList>
+    <itemMap>
         <entry>
             <key>1</key>
             <value>
@@ -18,9 +18,9 @@
                             <value>5</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 5.00</markupCost>
                 <generator>
@@ -33,5 +33,5 @@
                 <totalCost/>
             </value>
         </entry>
-    </itemList>
+    </itemMap>
 </menuManager>

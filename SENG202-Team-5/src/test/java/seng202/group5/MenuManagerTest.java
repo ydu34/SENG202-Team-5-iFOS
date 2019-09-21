@@ -39,7 +39,7 @@ public class MenuManagerTest {
         HashMap<String, MenuItem> itemListToBeAdded = new HashMap<String, MenuItem>();
         itemListToBeAdded.put("1", item);
         MenuManager newMenuManager = new MenuManager(itemListToBeAdded);
-        assertTrue(newMenuManager.getItemList().size() == 1);
+        assertTrue(newMenuManager.getItemMap().size() == 1);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class MenuManagerTest {
     @Test
     public void testCreateItemWithoutAddingtoMenu() {
         menuManager.createItem(name, burger, cost, "burg123", false);
-        assertTrue(menuManager.getItemList().size() == 1);
+        assertTrue(menuManager.getItemMap().size() == 1);
         //assertTrue(menuManager.getMenuItems().size() == 0);
     }
 
@@ -64,8 +64,8 @@ public class MenuManagerTest {
     public void testRemoveItemWithItemInMenu() {
         String testID = "burg123";
         menuManager.createItem(name, burger, cost, "burg123", false);
-        assertTrue(menuManager.getItemList().size() == 1);
+        assertTrue(menuManager.getItemMap().size() == 1);
         menuManager.removeItem(testID);
-        assertTrue(menuManager.getItemList().size() == 0);
+        assertTrue(menuManager.getItemMap().size() == 0);
     }
 }
