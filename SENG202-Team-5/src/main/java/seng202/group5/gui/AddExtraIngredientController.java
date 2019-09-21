@@ -147,15 +147,13 @@ public class AddExtraIngredientController extends GeneralController {
      * Also updates the name of the item if it's ingredients are different to the unedited version.
      */
     public void updateItemIngredients(javafx.event.ActionEvent actionEvent) {
-        //TODO: Does not handle the case of an item changing ingredients, then changing back to the original item. Old item
-        //should be the original item...
-        //Fix should be looking for the ID of the item, and comparing item lists. Coming soon!
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-        if ((selectedItem.getRecipe().getIngredientsAmount() != oldItem.getRecipe().getIngredientsAmount())
-                && !selectedItem.isEdited()) {
-            selectedItem.setEdited(true);
-        } else {
+        String itemID = selectedItem.getID();
+        MenuItem originalItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
+        if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
             selectedItem.setEdited(false);
+        } else {
+            selectedItem.setEdited(true);
         }
         controller.setMenuItem(selectedItem);
     }
