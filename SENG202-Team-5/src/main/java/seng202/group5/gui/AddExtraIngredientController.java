@@ -4,6 +4,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -146,7 +147,7 @@ public class AddExtraIngredientController extends GeneralController {
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
      * Also updates the name of the item if it's ingredients are different to the unedited version.
      */
-    public void updateItemIngredients(javafx.event.ActionEvent actionEvent) {
+    public void updateItemIngredients(ActionEvent actionEvent) {
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
         String itemID = selectedItem.getID();
         MenuItem originalItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
