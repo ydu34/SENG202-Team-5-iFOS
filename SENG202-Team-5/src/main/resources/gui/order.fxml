@@ -8,8 +8,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -41,36 +39,6 @@
             </rowConstraints>
             <children>
                 <BorderPane prefHeight="937.0" prefWidth="800.0">
-                    <center>
-                        <TabPane prefHeight="540.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-                            <tabs>
-                                <Tab text="Main">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="857.0" prefWidth="552.0">
-                                            <children>
-                                                <Button fx:id="itemButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="Item_1" />
-                                                <Button fx:id="itemButton2" layoutX="195.0" layoutY="14.0" mnemonicParsing="false" onAction="#getIngredients" prefHeight="50.0" prefWidth="126.0" text="item_2" />
-                                            </children>
-                                        </AnchorPane>
-                                    </content>
-                                </Tab>
-                                <Tab text="Sides">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                            <children>
-                                                <TilePane fx:id="tilePane" hgap="5.0" layoutX="34.0" layoutY="88.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefTileHeight="100.0" prefTileWidth="100.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                            </children>
-                                        </AnchorPane>
-                                    </content>
-                                </Tab>
-                                <Tab text="Beverages ">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                    </content>
-                                </Tab>
-                            </tabs>
-                        </TabPane>
-                    </center>
                     <left>
                         <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
@@ -83,15 +51,25 @@
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </MenuButton>
-                        <GridPane prefHeight="235.0" prefWidth="200.0">
+                                <GridPane prefWidth="200.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                              vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                              vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                              vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                              vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                              vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                              vgrow="SOMETIMES"/>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0"
+                                              vgrow="SOMETIMES"/>
                           </rowConstraints>
                            <children>
                                       <CheckBox fx:id="vegan" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0" prefWidth="140.0" text="Vegan">
@@ -118,7 +96,35 @@
                                     <Font size="19.0" />
                                  </font>
                                       </CheckBox>
-                                      <Text fx:id="orderIDText" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="temp" wrappingWidth="172.1787109375" GridPane.rowIndex="3">
+                               <CheckBox fx:id="mains" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0"
+                                         prefWidth="140.0" selected="true" text="Mains" GridPane.rowIndex="3">
+                                   <padding>
+                                       <Insets left="20.0"/>
+                                   </padding>
+                                   <font>
+                                       <Font size="19.0"/>
+                                   </font>
+                               </CheckBox>
+                               <CheckBox fx:id="sides" mnemonicParsing="false" onAction="#showItems" prefHeight="26.0"
+                                         prefWidth="182.0" text="Sides" GridPane.rowIndex="4">
+                                   <padding>
+                                       <Insets left="20.0"/>
+                                   </padding>
+                                   <font>
+                                       <Font size="19.0"/>
+                                   </font>
+                               </CheckBox>
+                               <CheckBox fx:id="beverages" mnemonicParsing="false" onAction="#showItems"
+                                         prefHeight="26.0" prefWidth="181.0" text="Beverages" GridPane.rowIndex="5">
+                                   <padding>
+                                       <Insets left="20.0"/>
+                                   </padding>
+                                   <font>
+                                       <Font size="19.0"/>
+                                   </font>
+                               </CheckBox>
+                               <Text fx:id="orderIDText" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0"
+                                     text="temp" wrappingWidth="172.1787109375" GridPane.rowIndex="6">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
@@ -126,7 +132,7 @@
                                     <Insets left="120.0" />
                                  </GridPane.margin>
                               </Text>
-                              <Label prefHeight="24.0" prefWidth="102.0" text="Order Id : " GridPane.rowIndex="3">
+                               <Label prefHeight="24.0" prefWidth="102.0" text="Order Id : " GridPane.rowIndex="6">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
@@ -227,6 +233,18 @@
                             </children>
                         </VBox>
                     </right>
+                    <center>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"
+                                    BorderPane.alignment="CENTER">
+                            <children>
+                                <TilePane fx:id="tilePane" hgap="5.0" layoutX="34.0" layoutY="88.0"
+                                          maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                          prefTileHeight="100.0" prefTileWidth="100.0" vgap="5.0"
+                                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                            </children>
+                        </AnchorPane>
+                    </center>
                 </BorderPane>
             <GridPane GridPane.rowIndex="1">
               <columnConstraints>
