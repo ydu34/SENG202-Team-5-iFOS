@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 /**
  * This class contains the transactionHistory which contains the Order and their IDs.
- * @Author Yu Duan
+ * @author Yu Duan
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

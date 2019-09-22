@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The controller for the screen for adding items to the menu
+ *
+ * @author
+ */
 public class AddRecipeController extends GeneralController {
 
     @FXML
@@ -47,6 +52,9 @@ public class AddRecipeController extends GeneralController {
 
     private MenuItem item;
 
+    /**
+     * An initializer for this controller
+     */
     @FXML
     public void pseudoInitialize() {
         newRecipe();

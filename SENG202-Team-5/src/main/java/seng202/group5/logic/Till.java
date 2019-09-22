@@ -19,6 +19,9 @@ import java.util.HashMap;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Till {
 
+    /**
+     * A hash map used to store the number of each cash denomination in the till
+     */
     @XmlElement
     @XmlJavaTypeAdapter(MoneyMapAdapter.class)
     private HashMap<Money, Integer> denominations;
@@ -27,17 +30,17 @@ public class Till {
         denominations = new HashMap<>();
     }
 
-
     public Till(ArrayList<Money> moneyList) {
-        denominations = new HashMap<Money, Integer>();
-        for (int i = 0; i < moneyList.size(); i++) {
-            denominations.put(moneyList.get(i), 0);
+        denominations = new HashMap<>();
+        for (Money money : moneyList) {
+            denominations.put(money, 0);
         }
     }
 
     public Till(HashMap<Money, Integer> tempDenominations) {
         denominations = tempDenominations;
-}
+    }
+
     /**
     * Adds the given value to the denominations stored. If a given denomination does not exist, it is added to the
      * denominations HashMap.
@@ -87,17 +90,17 @@ public class Till {
      * @return totalSum, the total of all denominations multiplied by the number counted.
      */
     public Money totalValue() {
-        Money totalSum = Money.parse("NZD 0.00");
-        ArrayList<Money> moneyArrayList = new ArrayList<Money>();
+        ArrayList<Money> moneyArrayList = new ArrayList<>();
         for (Money moneyKey : denominations.keySet()) {
             int count = denominations.get(moneyKey);
             moneyArrayList.add(moneyKey.multipliedBy(count));
         }
-        totalSum = Money.total(moneyArrayList);
+        Money totalSum = Money.total(moneyArrayList);
         return totalSum;
     }
 
     public HashMap<Money, Integer> getDenominations() {
         return denominations;
     }
+
 }

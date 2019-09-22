@@ -24,9 +24,6 @@ import java.util.*;
 public class AddExtraIngredientController extends GeneralController {
 
     @FXML
-    private Button launchSelectionScreenButton;
-
-    @FXML
     private Button confirmItemButton;
 
     @FXML
@@ -154,7 +151,6 @@ public class AddExtraIngredientController extends GeneralController {
         if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
             selectedItem.setEdited(false);
         } else {
-
             selectedItem.setEdited(true);
         }
         controller.setMenuItem(selectedItem);

@@ -19,15 +19,17 @@ import java.util.HashMap;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MenuManager {
 
+    /**
+     * A dictionary mapping string IDs to menu items
+     */
     private HashMap<String, MenuItem> itemMap;
 
-
     public MenuManager() {
-        itemMap = new HashMap<String, MenuItem>();
+        itemMap = new HashMap<>();
     }
 
     public MenuManager(HashMap<String, MenuItem> tempItemList) {
-        itemMap = new HashMap<String, MenuItem>();
+        itemMap = new HashMap<>();
         for (String stringKey : tempItemList.keySet()) {
             itemMap.put(stringKey, tempItemList.get(stringKey));
         }

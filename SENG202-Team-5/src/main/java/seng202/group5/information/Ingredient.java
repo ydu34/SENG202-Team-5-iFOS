@@ -68,8 +68,8 @@ public class Ingredient {
         dietaryInformation = dietInfo;
     }
 
-    public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice) {
 
+    public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice) {
         name = tempName;
         category = tempCategory;
         id = tempId;
@@ -77,14 +77,13 @@ public class Ingredient {
         dietaryInformation = new HashSet<>();
     }
 
+    @Deprecated(since = "Used for testing only")
     public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice, HashSet<DietEnum> dietInfo) {
-
         name = tempName;
         category = tempCategory;
         id = tempId;
         price = tempPrice;
         dietaryInformation = dietInfo;
-
     }
 
     /**

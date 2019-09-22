@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * A controller for managing the administration screen
  * @author Yu Duan
  */
 public class AdminController extends GeneralController {
@@ -101,7 +102,9 @@ public class AdminController extends GeneralController {
 
     private Map<String, File> fileMap;
 
-
+    /**
+     * An initializer for this controller
+     */
     @Override
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
@@ -121,6 +124,9 @@ public class AdminController extends GeneralController {
         DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
     }
 
+    /**
+     * Views information about transactions in the specified period
+     */
     @FXML
     public void viewHistory() {
         LocalDateTime eDate;
@@ -174,7 +180,7 @@ public class AdminController extends GeneralController {
 
     public void selectStock() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("stock.xml", selectedFile) == true) {
+        if (checkSelectedFile("stock.xml", selectedFile)) {
             fileMap.put("stock.xml", selectedFile);
             stockWarningText.setText("stock.xml selected");
             checkFilesSelected();
@@ -185,7 +191,7 @@ public class AdminController extends GeneralController {
 
     public void selectMenu() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("menu.xml", selectedFile) == true) {
+        if (checkSelectedFile("menu.xml", selectedFile)) {
             fileMap.put("menu.xml", selectedFile);
             menuWarningText.setText("menu.xml selected");
             checkFilesSelected();
@@ -197,7 +203,7 @@ public class AdminController extends GeneralController {
 
     public void selectHistory() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("history.xml", selectedFile) == true) {
+        if (checkSelectedFile("history.xml", selectedFile)) {
             fileMap.put("history.xml", selectedFile);
             historyWarningText.setText("history.xml selected");
             checkFilesSelected();
@@ -208,7 +214,7 @@ public class AdminController extends GeneralController {
 
     public void selectFinance() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("finance.xml", selectedFile) == true) {
+        if (checkSelectedFile("finance.xml", selectedFile)) {
             fileMap.put("finance.xml", selectedFile);
             financeWarningText.setText("finance.xml selected");
             checkFilesSelected();
@@ -237,12 +243,15 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Opens the add recipe screen
+     */
     public void addRecipe() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
             Parent root = loader.load();
 
-            AddRecipeController controller = loader.<AddRecipeController>getController();
+            AddRecipeController controller = loader.getController();
             System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
@@ -252,8 +261,7 @@ public class AdminController extends GeneralController {
             stage.setScene(new Scene(root, 600, 600));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -274,7 +282,6 @@ public class AdminController extends GeneralController {
         }
 
     }
-
 
     public void setFinance(Finance newFinance) {
         finance = newFinance;

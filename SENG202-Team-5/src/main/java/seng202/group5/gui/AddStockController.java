@@ -16,7 +16,11 @@ import seng202.group5.logic.Stock;
 
 import java.util.HashSet;
 
-
+/**
+ * A controller for a screen that adds ingredients to the stock
+ *
+ * @author Michael Morgun
+ */
 public class AddStockController extends GeneralController {
 
     @FXML
@@ -53,16 +57,17 @@ public class AddStockController extends GeneralController {
 
     private Ingredient ingredient;
 
-
+    /**
+     * Creates a new ingredient and adds it to the stock
+     *
+     * @param actionEvent an event that caused this to happen
+     */
     @FXML
     public void createIngredient(ActionEvent actionEvent) {
 
-        costField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
-                    costField.setText(oldValue);
-                }
+        costField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+                costField.setText(oldValue);
             }
         });
 
@@ -101,6 +106,9 @@ public class AddStockController extends GeneralController {
         }
     }
 
+    /**
+     * Adds dietary information to the ingredient object
+     */
     public void addDietaryInformation() {
         if (veganCheck.isSelected()) {
             ingredient.addDietInfo(DietEnum.VEGAN);

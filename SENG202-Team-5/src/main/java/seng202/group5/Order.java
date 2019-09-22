@@ -145,7 +145,7 @@ public class Order {
         for (String id : listOfKeys) {
             temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id) * quantity);
         }
-        if (orderItems.keySet().contains(item)) {
+        if (orderItems.containsKey(item)) {
             orderItems.put(item, orderItems.get(item) + quantity);
         } else {
             orderItems.put(item, quantity);
@@ -216,6 +216,11 @@ public class Order {
         }
     }
 
+    /**
+     * Sets the stock to a clone of the specified stock
+     *
+     * @param stock the new stock to be cloned
+     */
     public void resetStock(Stock stock) {
         temporaryStock = stock.clone();
     }
@@ -255,7 +260,6 @@ public class Order {
     public Stock getStock() {
         return temporaryStock;
     }
-
 
     public LocalDateTime getDateTimeProcessed() {
         return dateTimeProcessed;

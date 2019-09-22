@@ -21,12 +21,13 @@ import java.util.HashMap;
 public class Finance {
 
     private HashMap<String, Transaction> transactionHistory;
+
+    /**
+     * A list of cash denominations available
+     */
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     @XmlList
     private ArrayList<Money> denomination;
-    /**
-     * Temporary id generator for testing purposes.
-     */
     @XmlElement
     private Till till;
     
@@ -151,9 +152,15 @@ public class Finance {
         return totalChange;
     }
 
+    /**
+     * Gets a clone of the transaction history
+     *
+     * @return a clone of the transaction history
+     */
     public HashMap<String, Transaction> getTransactionHistoryClone() {
         return (HashMap<String, Transaction>) transactionHistory.clone();
     }
+
     public Till getTill() {
         return till;
     }

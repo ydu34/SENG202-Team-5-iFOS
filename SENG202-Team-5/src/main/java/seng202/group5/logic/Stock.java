@@ -11,7 +11,6 @@ import java.util.HashMap;
  *
  * @author Michael Morgoun, Daniel Harris, Yu Duan
  */
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Stock {
@@ -30,7 +29,6 @@ public class Stock {
         ingredientStock = tempIngredientStock;
     }
 
-
     /**
      * The builder for the Stock object if there is no initial stock.
      */
@@ -38,7 +36,6 @@ public class Stock {
         ingredients = new HashMap<>();
         ingredientStock = new HashMap<>();
     }
-
 
     /**
      * Adds an ingredient to the stock with a given id, unit, category and quantity.
@@ -55,7 +52,6 @@ public class Stock {
         }
     }
 
-
     /**
      * Adds an ingredient to the stock with a given ID, unit, category and with a quantity initialised to 0.
      *
@@ -65,7 +61,6 @@ public class Stock {
         int quantity = 0;
         addNewIngredient(ingredient, quantity);
     }
-
 
     /**
      * Modifies the quantity of an ingredient already in the stock by changing the parameter quantity to the current
