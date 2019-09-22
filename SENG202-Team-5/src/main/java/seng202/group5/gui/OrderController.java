@@ -99,20 +99,14 @@ public class OrderController extends GeneralController {
     private ArrayList<MenuItem> filteredItems;
     private SORT_TYPE sortingType = SORT_TYPE.NAME;
 
-    public void sortItemsName(ActionEvent event) {
-        sortingType = SORT_TYPE.NAME;
-        filterItems();
-    }
-
     @Override
     public void pseudoInitialize() {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-        showItems(new ActionEvent());
+        filterItems();
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
         } catch (NoOrderException e) {
-            //TODO: Implement me!
             System.out.println(e);
         }
         orderIDText.setText(currentOrder.getID());
@@ -122,6 +116,11 @@ public class OrderController extends GeneralController {
 
     public void sortItemsPrice(ActionEvent event) {
         sortingType = SORT_TYPE.PRICE;
+        filterItems();
+    }
+
+    public void sortItemsName(ActionEvent event) {
+        sortingType = SORT_TYPE.NAME;
         filterItems();
     }
 
@@ -244,24 +243,10 @@ public class OrderController extends GeneralController {
     }
 
 
-
-    /**
-     * Still trying to work this code out. Please dont delete it. */
-    @FXML
-    public void showItems(ActionEvent event) {
-        ArrayList<MenuItem> itemsToShow = new ArrayList<>();
-        itemsToShow = filterItems();
-        // work with menuItemsList
-
-
-    }
-
     public void addItemToOrder() {
         Integer quantity = quantitySpinner.getValue();
         currentOrder.addItem(item, quantity);
         System.out.println(currentOrder.getOrderItems());
-     //   changeScreen(actionEvent, "/gui/order.fxml");
-
     }
 
     public void populateIngredientsTable() {
@@ -279,30 +264,6 @@ public class OrderController extends GeneralController {
        // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
        // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
 
-    }
-
-    /**
-     * This method sets the text in the Ingredient panel to the list of ingredient
-     * present in the recipe and also updates the totalCostDisplay to the selling cost of that item.
-     */
-    @FXML
-    public void getIngredients(ActionEvent actionEvent) {
-        addItemButton.setDisable(false);
-
-        MenuItem selectedItem = null;
-
-        if (filteredItems != null) {
-            for (MenuItem item : filteredItems) {
-                Button btn = (Button) actionEvent.getSource();
-                if (item.getItemName().equals(btn.getText())) {
-                    selectedItem = item;
-                }
-            }
-            if (selectedItem != null) {
-                setMenuItem(selectedItem);
-            }
-
-        }
     }
 
 

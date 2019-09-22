@@ -72,7 +72,8 @@
                                               vgrow="SOMETIMES"/>
                           </rowConstraints>
                            <children>
-                                      <CheckBox fx:id="vegan" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0" prefWidth="140.0" text="Vegan">
+                               <CheckBox fx:id="vegan" mnemonicParsing="false" onAction="#filterItems" prefHeight="18.0"
+                                         prefWidth="140.0" text="Vegan">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -80,7 +81,8 @@
                                     <Font size="19.0" />
                                  </font>
                                       </CheckBox>
-                                      <CheckBox fx:id="vegetarian" mnemonicParsing="false" onAction="#showItems" prefHeight="26.0" prefWidth="182.0" text="Vegetarian" GridPane.rowIndex="1">
+                               <CheckBox fx:id="vegetarian" mnemonicParsing="false" onAction="#filterItems"
+                                         prefHeight="26.0" prefWidth="182.0" text="Vegetarian" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -88,7 +90,8 @@
                                     <Font size="19.0" />
                                  </font>
                                       </CheckBox>
-                                      <CheckBox fx:id="glutenFree" mnemonicParsing="false" onAction="#showItems" prefHeight="26.0" prefWidth="181.0" text="Gluten Free" GridPane.rowIndex="2">
+                               <CheckBox fx:id="glutenFree" mnemonicParsing="false" onAction="#filterItems"
+                                         prefHeight="26.0" prefWidth="181.0" text="Gluten Free" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -96,7 +99,7 @@
                                     <Font size="19.0" />
                                  </font>
                                       </CheckBox>
-                               <CheckBox fx:id="mains" mnemonicParsing="false" onAction="#showItems" prefHeight="18.0"
+                               <CheckBox fx:id="mains" mnemonicParsing="false" onAction="#filterItems" prefHeight="18.0"
                                          prefWidth="140.0" selected="true" text="Mains" GridPane.rowIndex="3">
                                    <padding>
                                        <Insets left="20.0"/>
@@ -105,7 +108,7 @@
                                        <Font size="19.0"/>
                                    </font>
                                </CheckBox>
-                               <CheckBox fx:id="sides" mnemonicParsing="false" onAction="#showItems" prefHeight="26.0"
+                               <CheckBox fx:id="sides" mnemonicParsing="false" onAction="#filterItems" prefHeight="26.0"
                                          prefWidth="182.0" text="Sides" GridPane.rowIndex="4">
                                    <padding>
                                        <Insets left="20.0"/>
@@ -114,7 +117,7 @@
                                        <Font size="19.0"/>
                                    </font>
                                </CheckBox>
-                               <CheckBox fx:id="beverages" mnemonicParsing="false" onAction="#showItems"
+                               <CheckBox fx:id="beverages" mnemonicParsing="false" onAction="#filterItems"
                                          prefHeight="26.0" prefWidth="181.0" text="Beverages" GridPane.rowIndex="5">
                                    <padding>
                                        <Insets left="20.0"/>

@@ -134,7 +134,7 @@ public class HistoryController extends GeneralController {
             ConfirmRefundController controller = loader.getController();
             controller.setSource(this);
             controller.setButton(button);
-            controller.setText(orderToRefund.getID());
+            controller.setText(orderToRefund);
 
             Stage stage = new Stage();
             stage.setTitle("Confirm refund");
@@ -146,10 +146,8 @@ public class HistoryController extends GeneralController {
 
     }
 
-    public void confirmOrder(String orderID) {
-        for (Money coin : getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID())) {
-            System.out.println(coin);
-        }
+    public ArrayList<Money> confirmOrder(String orderID) {
+        return getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID());
     }
 
     /**
