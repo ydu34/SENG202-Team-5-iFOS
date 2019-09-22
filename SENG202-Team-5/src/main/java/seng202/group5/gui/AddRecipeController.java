@@ -33,9 +33,6 @@ public class AddRecipeController extends GeneralController {
     private TextField makingPriceField;
 
     @FXML
-    private TextField totalPriceField;
-
-    @FXML
     private Button saveButton;
 
     @FXML
@@ -57,7 +54,13 @@ public class AddRecipeController extends GeneralController {
     private Text markupCostWarningText;
 
     @FXML
-    private Text totalCostWarningText;
+    private Text ingredientCostText;
+
+    @FXML
+    private Button computeTotalCostButton;
+
+    @FXML
+    private Text totalCostText;
 
     private MenuItem item;
 
@@ -88,28 +91,32 @@ public class AddRecipeController extends GeneralController {
     public void saveRecipe() {
         String name = nameField.getText();
         String markupPriceStr = makingPriceField.getText();
-        String totalPriceStr = totalPriceField.getText();
         try {
             Money.parse("NZD " + markupPriceStr);
         } catch(Exception e) {
             markupCostWarningText.setText("Invalid value");
         }
-
-        try {
-            Money.parse("NZD " + totalPriceStr);
-        } catch(Exception e) {
-            totalCostWarningText.setText("Invalid value");
-        }
         Money markupPrice = Money.parse("NZD " + markupPriceStr);
-        Money totalPrice = Money.parse("NZD " + totalPriceStr);
+
         item.getRecipe().setName(name);
         item.getRecipe().setRecipeText("No recipe for this");
         item.setItemName(name);
         item.setMarkupCost(markupPrice);
         item.calculateFinalCost();
         menuManager.addItem(item);
-        parentController.recipeTableInitialize();
         closeScreen();
+    }
+
+    public void computeTotalCost() {
+        String markupPriceStr = makingPriceField.getText();
+        try {
+            Money markupPrice = Money.parse("NZD " + markupPriceStr);
+            item.setMarkupCost(markupPrice);
+            totalCostText.setText(item.calculateFinalCost().toString());
+            System.out.println(item.calculateFinalCost().toString());
+        } catch(Exception e) {
+            markupCostWarningText.setText("Invalid value");
+        }
     }
 
     /**
@@ -154,15 +161,7 @@ public class AddRecipeController extends GeneralController {
      */
     public void setMenuItem(MenuItem tempItem) {
         item = tempItem;
+        ingredientCostText.setText(item.calculateMakingCost().toString());
         populateIngredientsTable();
     }
-
-    /**
-     * @param parentController The parent controller, the admin screen that opened this screen.
-     */
-    public void setParentController(AdminController parentController) {
-        this.parentController = parentController;
-    }
-
-
 }

@@ -34,20 +34,20 @@ public class HistoryXmlTest {
 
     @Test
     public void testOrderCostIsInHistory() {
-        String cost = history.getTransactionHistory().get("11").getTotalCost().toString();
-        assertEquals("NZD 0.00", cost);
+        String cost = history.getTransactionHistory().get("8").getTotalCost().toString();
+        assertEquals("NZD 80.00", cost);
     }
 
     @Test
     public void testOrderDateTimeProcessedIsInHistory() {
-        LocalDateTime dateTimeProcessed = history.getTransactionHistory().get("11").getDateTimeProcessed();
+        LocalDateTime dateTimeProcessed = history.getTransactionHistory().get("8").getDateTimeProcessed();
         assertTrue(dateTimeProcessed instanceof LocalDateTime);
     }
 
     @Test
     public void testOrderIdIsInHistory() {
-        String id = history.getTransactionHistory().get("11").getID();
-        assertEquals("11", id);
+        String id = history.getTransactionHistory().get("8").getID();
+        assertEquals("8", id);
     }
 
 }

@@ -49,6 +49,7 @@ public class MenuItem {
     private TypeEnum itemType;
     private boolean edited;
 
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money totalCost;
 
     public MenuItem() {
@@ -77,6 +78,7 @@ public class MenuItem {
         inMenu = tempInMenu;
         itemType = TypeEnum.MAIN;
         edited = false;
+        totalCost = calculateFinalCost();
     }
 
     /**
