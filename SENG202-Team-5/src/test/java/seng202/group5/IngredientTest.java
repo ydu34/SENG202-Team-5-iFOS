@@ -12,8 +12,8 @@ public class IngredientTest {
 
     @Test
     public void testEquals() {
-        Ingredient ingredient1 = new Ingredient("ing1", "g", "meat", Money.parse("NZD 0.10"));
-        Ingredient ingredient2 = new Ingredient("ing2", "g", "meat", Money.parse("NZD 0.10"));
+        Ingredient ingredient1 = new Ingredient("ing1", "meat", Money.parse("NZD 0.10"));
+        Ingredient ingredient2 = new Ingredient("ing2", "meat", Money.parse("NZD 0.10"));
 
         assertTrue(ingredient1.equals(ingredient1));
         assertFalse(ingredient1.equals(ingredient2));

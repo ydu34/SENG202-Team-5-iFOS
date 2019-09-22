@@ -22,7 +22,7 @@ public class RecipeTest {
 
     }};
     Recipe testRecipe = new Recipe("Chicken burger", "Steps to chicken burger");
-    Ingredient chickenPatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
+    Ingredient chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
 
     @Before
     public void setUp() {}
@@ -37,7 +37,7 @@ public class RecipeTest {
             add(DietEnum.VEGETARIAN);
 
         }};
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
+        Ingredient cheese = new Ingredient("cheese", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 2);
         assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 2);
         testRecipe.addIngredient(chickenPatty, 12);
@@ -57,7 +57,7 @@ public class RecipeTest {
             add(DietEnum.VEGETARIAN);
             //add(DietEnum.VEGAN);
         }};
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
+        Ingredient cheese = new Ingredient("cheese", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
 
         testRecipe.addIngredient(chickenPatty, 12);
         testRecipe.removeIngredient(chickenPatty, 3);
@@ -78,7 +78,7 @@ public class RecipeTest {
     @Test
     public void testEditIngredient() {
 
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
+        Ingredient cheese = new Ingredient("cheese", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 10);
         testRecipe.editRecipe(chickenPatty, 5);
         testRecipe.editRecipe(cheese, 2);

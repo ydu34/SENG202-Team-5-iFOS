@@ -40,12 +40,6 @@ class StockXmlTest {
     }
 
     @Test
-    public void testIngredientUnitInStock() {
-        String unit = stock.getIngredients().get("2").getUnit();
-        assertEquals("kg", unit);
-    }
-
-    @Test
     public void testIngredientCategoryInStock() {
         String category = stock.getIngredients().get("2").getCategory();
         assertEquals("meat", category);

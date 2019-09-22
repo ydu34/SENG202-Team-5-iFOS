@@ -48,8 +48,8 @@ class MenuItemTest {
             add(DietEnum.GLUTEN_FREE);
 
         }};
-        chickenPatty = new Ingredient("chicken", "kg", "meat", "12", Money.parse("NZD 5"), ingredientInfo);
-        cheese = new Ingredient("cheese", "kg", "dairy", "12", Money.parse("NZD 2"), ingredientInfo);
+        chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 5"), ingredientInfo);
+        cheese = new Ingredient("cheese", "dairy", "12", Money.parse("NZD 2"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 2);
         testRecipe.addIngredient(cheese, 1);
     }

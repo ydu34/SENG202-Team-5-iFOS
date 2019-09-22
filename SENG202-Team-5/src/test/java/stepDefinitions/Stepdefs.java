@@ -31,7 +31,7 @@ public class Stepdefs {
     private Recipe burgerRecipe;
     private MenuItem chip;
     private MenuManager manager;
-    private Ingredient buns = new Ingredient("Buns", "Kg", "Bread", "TestBun", Money.parse("NZD 5.00"));
+    private Ingredient buns = new Ingredient("Buns", "bread", "TestBun", Money.parse("NZD 5.00"));
     private boolean error;
 
 

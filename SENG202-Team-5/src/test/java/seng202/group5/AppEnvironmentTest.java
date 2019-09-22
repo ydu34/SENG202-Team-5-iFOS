@@ -42,13 +42,13 @@ class AppEnvironmentTest {
         cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, Money.parse("NZD 5.0"), "1", true);
         cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
 
-        Ingredient cheese = new Ingredient("Cheese", "Count", "Dairy", "1", Money.parse("NZD 0.10"));
+        Ingredient cheese = new Ingredient("Cheese", "Dairy", "1", Money.parse("NZD 0.10"));
         cheeseBurgerIngredientMap.put(cheese, 10);
-        Ingredient bun = new Ingredient("Bun", "Count", "Bread", "2", Money.parse("NZD 0.50"));
+        Ingredient bun = new Ingredient("Bun", "Bread", "2", Money.parse("NZD 0.50"));
         cheeseBurgerIngredientMap.put(bun, 5);
-        Ingredient beefPattie = new Ingredient("Beef Pattie", "Count", "Meat", "3", Money.parse("NZD 1.0"));
-        Ingredient lettuce = new Ingredient("Lettuce", "Count", "Vegetable", "4", Money.parse("NZD 0.2"));
-        Ingredient tomatoSauce = new Ingredient("Tomato Sauce", "ml", "Sauce", "5", Money.parse("NZD 0.1"));
+        Ingredient beefPattie = new Ingredient("Beef Pattie", "Meat", "3", Money.parse("NZD 1.0"));
+        Ingredient lettuce = new Ingredient("Lettuce", "Vegetable", "4", Money.parse("NZD 0.2"));
+        Ingredient tomatoSauce = new Ingredient("Tomato Sauce", "Sauce", "5", Money.parse("NZD 0.1"));
 
         cheeseBurgerRecipe.setIngredientsAmount(cheeseBurgerIngredientMap);
 
@@ -80,8 +80,8 @@ class AppEnvironmentTest {
      */
     @Test
     void test() {
-        Ingredient ing1 = new Ingredient("Milk", "L", "Liquid", "1", Money.parse("NZD 4.0"));
-        Ingredient ing2 = new Ingredient("Apple", "kg", "Fruit", "2", Money.parse("NZD 1.0"));
+        Ingredient ing1 = new Ingredient("Milk",  "Liquid", "1", Money.parse("NZD 4.0"));
+        Ingredient ing2 = new Ingredient("Apple", "Fruit", "2", Money.parse("NZD 1.0"));
 
         Stock stock = handler.getStock();
         stock = new Stock();
