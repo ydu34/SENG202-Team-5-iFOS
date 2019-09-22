@@ -11,9 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,12 +47,19 @@ public class StockController extends GeneralController {
     @FXML
     private Button removeButton;
 
+    @FXML
+    private Label warningLabel;
+
+    private HashMap<String, Integer> quantities;
+
     @Override
     public void pseudoInitialize() {
+        warningLabel.setText("");
+
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
                 getAppEnvironment().getStock().getIngredients().values());
 
-        HashMap<String, Integer> quantities = getAppEnvironment().getStock().getIngredientStock();
+        quantities = getAppEnvironment().getStock().getIngredientStock();
 
         rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         rowIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -68,19 +73,22 @@ public class StockController extends GeneralController {
         stockTable.setItems(ingredients);
     }
 
-    @FXML
-    public void addIngredient(ActionEvent event) {
+    public void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addStock.fxml"));
             Parent root = loader.load();
 
-            AddStockController controller = loader.<AddStockController>getController();
+            AddStockController controller = loader.getController();
             controller.setStock(getAppEnvironment().getStock());
 
             Stage stage = new Stage();
-            stage.setTitle("Add An Ingredient");
+            stage.setTitle(setTitle);
             stage.setScene(new Scene(root, 600, 200));
             stage.initModality(Modality.APPLICATION_MODAL);
+
+            controller.setQuantity(quantity);
+            controller.setIngredient(ingredient);
+            controller.pseudoInitialize();
 
             // Automatic refresh of the table
             stage.showAndWait();
@@ -91,4 +99,23 @@ public class StockController extends GeneralController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void addIngredient(ActionEvent event) {
+        String quantity = "";
+        initialiseScreen("New Ingredient", null, quantity);
+    }
+
+    @FXML
+    public void modifyIngredient(ActionEvent event) {
+        Ingredient currentSelected = stockTable.getSelectionModel().getSelectedItem();
+
+        try {
+            String quantity = quantities.get(currentSelected.getID()).toString();
+            initialiseScreen("Modify " + currentSelected.getName(), currentSelected, quantity);
+        } catch (Exception e) {
+            warningLabel.setText("Please select an item before modifying.");
+        }
+    }
+
 }

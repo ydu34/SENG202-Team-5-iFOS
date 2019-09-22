@@ -108,6 +108,11 @@ public class Ingredient {
         return id;
     }
 
+    /**
+     * Sets the dietaryInformation.
+     * @param set A HashSet containing DietEnums.
+     */
+    public void setDietaryInformation(HashSet<DietEnum> set) { dietaryInformation = set; }
 
     /**
      * This method sets the name to the ingredient added to the stock
@@ -124,6 +129,12 @@ public class Ingredient {
     public void setCategory(String someCategory) {
         category = someCategory;
     }
+
+    /**
+     * This method sets the price for the ingredient.
+     * @param money A new price for the ingredient using Joda Money.
+     */
+    public void setPrice(Money money) { price = money; }
 
     /**
      * Adds dietary information about this ingredient
