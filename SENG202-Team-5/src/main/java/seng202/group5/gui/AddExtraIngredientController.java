@@ -164,8 +164,7 @@ public class AddExtraIngredientController extends GeneralController {
      */
     public void initializeSelectedIngredients() {
         selectedIngredientSet = selectedItem.getRecipe().getIngredientsAmount().keySet();
-        itemIngredients = FXCollections.observableArrayList(
-                selectedIngredientSet);
+        itemIngredients = FXCollections.observableArrayList(selectedIngredientSet);
     }
 
     /**
@@ -214,6 +213,14 @@ public class AddExtraIngredientController extends GeneralController {
     public void revertToOrder(javafx.event.ActionEvent actionEvent) {
         OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
         controller.setMenuItem(oldItem);
+    }
+
+    protected MenuItem getSelectedItem() {
+        return selectedItem;
+    }
+
+    protected MenuItem getOldItem() {
+        return oldItem;
     }
 
 }

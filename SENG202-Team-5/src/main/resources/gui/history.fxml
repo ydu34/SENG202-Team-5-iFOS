@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-          minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8"
+          minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
           fx:controller="seng202.group5.gui.HistoryController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -57,6 +62,7 @@
            <columnConstraints>
                <ColumnConstraints hgrow="NEVER"/>
                <ColumnConstraints hgrow="NEVER"/>
+               <ColumnConstraints/>
                <ColumnConstraints hgrow="ALWAYS"/>
                <ColumnConstraints/>
            </columnConstraints>
@@ -69,7 +75,8 @@
                <DatePicker fx:id="historyEndDatePicker" onAction="#updateSelectableStartDates"
                            onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1"/>
                <TextField fx:id="historySearchbar" onKeyTyped="#updateVisibleOrders" promptText="Order ID search bar"
-                          GridPane.columnIndex="3"/>
+                          GridPane.columnIndex="2"/>
+               <Button mnemonicParsing="false" onAction="#addPastOrder" text="Add Past Order" GridPane.columnIndex="4"/>
            </children>
            <GridPane.margin>
                <Insets/>

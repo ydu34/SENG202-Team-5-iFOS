@@ -194,7 +194,7 @@
                            </columnResizePolicy>
                         </TableView>
                                 <Button fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" prefWidth="138.0" text="Add Extra Ingredient" textAlignment="CENTER" />
-                        <GridPane prefHeight="300.0" prefWidth="300.0">
+                                <GridPane fx:id="bottomRightGridPane" prefHeight="300.0" prefWidth="300.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="155.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="145.0" />
@@ -258,7 +258,9 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                   <Button disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" text="Order" GridPane.hgrow="ALWAYS" />
+                   <Button fx:id="launchOrderButton" disable="true" maxHeight="-Infinity"
+                           maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false"
+                           onAction="#launchOrderScreen" prefHeight="60.0" text="Order" GridPane.hgrow="ALWAYS"/>
                    <Button fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                    <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
                    <Button fx:id="launchAdminScreenButtton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchAdminScreen" prefHeight="60.0" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />

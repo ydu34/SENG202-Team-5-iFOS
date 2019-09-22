@@ -22,21 +22,6 @@ public class GeneralController {
     /** The property that is shared between all the controllers to access the AppEnvironment */
     private AppEnvironment appEnvironment;
 
-    @FXML
-    private Button launchOrderScreenButton;
-
-    @FXML
-    private Button launchInvoiceScreenButton;
-
-    @FXML
-    private Button launchStockScreenButton;
-
-    @FXML
-    private Button launchAdminScreenButton;
-
-    @FXML
-    private Button launchHistoryScreenButton;
-
     /**
      * A function which can be overwritten to initialize a controller with the
      * AppEnvironment set, which is not available with the regular initialize method
