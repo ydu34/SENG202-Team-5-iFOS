@@ -106,7 +106,7 @@ public class AddExtraIngredientController extends GeneralController {
                 if (empty) {
                     setText(null);
                 } else {
-                    int maxAmount = 20;
+                    int maxAmount = 30;
                     Ingredient ingredient = getTableView().getItems().get(getIndex());
                     HashMap<Ingredient, Integer> ingredientAmounts = selectedItem.getRecipe().getIngredientsAmount();
                     Integer index = getIndex();
@@ -188,6 +188,16 @@ public class AddExtraIngredientController extends GeneralController {
                         updatedStock.modifyQuantity(currentIngredient.getID(), updatedStockAmount);
                     }
                 }
+        }
+    }
+
+    /**
+     *Sets updatedStock to a copy of the current stock. Set's all quantities to 9999 temporarily.
+     */
+    public void updateStockRecipeMode() {
+        updatedStock = getAppEnvironment().getStock().clone();
+        for (String ingredientID : updatedStock.getIngredientStock().keySet()) {
+                updatedStock.modifyQuantity(ingredientID, 9999);
         }
     }
 

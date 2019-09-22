@@ -126,7 +126,7 @@ public class AddRecipeController extends GeneralController {
                 (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
         controller.setMenuItem(item);
         controller.setOpenMode("Recipe");
-        controller.updateStock();
+        controller.updateStockRecipeMode();
         controller.initializeTable();
     }
 

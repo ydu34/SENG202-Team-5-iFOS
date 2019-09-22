@@ -18,9 +18,9 @@
                             <value>5</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>VEGAN</dietaryInformation>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>VEGAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 5.00</markupCost>
                 <generator>
@@ -30,7 +30,6 @@
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
-                <totalCost/>
             </value>
         </entry>
     </itemMap>
