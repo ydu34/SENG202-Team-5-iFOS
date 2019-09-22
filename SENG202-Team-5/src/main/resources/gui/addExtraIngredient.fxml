@@ -28,14 +28,14 @@
         </TableView>
         <BorderPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="800.0" prefHeight="60.0" prefWidth="800.0" GridPane.rowIndex="1">
             <right>
-                <Button fx:id="confirmItemButton" mnemonicParsing="false" onAction="#updateItemIngredients" text="Confirm" translateX="-60.0" BorderPane.alignment="CENTER">
+                <Button fx:id="confirmItemButton" minWidth="100.0" mnemonicParsing="false" onAction="#updateItemIngredients" text="Confirm" translateX="-60.0" BorderPane.alignment="CENTER">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Button>
             </right>
             <left>
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#revertScreen" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
+                <Button fx:id="backButton" minWidth="100.0" mnemonicParsing="false" onAction="#revertScreen" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
                     <font>
                         <Font size="20.0" />
                     </font>
