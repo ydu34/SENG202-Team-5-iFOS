@@ -170,7 +170,6 @@
                                     <Text fx:id="changeDisplay" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.7294921875" />
                                  </children>
                               </TextFlow>
-                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#deleteRowFromTable" text="Button" />
                            </children>
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

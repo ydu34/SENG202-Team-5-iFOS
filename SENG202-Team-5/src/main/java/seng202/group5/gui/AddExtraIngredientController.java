@@ -218,5 +218,15 @@ public class AddExtraIngredientController extends GeneralController {
         controller.setMenuItem(oldItem);
     }
 
+    protected MenuItem getSelectedItem(){
+        return selectedItem;
+    }
+
+    protected MenuItem getOldItem(){
+        return oldItem;
+    }
+
+
+
 }
 

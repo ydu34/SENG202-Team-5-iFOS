@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import seng202.group5.Order;
 import seng202.group5.TypeEnum;
@@ -90,6 +91,10 @@ public class OrderController extends GeneralController {
 
     @FXML
     private MenuButton sortingBox;
+
+    @FXML
+    private Text promptText;
+
 
     private Order currentOrder;
 
@@ -256,12 +261,24 @@ public class OrderController extends GeneralController {
 
     }
 
-    public void addItemToOrder() {
-        Integer quantity = quantitySpinner.getValue();
-        currentOrder.addItem(item, quantity);
-        System.out.println(currentOrder.getOrderItems());
-     //   changeScreen(actionEvent, "/gui/order.fxml");
+    /**
+     * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
+     * Otherwise displays the appropriate message if the order can/cannot be added.
+     */
 
+    public void addItemToOrder() {
+
+        Integer quantity = quantitySpinner.getValue();
+       if(currentOrder.addItem(item, quantity) == true) {
+
+           promptText.setText(quantity + "X" + item.getItemName() + " added to the current order.");
+           promptText.setFill(Color.GREEN);
+       }
+       else{
+           promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
+           promptText.setFill(Color.RED);
+
+       }
     }
 
     public void populateIngredientsTable() {
