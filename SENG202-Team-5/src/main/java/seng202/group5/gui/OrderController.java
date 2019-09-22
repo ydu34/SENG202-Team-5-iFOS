@@ -5,9 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -112,6 +110,7 @@ public class OrderController extends GeneralController {
         showItems(new ActionEvent());
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
+             currentOrder.resetStock(getAppEnvironment().getStock());
         } catch (NoOrderException e) {
             //TODO: Implement me!
             System.out.println(e);

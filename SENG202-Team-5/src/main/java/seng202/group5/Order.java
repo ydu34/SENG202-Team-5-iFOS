@@ -209,6 +209,10 @@ public class Order {
         }
     }
 
+    public void resetStock(Stock stock) {
+        temporaryStock = stock.clone();
+    }
+
     /**
      * Gets the ID of this order
      *
