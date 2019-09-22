@@ -1,4 +1,4 @@
-package seng202.group5.gui;
+package seng202.group5.gui.history;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 import seng202.group5.Order;
+import seng202.group5.gui.AddExtraIngredientController;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.gui.OrderController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;

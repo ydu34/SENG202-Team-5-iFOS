@@ -76,20 +76,8 @@ public class GuiManager extends Application {
         thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
         thing.getOrderManager().newOrder();
 
-        MenuItem testItem = new MenuItem(
-                "Burger Item",
-                new Recipe("Burger",
-                           "Add items to burger",
-                           new HashMap<>() {{
-                               put(new Ingredient("Bun", "Bread", "ARZ4O2", Money.parse("NZD 1.2")), 2);
-                               put(new Ingredient("Patty", "Meat", "5ES240", Money.parse("NZD 3.4")), 1);
-                           }}),
-                Money.parse("NZD 5.80"),
-                true,
-                TypeEnum.MAIN
-        );
         Order tempOrder = new Order(stock);
-        tempOrder.addItem(testItem, 4);
+        tempOrder.addItem(thing.getMenuManager().getItemMap().get("1220"), 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
         try {
             thing.getFinance().pay(tempOrder.getTotalCost(),

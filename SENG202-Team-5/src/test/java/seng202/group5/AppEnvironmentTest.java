@@ -146,23 +146,4 @@ class AppEnvironmentTest {
         paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
         assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
     }
-//
-//    @Test
-//    void testHistoryXmlToObjet() {
-//        History history = new History();
-//        history = (History) handler.xmlToObject(History.class, history, "historyTest.xml", testDirectory);
-//        System.out.println(history.getTransactionHistory().get("1").getOrderItems().entrySet());
-//    }
-
-    // Test only works if stockTest.xml exists before running tests.
-//    @Test
-//    void testStockXmlToObject() {
-//        Stock stock = new Stock();
-//        stock = (Stock) handler.xmlToObject(Stock.class, stock, "stockTest.xml");
-//        Ingredient ing1 = stock.getIngredients().get("1");
-//        Ingredient ing2 = stock.getIngredients().get("2");
-//        Assertions.assertEquals(ing1.getName(), "Milk");
-//        Assertions.assertEquals(ing2.getName(), "Apple");
-//    }
-
 }
