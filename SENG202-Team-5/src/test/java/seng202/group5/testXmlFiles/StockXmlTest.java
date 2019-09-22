@@ -34,7 +34,7 @@ class StockXmlTest {
     @Test
     public void testIngredientNameInStock() {
         String name = stock.getIngredients().get("2").getName();
-        assertEquals("chicken", name);
+        assertEquals("Chicken", name);
     }
 
     @Test
@@ -46,7 +46,7 @@ class StockXmlTest {
     @Test
     public void testIngredientCategoryInStock() {
         String category = stock.getIngredients().get("2").getCategory();
-        assertEquals("meat", category);
+        assertEquals("Meat", category);
     }
 
     @Test

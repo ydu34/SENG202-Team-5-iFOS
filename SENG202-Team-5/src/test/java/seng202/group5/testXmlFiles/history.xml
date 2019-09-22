@@ -2,15 +2,49 @@
 <history>
     <transactionHistory>
         <entry>
-            <key>11</key>
+            <key>8</key>
             <value>
-                <orderItems/>
-                <totalCost>NZD 0.00</totalCost>
-                <dateTimeProcessed>2019-09-20T21:58:38.559968700</dateTimeProcessed>
+                <orderItems>
+                    <entry>
+                        <key>
+                            <itemName>Chicken Burger</itemName>
+                            <recipe>
+<name>Chicken burger</name>
+<recipeText>1) Get some Chicken
+2) Get some cheese
+3) Throw the chicken on the grill and let it fry
+</recipeText>
+<ingredientIDs>
+    <entry>
+        <key>2</key>
+        <value>1</value>
+    </entry>
+    <entry>
+        <key>3</key>
+        <value>1</value>
+    </entry>
+</ingredientIDs>
+<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                            </recipe>
+                            <markupCost>NZD 5.00</markupCost>
+                            <generator>
+<id>10</id>
+                            </generator>
+                            <id>1220</id>
+                            <inMenu>true</inMenu>
+                            <itemType>MAIN</itemType>
+                            <edited>false</edited>
+                            <totalCost>NZD 20.00</totalCost>
+                        </key>
+                        <value>4</value>
+                    </entry>
+                </orderItems>
+                <totalCost>NZD 80.00</totalCost>
+                <dateTimeProcessed>2019-09-23T00:00:56.091533</dateTimeProcessed>
                 <generator>
-                    <id>13</id>
+                    <id>10</id>
                 </generator>
-                <id>11</id>
+                <id>8</id>
             </value>
         </entry>
     </transactionHistory>

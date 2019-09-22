@@ -116,7 +116,7 @@ public class AdminController extends GeneralController {
         ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("markupCost"));
+        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         itemTable.setItems(items);
     }
 
@@ -254,7 +254,6 @@ public class AdminController extends GeneralController {
             AddRecipeController controller = loader.getController();
             System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
-            controller.setParentController(this);
             controller.pseudoInitialize();
 
             Stage stage = new Stage();
@@ -262,7 +261,9 @@ public class AdminController extends GeneralController {
             stage.setScene(new Scene(root, 600, 600));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addButton.getScene().getWindow());
-            stage.show();
+
+            stage.showAndWait();
+            pseudoInitialize();
         } catch (IOException e) {
             e.printStackTrace();
         }
