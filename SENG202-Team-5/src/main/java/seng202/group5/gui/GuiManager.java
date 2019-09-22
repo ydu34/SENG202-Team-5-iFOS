@@ -44,7 +44,7 @@ public class GuiManager extends Application {
     }
 
     public void addTestData(AppEnvironment thing) {
-        Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
+        Ingredient test = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         Stock stock = thing.getStock();
         stock.addNewIngredient(test);
         stock.modifyQuantity(test.getID(), 1);
@@ -57,13 +57,13 @@ public class GuiManager extends Application {
             add(DietEnum.GLUTEN_FREE);
             add(DietEnum.VEGETARIAN);
         }};
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", Money.parse("NZD 10"), ingredientInfo1);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", Money.parse("NZD 5"), ingredientInfo2);
+        Ingredient chickenpatty = new Ingredient("Chicken", "Meat", Money.parse("NZD 10"), ingredientInfo1);
+        Ingredient cheese = new Ingredient("Cheese", "Dairy", Money.parse("NZD 5"), ingredientInfo2);
         HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
             add(DietEnum.VEGETARIAN);
         }};
-        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", Money.parse("NZD 10"), ingredientInfo3);
+        Ingredient vegePatty = new Ingredient("Vegetables", "Vegetable", Money.parse("NZD 10"), ingredientInfo3);
         testRecipe.addIngredient(chickenpatty, 1);
         testRecipe.addIngredient(cheese, 1);
         testRecipe2.addIngredient(vegePatty, 1);
