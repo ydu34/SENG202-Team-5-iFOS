@@ -194,7 +194,7 @@
                            </columnResizePolicy>
                         </TableView>
                                 <Button fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" prefWidth="138.0" text="Add Extra Ingredient" textAlignment="CENTER" />
-                        <GridPane prefHeight="300.0" prefWidth="300.0">
+                                <GridPane fx:id="bottomRightGridPane" prefHeight="300.0" prefWidth="300.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="155.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="145.0" />

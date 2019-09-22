@@ -15,7 +15,9 @@ import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.*;
+import seng202.group5.information.Ingredient;
 import seng202.group5.information.Transaction;
+import seng202.group5.logic.Stock;
 
 import java.io.IOException;
 import java.time.*;
@@ -64,11 +66,12 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableColumn<Order, Button> rowAction;
 
-    private HashMap<String, Transaction> orderIDTransactionIndex = new HashMap<>();
+    private HashMap<String, Transaction> orderIDTransactionIndex;
     private ArrayList<Order> toBeRefunded = new ArrayList<>();
 
     @Override
     public void pseudoInitialize() {
+        orderIDTransactionIndex = new HashMap<>();
         for (Transaction transaction : getAppEnvironment().getFinance().getTransactionHistoryClone().values()) {
             orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
         }
@@ -86,7 +89,11 @@ public class HistoryController extends GeneralController {
         rowAction.setCellValueFactory(param -> {
             Button refundButton = new Button("Refund");
             Order order = param.getValue();
-            refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).isRefunded());
+            if (orderIDTransactionIndex.containsKey(order.getID())) {
+                refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).isRefunded());
+            } else {
+                refundButton.setDisable(true);
+            }
             refundButton.setOnAction((ActionEvent event) -> {
                 refundOrder(order, refundButton);
                 refundButton.setDisable(true);
@@ -282,6 +289,15 @@ public class HistoryController extends GeneralController {
             history.put(order.getID(), order);
             updateVisibleOrders(new ActionEvent());
         }
+    }
+
+    /**
+     * Uses a duplicate of the Order screen to create an order to put in the history
+     *
+     * @param event
+     */
+    public void addPastOrder(ActionEvent event) {
+        AddPastOrderController.changeToPastOrderScreen(event, this);
     }
 
 }

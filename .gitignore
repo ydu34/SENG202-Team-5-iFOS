@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+.gitignore
 
 # Log file
 *.log
@@ -24,6 +25,7 @@ hs_err_pid*
 
 # IntelliJ
 .idea/
+*.iml
 
 # Ignore files generated in target directory
 target/

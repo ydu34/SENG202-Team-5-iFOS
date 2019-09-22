@@ -5,9 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +16,7 @@ import seng202.group5.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
+import seng202.group5.logic.MenuManager;
 import seng202.group5.information.Recipe;
 
 import java.util.*;
@@ -111,7 +110,7 @@ public class OrderController extends GeneralController {
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
         showItems(new ActionEvent());
         try {
-             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
         } catch (NoOrderException e) {
             //TODO: Implement me!
             System.out.println(e);
@@ -344,6 +343,25 @@ public class OrderController extends GeneralController {
     public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
         selectionScreen(actionEvent, "/gui/selection.fxml");
     }
+
+    /**
+     * A method to set the current order for the alternate order screen in history
+     *
+     * @param order the order to set the current order to
+     */
+    protected void setCurrentOrder(Order order) {
+        currentOrder = order;
+    }
+
+    /**
+     * A method to get the selected item for the alternate order screen in history
+     *
+     * @return the selected item
+     */
+    protected MenuItem getSelectedItem() {
+        return item;
+    }
+
 
 
 
