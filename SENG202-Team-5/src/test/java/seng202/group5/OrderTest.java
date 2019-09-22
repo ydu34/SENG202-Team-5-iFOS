@@ -56,12 +56,12 @@ public class OrderTest {
         Stock stock = new Stock(ingredientStock, numberStock);
 
         order = new Order(stock);
-
         assertTrue(order.addItem(item, 1));
 
         assertEquals(order.getStock().getIngredientQuantity("ABC123"), 0);
 
         assertFalse(order.addItem(item, 1));
+        System.out.println(order.getOrderItems());
     }
 
 
