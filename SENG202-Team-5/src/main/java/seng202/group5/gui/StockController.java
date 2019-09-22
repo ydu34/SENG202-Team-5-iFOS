@@ -93,6 +93,7 @@ public class StockController extends GeneralController {
 
             controller.setQuantity(quantity);
             controller.setIngredient(ingredient);
+            controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
 
             // Automatic refresh of the table

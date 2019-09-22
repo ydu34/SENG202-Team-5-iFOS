@@ -148,7 +148,7 @@ public class Recipe {
      *
      * @param typeToCheck the dietary type to check
      */
-    private void checkDietaryInfo(DietEnum typeToCheck) {
+    public void checkDietaryInfo(DietEnum typeToCheck) {
         boolean isOfType = true;
         for (Ingredient ingredient : ingredientsAmount.keySet()) {
             if (!ingredient.getDietInfo().contains(typeToCheck)) {
@@ -156,7 +156,11 @@ public class Recipe {
                 break;
             }
         }
-        if (isOfType) dietaryInformation.add(typeToCheck);
+        if (isOfType) {
+            dietaryInformation.add(typeToCheck);
+        } else {
+            dietaryInformation.remove(typeToCheck);
+        }
     }
 
     /**

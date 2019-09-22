@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.DietEnum;
 import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;
 
 import java.util.HashSet;
@@ -128,6 +129,11 @@ public class AddStockController extends GeneralController {
             ingredient.setDietaryInformation(set);
 
             addDietaryInformation();
+
+            // Updates the dietary information about stored recipes
+            for (MenuItem item : getAppEnvironment().getMenuManager().getItemMap().values()) {
+                for (DietEnum dietType : DietEnum.values()) item.getRecipe().checkDietaryInfo(dietType);
+            }
         } catch (Exception e) {
             warningLabel.setText("Error modifying ingredient.");
             e.printStackTrace();
