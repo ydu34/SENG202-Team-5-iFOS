@@ -184,7 +184,8 @@ public class AddPastOrderController extends OrderController {
                 public void updateItemIngredients(ActionEvent actionEvent) {
                     AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);
                     MenuItem selectedItem = getSelectedItem();
-                    MenuItem oldItem = getOldItem();
+                    String itemID = selectedItem.getID();
+                    MenuItem oldItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
                     if ((selectedItem.getRecipe().getIngredientsAmount() != oldItem.getRecipe().getIngredientsAmount())
                             && !selectedItem.isEdited()) {
                         selectedItem.setEdited(true);
@@ -206,6 +207,8 @@ public class AddPastOrderController extends OrderController {
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
             controller.setMenuItem(getSelectedItem());
+            controller.setCurrentOrder(order);
+            controller.updateStock();
             controller.initializeTable();
         } catch (IOException e) {
             e.printStackTrace();

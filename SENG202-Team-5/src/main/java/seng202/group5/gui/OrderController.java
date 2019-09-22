@@ -282,18 +282,6 @@ public class OrderController extends GeneralController {
     }
 
     /**
-     * This method launches the selection screen for the selected menu item and passes the recipe and object from the
-     * from the current class to the the Selection controller class.
-     *
-     * @param event
-     * @param scenePath
-     */
-    public void selectionScreen(ActionEvent event, String scenePath) {
-        SelectionController controller = (SelectionController) changeScreen(event, scenePath);
-        controller.setMenuItem(item);
-    }
-
-    /**
      * This method sets the text in the Ingredient panel to the list of ingredient
      * present in the recipe and also updates the totalCostDisplay to the selling cost of that item.
      */
@@ -335,15 +323,6 @@ public class OrderController extends GeneralController {
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-    }
-
-    /**
-     * This method launches the selection screen when clicked on the the "Select" button.
-     *
-     * @param actionEvent
-     */
-    public void launchSelectionScreen(javafx.event.ActionEvent actionEvent) {
-        selectionScreen(actionEvent, "/gui/selection.fxml");
     }
 
     /**
