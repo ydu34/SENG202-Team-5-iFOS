@@ -84,12 +84,6 @@ public class Stock {
         }
     }
 
-    public void reduceQuantity(String id, int quantity){
-        if (ingredientStock.containsKey(id)) {
-            ingredientStock.replace(id, ingredientStock.get(id) - quantity);
-        }
-    }
-
     /**
      * Creates a clone of this Stock class for a temporary order stock
      *

@@ -39,71 +39,71 @@ public class GuiManager extends Application {
 
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
-        addTestData(thing);
+        //addTestData(thing);
         return thing;
     }
-
-    public void addTestData(AppEnvironment thing) {
-        Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
-        Stock stock = thing.getStock();
-        stock.addNewIngredient(test);
-        stock.modifyQuantity(test.getID(), 1);
-        Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
-        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
-        HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
-            add(DietEnum.GLUTEN_FREE);
-        }};
-        HashSet<DietEnum> ingredientInfo2 = new HashSet<>() {{
-            add(DietEnum.GLUTEN_FREE);
-            add(DietEnum.VEGETARIAN);
-        }};
-        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", Money.parse("NZD 10"), ingredientInfo1);
-        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", Money.parse("NZD 5"), ingredientInfo2);
-        HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
-            add(DietEnum.GLUTEN_FREE);
-            add(DietEnum.VEGETARIAN);
-        }};
-        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", Money.parse("NZD 10"), ingredientInfo3);
-        testRecipe.addIngredient(chickenpatty, 1);
-        testRecipe.addIngredient(cheese, 1);
-        testRecipe2.addIngredient(vegePatty, 1);
-
-        stock.addNewIngredient(chickenpatty, 100);
-        stock.addNewIngredient(cheese, 200);
-        stock.addNewIngredient(vegePatty, 150);
-
-        thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
-        thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
-        thing.getOrderManager().newOrder();
-
-        MenuItem testItem = new MenuItem(
-                "Burger Item",
-                new Recipe("Burger",
-                           "Add items to burger",
-                           new HashMap<>() {{
-                               put(new Ingredient("Bun", "buns", "Bread", "ARZ4O2", Money.parse("NZD 1.2")), 2);
-                               put(new Ingredient("Patty", "patties", "Meat", "5ES240", Money.parse("NZD 3.4")), 1);
-                           }}),
-                Money.parse("NZD 5.80"),
-                true,
-                TypeEnum.MAIN
-        );
-        Order tempOrder = new Order(stock);
-        tempOrder.addItem(testItem, 4);
-        tempOrder.setDateTimeProcessed(LocalDateTime.now());
-        try {
-            thing.getFinance().pay(tempOrder.getTotalCost(),
-                                   new ArrayList<>() {{
-                                       add(Money.parse("NZD 1000.00"));
-                                   }},
-                                   tempOrder.getDateTimeProcessed(),
-                                   tempOrder.getID());
-        } catch (InsufficientCashException e) {
-            e.printStackTrace();
-        }
-        thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
-
-    }
+//
+//    public void addTestData(AppEnvironment thing) {
+//        Ingredient test = new Ingredient("test", "mg", "flour", Money.parse("NZD 7.00"));
+//        Stock stock = thing.getStock();
+//        stock.addNewIngredient(test);
+//        stock.modifyQuantity(test.getID(), 1);
+//        Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
+//        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
+//        HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
+//            add(DietEnum.GLUTEN_FREE);
+//        }};
+//        HashSet<DietEnum> ingredientInfo2 = new HashSet<>() {{
+//            add(DietEnum.GLUTEN_FREE);
+//            add(DietEnum.VEGETARIAN);
+//        }};
+//        Ingredient chickenpatty = new Ingredient("chicken", "kg", "meat", Money.parse("NZD 10"), ingredientInfo1);
+//        Ingredient cheese = new Ingredient("cheese", "kg", "dairy", Money.parse("NZD 5"), ingredientInfo2);
+//        HashSet<DietEnum> ingredientInfo3 = new HashSet<>() {{
+//            add(DietEnum.GLUTEN_FREE);
+//            add(DietEnum.VEGETARIAN);
+//        }};
+//        Ingredient vegePatty = new Ingredient("vegetables", "kg", "vege", Money.parse("NZD 10"), ingredientInfo3);
+//        testRecipe.addIngredient(chickenpatty, 1);
+//        testRecipe.addIngredient(cheese, 1);
+//        testRecipe2.addIngredient(vegePatty, 1);
+//
+//        stock.addNewIngredient(chickenpatty, 100);
+//        stock.addNewIngredient(cheese, 200);
+//        stock.addNewIngredient(vegePatty, 150);
+//
+//        thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
+//        thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+//        thing.getOrderManager().newOrder();
+//
+//        MenuItem testItem = new MenuItem(
+//                "Burger Item",
+//                new Recipe("Burger",
+//                           "Add items to burger",
+//                           new HashMap<>() {{
+//                               put(new Ingredient("Bun", "buns", "Bread", "ARZ4O2", Money.parse("NZD 1.2")), 2);
+//                               put(new Ingredient("Patty", "patties", "Meat", "5ES240", Money.parse("NZD 3.4")), 1);
+//                           }}),
+//                Money.parse("NZD 5.80"),
+//                true,
+//                TypeEnum.MAIN
+//        );
+//        Order tempOrder = new Order(stock);
+//        tempOrder.addItem(testItem, 4);
+//        tempOrder.setDateTimeProcessed(LocalDateTime.now());
+//        try {
+//            thing.getFinance().pay(tempOrder.getTotalCost(),
+//                                   new ArrayList<>() {{
+//                                       add(Money.parse("NZD 1000.00"));
+//                                   }},
+//                                   tempOrder.getDateTimeProcessed(),
+//                                   tempOrder.getID());
+//        } catch (InsufficientCashException e) {
+//            e.printStackTrace();
+//        }
+//        thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
+//
+//    }
 
     public static void main(String[] args) {
         launch(args);

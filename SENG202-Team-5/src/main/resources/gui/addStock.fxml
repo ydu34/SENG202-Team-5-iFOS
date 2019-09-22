@@ -18,7 +18,6 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -34,63 +33,53 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="createButton" alignment="CENTER" mnemonicParsing="false" onAction="#createIngredient" prefHeight="43.0" prefWidth="81.0" text="Create" translateX="60.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Unit:" GridPane.rowIndex="1">
+      <Button fx:id="createButton" alignment="CENTER" mnemonicParsing="false" onAction="#createIngredient" prefHeight="43.0" prefWidth="81.0" text="Create" translateX="60.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Category:" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Category:" GridPane.rowIndex="2">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Cost:" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Cost:" GridPane.rowIndex="3">
+      <TextField fx:id="categoryField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="costField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Quantity:" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="unitField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="categoryField" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="costField" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Quantity:" GridPane.rowIndex="4">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <CheckBox fx:id="veganCheck" mnemonicParsing="false" text="Vegan" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <CheckBox fx:id="veganCheck" mnemonicParsing="false" text="Vegan" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="30.0" />
          </GridPane.margin>
       </CheckBox>
-      <CheckBox fx:id="vegetarianCheck" mnemonicParsing="false" text="Vegetarian" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <CheckBox fx:id="vegetarianCheck" mnemonicParsing="false" text="Vegetarian" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="30.0" />
          </GridPane.margin>
       </CheckBox>
-      <CheckBox fx:id="glutenFreeCheck" mnemonicParsing="false" text="Gluten Free" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <CheckBox fx:id="glutenFreeCheck" mnemonicParsing="false" text="Gluten Free" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="30.0" />
          </GridPane.margin>
