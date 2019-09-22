@@ -8,18 +8,24 @@
                 <recipe>
                     <name>Vege burger</name>
                     <recipeText>Steps to make pad thai</recipeText>
-                    <ingredientIDs/>
+                    <ingredientIDs>
+                        <entry>
+                            <key>4</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 7.00</markupCost>
                 <generator>
-                    <id>13</id>
+                    <id>10</id>
                 </generator>
                 <id>1222</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
+                <totalCost>NZD 17.00</totalCost>
             </value>
         </entry>
         <entry>
@@ -32,17 +38,27 @@
 2) Get some cheese
 3) Throw the chicken on the grill and let it fry
 </recipeText>
-                    <ingredientIDs/>
+                    <ingredientIDs>
+                        <entry>
+                            <key>2</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>3</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 5.00</markupCost>
                 <generator>
-                    <id>13</id>
+                    <id>10</id>
                 </generator>
                 <id>1220</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
+                <totalCost>NZD 20.00</totalCost>
             </value>
         </entry>
     </itemMap>

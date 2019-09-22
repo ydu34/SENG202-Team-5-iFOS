@@ -116,7 +116,7 @@ public class AdminController extends GeneralController {
         ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("markupCost"));
+        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         itemTable.setItems(items);
     }
 

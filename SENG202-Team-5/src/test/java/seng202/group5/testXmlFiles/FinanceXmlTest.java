@@ -28,37 +28,37 @@ public class FinanceXmlTest {
 
     @Test
     public void testTransactionDateTimeIsInFinance() {
-        LocalDateTime dateTime = finance.getTransactionHistory().get("12").getDateTime();
+        LocalDateTime dateTime = finance.getTransactionHistory().get("9").getDateTime();
         assertTrue(dateTime instanceof LocalDateTime);
     }
 
     @Test
     public void testTransactionChangeIsInFinance() {
-        String change = finance.getTransactionHistory().get("12").getChange().toString();
+        String change = finance.getTransactionHistory().get("9").getChange().toString();
         assertEquals("NZD 0.00", change);
     }
 
     @Test
     public void testTransactionTotalPriceIsInFinance() {
-        String totalPrice = finance.getTransactionHistory().get("12").getTotalPrice().toString();
-        assertEquals("NZD 0.00", totalPrice);
+        String totalPrice = finance.getTransactionHistory().get("9").getTotalPrice().toString();
+        assertEquals("NZD 80.00", totalPrice);
     }
 
     @Test
     public void testTransactionIDIsInFinance() {
-        String transactionId = finance.getTransactionHistory().get("12").getTransactionID();
-        assertEquals("12", transactionId);
+        String transactionId = finance.getTransactionHistory().get("9").getTransactionID();
+        assertEquals("9", transactionId);
     }
 
     @Test
     public void testTransactionIsRefundedBooleanIsInFinance() {
-        Boolean isRefunded = finance.getTransactionHistory().get("12").isRefunded();
+        Boolean isRefunded = finance.getTransactionHistory().get("9").isRefunded();
         assertFalse(isRefunded);
     }
 
     @Test
     public void testTransactionOrderIdIsInFinance() {
-        String orderId = finance.getTransactionHistory().get("12").getOrderID();
-        assertEquals("11", orderId);
+        String orderId = finance.getTransactionHistory().get("9").getOrderID();
+        assertEquals("8", orderId);
     }
 }
