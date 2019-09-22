@@ -33,6 +33,9 @@ public class AddExtraIngredientController extends GeneralController {
     private Button backButton;
 
     @FXML
+    private String openMode;
+
+    @FXML
     private MenuItem oldItem;
 
     @FXML
@@ -144,15 +147,21 @@ public class AddExtraIngredientController extends GeneralController {
      * Also updates the name of the item if it's ingredients are different to the unedited version.
      */
     public void updateItemIngredients(ActionEvent actionEvent) {
-        OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-        String itemID = selectedItem.getID();
-        MenuItem originalItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
-        if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
-            selectedItem.setEdited(false);
-        } else {
-            selectedItem.setEdited(true);
+        if (openMode.equals("Order")) {
+            OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+            String itemID = selectedItem.getID();
+            MenuItem originalItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
+            if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
+                selectedItem.setEdited(false);
+            } else {
+                selectedItem.setEdited(true);
+            }
+            controller.setMenuItem(selectedItem);
+        } else if (openMode.equals("Recipe")) {
+            AddRecipeController controller =
+                    (AddRecipeController) changeScreen(actionEvent, "/gui/addRecipe.fxml");
+            controller.setMenuItem(selectedItem);
         }
-        controller.setMenuItem(selectedItem);
     }
 
     /**
@@ -204,11 +213,20 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     /**
-     * Returns to the order screen, returning the original item as the selected item.
+     * Returns to the previous screen, returning the original item as the selected item.
      */
-    public void revertToOrder(javafx.event.ActionEvent actionEvent) {
-        OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-        controller.setMenuItem(oldItem);
+    public void revertScreen(javafx.event.ActionEvent actionEvent) {
+        if (openMode.equals("Order")) {
+            OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+            controller.setMenuItem(oldItem);
+        } else if (openMode.equals("Recipe")) {
+            AddRecipeController controller = (AddRecipeController) changeScreen(actionEvent, "/gui/addRecipe.fxml");
+            controller.setMenuItem(oldItem);
+        }
+    }
+
+    public void setOpenMode(String tempOpenMode) {
+        openMode = tempOpenMode;
     }
 
     protected MenuItem getSelectedItem() {

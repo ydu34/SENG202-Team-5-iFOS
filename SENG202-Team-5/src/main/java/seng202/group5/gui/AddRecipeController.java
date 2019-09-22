@@ -9,10 +9,12 @@ import javafx.stage.Stage;
 import seng202.group5.AppEnvironment;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddRecipeController extends GeneralController {
 
@@ -43,8 +45,6 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private Button addIngredientButton;
 
-    private AppEnvironment appEnvironment;
-
     private MenuItem item;
 
     @FXML
@@ -62,15 +62,12 @@ public class AddRecipeController extends GeneralController {
 
     public void newRecipe() {
         item = new MenuItem();
-
-
     }
 
     public void saveRecipe() {
         String name = nameField.getText();
         String makingPrice = makingPriceField.getText();
         String totalPrice = totalPriceField.getText();
-
         closeScreen();
 
     }
@@ -80,15 +77,37 @@ public class AddRecipeController extends GeneralController {
         stage.close();
     }
 
-    public void setAppEnvironment(AppEnvironment input) {
-        appEnvironment = input;
+    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+        AddExtraIngredientController controller =
+                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        controller.setMenuItem(item);
+        controller.setOpenMode("Recipe");
+        controller.updateStock();
+        controller.initializeTable();
     }
 
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-//        AddExtraIngredientController controller =
-//                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-//        controller.setMenuItem(item);
-//        controller.initializeTable();
+    /**
+     * Populates the table using the item's ingredients and quantities.
+     */
+    public void populateIngredientsTable() {
+        Recipe currentRecipe = item.getRecipe();
+        Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
+        List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
+        ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        quantityCol.setCellValueFactory(data ->{
+            int quantity = recipeIngredientsMap.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+        });
+        ingredientsTable.setItems(FXCollections.observableArrayList(recipeIngredients));
+    }
+
+
+    /**
+     * @param tempItem Item that has been modified in AddExtraIngredientController.
+     */
+    public void setMenuItem(MenuItem tempItem) {
+        item = tempItem;
+        populateIngredientsTable();
     }
 
 }

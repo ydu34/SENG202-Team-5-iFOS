@@ -235,12 +235,7 @@ public class OrderController extends GeneralController {
         addExtraIngredient.setDisable(false);
         totalCostDisplay.setText(item.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount().toString());
         menuItemName.setText(item.getItemName());
-
-        System.out.println(newItem);
-        System.out.println(newItem.calculateFinalCost());
         recipeText.setText(newItem.getRecipe().getRecipeText());
-        itemNameText.setText(newItem.getItemName() + "\n");
-        System.out.println(item);
     }
 
 
@@ -317,6 +312,7 @@ public class OrderController extends GeneralController {
         AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);
         controller.setMenuItem(item);
         controller.setCurrentOrder(currentOrder);
+        controller.setOpenMode("Order");
         controller.updateStock();
         controller.initializeTable();
     }

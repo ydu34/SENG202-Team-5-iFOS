@@ -201,7 +201,7 @@ public class AddPastOrderController extends OrderController {
                 }
 
                 @Override
-                public void revertToOrder(ActionEvent event) {
+                public void revertScreen(ActionEvent event) {
                     AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(event, this);
                     controller.setMenuItem(getOldItem());
                 }
