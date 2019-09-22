@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuManager>
-    <itemList>
+    <itemMap>
         <entry>
             <key>1222</key>
             <value>
@@ -45,5 +45,5 @@
                 <edited>false</edited>
             </value>
         </entry>
-    </itemList>
+    </itemMap>
 </menuManager>

@@ -9,7 +9,6 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.Disabled;
 import seng202.group5.*;
-import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
@@ -46,7 +45,7 @@ public class Stepdefs {
         stock.addNewIngredient(buns);
         error = false;
         manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
-        burger = manager.getItemList().get("testId");
+        burger = manager.getItemMap().get("testId");
     }
     @Given("Order exists")
     public void Order_exists() {
@@ -76,13 +75,13 @@ public class Stepdefs {
 
     @And("A Burger costs ${double}")
     public void aBurgerCosts$(double arg0) {
-        Money currentCost = manager.getItemList().get("testId").calculateMakingCost();
+        Money currentCost = manager.getItemMap().get("testId").calculateMakingCost();
         manager.removeItem("testId");
         DecimalFormat df = new DecimalFormat("#.00");
         Money newArg = Money.parse("NZD " + df.format(arg0));
         manager.removeItem("testId");
         manager.createItem("Burger", burgerRecipe, newArg.minus(currentCost), "testId", true);
-        burger = manager.getItemList().get("testId");
+        burger = manager.getItemMap().get("testId");
     }
 
 
@@ -112,7 +111,7 @@ public class Stepdefs {
 
         Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>(), "Text");
         manager.createItem("chip", chipRecipe, chipCost, "chipId", true);
-        chip = manager.getItemList().get("chipId");
+        chip = manager.getItemMap().get("chipId");
         order.addItem(chip, 1);
     }
 
@@ -137,7 +136,7 @@ public class Stepdefs {
         burgerRecipe.addIngredient(buns, 1);
         manager.removeItem("testId");
         manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
-        burger = manager.getItemList().get("testId");
+        burger = manager.getItemMap().get("testId");
 
     }
 
@@ -208,6 +207,6 @@ public class Stepdefs {
 
     @Then("The new recipe is in the menu")
     public void theNewRecipeIsInTheMenu() {
-        assertTrue(manager.getItemList().containsKey("recipeTestId"));
+        assertTrue(manager.getItemMap().containsKey("recipeTestId"));
     }
 }

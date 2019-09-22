@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuManager>
-    <itemList>
+    <itemMap>
         <entry>
             <key>1</key>
             <value>
@@ -33,5 +33,5 @@
                 <totalCost/>
             </value>
         </entry>
-    </itemList>
+    </itemMap>
 </menuManager>

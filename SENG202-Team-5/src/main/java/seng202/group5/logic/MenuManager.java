@@ -19,17 +19,17 @@ import java.util.HashMap;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MenuManager {
 
-    private HashMap<String, MenuItem> itemList;
+    private HashMap<String, MenuItem> itemMap;
 
 
     public MenuManager() {
-        itemList = new HashMap<String, MenuItem>();
+        itemMap = new HashMap<String, MenuItem>();
     }
 
     public MenuManager(HashMap<String, MenuItem> tempItemList) {
-        itemList = new HashMap<String, MenuItem>();
+        itemMap = new HashMap<String, MenuItem>();
         for (String stringKey : tempItemList.keySet()) {
-            itemList.put(stringKey, tempItemList.get(stringKey));
+            itemMap.put(stringKey, tempItemList.get(stringKey));
         }
     }
 
@@ -55,7 +55,7 @@ public class MenuManager {
      */
     public void createItem(String name, Recipe recipe, Money markupCost, String id, boolean inMenu) {
         MenuItem newItem = new MenuItem(name, recipe, markupCost, id, inMenu);
-        itemList.put(id, newItem);
+        itemMap.put(id, newItem);
     }
 
     /**
@@ -64,30 +64,34 @@ public class MenuManager {
      */
     public boolean removeItem(String ID) {
         boolean removed = false;
-        MenuItem answerItem = itemList.remove(ID);
+        MenuItem answerItem = itemMap.remove(ID);
         if (answerItem != null) {
             removed = true;
         }
         return removed;
     }
 
-    public HashMap<String, MenuItem> getItemList() {
-        return itemList;
+    public HashMap<String, MenuItem> getItemMap() {
+        return itemMap;
     }
 
-    public void setItemList(HashMap<String, MenuItem> tempItemList) {
-        itemList = tempItemList;
+    public void setItemMap(HashMap<String, MenuItem> tempItemMap) {
+        itemMap = tempItemMap;
     }
 
+    /**
+     * Calculates a HashMap containing all items which exist in a given menu.
+     * @return menuItemMap, a map containing all items which are in the menu.
+     */
     public HashMap<String, MenuItem> getMenuItems() {
-        HashMap<String, MenuItem> menuItemList = new HashMap<String, MenuItem>();
-        for (String stringKey : itemList.keySet()) {
-            MenuItem item = itemList.get(stringKey);
+        HashMap<String, MenuItem> menuItemMap = new HashMap<String, MenuItem>();
+        for (String stringKey : itemMap.keySet()) {
+            MenuItem item = itemMap.get(stringKey);
             if (item.isInMenu()) {
-                menuItemList.put(stringKey, item);
+                menuItemMap.put(stringKey, item);
             }
         }
-        return menuItemList;
+        return menuItemMap;
     }
 
 }

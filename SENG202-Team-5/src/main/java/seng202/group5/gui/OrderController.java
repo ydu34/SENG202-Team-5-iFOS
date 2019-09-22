@@ -328,6 +328,8 @@ public class OrderController extends GeneralController {
     public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
         AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);
         controller.setMenuItem(item);
+        controller.setCurrentOrder(currentOrder);
+        controller.updateStock();
         controller.initializeTable();
     }
 
