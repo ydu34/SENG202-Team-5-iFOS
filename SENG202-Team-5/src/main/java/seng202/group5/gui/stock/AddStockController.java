@@ -1,4 +1,4 @@
-package seng202.group5.gui;
+package seng202.group5.gui.stock;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.DietEnum;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;

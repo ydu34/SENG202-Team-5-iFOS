@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
@@ -126,9 +127,11 @@ public class HistoryController extends GeneralController {
             controller.setOrder(orderToRefund);
 
             Stage stage = new Stage();
-            stage.setTitle("Confirm refund");
+            stage.setTitle("Confirm Refund");
             stage.setScene(new Scene(root, 600, 200));
-            stage.show();
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }

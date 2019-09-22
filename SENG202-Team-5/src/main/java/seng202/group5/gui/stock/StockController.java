@@ -1,4 +1,4 @@
-package seng202.group5.gui;
+package seng202.group5.gui.stock;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 
 import java.io.IOException;
@@ -124,7 +125,35 @@ public class StockController extends GeneralController {
             String quantity = quantities.get(currentSelected.getID()).toString();
             initialiseScreen("Modify " + currentSelected.getName(), currentSelected, quantity);
         } catch (Exception e) {
-            warningLabel.setText("Please select an item before modifying.");
+            warningLabel.setText("Please select an item to modify.");
+        }
+    }
+
+    @FXML
+    public void removeIngredient(ActionEvent event) {
+        try {
+            Ingredient item = stockTable.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/confirmRemove.fxml"));
+            Parent root = loader.load();
+
+            RemoveStockController controller = loader.getController();
+            controller.setIngredient(item);
+            controller.setStock(getAppEnvironment().getStock());
+
+            Stage stage = new Stage();
+            stage.setTitle("Remove Ingredient");
+            stage.setScene(new Scene(root, 400, 200));
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            controller.pseudoInitialize();
+
+            stage.showAndWait();
+
+            pseudoInitialize();
+        } catch (Exception e) {
+            warningLabel.setText("Please select an item to remove.");
+            e.printStackTrace();
         }
     }
 
