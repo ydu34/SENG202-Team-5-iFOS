@@ -69,7 +69,6 @@ public class AddStockController extends GeneralController {
         try {
             // Getting all the values through the text fields
             String name = nameField.getText();
-            String unit = unitField.getText();
             String category = categoryField.getText();
             Money cost = Money.parse("NZD " + costField.getText());
             int quantity = Integer.parseInt(quantityField.getText());
@@ -87,7 +86,7 @@ public class AddStockController extends GeneralController {
             }
 
             // Attempting to make an ingredient from data collected above
-            ingredient = new Ingredient(name, unit, category, cost, dietRequirements);
+            ingredient = new Ingredient(name, category, cost, dietRequirements);
             addDietaryInformation();
             // Adding ingredient to the stock
             stock.addNewIngredient(ingredient, quantity);
