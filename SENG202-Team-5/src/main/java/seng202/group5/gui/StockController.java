@@ -1,6 +1,3 @@
-/**
- * @author Shivin Gaba, Michael Morgoun
- */
 package seng202.group5.gui;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -20,6 +17,11 @@ import seng202.group5.information.Ingredient;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * A controller for managing the stock screen
+ *
+ * @author Shivin Gaba, Michael Morgoun
+ */
 public class StockController extends GeneralController {
 
 
@@ -52,6 +54,9 @@ public class StockController extends GeneralController {
 
     private HashMap<String, Integer> quantities;
 
+    /**
+     * An initializer for this controller
+     */
     @Override
     public void pseudoInitialize() {
         warningLabel.setText("");
@@ -88,18 +93,23 @@ public class StockController extends GeneralController {
 
             controller.setQuantity(quantity);
             controller.setIngredient(ingredient);
+            controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
 
             // Automatic refresh of the table
             stage.showAndWait();
             pseudoInitialize();
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Opens the add ingredient to stock screen
+     *
+     * @param event an event that caused this to happen
+     */
     @FXML
     public void addIngredient(ActionEvent event) {
         String quantity = "";

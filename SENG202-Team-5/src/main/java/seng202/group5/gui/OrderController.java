@@ -251,7 +251,7 @@ public class OrderController extends GeneralController {
     public void addItemToOrder() {
 
         Integer quantity = quantitySpinner.getValue();
-       if(currentOrder.addItem(item, quantity) == true) {
+        if (currentOrder.addItem(item, quantity)) {
 
            promptText.setText(quantity + "X" + item.getItemName() + " added to the current order.");
            promptText.setFill(Color.GREEN);
@@ -282,11 +282,11 @@ public class OrderController extends GeneralController {
 
 
     /**
-     * This method launches the selection screen for the selected menu item and passes the recipe and object from the
-     * from the current class to the the Selection controller class.
+     * This method launches the screen for adding extra ingredients to the selected menu item and
+     * passes the item and order from the current class to the controller
      *
-     * @param event
-     * @param scenePath
+     * @param event an event that caused this to happen
+     * @param scenePath the path to the screen file
      */
     public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
         AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);

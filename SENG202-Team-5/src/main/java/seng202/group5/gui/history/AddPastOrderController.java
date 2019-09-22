@@ -29,23 +29,49 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 
+/**
+ * A controller for detailing a past order specifically for the history
+ *
+ * @author Daniel Harris
+ */
 public class AddPastOrderController extends OrderController {
 
+    /**
+     * The order that is being specified
+     */
     private Order order;
 
+    /**
+     * A picker for the date when the order was made
+     */
     private DatePicker datePicker;
 
+    /**
+     * A picker for the time at which the order was made
+     */
     private TextField timePicker;
 
+    /**
+     * A button to confirm the new past order
+     */
     private Button confirmButton;
 
+    /**
+     * The grid pane on the order screen that is used for the nodes added to the order screen
+     */
     @FXML
     private GridPane bottomRightGridPane;
-
 
     @FXML
     private Button launchOrderButton;
 
+    /**
+     * A method for switching to this screen
+     *
+     * @param event  an event that caused this to happen
+     * @param caller the controller that called this function
+     * @return the new AddPastOrderController created
+     */
     public static AddPastOrderController changeToPastOrderScreen(ActionEvent event, GeneralController caller) {
         Parent sampleScene = null;
         AddPastOrderController controller = null;
@@ -81,9 +107,13 @@ public class AddPastOrderController extends OrderController {
         node.setMaxWidth(300); // Max width of box
     }
 
+    /**
+     * An initializer for this controller
+     */
     @Override
     public void pseudoInitialize() {
         super.pseudoInitialize();
+        // Creating a new stock that has practically infinite ingredients
         Stock maxStock = new Stock();
         for (Ingredient ingr : getAppEnvironment().getStock().getIngredients().values()) {
             maxStock.addNewIngredient(ingr, 9999999);
@@ -91,16 +121,20 @@ public class AddPastOrderController extends OrderController {
         order = new Order(maxStock);
         setCurrentOrder(order);
 
+        // Creating the date picker
         datePicker = new DatePicker();
         setNodeConstraints(datePicker);
         datePicker.setValue(LocalDate.now());
+        // This sets the factory that creates each cell in the calendar
         datePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
+                // Disable dates that are in the future
                 setDisable(empty || date.compareTo(LocalDate.now()) > 0);
             }
         });
+        // This sets what converts typed dates into actual dates
         datePicker.setConverter(new LocalDateStringConverter() {
             @Override
             public LocalDate fromString(String input) {
@@ -113,8 +147,10 @@ public class AddPastOrderController extends OrderController {
             }
         });
 
+        // Creating the time picker
         timePicker = new TextField();
         setNodeConstraints(timePicker);
+        // This formats the input into a string that matches something like 2:45 am
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
         timePicker.setTextFormatter(new TextFormatter<>(new StringConverter<>() {
             @Override
@@ -128,21 +164,25 @@ public class AddPastOrderController extends OrderController {
             }
         }, formatter.parse(formatter.format(LocalTime.now()))));
 
+        // Creating the button to confirm the new order
         confirmButton = new Button("Confirm");
         confirmButton.setOnAction((ActionEvent event) -> sendPastOrderToHistory(event, formatter));
         confirmButton.setDisable(true);
         setNodeConstraints(confirmButton);
 
+        // Creating the button to cancel the order
         Button cancelButton = new Button("Cancel");
         cancelButton.setOnAction(this::returnToHistory);
         setNodeConstraints(cancelButton);
 
+        // Adding the nodes into the grid pane
         bottomRightGridPane.addRow(3);
         bottomRightGridPane.add(datePicker, 0, 3);
         bottomRightGridPane.add(timePicker, 1, 3);
         bottomRightGridPane.addRow(4);
         bottomRightGridPane.add(cancelButton, 0, 4);
         bottomRightGridPane.add(confirmButton, 1, 4);
+        // Setting the row constraints of the new rows
         RowConstraints row3 = new RowConstraints();
         RowConstraints row4 = new RowConstraints();
         row3.setVgrow(Priority.NEVER);
@@ -159,6 +199,12 @@ public class AddPastOrderController extends OrderController {
         launchOrderButton.setDisable(false);
     }
 
+    /**
+     * Adds the past order to the history
+     *
+     * @param event     an event that caused this to happen
+     * @param formatter the formatter for the time picker
+     */
     public void sendPastOrderToHistory(ActionEvent event, DateTimeFormatter formatter) {
         order.setDateTimeProcessed(LocalDateTime.of(datePicker.getValue(),
                                                     LocalTime.from(formatter.parse(timePicker.getText()))));
@@ -166,6 +212,10 @@ public class AddPastOrderController extends OrderController {
         controller.addNewOrder(order);
     }
 
+    /**
+     * Returns to the history screen without adding the past order
+     * @param event an event that caused this to happen
+     */
     public void returnToHistory(ActionEvent event) {
         changeScreen(event, "/gui/history.fxml");
     }
@@ -175,11 +225,11 @@ public class AddPastOrderController extends OrderController {
     }
 
     /**
-     * This method launches the selection screen for the selected menu item and passes the recipe and object from the
-     * from the current class to the the Selection controller class.
+     * This method launches the screen for adding extra ingredients to the selected menu item and
+     * passes the item and order from the current class to the controller
      *
-     * @param event
-     * @param scenePath
+     * @param event     an event that caused this to happen
+     * @param scenePath the path to the screen to change to
      */
     @Override
     public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
@@ -187,15 +237,16 @@ public class AddPastOrderController extends OrderController {
         AddExtraIngredientController controller = null;
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
+            // Need to create a new class here so this screen comes back with the right controller
             sampleLoader.setControllerFactory(aClass -> new AddExtraIngredientController() {
+                // These functions are almost the same as the overridden methods
                 @Override
                 public void updateItemIngredients(ActionEvent actionEvent) {
                     AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);
                     MenuItem selectedItem = getSelectedItem();
                     String itemID = selectedItem.getID();
                     MenuItem oldItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
-                    if ((selectedItem.getRecipe().getIngredientsAmount() != oldItem.getRecipe().getIngredientsAmount())
-                            && !selectedItem.isEdited()) {
+                    if ((selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
                         selectedItem.setEdited(true);
                     } else {
                         selectedItem.setEdited(false);
@@ -227,11 +278,18 @@ public class AddPastOrderController extends OrderController {
         oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
     }
 
+    /**
+     * Launches the screen to edit the ingredient counts of a menu item
+     * @param actionEvent an event that caused this to happen
+     */
     @Override
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
     }
 
+    /**
+     * Adds the selected item to the order
+     */
     @Override
     public void addItemToOrder() {
         super.addItemToOrder();

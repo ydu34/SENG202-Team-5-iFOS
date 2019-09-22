@@ -20,8 +20,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * A class that sets up the application and starts it
+ */
 public class GuiManager extends Application {
 
+    /**
+     * Starts the application
+     *
+     * @param primaryStage the stage to display the application on
+     * @throws IOException if the application fails to load
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         //Parent root = FXMLLoader.load(getClass().getResource("/gui/order.fxml"));
@@ -31,21 +40,31 @@ public class GuiManager extends Application {
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
-        Integer height = Screen.getMainScreen().getHeight();
-        Integer width = Screen.getMainScreen().getWidth();
+        int height = Screen.getMainScreen().getHeight();
+        int width = Screen.getMainScreen().getWidth();
         primaryStage.setScene(new Scene(root, width, height));
         primaryStage.show();
     }
 
+    /**
+     * Creates the environment for the application logic to run in
+     *
+     * @return the new AppEnvironment
+     */
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
         addTestData(thing);
         return thing;
     }
 
-    public void addTestData(AppEnvironment thing) {
+    /**
+     * Adds data to the specified app environment for testing
+     *
+     * @param environment the app environment to add data to
+     */
+    public void addTestData(AppEnvironment environment) {
         Ingredient test = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
-        Stock stock = thing.getStock();
+        Stock stock = environment.getStock();
         stock.addNewIngredient(test);
         stock.modifyQuantity(test.getID(), 1);
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
@@ -72,24 +91,24 @@ public class GuiManager extends Application {
         stock.addNewIngredient(cheese, 200);
         stock.addNewIngredient(vegePatty, 150);
 
-        thing.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
-        thing.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
-        thing.getOrderManager().newOrder();
+        environment.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
+        environment.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+        environment.getOrderManager().newOrder();
 
         Order tempOrder = new Order(stock);
-        tempOrder.addItem(thing.getMenuManager().getItemMap().get("1220"), 4);
+        tempOrder.addItem(environment.getMenuManager().getItemMap().get("1220"), 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
         try {
-            thing.getFinance().pay(tempOrder.getTotalCost(),
-                                   new ArrayList<>() {{
-                                       add(Money.parse("NZD 1000.00"));
-                                   }},
-                                   tempOrder.getDateTimeProcessed(),
-                                   tempOrder.getID());
+            environment.getFinance().pay(tempOrder.getTotalCost(),
+                                         new ArrayList<>() {{
+                                             add(Money.parse("NZD 1000.00"));
+                                         }},
+                                         tempOrder.getDateTimeProcessed(),
+                                         tempOrder.getID());
         } catch (InsufficientCashException e) {
             e.printStackTrace();
         }
-        thing.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
+        environment.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
 
     }
 

@@ -192,9 +192,6 @@ public class MenuItem {
         return itemType;
     }
 
-    public boolean isEdited() {
-        return edited;
-    }
 
     public void setType(TypeEnum itemType) {
         this.itemType = itemType;
@@ -203,6 +200,11 @@ public class MenuItem {
     public void setItemName(String tempName) {
         itemName = tempName;
     }
+
+    public boolean isEdited() {
+        return edited;
+    }
+
     public void setEdited(boolean tempEdited) {
         edited = tempEdited;
     }

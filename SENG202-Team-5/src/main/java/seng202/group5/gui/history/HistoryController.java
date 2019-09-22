@@ -50,6 +50,8 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableView<Order> historyTable;
 
+    // These are the rows of the history table
+
     @FXML
     private TableColumn<Order, String> rowID;
 
@@ -65,8 +67,10 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableColumn<Order, Button> rowAction;
 
+    /**
+     * A map from order IDs to the related transactions
+     */
     private HashMap<String, Transaction> orderIDTransactionIndex;
-    private ArrayList<Order> toBeRefunded = new ArrayList<>();
 
     @Override
     public void pseudoInitialize() {
@@ -75,6 +79,7 @@ public class HistoryController extends GeneralController {
             orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
         }
 
+        // This sets the factories for creating values to display for each order
         rowID.setCellValueFactory(new PropertyValueFactory<>("iD"));
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getDateTimeProcessed().toLocalDate().toString()));
@@ -85,9 +90,11 @@ public class HistoryController extends GeneralController {
             return new ReadOnlyStringWrapper(time.toString());
         });
         rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
             Button refundButton = new Button("Refund");
             Order order = param.getValue();
+            // Disable the button if the order cannot be refunded
             if (orderIDTransactionIndex.containsKey(order.getID())) {
                 refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).isRefunded());
             } else {
@@ -98,23 +105,6 @@ public class HistoryController extends GeneralController {
                 refundButton.setDisable(true);
             });
             return new ReadOnlyObjectWrapper<>(refundButton);
-        });
-        rowAction.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Order, Button> call(final TableColumn<Order, Button> tableColumn) {
-                final TableCell<Order, Button> cell = new TableCell<>() {
-                    @Override
-                    public void updateItem(Button item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(item);
-                        }
-                    }
-                };
-                return cell;
-            }
         });
 
         historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
@@ -133,7 +123,7 @@ public class HistoryController extends GeneralController {
             ConfirmRefundController controller = loader.getController();
             controller.setSource(this);
             controller.setButton(button);
-            controller.setText(orderToRefund);
+            controller.setOrder(orderToRefund);
 
             Stage stage = new Stage();
             stage.setTitle("Confirm refund");
@@ -145,14 +135,20 @@ public class HistoryController extends GeneralController {
 
     }
 
-    public ArrayList<Money> confirmOrder(String orderID) {
+    /**
+     * Confirms the refund of an order
+     *
+     * @param orderID the ID of the order to refund
+     * @return a list of coins to give back to the customer
+     */
+    public ArrayList<Money> confirmOrderRefund(String orderID) {
         return getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID());
     }
 
     /**
      * Sets the DateCell creators for the start date picker
      *
-     * @param event
+     * @param event an event that caused this to happen
      */
     public void setStartDateUpdater(javafx.event.Event event) {
         historyStartDatePicker.setDayCellFactory(picker -> new DateCell() {
@@ -183,7 +179,7 @@ public class HistoryController extends GeneralController {
     /**
      * Sets the DateCell creators for the end date picker
      *
-     * @param event
+     * @param event an event that caused this to happen
      */
     public void setEndDateUpdater(javafx.event.Event event) {
         historyEndDatePicker.setDayCellFactory(picker -> new DateCell() {
@@ -214,7 +210,7 @@ public class HistoryController extends GeneralController {
     /**
      * Iterates through the available end dates and sets which are selectable depending on the start date
      *
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void updateSelectableEndDates(javafx.event.ActionEvent actionEvent) {
         for (Node element : historyEndDatePicker.getChildrenUnmodifiable()) {
@@ -229,7 +225,7 @@ public class HistoryController extends GeneralController {
     /**
      * Iterates through the available start dates and sets which are selectable depending on the end date
      *
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void updateSelectableStartDates(javafx.event.ActionEvent actionEvent) {
         for (Node element : historyStartDatePicker.getChildrenUnmodifiable()) {
@@ -245,7 +241,7 @@ public class HistoryController extends GeneralController {
     /**
      * Updates the orders that are visible in the order table
      *
-     * @param event
+     * @param event an event that caused this to happen
      */
     public void updateVisibleOrders(javafx.event.Event event) {
         LocalDate firstDate = historyStartDatePicker.getValue();
@@ -275,6 +271,11 @@ public class HistoryController extends GeneralController {
         }
     }
 
+    /**
+     * Adds a new order to the history
+     *
+     * @param order the order to add to the history
+     */
     public void addNewOrder(Order order) {
 
         HashMap<String, Order> history = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory();
@@ -291,7 +292,7 @@ public class HistoryController extends GeneralController {
     /**
      * Uses a duplicate of the Order screen to create an order to put in the history
      *
-     * @param event
+     * @param event an event that caused this to happen
      */
     public void addPastOrder(ActionEvent event) {
         AddPastOrderController.changeToPastOrderScreen(event, this);

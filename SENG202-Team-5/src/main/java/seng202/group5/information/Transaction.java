@@ -19,14 +19,22 @@ import java.time.LocalDateTime;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
 
+    /**
+     * When this transaction occurred
+     */
     @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
     private LocalDateTime datetime;
+    /**
+     * The change given
+     */
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money change;
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money totalPrice;
-    private IDGenerator generator = new IDGenerator();
-    private String transactionID = generator.newID();
+    private String transactionID = (new IDGenerator()).newID();
+    /**
+     * Whether or not this transaction has been refunded
+     */
     private Boolean refunded;
     private String orderID;
 
@@ -57,6 +65,7 @@ public class Transaction {
     public LocalDateTime getDateTime() {
         return datetime;
     }
+
     public void refund() {
         refunded = true;
     }
@@ -64,6 +73,5 @@ public class Transaction {
     public String getOrderID() {
         return orderID;
     }
-
 
 }
