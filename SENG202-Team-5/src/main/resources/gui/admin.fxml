@@ -141,14 +141,15 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="143.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="123.80001220703127" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="123.80001220703127" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="123.80001220703127" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="171.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="47.0" prefWidth="218.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.rowIndex="4">
+                        <Button fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="50.0" prefWidth="200.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                        <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                            <font>
                               <Font size="26.0" />
                            </font></Text>
@@ -161,20 +162,26 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="importStockButton" mnemonicParsing="false" onAction="#importStock" text="Import stock.xml" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                              <Button fx:id="importMenuButton" disable="true" mnemonicParsing="false" onAction="#importMenu" text="Import menu.xml" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                              <Button fx:id="importHistoryButton" disable="true" mnemonicParsing="false" onAction="#importHistory" text="Import history.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                              <Button fx:id="importFinanceButton" disable="true" mnemonicParsing="false" onAction="#importFinance" text="Import finance.xml" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                              <Button fx:id="selectStockButton" mnemonicParsing="false" onAction="#selectStock" text="Select stock.xml" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                              <Button fx:id="selectMenuButton" mnemonicParsing="false" onAction="#selectMenu" text="Select menu.xml" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                              <Button fx:id="selectHistoryButton" mnemonicParsing="false" onAction="#selectHistory" text="Select history.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                              <Button fx:id="selectFinanceButton" mnemonicParsing="false" onAction="#selectFinance" text="Select finance.xml" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                              <Text fx:id="stockWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="stock.xml not selected" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <Text fx:id="menuWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="menu.xml not selected" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <Text fx:id="historyWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="history.xml not selected" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <Text fx:id="financeWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="finance.xml not selected" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
-                        <TextArea editable="false" prefHeight="155.0" prefWidth="800.0" text="Please import the data, .xml files in the following order:&#10;stock.xml&#10;menu.xml&#10;history.xml&#10;finance.xml" GridPane.rowIndex="1" />
+                        <TextArea editable="false" prefHeight="155.0" prefWidth="800.0" text="Data files can only be imported if all four files are selected. " GridPane.rowIndex="1" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions " GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
                            <font>
                               <Font size="33.0" />
                            </font>
                         </Text>
+                        <Button fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="50.0" prefWidth="200.0" text="Import Data" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </content>
