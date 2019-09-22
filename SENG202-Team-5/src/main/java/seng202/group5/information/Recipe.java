@@ -51,6 +51,7 @@ public class Recipe {
         recipeText = "";
         ingredientsAmount = new HashMap<>();
         ingredientIDs = new HashMap<>();
+        dietaryInformation = new HashSet<>();
     }
 
     /**
@@ -223,4 +224,15 @@ public class Recipe {
         return dietaryInformation;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRecipeText(String recipeText) {
+        this.recipeText = recipeText;
+    }
+
+    public void setDietaryInformation(HashSet<DietEnum> dietaryInformation) {
+        this.dietaryInformation = dietaryInformation;
+    }
 }

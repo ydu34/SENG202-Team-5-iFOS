@@ -49,12 +49,16 @@ public class MenuItem {
     private TypeEnum itemType;
     private boolean edited;
 
-    private Money totalCost = Money.parse("NZD 0.00");
+    private Money totalCost;
 
     public MenuItem() {
         itemName = "";
         recipe = new Recipe();
         markupCost = null;
+        inMenu = true;
+        itemType = null;
+        edited = false;
+        totalCost = Money.parse("NZD 0.00");
     }
 
     /**
@@ -89,6 +93,7 @@ public class MenuItem {
         inMenu = tempInMenu;
         this.itemType = itemType;
         edited = false;
+        totalCost = calculateFinalCost();
     }
 
 
@@ -99,11 +104,13 @@ public class MenuItem {
      */
     public Money calculateMakingCost() {
         Money recipeMakingCost = Money.parse("NZD 0.00");
-        HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
-        for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
-            Ingredient ingredient = eachIngredient.getKey();
-            Integer amount = eachIngredient.getValue();
-            recipeMakingCost = recipeMakingCost.plus(ingredient.getCost().multipliedBy(amount));
+        if (recipe != null) {
+            HashMap<Ingredient, Integer> ingredients = recipe.getIngredientsAmount();
+            for (Map.Entry<Ingredient, Integer> eachIngredient : ingredients.entrySet()) {
+                Ingredient ingredient = eachIngredient.getKey();
+                Integer amount = eachIngredient.getValue();
+                recipeMakingCost = recipeMakingCost.plus(ingredient.getCost().multipliedBy(amount));
+            }
         }
         return recipeMakingCost;
     }
@@ -115,9 +122,12 @@ public class MenuItem {
      * @return the selling cost of the menu item in the form of the Money object in NZD
      */
     public Money calculateFinalCost() {
-        totalCost = calculateMakingCost().plus(markupCost);
-        System.out.println("total_cost" + totalCost);
-        return calculateMakingCost().plus(markupCost);
+        totalCost = Money.parse("NZD 0.00");
+        if (markupCost != null) {
+            totalCost = calculateMakingCost().plus(markupCost);
+            System.out.println("total_cost" + totalCost);
+        }
+        return totalCost;
 
     }
 
