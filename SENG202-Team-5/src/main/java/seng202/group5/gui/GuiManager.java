@@ -11,13 +11,11 @@ import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -104,11 +102,11 @@ public class GuiManager extends Application {
                                              add(Money.parse("NZD 1000.00"));
                                          }},
                                          tempOrder.getDateTimeProcessed(),
-                                         tempOrder.getID());
+                                         tempOrder.getId());
         } catch (InsufficientCashException e) {
             e.printStackTrace();
         }
-        environment.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
+        environment.getHistory().getTransactionHistory().put(tempOrder.getId(), tempOrder);
 
     }
 

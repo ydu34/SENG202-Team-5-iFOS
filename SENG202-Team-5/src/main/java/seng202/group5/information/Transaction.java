@@ -74,4 +74,7 @@ public class Transaction {
         return orderID;
     }
 
+    public void setTransactionID(String transactionID) {
+        this.transactionID = transactionID;
+    }
 }

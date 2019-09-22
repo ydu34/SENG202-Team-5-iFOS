@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * A class which creates IDs for all that requires an ID and makes sure that
  * they're never the same.
- * @author Michael Morgoun, Yu Duan
+ * @author Michael Morgoun
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -40,6 +40,14 @@ public class IDGenerator {
      */
     public void setLastID(String lastID) {
         id = Integer.parseInt(lastID);
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        IDGenerator.id = id;
     }
 
 }

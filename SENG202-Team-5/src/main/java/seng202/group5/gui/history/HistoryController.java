@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.*;
@@ -96,8 +95,8 @@ public class HistoryController extends GeneralController {
             Button refundButton = new Button("Refund");
             Order order = param.getValue();
             // Disable the button if the order cannot be refunded
-            if (orderIDTransactionIndex.containsKey(order.getID())) {
-                refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).isRefunded());
+            if (orderIDTransactionIndex.containsKey(order.getId())) {
+                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
             } else {
                 refundButton.setDisable(true);
             }
@@ -267,7 +266,7 @@ public class HistoryController extends GeneralController {
         for (Order order : historyValues) {
             if (order.getDateTimeProcessed().isAfter(firstTime) &&
                     order.getDateTimeProcessed().isBefore(lastTime) &&
-                    order.getID().matches(".*" + searchString + ".*")) {
+                    order.getId().matches(".*" + searchString + ".*")) {
                 historyTable.getItems().add(order);
             }
 
@@ -283,11 +282,11 @@ public class HistoryController extends GeneralController {
 
         HashMap<String, Order> history = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory();
 
-        if (history.containsKey(order.getID())) {
+        if (history.containsKey(order.getId())) {
             //TODO create a formal error display system
             System.out.println("Order already exists in history!");
         } else {
-            history.put(order.getID(), order);
+            history.put(order.getId(), order);
             updateVisibleOrders(new ActionEvent());
         }
     }

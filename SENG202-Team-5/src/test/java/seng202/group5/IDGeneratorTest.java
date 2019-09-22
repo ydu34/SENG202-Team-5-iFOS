@@ -36,7 +36,7 @@ public class IDGeneratorTest {
 
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(ingredient.getID());
-        ids.add(order.getID());
+        ids.add(order.getId());
         ids.add(item.getID());
         ids.add(transaction.getTransactionID());
 

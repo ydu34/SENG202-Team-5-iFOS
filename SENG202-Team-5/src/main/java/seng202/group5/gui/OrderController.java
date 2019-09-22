@@ -114,7 +114,7 @@ public class OrderController extends GeneralController {
         } catch (NoOrderException e) {
             System.out.println(e);
         }
-        orderIDText.setText(currentOrder.getID());
+        orderIDText.setText(currentOrder.getId());
         addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
     }

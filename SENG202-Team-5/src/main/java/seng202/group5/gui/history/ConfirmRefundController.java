@@ -58,7 +58,7 @@ public class ConfirmRefundController {
      * @param order the order to refund
      */
     public void setOrder(Order order) {
-        infoLabel.setText(String.format("Are you sure you want to refund Order %s?", order.getID()));
+        infoLabel.setText(String.format("Are you sure you want to refund Order %s?", order.getId()));
         this.order = order;
     }
 
@@ -72,7 +72,7 @@ public class ConfirmRefundController {
         // Showing what coins to return to the customer
         StringBuilder builder = new StringBuilder();
         Money moneySum = Money.parse("NZD 0.00");
-        for (Money coin : source.confirmOrderRefund(order.getID())) {
+        for (Money coin : source.confirmOrderRefund(order.getId())) {
             moneySum = moneySum.plus(coin);
             builder.append(coin.toString());
             builder.append("\n");

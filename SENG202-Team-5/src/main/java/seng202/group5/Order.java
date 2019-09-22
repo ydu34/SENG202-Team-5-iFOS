@@ -230,7 +230,7 @@ public class Order {
      *
      * @return the ID of this order
      */
-    public String getID() {
+    public String getId() {
         return id;
     }
 
@@ -269,4 +269,7 @@ public class Order {
         this.dateTimeProcessed = dateProcessed;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

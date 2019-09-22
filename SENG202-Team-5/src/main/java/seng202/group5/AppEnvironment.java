@@ -31,7 +31,7 @@ public class AppEnvironment {
     private History history;
     private MenuManager menuManager;
     private HashSet<String> acceptedFiles;
-    private Till till;
+    private IDGenerator idGenerator;
 
 
     /**
@@ -43,7 +43,7 @@ public class AppEnvironment {
         history = new History();
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock, history);
-        till = finance.getTill();
+        idGenerator = new IDGenerator();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
@@ -186,7 +186,7 @@ public class AppEnvironment {
         try {
             Order order = orderManager.getOrder();
             order.setDateTimeProcessed(LocalDateTime.now());
-            orderManager.getHistory().getTransactionHistory().put(order.getID(), order);
+            orderManager.getHistory().getTransactionHistory().put(order.getId(), order);
             setStock(order.getStock().clone());
             orderManager.setStock(stock);
             orderManager.newOrder();
@@ -194,7 +194,7 @@ public class AppEnvironment {
             change = finance.pay(order.getTotalCost(),
                                  denominations,
                                  order.getDateTimeProcessed(),
-                                 order.getID());
+                                 order.getId());
 
         } catch (NoOrderException e) {
             e.printStackTrace();
@@ -250,5 +250,13 @@ public class AppEnvironment {
 
     public void setMenuManager(MenuManager menuManager) {
         this.menuManager = menuManager;
+    }
+
+    public IDGenerator getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(IDGenerator idGenerator) {
+        this.idGenerator = idGenerator;
     }
 }
