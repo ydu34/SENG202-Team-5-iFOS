@@ -1,4 +1,4 @@
-package seng202.group5.gui;
+package seng202.group5.gui.history;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -15,9 +15,8 @@ import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.*;
-import seng202.group5.information.Ingredient;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Transaction;
-import seng202.group5.logic.Stock;
 
 import java.io.IOException;
 import java.time.*;
