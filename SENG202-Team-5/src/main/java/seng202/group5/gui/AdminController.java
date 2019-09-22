@@ -245,12 +245,14 @@ public class AdminController extends GeneralController {
             AddRecipeController controller = loader.<AddRecipeController>getController();
             System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
+            controller.setParentController(this);
             controller.pseudoInitialize();
 
             Stage stage = new Stage();
             stage.setTitle("Add a Recipe");
             stage.setScene(new Scene(root, 600, 600));
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addButton.getScene().getWindow());
             stage.show();
         }
         catch (IOException e) {

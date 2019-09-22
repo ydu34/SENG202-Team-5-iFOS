@@ -71,6 +71,14 @@ public class MenuManager {
         return removed;
     }
 
+    /**
+     * Adds the MenuItem object into the itemMap.
+     * @param menuItem The menu item to be added into the menu.
+     */
+    public void addItem(MenuItem menuItem) {
+        itemMap.put(menuItem.getID(), menuItem);
+    }
+
     public HashMap<String, MenuItem> getItemMap() {
         return itemMap;
     }

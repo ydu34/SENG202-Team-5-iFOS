@@ -35,7 +35,7 @@
                 </Button>
             </right>
             <left>
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#revertToOrder" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
+                <Button fx:id="backButton" mnemonicParsing="false" onAction="#revertScreen" text="Back" translateX="60.0" BorderPane.alignment="CENTER">
                     <font>
                         <Font size="20.0" />
                     </font>
