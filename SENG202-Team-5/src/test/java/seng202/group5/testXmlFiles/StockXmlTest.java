@@ -9,6 +9,7 @@ import seng202.group5.DietEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
 
+import javax.xml.bind.JAXBException;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -58,7 +59,11 @@ class StockXmlTest {
         oldAppEnvironment.getStock().getIngredientStock().put(vegePatty.getID(), 150);
         oldAppEnvironment.getStock().getIngredients().put(vegePatty.getID(), vegePatty);
 
-        oldAppEnvironment.objectToXml(Stock.class, oldAppEnvironment.getStock(), "stock.xml", testDirectory);
+        try {
+            oldAppEnvironment.objectToXml(Stock.class, oldAppEnvironment.getStock(), "stock.xml", testDirectory);
+        } catch (JAXBException e) {
+            System.out.println("Failed to marshal object");
+        }
     }
 
     @BeforeEach

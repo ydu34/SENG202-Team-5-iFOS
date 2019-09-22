@@ -58,19 +58,14 @@ public class AppEnvironment {
      * @param o        The object you want to marshal into xml file.
      * @param fileName The name of the xml file.
      */
-    public void objectToXml(Class c, Object o, String fileName,  String fileDirectory) {
+    public void objectToXml(Class c, Object o, String fileName,  String fileDirectory) throws JAXBException{
+        JAXBContext jaxbContext = JAXBContext.newInstance(c);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(c);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
-            jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + "/" + fileName));
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+        jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
+        jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + "/" + fileName));
     }
 
     /**
@@ -162,11 +157,15 @@ public class AppEnvironment {
         }
     }
 
-    public void allObjectsToXml(String fileDirectory) {
-        objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
-        objectToXml(History.class, history, "history.xml", fileDirectory);
-        objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
-        objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+    public void allObjectsToXml(String fileDirectory) throws Exception{
+        try {
+            objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
+            objectToXml(History.class, history, "history.xml", fileDirectory);
+            objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
+            objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+        } catch (JAXBException e) {
+            throw new Exception();
+        }
     }
 
     /**

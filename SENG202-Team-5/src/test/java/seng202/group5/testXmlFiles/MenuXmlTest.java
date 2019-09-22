@@ -12,6 +12,7 @@ import seng202.group5.information.Recipe;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 
+import javax.xml.bind.JAXBException;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,8 +67,11 @@ public class MenuXmlTest {
 
         oldAppEnvironment.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         oldAppEnvironment.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
-
-        oldAppEnvironment.objectToXml(MenuManager.class, oldAppEnvironment.getMenuManager(), "menu.xml", testDirectory);
+        try {
+            oldAppEnvironment.objectToXml(MenuManager.class, oldAppEnvironment.getMenuManager(), "menu.xml", testDirectory);
+        } catch (JAXBException e) {
+            System.out.println("Failed to marshal object");
+        }
     }
 
     @BeforeEach

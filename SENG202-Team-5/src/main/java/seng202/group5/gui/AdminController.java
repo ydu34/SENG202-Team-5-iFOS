@@ -150,6 +150,10 @@ public class AdminController extends GeneralController {
 
     }
 
+    /**
+     * Gets the file that the user selects, limits the user to only select xml files
+     * @return the selected file from the file chooser.
+     */
     public File getSelectedFile() {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
@@ -159,6 +163,13 @@ public class AdminController extends GeneralController {
 
     }
 
+    /**
+     * Compares the xml file name with the selected file name to see if the correct file
+     * is selected.
+     * @param xmlFileName The name of the xml file with .xml
+     * @param selectedFile  The selected file that the user selects
+     * @return
+     */
     public boolean checkSelectedFile(String xmlFileName, File selectedFile) {
         boolean correct = false;
         if (selectedFile != null) {
@@ -170,6 +181,11 @@ public class AdminController extends GeneralController {
         return correct;
     }
 
+    /**
+     * Checks if the number of files selected by the user is four, if it is
+     * it means that all xml files are selected and ready to be imported.
+     * Therefore enable the import data button for the user to click.
+     */
     public void checkFilesSelected() {
         if (fileMap.size()==4) {
             importDataButton.setDisable(false);
@@ -178,6 +194,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Action for the select stock button to add the selected file to the list of files
+     * if it is stock.xml otherwise tell the user it is invalid.
+     */
     public void selectStock() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("stock.xml", selectedFile)) {
@@ -189,6 +209,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Action for the select menu button to add the selected file to the list of files
+     * if it is menu.xml otherwise tell the user it is invalid.
+     */
     public void selectMenu() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("menu.xml", selectedFile)) {
@@ -201,6 +225,10 @@ public class AdminController extends GeneralController {
 
     }
 
+    /**
+     * Action for the select history button to add the selected file to the list of files
+     * if it is history.xml otherwise tell the user it is invalid.
+     */
     public void selectHistory() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("history.xml", selectedFile)) {
@@ -212,6 +240,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Action for the select finance button to add the selected file to the list of files
+     * if it is finance.xml otherwise tell the user it is invalid.
+     */
     public void selectFinance() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("finance.xml", selectedFile)) {
@@ -223,6 +255,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Gets all the xml files in the hashmap and unmarshal the xml files to objects.
+     * If the files are corrupted or invalid, the user is notified.
+     */
     public void importData() {
         Stock oldStock = getAppEnvironment().getStock();
         MenuManager oldMenu = getAppEnvironment().getMenuManager();
@@ -278,10 +314,12 @@ public class AdminController extends GeneralController {
         File selectedDirectory = directoryChooser.showDialog(null);
 
         if (selectedDirectory != null) {
-            System.out.println(selectedDirectory.getAbsolutePath());
-            getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
-        } else {
-            System.out.println("No directory selected");
+            try {
+                getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
+                fileNotificationText.setText("All files successfully exported!");
+            } catch (Exception e) {
+                fileNotificationText.setText("Files failed to export, please try again.");
+            }
         }
 
     }

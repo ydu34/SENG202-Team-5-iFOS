@@ -14,6 +14,7 @@ import seng202.group5.information.Recipe;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
 
+import javax.xml.bind.JAXBException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -82,8 +83,11 @@ public class FinanceXmlTest {
         oldAppEnvironment.getFinance().getTransactionHistory().put(transaction.getTransactionID(), transaction);
 
         oldAppEnvironment.getHistory().getTransactionHistory().put(tempOrder.getId(), tempOrder);
-
-        oldAppEnvironment.objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
+        try {
+            oldAppEnvironment.objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
+        } catch (JAXBException e) {
+            System.out.println("Failed to marshal object");
+        }
     }
     @BeforeEach
     public void testUnmarshallFinance() {

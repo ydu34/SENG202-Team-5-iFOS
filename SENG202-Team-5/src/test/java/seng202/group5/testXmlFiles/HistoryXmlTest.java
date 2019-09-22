@@ -13,6 +13,7 @@ import seng202.group5.information.Recipe;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.History;
 
+import javax.xml.bind.JAXBException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -83,8 +84,11 @@ public class HistoryXmlTest {
 
         oldAppEnvironment.getHistory().getTransactionHistory().put(tempOrder.getId(), tempOrder);
 
-        oldAppEnvironment.objectToXml(History.class, oldAppEnvironment.getHistory(), "history.xml", testDirectory);
-
+        try {
+            oldAppEnvironment.objectToXml(History.class, oldAppEnvironment.getHistory(), "history.xml", testDirectory);
+        } catch (JAXBException e) {
+            System.out.println("Failed to marshal object");
+        }
     }
     @BeforeEach
     public void testUnmarshalHistory() {
