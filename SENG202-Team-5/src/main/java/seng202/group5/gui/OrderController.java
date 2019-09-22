@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import seng202.group5.Order;
 import seng202.group5.TypeEnum;
@@ -91,6 +92,10 @@ public class OrderController extends GeneralController {
     @FXML
     private MenuButton sortingBox;
 
+    @FXML
+    private Text promptText;
+
+
     private Order currentOrder;
 
     private ArrayList<MenuItem> allItems;
@@ -98,21 +103,15 @@ public class OrderController extends GeneralController {
     private ArrayList<MenuItem> filteredItems;
     private SORT_TYPE sortingType = SORT_TYPE.NAME;
 
-    public void sortItemsName(ActionEvent event) {
-        sortingType = SORT_TYPE.NAME;
-        filterItems();
-    }
-
     @Override
     public void pseudoInitialize() {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
-        showItems(new ActionEvent());
+        filterItems();
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
              currentOrder.resetStock(getAppEnvironment().getStock());
         } catch (NoOrderException e) {
-            //TODO: Implement me!
             System.out.println(e);
         }
         orderIDText.setText(currentOrder.getID());
@@ -122,6 +121,11 @@ public class OrderController extends GeneralController {
 
     public void sortItemsPrice(ActionEvent event) {
         sortingType = SORT_TYPE.PRICE;
+        filterItems();
+    }
+
+    public void sortItemsName(ActionEvent event) {
+        sortingType = SORT_TYPE.NAME;
         filterItems();
     }
 
@@ -241,22 +245,22 @@ public class OrderController extends GeneralController {
 
 
     /**
-     * Still trying to work this code out. Please dont delete it. */
-    @FXML
-    public void showItems(ActionEvent event) {
-        ArrayList<MenuItem> itemsToShow = new ArrayList<>();
-        itemsToShow = filterItems();
-        // work with menuItemsList
-
-
-    }
-
+     * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
+     * Otherwise displays the appropriate message if the order can/cannot be added.
+     */
     public void addItemToOrder() {
-        Integer quantity = quantitySpinner.getValue();
-        currentOrder.addItem(item, quantity);
-        System.out.println(currentOrder.getOrderItems());
-     //   changeScreen(actionEvent, "/gui/order.fxml");
 
+        Integer quantity = quantitySpinner.getValue();
+        if (currentOrder.addItem(item, quantity)) {
+
+           promptText.setText(quantity + "X" + item.getItemName() + " added to the current order.");
+           promptText.setFill(Color.GREEN);
+       }
+       else{
+           promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
+           promptText.setFill(Color.RED);
+
+       }
     }
 
     public void populateIngredientsTable() {
@@ -276,37 +280,13 @@ public class OrderController extends GeneralController {
 
     }
 
-    /**
-     * This method sets the text in the Ingredient panel to the list of ingredient
-     * present in the recipe and also updates the totalCostDisplay to the selling cost of that item.
-     */
-    @FXML
-    public void getIngredients(ActionEvent actionEvent) {
-        addItemButton.setDisable(false);
-
-        MenuItem selectedItem = null;
-
-        if (filteredItems != null) {
-            for (MenuItem item : filteredItems) {
-                Button btn = (Button) actionEvent.getSource();
-                if (item.getItemName().equals(btn.getText())) {
-                    selectedItem = item;
-                }
-            }
-            if (selectedItem != null) {
-                setMenuItem(selectedItem);
-            }
-
-        }
-    }
-
 
     /**
-     * This method launches the selection screen for the selected menu item and passes the recipe and object from the
-     * from the current class to the the Selection controller class.
+     * This method launches the screen for adding extra ingredients to the selected menu item and
+     * passes the item and order from the current class to the controller
      *
-     * @param event
-     * @param scenePath
+     * @param event an event that caused this to happen
+     * @param scenePath the path to the screen file
      */
     public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
         AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);

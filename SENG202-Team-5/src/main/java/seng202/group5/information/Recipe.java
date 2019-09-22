@@ -60,8 +60,7 @@ public class Recipe {
     public Recipe(String tempName, String tempRecipeText) {
         name = tempName;
         recipeText = tempRecipeText;
-        dietaryInformation = new HashSet<>();
-        dietaryInformation.addAll(Arrays.asList(DietEnum.values()));
+        dietaryInformation = new HashSet<>(Arrays.asList(DietEnum.values()));
         ingredientsAmount = new HashMap<>();
         ingredientIDs = new HashMap<>();
 
@@ -150,7 +149,7 @@ public class Recipe {
      *
      * @param typeToCheck the dietary type to check
      */
-    private void checkDietaryInfo(DietEnum typeToCheck) {
+    public void checkDietaryInfo(DietEnum typeToCheck) {
         boolean isOfType = true;
         for (Ingredient ingredient : ingredientsAmount.keySet()) {
             if (!ingredient.getDietInfo().contains(typeToCheck)) {
@@ -158,7 +157,11 @@ public class Recipe {
                 break;
             }
         }
-        if (isOfType) dietaryInformation.add(typeToCheck);
+        if (isOfType) {
+            dietaryInformation.add(typeToCheck);
+        } else {
+            dietaryInformation.remove(typeToCheck);
+        }
     }
 
     /**
@@ -166,7 +169,6 @@ public class Recipe {
      *
      * @param someIngredient ingredient whose quantity needs to be edited
      * @param quantity       amount by which the quantity needs to be edited
-     * @return true if the editing the quantity of that ingredient was successful else returns false
      */
     public void editRecipe(Ingredient someIngredient, int quantity) {
         if (ingredientsAmount.containsKey(someIngredient) && quantity >= 1) {
@@ -178,6 +180,7 @@ public class Recipe {
 
     /**
      * Returns the name of the recipe
+     *
      * @return Name of the recipe.
      **/
 
@@ -186,15 +189,15 @@ public class Recipe {
 
     /**
      * Returns all the step in written in a particular recipe
+     *
+     * @return the text representing the recipe (i.e. steps to make something)
      **/
-
     public String getRecipeText() { return recipeText; }
 
 
     public HashMap<String, Integer> getIngredientIDs() {
         return ingredientIDs;
     }
-
 
     public void setIngredientIDs(HashMap<String, Integer> ingredientIDs) {
         this.ingredientIDs = ingredientIDs;

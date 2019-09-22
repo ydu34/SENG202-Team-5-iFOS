@@ -14,9 +14,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
+import org.xml.sax.SAXException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
+import seng202.group5.logic.History;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Stock;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -25,8 +30,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * A controller for managing the administration screen
  * @author Yu Duan
  */
 public class AdminController extends GeneralController {
@@ -44,19 +52,34 @@ public class AdminController extends GeneralController {
     private Button exportDataButton;
 
     @FXML
-    private Button importStockButton;
+    private Button selectStockButton;
 
     @FXML
-    private Button importMenuButton;
+    private Button selectMenuButton;
 
     @FXML
-    private Button importHistoryButton;
+    private Button selectHistoryButton;
 
     @FXML
-    private Button importFinanceButton;
+    private Button selectFinanceButton;
+
+    @FXML
+    private Button importDataButton;
 
     @FXML
     private Text fileNotificationText;
+
+    @FXML
+    private Text stockWarningText;
+
+    @FXML
+    private Text menuWarningText;
+
+    @FXML
+    private Text historyWarningText;
+
+    @FXML
+    private Text financeWarningText;
 
     @FXML
     private Button addButton;
@@ -77,12 +100,16 @@ public class AdminController extends GeneralController {
 
     private FileChooser fileChooser;
 
+    private Map<String, File> fileMap;
 
+    /**
+     * An initializer for this controller
+     */
     @Override
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
-
+        fileMap = new HashMap<>();
     }
 
     public void recipeTableInitialize() {
@@ -97,6 +124,9 @@ public class AdminController extends GeneralController {
         DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
     }
 
+    /**
+     * Views information about transactions in the specified period
+     */
     @FXML
     public void viewHistory() {
         LocalDateTime eDate;
@@ -124,6 +154,7 @@ public class AdminController extends GeneralController {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
         File selectedFile = fileChooser.showOpenDialog(null);
+        fileNotificationText.setText(null);
         return selectedFile;
 
     }
@@ -134,54 +165,93 @@ public class AdminController extends GeneralController {
             String fileName = selectedFile.getName();
             if (fileName.equals(xmlFileName)) {
                 correct = true;
-                fileNotificationText.setText(xmlFileName + " has been imported into the system");
-            } else {
-                fileNotificationText.setText("The selected file is must be " + xmlFileName);
             }
-
-        } else {
-            fileNotificationText.setText("The selected file is not valid or no file selected");
         }
         return correct;
     }
 
-    public void importStock() {
-        File selectedFile = getSelectedFile();
-        if (checkSelectedFile("stock.xml", selectedFile) == true) {
-            getAppEnvironment().stockXmlToObject(selectedFile.getParent());
-            importMenuButton.setDisable(false);
+    public void checkFilesSelected() {
+        if (fileMap.size()==4) {
+            importDataButton.setDisable(false);
+        } else {
+            importDataButton.setDisable(true);
         }
     }
 
-    public void importMenu() {
+    public void selectStock() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("menu.xml", selectedFile) == true) {
-            getAppEnvironment().menuXmlToObject(selectedFile.getParent());
-            importHistoryButton.setDisable(false);
+        if (checkSelectedFile("stock.xml", selectedFile)) {
+            fileMap.put("stock.xml", selectedFile);
+            stockWarningText.setText("stock.xml selected");
+            checkFilesSelected();
+        } else {
+            stockWarningText.setText("invalid file selected");
         }
     }
 
-    public void importHistory() {
+    public void selectMenu() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("history.xml", selectedFile) == true) {
-            getAppEnvironment().historyXmlToObject(selectedFile.getParent());
-            importFinanceButton.setDisable(false);
+        if (checkSelectedFile("menu.xml", selectedFile)) {
+            fileMap.put("menu.xml", selectedFile);
+            menuWarningText.setText("menu.xml selected");
+            checkFilesSelected();
+        } else {
+            menuWarningText.setText("invalid file selected");
+        }
+
+    }
+
+    public void selectHistory() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("history.xml", selectedFile)) {
+            fileMap.put("history.xml", selectedFile);
+            historyWarningText.setText("history.xml selected");
+            checkFilesSelected();
+        } else {
+            historyWarningText.setText("invalid file selected");
         }
     }
 
-    public void importFinance() {
+    public void selectFinance() {
         File selectedFile = getSelectedFile();
-        if (checkSelectedFile("finance.xml", selectedFile) == true) {
-            getAppEnvironment().financeXmlToObject(selectedFile.getParent());
+        if (checkSelectedFile("finance.xml", selectedFile)) {
+            fileMap.put("finance.xml", selectedFile);
+            financeWarningText.setText("finance.xml selected");
+            checkFilesSelected();
+        } else {
+            financeWarningText.setText("invalid file selected");
         }
     }
 
+    public void importData() {
+        Stock oldStock = getAppEnvironment().getStock();
+        MenuManager oldMenu = getAppEnvironment().getMenuManager();
+        History oldHistory = getAppEnvironment().getHistory();
+        Finance oldFinance = getAppEnvironment().getFinance();
+        try {
+            getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
+            getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
+            getAppEnvironment().historyXmlToObject(fileMap.get("history.xml").getParent());
+            getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            fileNotificationText.setText("All xml files successfully uploaded into application!");
+        } catch (Exception e) {
+            fileNotificationText.setText(e.getMessage());
+            getAppEnvironment().setStock(oldStock);
+            getAppEnvironment().setMenuManager(oldMenu);
+            getAppEnvironment().setHistory(oldHistory);
+            getAppEnvironment().setFinance(oldFinance);
+        }
+    }
+
+    /**
+     * Opens the add recipe screen
+     */
     public void addRecipe() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
             Parent root = loader.load();
 
-            AddRecipeController controller = loader.<AddRecipeController>getController();
+            AddRecipeController controller = loader.getController();
             System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
@@ -194,8 +264,7 @@ public class AdminController extends GeneralController {
 
             stage.showAndWait();
             pseudoInitialize();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -216,7 +285,6 @@ public class AdminController extends GeneralController {
         }
 
     }
-
 
     public void setFinance(Finance newFinance) {
         finance = newFinance;

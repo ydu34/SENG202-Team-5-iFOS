@@ -24,9 +24,6 @@ import java.util.*;
 public class AddExtraIngredientController extends GeneralController {
 
     @FXML
-    private Button launchSelectionScreenButton;
-
-    @FXML
     private Button confirmItemButton;
 
     @FXML
@@ -49,6 +46,9 @@ public class AddExtraIngredientController extends GeneralController {
 
     @FXML
     private TableView<Ingredient> ingredientsTable;
+
+    @FXML
+    private TableColumn<Ingredient, String> columnID = new TableColumn<>("ID");
 
     @FXML
     private TableColumn<Ingredient, String> columnIngredientName = new TableColumn<>("ingredientName");
@@ -82,6 +82,7 @@ public class AddExtraIngredientController extends GeneralController {
      */
     public void initializeColumns() {
         HashMap<String, Integer> quantities = updatedStock.getIngredientStock();
+        columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -169,7 +170,9 @@ public class AddExtraIngredientController extends GeneralController {
      */
     public void initializeSelectedIngredients() {
         selectedIngredientSet = selectedItem.getRecipe().getIngredientsAmount().keySet();
-        itemIngredients = FXCollections.observableArrayList(selectedIngredientSet);
+        System.out.println("Selected items: " + selectedIngredientSet);
+        itemIngredients = FXCollections.observableArrayList(
+                selectedIngredientSet);
     }
 
     /**
@@ -229,13 +232,15 @@ public class AddExtraIngredientController extends GeneralController {
         openMode = tempOpenMode;
     }
 
-    protected MenuItem getSelectedItem() {
+    protected MenuItem getSelectedItem(){
         return selectedItem;
     }
 
-    protected MenuItem getOldItem() {
+    protected MenuItem getOldItem(){
         return oldItem;
     }
+
+
 
 }
 

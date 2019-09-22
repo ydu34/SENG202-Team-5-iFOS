@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A controller for managing the invoice screen
+ */
 public class InvoiceController extends GeneralController {
 
     @FXML
@@ -32,7 +35,9 @@ public class InvoiceController extends GeneralController {
     @FXML
     private Text changeDisplay;
 
-
+    /**
+     * Displays the items in the order
+     */
     @FXML
     private TableView<MenuItem> currentOrderTable;
 
@@ -43,12 +48,10 @@ public class InvoiceController extends GeneralController {
     private TableColumn<MenuItem, String> itemQuantityCol;
 
     @FXML
-    private TableColumn<MenuItem,Money> itemPriceCol;
+    private TableColumn<MenuItem,String> itemPriceCol;
 
     @FXML
     private Button eftposButton;
-
-    private Money totalCost;
 
     private ArrayList<Money> payment = new ArrayList<>();
 
@@ -58,12 +61,15 @@ public class InvoiceController extends GeneralController {
 
     private Map<MenuItem, Integer> orderItemsMap;
 
+    /**
+     * The initializer for this controller
+     */
     public void pseudoInitialize() {
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
-        } catch (NoOrderException e) {
+        } catch (NoOrderException ignored) {
         }
-        totalCost = currentOrder.getTotalCost();
+        Money totalCost = currentOrder.getTotalCost();
 
         totalCostDisplay.setText("Total Cost: "+ totalCost);
         currentOrderTable();
@@ -74,15 +80,20 @@ public class InvoiceController extends GeneralController {
      * This method goes through the list which contains the list of menu items for the current order and displays the menu item
      * and the price and its quantity on the in the table view.
      */
-
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
-        System.out.println("order" +currentOrder.getID());
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
 
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
 
-        itemPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        System.out.println("table_view" + currentOrderTable.getItems());
+
+        itemPriceCol.setCellValueFactory(data -> {
+                                             int quantity = orderItemsMap.get(data.getValue());
+                                             Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
+                                             return new SimpleStringProperty(totalPrice.toString());
+                                         }
+        );
 
         itemQuantityCol.setCellValueFactory(data -> {
             int quantity = orderItemsMap.get(data.getValue());
@@ -92,6 +103,10 @@ public class InvoiceController extends GeneralController {
 
         currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
     }
+
+    /**
+     * Confirms order payment in cash
+     */
     public void payCash() {
         try {
             if (getAppEnvironment().getOrderManager().getOrder().getTotalCost().equals(Money.parse("NZD 0.00"))) {
@@ -101,17 +116,17 @@ public class InvoiceController extends GeneralController {
                 try {
                     Order order = getAppEnvironment().getOrderManager().getOrder();
                     ArrayList<Money> change = getAppEnvironment().confirmPayment(payment);
-                    String display = "";
+                    StringBuilder display = new StringBuilder();
                     Money totalChange = Money.parse("NZD 0.00");
                     Money totalPayment = Money.parse("NZD 0.00");
                     for (Money money : change) {
-                        display += money + "\n";
+                        display.append(money).append("\n");
                         totalChange = totalChange.plus(money);
                     }
                     for (Money money : payment) {
                         totalPayment = totalPayment.plus(money);
                     }
-                    changeDisplay.setText(display);
+                    changeDisplay.setText(display.toString());
                     if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
                         totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
                     } else {
@@ -132,6 +147,13 @@ public class InvoiceController extends GeneralController {
     }
 
 
+    public void editItem(){
+
+    }
+
+    /**
+     * Resets the list containing the currently given denominations
+     */
     public void clearPayment() {
         total = Money.parse("NZD 0");
         payment = new ArrayList<>();
@@ -140,12 +162,21 @@ public class InvoiceController extends GeneralController {
         changeDisplay.setText("");
     }
 
+    /**
+     * Adds the specified cash denomination to add to the total
+     *
+     * @param value the cash denomination to add in cents
+     */
     private void addMoney(int value){
         Money money = Money.parse("NZD "+0.01*value);
         total = total.plus(money);
         payment.add(money);
         changeDisplay.setText("Total Payed: "+total);
     }
+
+    /**
+     * Cancels the current order
+     */
     @FXML
     private void cancelOrder() {
 //        clearPayment();

@@ -182,16 +182,16 @@ public class MenuItem {
                 recipe.getRecipeText(),
                 (HashMap<Ingredient, Integer>) recipe.getIngredientsAmount().clone(),
                 (HashMap<String, Integer>) recipe.getIngredientIDs().clone());
-        return new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
+        MenuItem returnItem = new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
+        returnItem.setEdited(edited);
+        returnItem.setType(itemType);
+        return returnItem;
     }
 
     public TypeEnum getItemType() {
         return itemType;
     }
 
-    public boolean isEdited() {
-        return edited;
-    }
 
     public void setType(TypeEnum itemType) {
         this.itemType = itemType;
@@ -200,6 +200,11 @@ public class MenuItem {
     public void setItemName(String tempName) {
         itemName = tempName;
     }
+
+    public boolean isEdited() {
+        return edited;
+    }
+
     public void setEdited(boolean tempEdited) {
         edited = tempEdited;
     }

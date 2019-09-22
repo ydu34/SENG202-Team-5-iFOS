@@ -68,6 +68,9 @@ public class AddRecipeController extends GeneralController {
 
     private AdminController parentController;
 
+    /**
+     * An initializer for this controller
+     */
     @FXML
     public void pseudoInitialize() {
         menuManager = getAppEnvironment().getMenuManager();

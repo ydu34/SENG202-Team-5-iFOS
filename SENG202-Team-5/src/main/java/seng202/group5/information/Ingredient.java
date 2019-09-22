@@ -68,8 +68,8 @@ public class Ingredient {
         dietaryInformation = dietInfo;
     }
 
-    public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice) {
 
+    public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice) {
         name = tempName;
         category = tempCategory;
         id = tempId;
@@ -77,14 +77,13 @@ public class Ingredient {
         dietaryInformation = new HashSet<>();
     }
 
+    @Deprecated(since = "Used for testing only")
     public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice, HashSet<DietEnum> dietInfo) {
-
         name = tempName;
         category = tempCategory;
         id = tempId;
         price = tempPrice;
         dietaryInformation = dietInfo;
-
     }
 
     /**
@@ -108,6 +107,11 @@ public class Ingredient {
         return id;
     }
 
+    /**
+     * Sets the dietaryInformation.
+     * @param set A HashSet containing DietEnums.
+     */
+    public void setDietaryInformation(HashSet<DietEnum> set) { dietaryInformation = set; }
 
     /**
      * This method sets the name to the ingredient added to the stock
@@ -124,6 +128,12 @@ public class Ingredient {
     public void setCategory(String someCategory) {
         category = someCategory;
     }
+
+    /**
+     * This method sets the price for the ingredient.
+     * @param money A new price for the ingredient using Joda Money.
+     */
+    public void setPrice(Money money) { price = money; }
 
     /**
      * Adds dietary information about this ingredient

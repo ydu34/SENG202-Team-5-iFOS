@@ -49,6 +49,7 @@ public class Order {
     private IDGenerator generator = new IDGenerator();
     private String id = generator.newID();
 
+
     /**
      * The Stock to update when creating this order
      */
@@ -120,6 +121,7 @@ public class Order {
      */
     public boolean addItem(MenuItem item, int quantity) {
         // Getting the HashMap of ingredients, quantities
+
         HashMap<Ingredient, Integer> ingredientQuantities = item.getRecipe().getIngredientsAmount();
         HashMap<String, Integer> ingredients = new HashMap<>();
         for (Ingredient ingredient : ingredientQuantities.keySet()) {
@@ -133,6 +135,8 @@ public class Order {
         for (String id : listOfKeys) {
             // If we don't have enough in the Stock, we can't add it to order
             if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
+               // System.out.println("false");
+
                 return false;
             }
         }
@@ -141,7 +145,7 @@ public class Order {
         for (String id : listOfKeys) {
             temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id) * quantity);
         }
-        if (orderItems.keySet().contains(item)) {
+        if (orderItems.containsKey(item)) {
             orderItems.put(item, orderItems.get(item) + quantity);
         } else {
             orderItems.put(item, quantity);
@@ -151,6 +155,8 @@ public class Order {
         totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(quantity));
         return true;
     }
+
+
 
     /**
      * Removes the item taken as a parameter from the order and updates the temporaryStock and returns a boolean true or false as to whether
@@ -180,6 +186,7 @@ public class Order {
 
             // Minuses the price of the item from the total cost
             totalCost = totalCost.minus(item.calculateFinalCost().multipliedBy(quantity));
+
             return true;
         } else {
             return false;
@@ -209,6 +216,11 @@ public class Order {
         }
     }
 
+    /**
+     * Sets the stock to a clone of the specified stock
+     *
+     * @param stock the new stock to be cloned
+     */
     public void resetStock(Stock stock) {
         temporaryStock = stock.clone();
     }
@@ -248,7 +260,6 @@ public class Order {
     public Stock getStock() {
         return temporaryStock;
     }
-
 
     public LocalDateTime getDateTimeProcessed() {
         return dateTimeProcessed;
