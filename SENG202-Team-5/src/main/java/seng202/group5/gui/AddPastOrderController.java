@@ -30,8 +30,18 @@ public class AddPastOrderController extends OrderController {
 
     private Order order;
 
+    private DatePicker datePicker;
+
+    private TextField timePicker;
+
+    private Button confirmButton;
+
     @FXML
     private GridPane bottomRightGridPane;
+
+
+    @FXML
+    private Button launchOrderButton;
 
     public static AddPastOrderController changeToPastOrderScreen(ActionEvent event, GeneralController caller) {
         Parent sampleScene = null;
@@ -78,7 +88,7 @@ public class AddPastOrderController extends OrderController {
         order = new Order(maxStock);
         setCurrentOrder(order);
 
-        DatePicker datePicker = new DatePicker();
+        datePicker = new DatePicker();
         setNodeConstraints(datePicker);
         datePicker.setValue(LocalDate.now());
         datePicker.setDayCellFactory(picker -> new DateCell() {
@@ -100,33 +110,24 @@ public class AddPastOrderController extends OrderController {
             }
         });
 
-        TextField tf = new TextField();
-        setNodeConstraints(tf);
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm a");
-        tf.setTextFormatter(new TextFormatter<>(new StringConverter<>() {
+        timePicker = new TextField();
+        setNodeConstraints(timePicker);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        timePicker.setTextFormatter(new TextFormatter<>(new StringConverter<>() {
             @Override
             public String toString(TemporalAccessor temporalAccessor) {
-                return format.format(temporalAccessor);
+                return formatter.format(temporalAccessor);
             }
 
             @Override
             public TemporalAccessor fromString(String s) {
-                return format.parse(s);
+                return formatter.parse(s);
             }
-        }, format.parse(format.format(LocalTime.now()))));
+        }, formatter.parse(formatter.format(LocalTime.now()))));
 
-        datePicker.setOnAction((ActionEvent event) -> {
-            order.setDateTimeProcessed(LocalDateTime.of(datePicker.getValue(),
-                                                        LocalTime.from(format.parse(tf.getText()))));
-        });
-
-        tf.setOnAction((ActionEvent event) -> {
-            order.setDateTimeProcessed(LocalDateTime.of(datePicker.getValue(),
-                                                        LocalTime.from(format.parse(tf.getText()))));
-        });
-
-        Button confirmButton = new Button("Confirm");
-        confirmButton.setOnAction(this::sendPastOrderToHistory);
+        confirmButton = new Button("Confirm");
+        confirmButton.setOnAction((ActionEvent event) -> sendPastOrderToHistory(event, formatter));
+        confirmButton.setDisable(true);
         setNodeConstraints(confirmButton);
 
         Button cancelButton = new Button("Cancel");
@@ -135,7 +136,7 @@ public class AddPastOrderController extends OrderController {
 
         bottomRightGridPane.addRow(3);
         bottomRightGridPane.add(datePicker, 0, 3);
-        bottomRightGridPane.add(tf, 1, 3);
+        bottomRightGridPane.add(timePicker, 1, 3);
         bottomRightGridPane.addRow(4);
         bottomRightGridPane.add(cancelButton, 0, 4);
         bottomRightGridPane.add(confirmButton, 1, 4);
@@ -151,9 +152,13 @@ public class AddPastOrderController extends OrderController {
         row4.setMaxHeight(Region.USE_PREF_SIZE);
         bottomRightGridPane.getRowConstraints().add(row3);
         bottomRightGridPane.getRowConstraints().add(row4);
+
+        launchOrderButton.setDisable(false);
     }
 
-    public void sendPastOrderToHistory(ActionEvent event) {
+    public void sendPastOrderToHistory(ActionEvent event, DateTimeFormatter formatter) {
+        order.setDateTimeProcessed(LocalDateTime.of(datePicker.getValue(),
+                                                    LocalTime.from(formatter.parse(timePicker.getText()))));
         HistoryController controller = (HistoryController) changeScreen(event, "/gui/history.fxml");
         controller.addNewOrder(order);
     }
@@ -222,6 +227,12 @@ public class AddPastOrderController extends OrderController {
     @Override
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+    }
+
+    @Override
+    public void addItemToOrder() {
+        super.addItemToOrder();
+        confirmButton.setDisable(false);
     }
 
 }

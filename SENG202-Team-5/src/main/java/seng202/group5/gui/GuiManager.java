@@ -85,10 +85,10 @@ public class GuiManager extends Application {
                                put(new Ingredient("Patty", "patties", "Meat", "5ES240", Money.parse("NZD 3.4")), 1);
                            }}),
                 Money.parse("NZD 5.80"),
-                "14328",
-                true
+                true,
+                TypeEnum.MAIN
         );
-        Order tempOrder = new Order(new Stock());
+        Order tempOrder = new Order(stock);
         tempOrder.addItem(testItem, 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
         try {
