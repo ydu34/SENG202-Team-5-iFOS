@@ -150,6 +150,7 @@ public class AppEnvironment {
 
     public void menuXmlToObject(String fileDirectory) {
         menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", "menu.xsd", fileDirectory);
+        handleMenu(menuManager.getMenuItems());
     }
 
     public void allObjectsToXml(String fileDirectory) {
