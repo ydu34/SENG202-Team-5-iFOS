@@ -10,13 +10,13 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import seng202.group5.Order;
 import seng202.group5.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
-import seng202.group5.logic.MenuManager;
 import seng202.group5.information.Recipe;
 
 import java.util.*;
@@ -92,6 +92,10 @@ public class OrderController extends GeneralController {
     @FXML
     private MenuButton sortingBox;
 
+    @FXML
+    private Text promptText;
+
+
     private Order currentOrder;
 
     private ArrayList<MenuItem> allItems;
@@ -105,7 +109,8 @@ public class OrderController extends GeneralController {
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
         filterItems();
         try {
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+             currentOrder.resetStock(getAppEnvironment().getStock());
         } catch (NoOrderException e) {
             System.out.println(e);
         }
@@ -243,10 +248,24 @@ public class OrderController extends GeneralController {
     }
 
 
+
+    /**
+     * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
+     * Otherwise displays the appropriate message if the order can/cannot be added.
+     */
     public void addItemToOrder() {
+
         Integer quantity = quantitySpinner.getValue();
-        currentOrder.addItem(item, quantity);
-        System.out.println(currentOrder.getOrderItems());
+       if(currentOrder.addItem(item, quantity) == true) {
+
+           promptText.setText(quantity + "X" + item.getItemName() + " added to the current order.");
+           promptText.setFill(Color.GREEN);
+       }
+       else{
+           promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
+           promptText.setFill(Color.RED);
+
+       }
     }
 
     public void populateIngredientsTable() {

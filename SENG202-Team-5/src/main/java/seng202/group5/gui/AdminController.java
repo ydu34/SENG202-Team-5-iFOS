@@ -14,10 +14,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.logic.Finance;
+import org.xml.sax.SAXException;
 import seng202.group5.information.MenuItem;
-import seng202.group5.logic.OrderManager;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.History;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Stock;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,7 +30,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Yu Duan
@@ -43,29 +48,42 @@ public class AdminController extends GeneralController {
     private TextArea saleSummaryText;
 
     @FXML
-    private Button selectFilesButton;
-
-    @FXML
     private Button exportDataButton;
 
     @FXML
-    private ListView importFilesListView;
+    private Button selectStockButton;
 
     @FXML
-    private Button clearListButton;
+    private Button selectMenuButton;
 
     @FXML
-    private Button importFilesButton;
+    private Button selectHistoryButton;
+
+    @FXML
+    private Button selectFinanceButton;
+
+    @FXML
+    private Button importDataButton;
 
     @FXML
     private Text fileNotificationText;
 
     @FXML
+    private Text stockWarningText;
+
+    @FXML
+    private Text menuWarningText;
+
+    @FXML
+    private Text historyWarningText;
+
+    @FXML
+    private Text financeWarningText;
+
+    @FXML
     private Button addButton;
 
     private Finance finance;
-
-    private List<File> selectedFiles;
 
     @FXML
     private TableView<MenuItem> itemTable;
@@ -79,13 +97,16 @@ public class AdminController extends GeneralController {
     @FXML
     private TableColumn<MenuItem, String> sellingPriceCol;
 
+    private FileChooser fileChooser;
+
+    private Map<String, File> fileMap;
 
 
     @Override
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
-
+        fileMap = new HashMap<>();
     }
 
     public void recipeTableInitialize() {
@@ -123,53 +144,97 @@ public class AdminController extends GeneralController {
 
     }
 
-    /**
-     * The method called when importData button is clicked
-     * Allows th user to select xml files that they want to import
-     */
-    public void selectFiles() {
-        FileChooser fileChooser = new FileChooser();
+    public File getSelectedFile() {
+        fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
-        selectedFiles = fileChooser.showOpenMultipleDialog(null);
+        File selectedFile = fileChooser.showOpenDialog(null);
+        fileNotificationText.setText(null);
+        return selectedFile;
 
-        if (selectedFiles != null) {
-            for (int i = 0; i < selectedFiles.size(); i++) {
-                importFilesListView.getItems().add(selectedFiles.get(i).getName());
+    }
+
+    public boolean checkSelectedFile(String xmlFileName, File selectedFile) {
+        boolean correct = false;
+        if (selectedFile != null) {
+            String fileName = selectedFile.getName();
+            if (fileName.equals(xmlFileName)) {
+                correct = true;
             }
+        }
+        return correct;
+    }
+
+    public void checkFilesSelected() {
+        if (fileMap.size()==4) {
+            importDataButton.setDisable(false);
         } else {
-            System.out.println("file is not valid");
-            fileNotificationText.setText("The selected file is not valid");
+            importDataButton.setDisable(true);
+        }
+    }
+
+    public void selectStock() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("stock.xml", selectedFile) == true) {
+            fileMap.put("stock.xml", selectedFile);
+            stockWarningText.setText("stock.xml selected");
+            checkFilesSelected();
+        } else {
+            stockWarningText.setText("invalid file selected");
+        }
+    }
+
+    public void selectMenu() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("menu.xml", selectedFile) == true) {
+            fileMap.put("menu.xml", selectedFile);
+            menuWarningText.setText("menu.xml selected");
+            checkFilesSelected();
+        } else {
+            menuWarningText.setText("invalid file selected");
         }
 
     }
 
-
-    /**
-     * Imports all the files in the importFilesListView by converting
-     * all the xml files to objects.
-     */
-    public void importFiles() {
-        if (selectedFiles != null) {
-            for (int i = 0; i < selectedFiles.size(); i++) {
-                String fileName = selectedFiles.get(i).getName();
-                switch(fileName) {
-                    case "stock.xml": getAppEnvironment().stockXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "history.xml": getAppEnvironment().historyXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "finance.xml": getAppEnvironment().financeXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                    case "menu.xml": getAppEnvironment().menuXmlToObject(selectedFiles.get(i).getParent());
-                        break;
-                }
-
-            }
-            clearList();
+    public void selectHistory() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("history.xml", selectedFile) == true) {
+            fileMap.put("history.xml", selectedFile);
+            historyWarningText.setText("history.xml selected");
+            checkFilesSelected();
         } else {
-            fileNotificationText.setText("No files selected");
+            historyWarningText.setText("invalid file selected");
         }
+    }
 
+    public void selectFinance() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("finance.xml", selectedFile) == true) {
+            fileMap.put("finance.xml", selectedFile);
+            financeWarningText.setText("finance.xml selected");
+            checkFilesSelected();
+        } else {
+            financeWarningText.setText("invalid file selected");
+        }
+    }
 
+    public void importData() {
+        Stock oldStock = getAppEnvironment().getStock();
+        MenuManager oldMenu = getAppEnvironment().getMenuManager();
+        History oldHistory = getAppEnvironment().getHistory();
+        Finance oldFinance = getAppEnvironment().getFinance();
+        try {
+            getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
+            getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
+            getAppEnvironment().historyXmlToObject(fileMap.get("history.xml").getParent());
+            getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            fileNotificationText.setText("All xml files successfully uploaded into application!");
+        } catch (Exception e) {
+            fileNotificationText.setText(e.getMessage());
+            getAppEnvironment().setStock(oldStock);
+            getAppEnvironment().setMenuManager(oldMenu);
+            getAppEnvironment().setHistory(oldHistory);
+            getAppEnvironment().setFinance(oldFinance);
+        }
     }
 
     public void addRecipe() {
@@ -191,15 +256,6 @@ public class AdminController extends GeneralController {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    /**
-     * Empties the list of files selected
-     */
-    public void clearList() {
-        selectedFiles = new ArrayList<>();
-        importFilesListView.getItems().clear();
     }
 
     /**

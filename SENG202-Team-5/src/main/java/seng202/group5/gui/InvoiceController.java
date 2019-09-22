@@ -43,7 +43,7 @@ public class InvoiceController extends GeneralController {
     private TableColumn<MenuItem, String> itemQuantityCol;
 
     @FXML
-    private TableColumn<MenuItem,Money> itemPriceCol;
+    private TableColumn<MenuItem,String> itemPriceCol;
 
     @FXML
     private Button eftposButton;
@@ -77,12 +77,19 @@ public class InvoiceController extends GeneralController {
 
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
-        System.out.println("order" +currentOrder.getID());
+      //  System.out.println("order" +currentOrder.getID());
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
 
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
 
-        itemPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        System.out.println("table_view" + currentOrderTable.getItems());
+
+        itemPriceCol.setCellValueFactory(data -> {
+            int quantity = orderItemsMap.get(data.getValue());
+            Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
+            return new SimpleStringProperty(totalPrice.toString());
+                }
+        );
 
         itemQuantityCol.setCellValueFactory(data -> {
             int quantity = orderItemsMap.get(data.getValue());
@@ -131,6 +138,11 @@ public class InvoiceController extends GeneralController {
 
     }
 
+
+    public void editItem(){
+
+
+    }
 
     public void clearPayment() {
         total = Money.parse("NZD 0");

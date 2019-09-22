@@ -154,6 +154,7 @@ public class AddExtraIngredientController extends GeneralController {
         if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
             selectedItem.setEdited(false);
         } else {
+
             selectedItem.setEdited(true);
         }
         controller.setMenuItem(selectedItem);
@@ -164,7 +165,9 @@ public class AddExtraIngredientController extends GeneralController {
      */
     public void initializeSelectedIngredients() {
         selectedIngredientSet = selectedItem.getRecipe().getIngredientsAmount().keySet();
-        itemIngredients = FXCollections.observableArrayList(selectedIngredientSet);
+        System.out.println("Selected items: " + selectedIngredientSet);
+        itemIngredients = FXCollections.observableArrayList(
+                selectedIngredientSet);
     }
 
     /**
@@ -215,13 +218,15 @@ public class AddExtraIngredientController extends GeneralController {
         controller.setMenuItem(oldItem);
     }
 
-    protected MenuItem getSelectedItem() {
+    protected MenuItem getSelectedItem(){
         return selectedItem;
     }
 
-    protected MenuItem getOldItem() {
+    protected MenuItem getOldItem(){
         return oldItem;
     }
+
+
 
 }
 

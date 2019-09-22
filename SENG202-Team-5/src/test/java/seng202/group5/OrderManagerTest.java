@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OrderManagerTest {
 
     private OrderManager testOrderManager;
-    private Ingredient bun = new Ingredient("Bun", "buns", "Bread", "ARZ4O2", Money.parse("NZD 1.2"));
-    private Ingredient patty = new Ingredient("Patty", "patties", "Meat", "5ES240", Money.parse("NZD 3.4"));
+    private Ingredient bun = new Ingredient("Bun", "Bread", "ARZ4O2", Money.parse("NZD 1.2"));
+    private Ingredient patty = new Ingredient("Patty", "Meat", "5ES240", Money.parse("NZD 3.4"));
     private MenuItem testItem = new MenuItem(
             "Burger Item",
             new Recipe("Burger",

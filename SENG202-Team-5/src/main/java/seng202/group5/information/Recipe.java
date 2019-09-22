@@ -95,6 +95,7 @@ public class Recipe {
     public void addIngredient(Ingredient someIngredient, int quantity) {
 
         ingredientsAmount.merge(someIngredient, quantity, Integer::sum);
+        ingredientIDs.merge(someIngredient.getID(), quantity, Integer::sum);
         dietaryInformation.retainAll(someIngredient.getDietInfo());
     }
 

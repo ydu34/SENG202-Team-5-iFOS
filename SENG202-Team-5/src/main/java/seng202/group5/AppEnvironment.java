@@ -10,10 +10,7 @@ import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
@@ -81,21 +78,17 @@ public class AppEnvironment {
      *
      * @return an object o.
      */
-    public Object xmlToObject(Class c, Object o, String fileName, String schemaFileName, String fileDirectory) {
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(c);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+    public Object xmlToObject(Class c, Object o, String fileName, String schemaFileName, String fileDirectory) throws JAXBException, SAXException{
+        JAXBContext jaxbContext = JAXBContext.newInstance(c);
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-            ClassLoader classLoader = getClass().getClassLoader();
-            //Setup schema validator
-            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = sf.newSchema(new File(classLoader.getResource("schema/" + schemaFileName).getFile()));
-            jaxbUnmarshaller.setSchema(schema);
+        ClassLoader classLoader = getClass().getClassLoader();
+        //Setup schema validator
+        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Schema schema = sf.newSchema(new File(classLoader.getResource("schema/" + schemaFileName).getFile()));
+        jaxbUnmarshaller.setSchema(schema);
 
-            o = c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + "/" + fileName)));
-        } catch (JAXBException | SAXException e) {
-            e.printStackTrace();
-        }
+        o = c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + "/" + fileName)));
         return o;
     }
 
@@ -134,22 +127,39 @@ public class AppEnvironment {
         }
     }
 
-    public void stockXmlToObject(String fileDirectory) {
-        stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", "stock.xsd", fileDirectory);
-        orderManager.setStock(stock);
+    public void stockXmlToObject(String fileDirectory) throws Exception {
+        try {
+            stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", "stock.xsd", fileDirectory);
+            orderManager.setStock(stock);
+        } catch (JAXBException|SAXException e) {
+            throw new Exception("stock.xml file is invalid");
+        }
     }
 
-    public void historyXmlToObject(String fileDirectory) {
-        history = (History) xmlToObject(History.class, history, "history.xml", "history.xsd", fileDirectory);
-        orderManager.setCurrentHistory(history);
+    public void historyXmlToObject(String fileDirectory) throws Exception{
+        try {
+            history = (History) xmlToObject(History.class, history, "history.xml", "history.xsd", fileDirectory);
+            orderManager.setCurrentHistory(history);
+        } catch (JAXBException|SAXException e) {
+            throw new Exception("history.xml file is invalid");
+        }
     }
 
-    public void financeXmlToObject(String fileDirectory) {
-        finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", "finance.xsd", fileDirectory);
+    public void financeXmlToObject(String fileDirectory) throws Exception{
+        try {
+            finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", "finance.xsd", fileDirectory);
+        } catch (JAXBException|SAXException e) {
+            throw new Exception("finance.xml file is invalid");
+        }
     }
 
-    public void menuXmlToObject(String fileDirectory) {
-        menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", "menu.xsd", fileDirectory);
+    public void menuXmlToObject(String fileDirectory) throws Exception{
+        try {
+            menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", "menu.xsd", fileDirectory);
+            handleMenu(menuManager.getMenuItems());
+        } catch (JAXBException|SAXException e) {
+            throw new Exception("menu.xml file is invalid");
+        }
     }
 
     public void allObjectsToXml(String fileDirectory) {
@@ -230,4 +240,15 @@ public class AppEnvironment {
         orderManager = tempManager;
     }
 
+    public void setFinance(Finance finance) {
+        this.finance = finance;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
+    }
+
+    public void setMenuManager(MenuManager menuManager) {
+        this.menuManager = menuManager;
+    }
 }

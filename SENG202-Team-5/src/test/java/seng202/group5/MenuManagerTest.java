@@ -16,7 +16,7 @@ public class MenuManagerTest {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
     private MenuManager menuManager = new MenuManager();
     private String burgerRecipeText = "Make a burger!";
-    private Ingredient bun = new Ingredient("Bun", "300", "Main", "Bun123", Money.parse("NZD 10.30"));
+    private Ingredient bun = new Ingredient("Bun", "Main", "Bun123", Money.parse("NZD 10.30"));
     private HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
     private Recipe burger;
     private String name;

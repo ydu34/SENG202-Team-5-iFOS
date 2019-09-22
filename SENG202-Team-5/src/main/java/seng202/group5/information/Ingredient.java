@@ -26,11 +26,6 @@ public class Ingredient {
     private String name;
 
     /**
-     * The measurement used to quantify the ingredient i.e. kg, L, buns etc.
-     **/
-    private String unit;
-
-    /**
      * Category that ingredient belongs to like poultry, meat or bread.
      **/
     private String category;
@@ -59,36 +54,32 @@ public class Ingredient {
     Ingredient() {
     }
 
-    public Ingredient(String tempName, String tempUnit, String tempCategory, Money tempPrice) {
+    public Ingredient(String tempName, String tempCategory, Money tempPrice) {
         name = tempName;
-        unit = tempUnit;
         category = tempCategory;
         price = tempPrice;
         dietaryInformation = new HashSet<>();
     }
 
-    public Ingredient(String tempName, String tempUnit, String tempCategory, Money tempPrice, HashSet<DietEnum> dietInfo) {
+    public Ingredient(String tempName, String tempCategory, Money tempPrice, HashSet<DietEnum> dietInfo) {
         name = tempName;
-        unit = tempUnit;
         category = tempCategory;
         price = tempPrice;
         dietaryInformation = dietInfo;
     }
 
-    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice) {
+    public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice) {
 
         name = tempName;
-        unit = tempUnit;
         category = tempCategory;
         id = tempId;
         price = tempPrice;
         dietaryInformation = new HashSet<>();
     }
 
-    public Ingredient(String tempName, String tempUnit, String tempCategory, String tempId, Money tempPrice, HashSet<DietEnum> dietInfo) {
+    public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice, HashSet<DietEnum> dietInfo) {
 
         name = tempName;
-        unit = tempUnit;
         category = tempCategory;
         id = tempId;
         price = tempPrice;
@@ -101,13 +92,6 @@ public class Ingredient {
      **/
     public String getName() {
         return name;
-    }
-
-    /**
-     * Returns the number of units of the ingredient on hand
-     **/
-    public String getUnit() {
-        return unit;
     }
 
     /**

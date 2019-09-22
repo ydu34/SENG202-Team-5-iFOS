@@ -41,7 +41,7 @@ public class OrderTest {
     public void testAddItem() {
         order = new Order();
 
-        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", Money.parse("NZD 10.0"));
+        Ingredient ingredient = new Ingredient("Name", "Cate", "ABC123", Money.parse("NZD 10.0"));
         HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
         ingredients.put(ingredient, 1);
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();
@@ -56,18 +56,18 @@ public class OrderTest {
         Stock stock = new Stock(ingredientStock, numberStock);
 
         order = new Order(stock);
-
         assertTrue(order.addItem(item, 1));
 
         assertEquals(order.getStock().getIngredientQuantity("ABC123"), 0);
 
         assertFalse(order.addItem(item, 1));
+        System.out.println(order.getOrderItems());
     }
 
 
     @Test
     public void testRemoveItem() {
-        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", Money.parse("NZD 10.0"));
+        Ingredient ingredient = new Ingredient("Name", "Cate", "ABC123", Money.parse("NZD 10.0"));
         HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
         ingredients.put(ingredient, 1);
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();
@@ -95,7 +95,7 @@ public class OrderTest {
 
     @Test
     public void testModifyItemQuantity() {
-        Ingredient ingredient = new Ingredient("Name", "Unit", "Cate", "ABC123", Money.parse("NZD 10.0"));
+        Ingredient ingredient = new Ingredient("Name", "Cate", "ABC123", Money.parse("NZD 10.0"));
         HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
         ingredients.put(ingredient, 1);
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();

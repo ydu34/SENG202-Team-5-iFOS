@@ -38,9 +38,6 @@ public class StockController extends GeneralController {
     private TableColumn<Ingredient, String> rowQuantity;
 
     @FXML
-    private TableColumn<Ingredient, String> rowUnits;
-
-    @FXML
     private TableColumn<Ingredient, String> rowCategory;
 
     @FXML
@@ -61,7 +58,6 @@ public class StockController extends GeneralController {
 
         rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         rowIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
-        rowUnits.setCellValueFactory(new PropertyValueFactory<>("unit"));
         rowCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         rowQuantity.setCellValueFactory(data -> {
@@ -95,5 +91,4 @@ public class StockController extends GeneralController {
             e.printStackTrace();
         }
     }
-
 }
