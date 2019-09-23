@@ -20,10 +20,11 @@
     <children>
         <TableView fx:id="ingredientsTable" prefHeight="200.0" prefWidth="1920.0" GridPane.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="columnIngredientName" prefWidth="600.0" text="Ingredient" />
-                <TableColumn fx:id="columnCategory" prefWidth="708.0" text="Categories" />
-                <TableColumn fx:id="columnQuantity" prefWidth="220.0" text="Quantity" />
-                <TableColumn fx:id="columnSpinner" prefWidth="387.0" text="Selected" />
+                <TableColumn fx:id="columnIngredientName" prefWidth="500.0" text="Ingredient" />
+            <TableColumn fx:id="columnCategory1" minWidth="0.0" prefWidth="670.0" text="Categories" />
+                <TableColumn fx:id="columnQuantity" minWidth="0.0" prefWidth="250.0" text="Quantity" />
+                <TableColumn fx:id="columnCost" prefWidth="200.0" text="Cost per Unit" />
+                <TableColumn fx:id="columnSpinner" prefWidth="300.0" text="Selected" />
             </columns>
         </TableView>
         <BorderPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="800.0" prefHeight="60.0" prefWidth="800.0" GridPane.rowIndex="1">
