@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -61,7 +62,9 @@
               <rowConstraints>
                 <RowConstraints maxHeight="155.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="107.0" minHeight="6.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="131.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="107.0" minHeight="6.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="80.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="168.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
@@ -72,18 +75,24 @@
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin></TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient cost:" GridPane.rowIndex="2" />
-                  <Text fx:id="ingredientCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" wrappingWidth="151.71826171875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Markup cost:" GridPane.rowIndex="3" />
-                  <TextField fx:id="markupCostField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient cost:" GridPane.rowIndex="4" />
+                  <Text fx:id="ingredientCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" wrappingWidth="151.71826171875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Markup cost:" GridPane.rowIndex="5" />
+                  <TextField fx:id="markupCostField" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Text fx:id="markupCostWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Text fx:id="totalCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Button fx:id="computeTotalCostButton" mnemonicParsing="false" onAction="#computeTotalCost" text="Compute Total cost:" GridPane.rowIndex="5" />
+                  <Text fx:id="markupCostWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Text fx:id="totalCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Button fx:id="computeTotalCostButton" mnemonicParsing="false" onAction="#computeTotalCost" text="Compute Total cost:" GridPane.rowIndex="7" />
                   <Text fx:id="itemNameWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Menu Type:" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="menuTypeComboBox" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </ComboBox>
                </children>
             </GridPane>
             <GridPane prefHeight="165.0" prefWidth="372.0" GridPane.rowIndex="1">

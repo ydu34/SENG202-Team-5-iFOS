@@ -2,6 +2,7 @@ package seng202.group5.gui;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,6 +12,7 @@ import org.joda.money.Money;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.MenuManager;
 
 import java.util.ArrayList;
@@ -62,6 +64,9 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private Text itemNameWarningText;
 
+    @FXML
+    private ComboBox<TypeEnum> menuTypeComboBox;
+
     private MenuItem item;
 
     private MenuManager menuManager;
@@ -75,6 +80,7 @@ public class AddRecipeController extends GeneralController {
     public void pseudoInitialize() {
         menuManager = getAppEnvironment().getMenuManager();
         item = new MenuItem();
+        initializeTypeComboBox();
         initializeTextValues();
         populateIngredientsTable();
 
@@ -98,6 +104,7 @@ public class AddRecipeController extends GeneralController {
     public void saveTextFieldValues() throws NumberFormatException, Exception{
         String name = nameField.getText();
         String markupPriceStr = markupCostField.getText();
+        item.setType(menuTypeComboBox.getSelectionModel().getSelectedItem());
         try {
             Double.parseDouble(markupCostField.getText());
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
@@ -190,12 +197,22 @@ public class AddRecipeController extends GeneralController {
         totalCostText.setText(item.calculateFinalCost().toString());
     }
 
+    public void initializeTypeComboBox() {
+        ObservableList<TypeEnum> typeEnumOptions =
+                FXCollections.observableArrayList(
+                        TypeEnum.values()
+                );
+        menuTypeComboBox.setItems(typeEnumOptions);
+        menuTypeComboBox.getSelectionModel().select(item.getItemType());
+    }
+
     /**
      * @param tempItem Item that has been modified in AddExtraIngredientController.
      */
     public void setMenuItem(MenuItem tempItem) {
         item = tempItem;
         initializeTextValues();
+        initializeTypeComboBox();
         populateIngredientsTable();
     }
 }
