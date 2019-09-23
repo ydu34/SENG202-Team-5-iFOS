@@ -55,7 +55,7 @@ public class MenuItem {
     public MenuItem() {
         itemName = "";
         recipe = new Recipe();
-        markupCost = null;
+        markupCost = Money.parse("NZD 0.00");
         inMenu = true;
         itemType = null;
         edited = false;

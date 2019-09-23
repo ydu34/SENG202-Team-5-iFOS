@@ -96,11 +96,12 @@
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="70.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="455.0" vgrow="ALWAYS" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="67.0" prefHeight="99.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="402.0" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
-                        <TableView fx:id="itemTable" prefHeight="477.0" prefWidth="800.0" GridPane.rowIndex="1">
+                        <TableView fx:id="itemTable" prefHeight="477.0" prefWidth="800.0" GridPane.rowIndex="2">
                           <columns>
                             <TableColumn fx:id="nameCol" minWidth="250.0" prefWidth="-1.0" text="Name" />
                             <TableColumn fx:id="dietaryCol" minWidth="250.0" prefWidth="-1.0" text="Dietary" />
@@ -115,6 +116,7 @@
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="547.0" minWidth="10.0" prefWidth="547.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="200.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="200.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="200.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -126,9 +128,18 @@
                                  </font>
                               </Text>
                               <Button fx:id="addButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#addRecipe" prefHeight="60.0" prefWidth="200.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                              <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                              <Button fx:id="modifyButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#modifySelectedItem" prefHeight="60.0" prefWidth="200.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                              <Button fx:id="deleteButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="60.0" prefWidth="200.0" text="Delete" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
                            </children>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
                         </GridPane>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select an Item to delete or modify" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Text>
                      </children>
                   </GridPane>
                </content>

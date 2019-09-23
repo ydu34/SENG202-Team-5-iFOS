@@ -98,6 +98,12 @@ public class AdminController extends GeneralController {
     @FXML
     private TableColumn<MenuItem, String> sellingPriceCol;
 
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button modifyButton;
+
     private FileChooser fileChooser;
 
     private Map<String, File> fileMap;
@@ -302,6 +308,44 @@ public class AdminController extends GeneralController {
             pseudoInitialize();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Action for deleteButton, deletes the selected item from the menu.
+     */
+    public void deleteSelectedItem() {
+        MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            getAppEnvironment().getMenuManager().removeItem(selectedItem.getID());
+            recipeTableInitialize();
+        }
+    }
+
+    public void modifySelectedItem() {
+        MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
+                Parent root = loader.load();
+
+                AddRecipeController controller = loader.getController();
+                System.out.println(getAppEnvironment());
+                controller.setAppEnvironment(getAppEnvironment());
+                controller.pseudoInitialize();
+                controller.setMenuItem(selectedItem);
+
+                Stage stage = new Stage();
+                stage.setTitle("Add a Recipe");
+                stage.setScene(new Scene(root, 600, 600));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(addButton.getScene().getWindow());
+
+                stage.showAndWait();
+                pseudoInitialize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

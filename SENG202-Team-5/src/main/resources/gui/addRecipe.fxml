@@ -74,7 +74,7 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient cost:" GridPane.rowIndex="1" />
                   <Text fx:id="ingredientCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" wrappingWidth="151.71826171875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Markup cost:" GridPane.rowIndex="2" />
-                  <TextField fx:id="makingPriceField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField fx:id="markupCostField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>

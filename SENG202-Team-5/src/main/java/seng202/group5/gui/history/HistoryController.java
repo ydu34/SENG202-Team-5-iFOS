@@ -80,7 +80,7 @@ public class HistoryController extends GeneralController {
         }
 
         // This sets the factories for creating values to display for each order
-        rowID.setCellValueFactory(new PropertyValueFactory<>("iD"));
+        rowID.setCellValueFactory(new PropertyValueFactory<>("id"));
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getDateTimeProcessed().toLocalDate().toString()));
         rowTime.setCellValueFactory(cellData -> {

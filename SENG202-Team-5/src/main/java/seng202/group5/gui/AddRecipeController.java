@@ -8,15 +8,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.AppEnvironment;
-import seng202.group5.TypeEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 import seng202.group5.logic.MenuManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +27,7 @@ public class AddRecipeController extends GeneralController {
     private TextField nameField;
 
     @FXML
-    private TextField makingPriceField;
+    private TextField markupCostField;
 
     @FXML
     private Button saveButton;
@@ -75,40 +72,38 @@ public class AddRecipeController extends GeneralController {
     public void pseudoInitialize() {
         menuManager = getAppEnvironment().getMenuManager();
         item = new MenuItem();
-        List<Ingredient> ingredients = new ArrayList<>(item.getRecipe().getIngredientsAmount().keySet());
-        HashMap<Ingredient, Integer> quantities = item.getRecipe().getIngredientsAmount();
-        ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        quantityCol.setCellValueFactory(data -> {
-            int quantity = quantities.get(data.getValue());
-            return new SimpleStringProperty(Integer.toString(quantity));
-        });
-        ingredientsTable.setItems(FXCollections.observableArrayList(ingredients));
+        initializeTextValues();
+        populateIngredientsTable();
+
     }
 
     /**
      * Saves the recipe into the systems menu and closes the add recipe window.
      */
     public void saveRecipe() {
-        String name = nameField.getText();
-        String markupPriceStr = makingPriceField.getText();
-        try {
-            Money.parse("NZD " + markupPriceStr);
-        } catch(Exception e) {
-            markupCostWarningText.setText("Invalid value");
-        }
-        Money markupPrice = Money.parse("NZD " + markupPriceStr);
-
-        item.getRecipe().setName(name);
-        item.getRecipe().setRecipeText("No recipe for this");
-        item.setItemName(name);
-        item.setMarkupCost(markupPrice);
-        item.calculateFinalCost();
+        saveTextFieldValues();
         menuManager.addItem(item);
         closeScreen();
     }
 
+    public void saveTextFieldValues() {
+        String name = nameField.getText();
+        String markupPriceStr = markupCostField.getText();
+        try {
+            Money markupPrice = Money.parse("NZD " + markupPriceStr);
+            item.getRecipe().setName(name);
+            item.getRecipe().setRecipeText("No recipe for this");
+            item.setItemName(name);
+            item.setMarkupCost(markupPrice);
+            item.calculateFinalCost();
+        } catch(Exception e) {
+            markupCostWarningText.setText("Invalid value");
+        }
+
+    }
+
     public void computeTotalCost() {
-        String markupPriceStr = makingPriceField.getText();
+        String markupPriceStr = markupCostField.getText();
         try {
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
             item.setMarkupCost(markupPrice);
@@ -132,6 +127,7 @@ public class AddRecipeController extends GeneralController {
      * @param actionEvent
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+        saveTextFieldValues();
         AddExtraIngredientController controller =
                 (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
         controller.setMenuItem(item);
@@ -155,13 +151,22 @@ public class AddRecipeController extends GeneralController {
         ingredientsTable.setItems(FXCollections.observableArrayList(recipeIngredients));
     }
 
+    /**
+     * Initializes the text fields with values of the item.
+     */
+    public void initializeTextValues() {
+        nameField.setText(item.getItemName());
+        ingredientCostText.setText(item.calculateMakingCost().toString());
+        markupCostField.setText(item.getMarkupCost().toString().substring(4));
+        totalCostText.setText(item.calculateFinalCost().toString());
+    }
 
     /**
      * @param tempItem Item that has been modified in AddExtraIngredientController.
      */
     public void setMenuItem(MenuItem tempItem) {
         item = tempItem;
-        ingredientCostText.setText(item.calculateMakingCost().toString());
+        initializeTextValues();
         populateIngredientsTable();
     }
 }
