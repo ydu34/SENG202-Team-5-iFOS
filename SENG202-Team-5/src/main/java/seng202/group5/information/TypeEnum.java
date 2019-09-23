@@ -1,4 +1,4 @@
-package seng202.group5;
+package seng202.group5.information;
 
 /**
  * An enum for specifying what type of item a menu item is

@@ -1,4 +1,4 @@
-package seng202.group5;
+package seng202.group5.information;
 
 /**
  * An enum for tracking whether or not recipes meet certain dietary requirements

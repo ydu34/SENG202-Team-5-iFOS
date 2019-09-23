@@ -5,10 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
-import seng202.group5.DietEnum;
-import seng202.group5.IDGenerator;
-import seng202.group5.Order;
-import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.DietEnum;
+import seng202.group5.logic.Order;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.Recipe;
 import seng202.group5.information.Transaction;
@@ -16,7 +14,6 @@ import seng202.group5.logic.Finance;
 
 import javax.xml.bind.JAXBException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
