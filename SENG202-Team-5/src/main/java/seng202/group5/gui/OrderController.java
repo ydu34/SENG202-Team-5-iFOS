@@ -12,8 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import seng202.group5.Order;
-import seng202.group5.TypeEnum;
+import seng202.group5.logic.Order;
+import seng202.group5.information.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -146,8 +146,9 @@ public class OrderController extends GeneralController {
 
             for (MenuItem item : sortedItems) {
                 Button tempButton = new Button(item.getItemName());
-                tempButton.setPrefWidth(136);
-                tempButton.setPrefHeight(50);
+                tempButton.setStyle("-fx-font-size: 20; ");
+                tempButton.setPrefWidth(260);
+                tempButton.setPrefHeight(100);
                 tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
                 buttons.add(tempButton);
             }

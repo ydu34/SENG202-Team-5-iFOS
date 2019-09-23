@@ -1,13 +1,12 @@
-package seng202.group5;
+package seng202.group5.information;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seng202.group5.information.*;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.OrderManager;
 import seng202.group5.logic.Stock;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
-import seng202.group5.information.Recipe;
 
 import java.util.HashMap;
 import java.util.HashSet;

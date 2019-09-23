@@ -1,4 +1,4 @@
-package seng202.group5;
+package seng202.group5.information;
 import org.joda.money.Money;
 
 import java.time.LocalDateTime;

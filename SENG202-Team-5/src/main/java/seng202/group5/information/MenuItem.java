@@ -2,7 +2,6 @@ package seng202.group5.information;
 
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
-import seng202.group5.TypeEnum;
 import seng202.group5.adapters.MoneyAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;

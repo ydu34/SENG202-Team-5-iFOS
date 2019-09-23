@@ -14,8 +14,8 @@
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 7.00</markupCost>
                 <generator>

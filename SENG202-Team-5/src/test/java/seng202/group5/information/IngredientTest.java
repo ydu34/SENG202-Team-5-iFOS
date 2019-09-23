@@ -1,7 +1,8 @@
-package seng202.group5;
+package seng202.group5.information;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
+import seng202.group5.information.DietEnum;
 import seng202.group5.information.Ingredient;
 
 import java.util.ArrayList;

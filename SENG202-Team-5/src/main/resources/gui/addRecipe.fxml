@@ -59,10 +59,11 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="202.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="136.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="121.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="80.0" minHeight="0.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="155.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="107.0" minHeight="6.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="131.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="80.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="168.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -71,17 +72,18 @@
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin></TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient cost:" GridPane.rowIndex="1" />
-                  <Text fx:id="ingredientCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" wrappingWidth="151.71826171875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Markup cost:" GridPane.rowIndex="2" />
-                  <TextField fx:id="markupCostField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredient cost:" GridPane.rowIndex="2" />
+                  <Text fx:id="ingredientCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" wrappingWidth="151.71826171875" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Markup cost:" GridPane.rowIndex="3" />
+                  <TextField fx:id="markupCostField" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Text fx:id="markupCostWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Text fx:id="totalCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Button fx:id="computeTotalCostButton" mnemonicParsing="false" onAction="#computeTotalCost" text="Compute Total cost:" GridPane.rowIndex="4" />
+                  <Text fx:id="markupCostWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Text fx:id="totalCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Button fx:id="computeTotalCostButton" mnemonicParsing="false" onAction="#computeTotalCost" text="Compute Total cost:" GridPane.rowIndex="5" />
+                  <Text fx:id="itemNameWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane prefHeight="165.0" prefWidth="372.0" GridPane.rowIndex="1">

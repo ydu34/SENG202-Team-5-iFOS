@@ -4,7 +4,7 @@
         <entry>
             <key>9</key>
             <value>
-                <datetime>2019-09-23T00:00:56.091533</datetime>
+                <datetime>2019-09-23T15:41:35.497937</datetime>
                 <change>NZD 0.00</change>
                 <totalPrice>NZD 80.00</totalPrice>
                 <transactionID>9</transactionID>
@@ -17,11 +17,10 @@
     <till>
         <denominations>
             <entries key="NZD 0.10">0</entries>
-            <entries key="NZD 1000.00">1</entries>
             <entries key="NZD 10.00">0</entries>
             <entries key="NZD 2.00">0</entries>
             <entries key="NZD 50.00">0</entries>
-            <entries key="NZD 100.00">0</entries>
+            <entries key="NZD 100.00">1</entries>
             <entries key="NZD 5.00">0</entries>
             <entries key="NZD 1.00">0</entries>
             <entries key="NZD 0.20">0</entries>

@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.DietEnum;
+import seng202.group5.information.DietEnum;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;

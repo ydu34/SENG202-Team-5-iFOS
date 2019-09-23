@@ -48,7 +48,7 @@
                                         <MenuItem mnemonicParsing="false" onAction="#sortItemsPrice" text="Price" />
                                     </items>
                                     <VBox.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </MenuButton>
                                 <GridPane prefWidth="200.0">
@@ -65,8 +65,7 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                               <CheckBox fx:id="vegan" mnemonicParsing="false" onAction="#filterItems" prefHeight="18.0"
-                                         prefWidth="140.0" text="Vegan">
+                               <CheckBox fx:id="vegan" mnemonicParsing="false" onAction="#filterItems" prefHeight="18.0" prefWidth="140.0" text="Vegan">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -74,8 +73,7 @@
                                     <Font size="19.0" />
                                  </font>
                                       </CheckBox>
-                               <CheckBox fx:id="vegetarian" mnemonicParsing="false" onAction="#filterItems"
-                                         prefHeight="26.0" prefWidth="182.0" text="Vegetarian" GridPane.rowIndex="1">
+                               <CheckBox fx:id="vegetarian" mnemonicParsing="false" onAction="#filterItems" prefHeight="26.0" prefWidth="182.0" text="Vegetarian" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -83,8 +81,7 @@
                                     <Font size="19.0" />
                                  </font>
                                       </CheckBox>
-                               <CheckBox fx:id="glutenFree" mnemonicParsing="false" onAction="#filterItems"
-                                         prefHeight="26.0" prefWidth="181.0" text="Gluten Free" GridPane.rowIndex="2">
+                               <CheckBox fx:id="glutenFree" mnemonicParsing="false" onAction="#filterItems" prefHeight="26.0" prefWidth="181.0" text="Gluten Free" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -148,7 +145,7 @@
                                     <Font size="19.0" />
                                  </font>
                                  <GridPane.margin>
-                                     <Insets bottom="5.0" left="20.0" right="5.0" top="5.0"/>
+                                     <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                               </Text>
                               <TextFlow prefHeight="596.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -160,7 +157,7 @@
                                     </Text>
                                  </children>
                                   <GridPane.margin>
-                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                   </GridPane.margin>
                               </TextFlow>
                            </children>
@@ -171,9 +168,7 @@
                     <right>
                         <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                             <children>
-                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0"
-                                       text="Item Ingredients" textAlignment="CENTER" wrapText="true"
-                                       VBox.vgrow="NEVER">
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0" text="Item Ingredients" textAlignment="CENTER" wrapText="true" VBox.vgrow="NEVER">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
@@ -181,9 +176,7 @@
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <TableView fx:id="ingredientInfoTable" maxHeight="1.7976931348623157E308"
-                                           minHeight="-Infinity" prefHeight="300.0" prefWidth="210.0"
-                                           VBox.vgrow="ALWAYS">
+                                <TableView fx:id="ingredientInfoTable" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="300.0" prefWidth="210.0" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="ingredientNameCol" prefWidth="218.0" text="Ingredient" />
                             <TableColumn fx:id="ingredientQuantityCol" prefWidth="81.0" text="Quantity" />
@@ -192,20 +185,16 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                                <Button fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER"
-                                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                        mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen"
-                                        prefHeight="40.0" prefWidth="138.0" text="Add Extra Ingredient"
-                                        textAlignment="CENTER" VBox.vgrow="NEVER"/>
+                                <Button fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" prefWidth="138.0" text="Add Extra Ingredient" textAlignment="CENTER" VBox.vgrow="NEVER" />
                                 <GridPane fx:id="bottomRightGridPane" prefWidth="300.0" VBox.vgrow="NEVER">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="155.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="145.0" />
                            </columnConstraints>
                            <rowConstraints>
-                               <RowConstraints vgrow="NEVER"/>
-                               <RowConstraints vgrow="NEVER"/>
-                               <RowConstraints vgrow="NEVER"/>
+                               <RowConstraints vgrow="NEVER" />
+                               <RowConstraints vgrow="NEVER" />
+                               <RowConstraints vgrow="NEVER" />
                            </rowConstraints>
                            <children>
                                <Spinner fx:id="quantitySpinner" onDragDetected="#addItemToOrder" prefHeight="26.0" prefWidth="159.0" GridPane.rowIndex="1">
@@ -213,7 +202,7 @@
                                           <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="1" />
                                       </valueFactory>
                                    <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                    </GridPane.margin>
                               </Spinner>
                                <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemToOrder" prefHeight="26.0" prefWidth="72.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -221,16 +210,15 @@
                                     <Font size="19.0" />
                                  </font>
                                    <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                    </GridPane.margin>
                                </Button>
-                               <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                                      text="Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+                               <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                                           <font>
                                               <Font size="19.0" />
                                           </font>
                                    <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                    </GridPane.margin>
                                       </Label>
                                       <Label fx:id="totalCostDisplay" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="111.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -242,7 +230,7 @@
                                     <Font size="19.0" />
                                  </font>
                                   <GridPane.margin>
-                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                   </GridPane.margin>
                               </Text>
                            </children>
@@ -252,11 +240,10 @@
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                              <RowConstraints vgrow="NEVER"/>
+                              <RowConstraints vgrow="NEVER" />
                           </rowConstraints>
                            <children>
-                               <TextFlow minHeight="-Infinity" prefHeight="100.0" prefWidth="200.0"
-                                         GridPane.vgrow="ALWAYS">
+                               <TextFlow minHeight="-Infinity" prefHeight="100.0" prefWidth="200.0" GridPane.vgrow="ALWAYS">
                                  <children>
                                     <Text fx:id="promptText" strokeType="OUTSIDE" strokeWidth="0.0">
                                        <font>
@@ -265,7 +252,7 @@
                                     </Text>
                                  </children>
                                    <GridPane.margin>
-                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                    </GridPane.margin>
                                </TextFlow>
                            </children>
@@ -276,7 +263,7 @@
                     <center>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <TilePane fx:id="tilePane" hgap="5.0" layoutX="34.0" layoutY="88.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefTileHeight="100.0" prefTileWidth="100.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <TilePane fx:id="tilePane" hgap="5.0" layoutX="34.0" layoutY="88.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefTileHeight="200.0" prefTileWidth="200.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                             </children>
                         </AnchorPane>
                     </center>

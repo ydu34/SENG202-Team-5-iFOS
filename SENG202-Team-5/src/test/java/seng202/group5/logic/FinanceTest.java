@@ -1,4 +1,4 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +26,7 @@ public class FinanceTest {
         payed.add(Money.parse("NZD 5.00"));
         payed.add(Money.parse("NZD 5.00"));
         ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 100.00"));
         denomination.add(Money.parse("NZD 50.00"));
         denomination.add(Money.parse("NZD 20.00"));
         denomination.add(Money.parse("NZD 10.00"));
@@ -101,6 +102,26 @@ public class FinanceTest {
         total.add(Money.parse("NZD 45.00"));
         total.add(Money.parse("NZD 22.50"));
         assertEquals(total, testFinance.totalCalculator(startDate, endDate));
+    }
+
+    @Test
+    public void getDenomination() {
+        ArrayList<Money> denomination = new ArrayList<>();
+        denomination.add(Money.parse("NZD 100.00"));
+        denomination.add(Money.parse("NZD 50.00"));
+        denomination.add(Money.parse("NZD 20.00"));
+        denomination.add(Money.parse("NZD 10.00"));
+        denomination.add(Money.parse("NZD 5.00"));
+        denomination.add(Money.parse("NZD 2.00"));
+        denomination.add(Money.parse("NZD 1.00"));
+        denomination.add(Money.parse("NZD 0.50"));
+        denomination.add(Money.parse("NZD 0.20"));
+        denomination.add(Money.parse("NZD 0.10"));
+        assertEquals(testFinance.getDenomination(), denomination);
+    }
+    @Test
+    public void testGetTransactionHistory() {
+        assertEquals(testFinance.getTransactionHistory(), new HashMap<>());
     }
 
 }
