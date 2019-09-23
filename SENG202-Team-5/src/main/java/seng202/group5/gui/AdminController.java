@@ -45,7 +45,7 @@ public class AdminController extends GeneralController {
     private DatePicker endDate;
 
     @FXML
-    private TextArea saleSummaryText;
+    private Label saleSummaryText;
 
     @FXML
     private Button exportDataButton;
@@ -115,6 +115,7 @@ public class AdminController extends GeneralController {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
         fileMap = new HashMap<>();
+        viewHistory();
     }
 
     public void recipeTableInitialize() {
@@ -154,8 +155,11 @@ public class AdminController extends GeneralController {
             sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
         }
         if (!eDate.isBefore(sDate)) {
-            ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
-            saleSummaryText.setText("Total cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
+            ArrayList<Money> result = finance.totalCalculator(sDate, eDate, getAppEnvironment().getHistory().getTransactionHistory());
+            saleSummaryText.setText("Total cost of orders: " + result.get(0) +
+                    "\nAverage daily cost: " + result.get(1) +
+                    "\nTotal profits: " + result.get(2) +
+                    "\nAverage daily profits: " + result.get(3));
         } else {
             saleSummaryText.setText("End date is before start date");
         }

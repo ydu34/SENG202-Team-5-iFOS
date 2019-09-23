@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TableColumn?>
@@ -261,9 +262,20 @@
                         </VBox>
                     </right>
                     <center>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <AnchorPane fx:id="tilePaneContainer" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                    prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <TilePane fx:id="tilePane" hgap="5.0" layoutX="34.0" layoutY="88.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefTileHeight="200.0" prefTileWidth="200.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <ScrollPane hbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <content>
+                                        <TilePane fx:id="tilePane" maxHeight="1.7976931348623157E308" prefColumns="1000"
+                                                  prefRows="1000" prefTileHeight="100.0" prefTileWidth="260.0">
+                                            <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                            </padding>
+                                        </TilePane>
+                                    </content>
+                                </ScrollPane>
                             </children>
                         </AnchorPane>
                     </center>

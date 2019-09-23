@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;
 
 
@@ -27,12 +28,18 @@ public class RemoveStockController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
-        removeLabel.setText("Do you want to remove " + ingredient.getName() + "?");
+        removeLabel.setText("Do you want to remove " + ingredient.getName() + "?\n" +
+                "This will remove " + ingredient.getName() + " from all recipes!");
     }
 
     @FXML
     public void removeIngredient(ActionEvent event) {
         stock.removeIngredient(ingredient.getID());
+        for (MenuItem item : getAppEnvironment().getMenuManager().getItemMap().values()) {
+            if (item.getRecipe().getIngredientsAmount().containsKey(ingredient)) {
+                item.getRecipe().removeIngredient(ingredient);
+            }
+        }
 
         Stage stage = (Stage) removeButton.getScene().getWindow();
         stage.close();
