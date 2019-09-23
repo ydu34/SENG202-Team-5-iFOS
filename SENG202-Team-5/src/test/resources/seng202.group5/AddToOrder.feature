@@ -64,12 +64,38 @@ Feature: Add item to order
         And A new item is created for that recipe
         Then The new recipe is in the menu
 
-#    Scenario: Confirm an Order
-#        Given Order exists
-#        And A Burger costs $5.00
-#        And Burger is in order
-#        When Order is confirmed
-#        Then Payment is requested
+    Scenario: An order is cancelled which contained burger
+        Given Order exists
+        And A Burger costs $5.00
+        And Burger is in order
+        And Chips cost $5.00
+        When Chips are added to order
+        Then Orders total cost is $10.00
+        And Order contains a burger
+        And order contains chips
+
+
+    Scenario: A burger is removed from order which contained burger and chips
+      Given Order exists
+      And A Burger costs $5.00
+      And Burger is in order
+      And Chips cost $5.00
+      And Chips is in order
+      When Burger is removed from order
+      Then Orders total cost is $5.00
+      And  order contains chips
+
+
+    Scenario: Burger and chips are removed from order which contained burger and chips
+        Given Order exists
+        And A Burger costs $5.00
+        And Burger is in order
+        And Chips cost $5.00
+        And Chips is in order
+        When Burger is removed from order
+        When Chips is removed from order
+        Then Orders total cost is $0.00
+
 
 
 
