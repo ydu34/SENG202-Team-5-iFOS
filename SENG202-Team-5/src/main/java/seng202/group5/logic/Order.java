@@ -1,7 +1,8 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
 import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.logic.Stock;

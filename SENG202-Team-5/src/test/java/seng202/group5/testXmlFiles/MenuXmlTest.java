@@ -5,12 +5,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
-import seng202.group5.DietEnum;
-import seng202.group5.TypeEnum;
+import seng202.group5.information.DietEnum;
+import seng202.group5.information.TypeEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.Recipe;
 import seng202.group5.logic.MenuManager;
-import seng202.group5.logic.Stock;
 
 import javax.xml.bind.JAXBException;
 import java.util.HashSet;

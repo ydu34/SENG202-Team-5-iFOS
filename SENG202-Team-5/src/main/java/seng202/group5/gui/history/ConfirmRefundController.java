@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.AppEnvironment;
-import seng202.group5.Order;
+import seng202.group5.logic.Order;
 
 /**
  * A controller for confirming if the user wants to refund an order

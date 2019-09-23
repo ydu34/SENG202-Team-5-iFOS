@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.DietEnum;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.Recipe;

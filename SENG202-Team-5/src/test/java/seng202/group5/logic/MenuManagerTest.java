@@ -1,4 +1,4 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.*;
