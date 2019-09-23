@@ -75,7 +75,7 @@ public class OrderManagerTest {
     public void testPrintReceipt() {
         try {
             testOrderManager.getOrder().addItem(testItem, 3);
-            assertEquals("3 Burger Item(s) - $0.00\nTotal cost - $0.00", testOrderManager.printReceipt());
+            assertEquals("3 Burger Item(s) - NZD 34.80\nTotal cost - NZD 34.80", testOrderManager.getOrder().printReceipt());
         } catch (NoOrderException e) {
             e.printStackTrace();
             fail();

@@ -65,27 +65,6 @@ public class OrderManager {
     }
 
     /**
-     * Prints the reciept of the order
-     *
-     * @return A string of the reciept of the order
-     */
-    public String printReceipt() {
-        StringBuilder outputString = new StringBuilder();
-        HashMap<MenuItem, Integer> orderItems = currentOrder.getOrderItems();
-        for (Map.Entry<MenuItem, Integer> entry : orderItems.entrySet()) {
-            MenuItem a = entry.getKey();
-            Integer b = entry.getValue();
-            outputString.append(format("%d %s(s) - %s\n",
-                                       b,
-                                       a.getItemName(),
-                                       "$0.00"));
-        }
-        outputString.append("Total cost - $0.00");
-        return outputString.toString();
-    }
-    //TODO formalize receipt structure
-
-    /**
      * Gets the current order
      *
      * @return the current order
