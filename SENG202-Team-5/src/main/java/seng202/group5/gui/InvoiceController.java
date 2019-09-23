@@ -177,7 +177,14 @@ public class InvoiceController extends GeneralController {
 //        clearPayment();
 //        totalCost = Money.parse("NZD 0");
 //        totalCostDisplay.setText("Total Cost: "+ totalCost);
-        super.getAppEnvironment().getOrderManager().newOrder();
+        try {
+
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrder.resetStock(getAppEnvironment().getStock());
+            currentOrder.clearItemsInOrder();
+        } catch (NoOrderException e) {
+
+        }
         pseudoInitialize();
     }
 
