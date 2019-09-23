@@ -119,8 +119,6 @@ public class AddRecipeController extends GeneralController {
         }
     }
 
-
-
     public void computeTotalCost() {
         markupCostWarningText.setText("");
         String markupPriceStr = markupCostField.getText();

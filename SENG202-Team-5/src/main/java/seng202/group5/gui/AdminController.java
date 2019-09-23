@@ -209,7 +209,7 @@ public class AdminController extends GeneralController {
             stockWarningText.setText("stock.xml selected");
             checkFilesSelected();
         } else {
-            stockWarningText.setText("invalid file selected");
+            stockWarningText.setText("Invalid file selected");
         }
     }
 
@@ -224,7 +224,7 @@ public class AdminController extends GeneralController {
             menuWarningText.setText("menu.xml selected");
             checkFilesSelected();
         } else {
-            menuWarningText.setText("invalid file selected");
+            menuWarningText.setText("Invalid file selected");
         }
 
     }
@@ -292,7 +292,6 @@ public class AdminController extends GeneralController {
             Parent root = loader.load();
 
             AddRecipeController controller = loader.getController();
-            System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
 
@@ -328,7 +327,6 @@ public class AdminController extends GeneralController {
                 Parent root = loader.load();
 
                 AddRecipeController controller = loader.getController();
-                System.out.println(getAppEnvironment());
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.pseudoInitialize();
                 controller.setMenuItem(selectedItem);

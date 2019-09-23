@@ -75,11 +75,7 @@ public class InvoiceController extends GeneralController {
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
-
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-
-        System.out.println("table_view" + currentOrderTable.getItems());
-
         itemPriceCol.setCellValueFactory(data -> {
                                              int quantity = orderItemsMap.get(data.getValue());
                                              Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
@@ -105,27 +101,35 @@ public class InvoiceController extends GeneralController {
                 throw new NoOrderException("No order exists to get");
             } else {
                 System.out.println((getAppEnvironment().getOrderManager().getOrder().getTotalCost()));
-                try {
+                Money totalPayment = Money.parse("NZD 0.00");
+                for (Money money : payment) {
+                    totalPayment = totalPayment.plus(money);
+                }
+                System.out.println(totalPayment);
+                if (!(getAppEnvironment().getOrderManager().getOrder().getTotalCost()).isGreaterThan(totalPayment)) {
                     Order order = getAppEnvironment().getOrderManager().getOrder();
-                    ArrayList<Money> change = getAppEnvironment().confirmPayment(payment);
-                    StringBuilder display = new StringBuilder();
-                    Money totalChange = Money.parse("NZD 0.00");
-                    Money totalPayment = Money.parse("NZD 0.00");
-                    for (Money money : change) {
-                        display.append(money).append("\n");
-                        totalChange = totalChange.plus(money);
-                    }
-                    for (Money money : payment) {
-                        totalPayment = totalPayment.plus(money);
-                    }
-                    changeDisplay.setText(display.toString());
-                    if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
-                        totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
-                    } else {
-                        totalChangeDisplay.setText("Change: " + totalChange);
+                    ArrayList<Money> change;
+                    try {
+                        change = getAppEnvironment().confirmPayment(payment);
+                        StringBuilder display = new StringBuilder();
+                        Money totalChange = Money.parse("NZD 0.00");
+                        for (Money money : change) {
+                            display.append(money).append("\n");
+                            totalChange = totalChange.plus(money);
+                        }
+                        changeDisplay.setText(display.toString());
+                        if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
+                            totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
+                        } else {
+                            totalChangeDisplay.setText("Change: " + totalChange);
+                        }
+                    } catch (InsufficientCashException e) {
+                        changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
                     }
 
-                } catch (InsufficientCashException e) {
+
+
+                } else {
                     changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
 
                 }
@@ -174,7 +178,14 @@ public class InvoiceController extends GeneralController {
 //        clearPayment();
 //        totalCost = Money.parse("NZD 0");
 //        totalCostDisplay.setText("Total Cost: "+ totalCost);
-        super.getAppEnvironment().getOrderManager().newOrder();
+        try {
+
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrder.resetStock(getAppEnvironment().getStock());
+            currentOrder.clearItemsInOrder();
+        } catch (NoOrderException ignored) {
+
+        }
         pseudoInitialize();
     }
 
