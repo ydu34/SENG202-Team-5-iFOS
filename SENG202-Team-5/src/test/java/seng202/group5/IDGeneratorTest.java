@@ -51,11 +51,22 @@ public class IDGeneratorTest {
     }
 
     @Test
-    public void testSetId() {
+    public void testSetLastId() {
         String lastID = "1";
         generator.setLastID(lastID);
 
         assertTrue(generator.newID() != lastID);
+    }
+
+    @Test
+    public void testSetID() {
+        int prevID = 6;
+
+        assertNotEquals(generator.getId(), prevID);
+
+        generator.setId(prevID);
+
+        assertEquals(generator.getId(), prevID);
     }
 
 }
