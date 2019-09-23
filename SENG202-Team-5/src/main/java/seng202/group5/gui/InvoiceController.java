@@ -3,6 +3,7 @@ package seng202.group5.gui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,6 +42,9 @@ public class InvoiceController extends GeneralController {
     private TableColumn<MenuItem, String> itemNameCol;
 
     @FXML
+    private Button removeItem;
+
+    @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
 
     @FXML
@@ -52,6 +56,8 @@ public class InvoiceController extends GeneralController {
 
     private Order currentOrder;
 
+    private boolean someOrder;
+
     private Map<MenuItem, Integer> orderItemsMap;
 
     /**
@@ -60,12 +66,20 @@ public class InvoiceController extends GeneralController {
     public void pseudoInitialize() {
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            removeItem.setDisable(true);
         } catch (NoOrderException ignored) {
         }
         Money totalCost = currentOrder.getTotalCost();
 
         totalCostDisplay.setText("Total Cost: "+ totalCost);
         currentOrderTable();
+
+        currentOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if(newSelection != null){
+                removeItem.setDisable(false);
+            }
+        });
+
     }
 
     /**
@@ -189,10 +203,19 @@ public class InvoiceController extends GeneralController {
         pseudoInitialize();
     }
 
+    /**
+     * This function removes the selected menu item from the current order
+     * @param actionEvent
+     */
     @FXML
     private void deleteRowFromTable(javafx.event.ActionEvent actionEvent ) {
-       boolean someOrder =  this.currentOrderTable.getItems().remove(new Object[]{this.currentOrderTable.getSelectionModel().getSelectedItem()});
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if(someOrder == true){
+            removeItem.setDisable(false);
+        }
         System.out.println(someOrder);
+
     }
 
     @FXML

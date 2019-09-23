@@ -1,5 +1,6 @@
 package seng202.group5.gui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -91,7 +92,7 @@ public class AdminController extends GeneralController {
     private TableColumn<MenuItem, String> nameCol;
 
     @FXML
-    private TableColumn dietaryCol;
+    private TableColumn<MenuItem, String> dietaryCol;
 
     @FXML
     private TableColumn<MenuItem, String> sellingPriceCol;
@@ -120,7 +121,14 @@ public class AdminController extends GeneralController {
         ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        dietaryCol.setCellValueFactory(cellData -> {
+
+            String string = cellData.getValue().getRecipe().getDietaryInformationString();
+
+            return new SimpleStringProperty(string);
+        });
         sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        itemTable.getItems().clear();
         itemTable.setItems(items);
     }
 
@@ -333,12 +341,12 @@ public class AdminController extends GeneralController {
 
                 Stage stage = new Stage();
                 stage.setTitle("Add a Recipe");
-                stage.setScene(new Scene(root, 600, 600));
+                stage.setScene(new Scene(root, 800, 600));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initOwner(addButton.getScene().getWindow());
 
                 stage.showAndWait();
-                pseudoInitialize();
+                recipeTableInitialize();
             } catch (IOException e) {
                 e.printStackTrace();
             }
