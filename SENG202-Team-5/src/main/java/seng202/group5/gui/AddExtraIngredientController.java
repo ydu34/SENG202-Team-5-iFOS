@@ -133,7 +133,7 @@ public class AddExtraIngredientController extends GeneralController {
                         if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
                             ingredientAmountMap.remove(ingredient);
                         } else if (newValue != 0) {
-                            ingredientAmountMap.put(ingredient, newValue);
+                            selectedItem.getRecipe().addIngredient(ingredient,  newValue - oldValue);
                         }
                     });
                     setGraphic(spinner);
