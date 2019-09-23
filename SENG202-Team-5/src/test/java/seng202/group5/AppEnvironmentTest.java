@@ -8,9 +8,7 @@ import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
-import seng202.group5.logic.History;
-import seng202.group5.logic.MenuManager;
-import seng202.group5.logic.Stock;
+
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -107,5 +105,18 @@ class AppEnvironmentTest {
         paymentAmount.add(cheeseBurger.calculateFinalCost());
         paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
         assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
+    }
+
+    @Test
+    void testConfirmPaymentWithoutOrder() {
+        handler.getOrderManager().setCurrentOrder(null);
+
+        ArrayList<Money> paymentAmount = new ArrayList<>();
+
+        try {
+            handler.getOrderManager().getOrder();
+        } catch (NoOrderException e) {
+            assertTrue(e.getMessage() == "No order exists to get");
+        }
     }
 }
