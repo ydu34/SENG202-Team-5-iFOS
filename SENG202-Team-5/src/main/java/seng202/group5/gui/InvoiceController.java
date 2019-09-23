@@ -8,10 +8,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
-import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
 
 import java.util.ArrayList;
 import java.util.List;
