@@ -327,6 +327,9 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Action for modifyButton, opens a new window for the use to modify the menu item.
+     */
     public void modifySelectedItem() {
         MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
