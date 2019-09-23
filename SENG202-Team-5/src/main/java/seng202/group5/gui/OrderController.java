@@ -253,7 +253,7 @@ public class OrderController extends GeneralController {
         Integer quantity = quantitySpinner.getValue();
         if (currentOrder.addItem(item, quantity)) {
 
-           promptText.setText(quantity + "X" + item.getItemName() + " added to the current order.");
+            promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
            promptText.setFill(Color.GREEN);
        }
        else{
