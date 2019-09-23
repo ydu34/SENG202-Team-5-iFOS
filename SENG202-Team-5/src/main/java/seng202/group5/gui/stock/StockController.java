@@ -166,6 +166,7 @@ public class StockController extends GeneralController {
             stage.setScene(new Scene(root, 400, 200));
             stage.initModality(Modality.APPLICATION_MODAL);
 
+            controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
 
             stage.showAndWait();
