@@ -93,7 +93,6 @@ public class RecipeTest {
         HashMap<String, Integer> ingredientIDs = new HashMap<>();
         Recipe testrecipe_2 = new Recipe("Burger", "Making Burger", ingredientsAmount, ingredientIDs);
         testrecipe_2.addIngredient(chickenPatty, 2);
-        System.out.println(chickenPatty.getDietInfo());
         assertEquals(testrecipe_2.getIngredientsAmount().get(chickenPatty), 2);
 
     }

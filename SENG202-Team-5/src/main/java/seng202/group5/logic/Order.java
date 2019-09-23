@@ -217,6 +217,11 @@ public class Order {
         }
     }
 
+    public void clearItemsInOrder(){
+        orderItems.clear();
+        totalCost = Money.zero(CurrencyUnit.of("NZD"));
+    }
+
     /**
      * Sets the stock to a clone of the specified stock
      *

@@ -126,7 +126,6 @@ public class MenuItem {
         totalCost = Money.parse("NZD 0.00");
         if (markupCost != null) {
             totalCost = calculateMakingCost().plus(markupCost);
-            System.out.println("total_cost" + totalCost);
         }
         return totalCost;
 

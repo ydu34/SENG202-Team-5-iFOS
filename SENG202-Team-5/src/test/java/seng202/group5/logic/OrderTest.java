@@ -62,7 +62,6 @@ public class OrderTest {
         assertEquals(order.getStock().getIngredientQuantity("ABC123"), 0);
 
         assertFalse(order.addItem(item, 1));
-        System.out.println(order.getOrderItems());
     }
 
 

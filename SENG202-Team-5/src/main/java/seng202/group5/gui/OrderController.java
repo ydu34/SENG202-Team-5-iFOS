@@ -110,7 +110,6 @@ public class OrderController extends GeneralController {
         filterItems();
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
-             currentOrder.resetStock(getAppEnvironment().getStock());
         } catch (NoOrderException e) {
             System.out.println(e);
         }
@@ -221,7 +220,6 @@ public class OrderController extends GeneralController {
 
         populateTilePane(filteredMenuItems);
 
-        System.out.println(filteredMenuItems);
         return filteredMenuItems;
 
     }
@@ -272,7 +270,6 @@ public class OrderController extends GeneralController {
             int quantity = recipeIngredientsMap.get(data.getValue());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
-
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
         //this code removes the scroll bar buts ends up adding an extra column
        // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
