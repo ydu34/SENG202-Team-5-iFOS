@@ -25,12 +25,6 @@ import java.util.*;
 public class AddExtraIngredientController extends GeneralController {
 
     @FXML
-    private Button confirmItemButton;
-
-    @FXML
-    private Button backButton;
-
-    @FXML
     private String openMode;
 
     @FXML
