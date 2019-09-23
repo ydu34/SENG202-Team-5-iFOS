@@ -39,18 +39,32 @@ public class MenuItem {
      * The unique id related to every item on the menu
      */
     private IDGenerator generator = new IDGenerator();
+    /**
+     * Unique id for a menu item
+     */
     private String id = generator.newID();
     /**
      * Whether or not this item is in the menu
      */
     private boolean inMenu;
-
+    /**
+     * Enum type that tells about the dietry info about the menu item
+     */
     private TypeEnum itemType;
+    /**
+     * Weather or not the item was modified
+     */
     private boolean edited;
 
     @XmlJavaTypeAdapter(MoneyAdapter.class)
+    /**
+     * total cost of the menu item
+     */
     private Money totalCost;
 
+    /**
+     * Default constructor for the menu item class
+     */
     public MenuItem() {
         itemName = "";
         recipe = new Recipe();
@@ -131,13 +145,27 @@ public class MenuItem {
 
     }
 
+    /**
+     *
+     * @return a boolean based on if the if the item is in the menu or not
+     */
     public boolean isInMenu() {
         return inMenu;
     }
 
+    /**
+     * The function returns the id for the menu item
+     * @return td id for the menu item
+     */
+
     public String getID() {
         return id;
     }
+
+    /**
+     * The function returns the name of the item
+     * @return the name of the item
+     */
 
     public String getItemName() {
         if (edited) {
@@ -147,15 +175,35 @@ public class MenuItem {
         }
     }
 
+    /**
+     *
+     * @return The function returns the recipe object
+     */
+
     public Recipe getRecipe() {
         return recipe;
     }
 
+    /**
+     *
+     * @return The function returns the markup cost set by the user
+     */
+
     public Money getMarkupCost() { return markupCost; }
+
+    /**
+     * The function assigns the value to the markup cost
+     * @param markupCost is the cost added to the ingredient cost of the menu item
+     */
 
     public void setMarkupCost(Money markupCost) {
         this.markupCost = markupCost;
     }
+
+    /**
+     *
+     * @return a unique integer based on the contents of this menu item
+     */
 
     public int hashcode() {
         ArrayList<Object> tempList = new ArrayList<>();
@@ -188,31 +236,62 @@ public class MenuItem {
         return returnItem;
     }
 
+    /**
+     *
+     * @return the enum which reflects the dietary information for the menu item
+     */
+
     public TypeEnum getItemType() {
         return itemType;
     }
 
+    /**
+     * This function sets the itemType enum for the menu item
+     * @param itemType
+     */
 
     public void setType(TypeEnum itemType) {
         this.itemType = itemType;
     }
 
+    /**
+     * The function sets the name of the menu item
+     * @param tempName the assigned name for the menu item
+     */
+
     public void setItemName(String tempName) {
         itemName = tempName;
     }
 
+    /**
+     *
+     * @return the value for the boolean if the item was edited
+     */
     public boolean isEdited() {
         return edited;
     }
+
+    /**
+     * Sets thee boolean to true if the menu item was edited
+     * @param tempEdited
+     */
 
     public void setEdited(boolean tempEdited) {
         edited = tempEdited;
     }
 
+    /**
+     * The function returns the total cost of the menu item
+     * @return the total cost for a menu item
+     */
     public Money getTotalCost() {
         return totalCost;
     }
 
+    /**
+     * The function sets the total cost of the menu item
+     * @param totalCost the final cost of the menu item
+     */
     public void setTotalCost(Money totalCost) {
         this.totalCost = totalCost;
     }

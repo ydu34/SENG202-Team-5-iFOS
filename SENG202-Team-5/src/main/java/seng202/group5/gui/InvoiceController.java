@@ -190,6 +190,12 @@ public class InvoiceController extends GeneralController {
     }
 
     @FXML
+    private void deleteRowFromTable(javafx.event.ActionEvent actionEvent ) {
+       boolean someOrder =  this.currentOrderTable.getItems().remove(new Object[]{this.currentOrderTable.getSelectionModel().getSelectedItem()});
+        System.out.println(someOrder);
+    }
+
+    @FXML
     private void addTenCent(){
         addMoney(10);
     }

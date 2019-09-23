@@ -2,11 +2,8 @@ package seng202.group5.information;
 
 
 import org.joda.money.Money;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.information.DietEnum;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.Recipe;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,15 +15,19 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class RecipeTest {
 
-    HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
-        add(DietEnum.GLUTEN_FREE);
+    private Recipe testRecipe;
 
-    }};
-    Recipe testRecipe = new Recipe("Chicken burger", "Steps to chicken burger");
-    Ingredient chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
+    private Ingredient chickenPatty;
 
-    @Before
-    public void setUp() {}
+    private HashSet<DietEnum> ingredientInfo;
+
+    @BeforeEach
+    public void setUp() {
+        ingredientInfo = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE); }};
+        testRecipe = new Recipe("Chicken burger", "Steps to chicken burger");
+        chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
+    }
 
 
     @Test
@@ -91,9 +92,9 @@ public class RecipeTest {
     public void testRecipeConstructors() {
         HashMap<Ingredient, Integer> ingredientsAmount = new HashMap<>();
         HashMap<String, Integer> ingredientIDs = new HashMap<>();
-        Recipe testrecipe_2 = new Recipe("Burger", "Making Burger", ingredientsAmount, ingredientIDs);
-        testrecipe_2.addIngredient(chickenPatty, 2);
-        assertEquals(testrecipe_2.getIngredientsAmount().get(chickenPatty), 2);
+        Recipe testRecipe2 = new Recipe("Burger", "Making Burger", ingredientsAmount, ingredientIDs);
+        testRecipe2.addIngredient(chickenPatty, 2);
+        assertEquals(testRecipe2.getIngredientsAmount().get(chickenPatty), 2);
 
     }
 

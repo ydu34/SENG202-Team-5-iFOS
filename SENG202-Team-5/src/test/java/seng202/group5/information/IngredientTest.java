@@ -41,4 +41,28 @@ public class IngredientTest {
         ingredient.removeDietInfo(list);
         assertEquals(ingredient.getDietInfo().size(), 0);
     }
+
+    @Test
+    public void testSetGetId(){
+        Ingredient ingredient = new Ingredient("ing1", "meat", "TId", Money.parse("NZD 0.10"));
+        assertEquals(ingredient.getId(), "TId");
+        ingredient.setId("TId2");
+        assertEquals(ingredient.getId(), "TId2");
+    }
+
+    @Test
+    public void testSetGetCategory(){
+        Ingredient ingredient = new Ingredient("ing1", "meat", "TId", Money.parse("NZD 0.10"));
+        assertEquals(ingredient.getCategory(), "meat");
+        ingredient.setCategory("Vege");
+        assertEquals(ingredient.getCategory(), "Vege");
+    }
+
+    @Test
+    public void testSetGetPrice(){
+        Ingredient ingredient = new Ingredient("ing1", "meat", "TId", Money.parse("NZD 0.10"));
+        assertEquals(ingredient.getPrice(), Money.parse("NZD 0.10"));
+        ingredient.setPrice(Money.parse("NZD 1000"));
+        assertEquals(ingredient.getPrice(), Money.parse("NZD 1000"));
+    }
 }

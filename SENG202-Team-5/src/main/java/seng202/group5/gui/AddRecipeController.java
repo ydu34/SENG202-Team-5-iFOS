@@ -47,6 +47,9 @@ public class AddRecipeController extends GeneralController {
     private TableColumn<Ingredient, String> quantityCol;
 
     @FXML
+    private TableColumn<Ingredient, String> ingredientCostCol;
+
+    @FXML
     private Button addIngredientButton;
 
     @FXML
@@ -67,11 +70,17 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private ComboBox<TypeEnum> menuTypeComboBox;
 
+    @FXML
+    private TextArea recipeTextArea;
+
+
+
     private MenuItem item;
 
     private MenuManager menuManager;
 
     private AdminController parentController;
+
 
     /**
      * An initializer for this controller
@@ -116,7 +125,7 @@ public class AddRecipeController extends GeneralController {
             if (markupPrice.isNegative()) {
                 throw new NumberFormatException();
             } else {
-                item.getRecipe().setRecipeText("No recipe for this");
+                item.getRecipe().setRecipeText(recipeTextArea.getText());
                 item.setItemName(name);
                 item.setMarkupCost(markupPrice);
                 item.calculateFinalCost();
@@ -184,7 +193,15 @@ public class AddRecipeController extends GeneralController {
             int quantity = recipeIngredientsMap.get(data.getValue());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
+        ingredientCostCol.setCellValueFactory(data -> {
+                                             int quantity = recipeIngredientsMap.get(data.getValue());
+                                             Money totalPrice = data.getValue().getPrice().multipliedBy(quantity);
+                                             return new SimpleStringProperty(totalPrice.toString());
+                                         }
+        );
+
         ingredientsTable.setItems(FXCollections.observableArrayList(recipeIngredients));
+
     }
 
     /**
@@ -192,6 +209,7 @@ public class AddRecipeController extends GeneralController {
      */
     public void initializeTextValues() {
         nameField.setText(item.getItemName());
+        recipeTextArea.setText(item.getRecipe().getRecipeText());
         ingredientCostText.setText(item.calculateMakingCost().toString());
         markupCostField.setText(item.getMarkupCost().toString().substring(4));
         totalCostText.setText(item.calculateFinalCost().toString());

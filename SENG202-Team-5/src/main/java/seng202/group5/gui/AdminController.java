@@ -341,7 +341,7 @@ public class AdminController extends GeneralController {
 
                 Stage stage = new Stage();
                 stage.setTitle("Add a Recipe");
-                stage.setScene(new Scene(root, 600, 600));
+                stage.setScene(new Scene(root, 800, 600));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initOwner(addButton.getScene().getWindow());
 

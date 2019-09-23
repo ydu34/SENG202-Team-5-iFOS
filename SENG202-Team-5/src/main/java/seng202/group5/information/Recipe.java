@@ -46,7 +46,7 @@ public class Recipe {
 
     public Recipe() {
         name = "";
-        recipeText = "";
+        recipeText = "No recipe required";
         ingredientsAmount = new HashMap<>();
         ingredientIDs = new HashMap<>();
         dietaryInformation = new HashSet<>();

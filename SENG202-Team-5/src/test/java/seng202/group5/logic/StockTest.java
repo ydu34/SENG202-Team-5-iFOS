@@ -85,4 +85,16 @@ public class StockTest {
         assertTrue(stock.getIngredientStock().get("ID") == newstock.getIngredientStock().get("ID"));
     }
 
+    @Test
+    public void testRemoveIngredient() {
+        assertTrue(stock.getIngredientStock().isEmpty());
+        Ingredient tempIngredient = new Ingredient("Beef", "Meat", "ABC123", Money.parse("NZD 10.0"));
+        stock.addNewIngredient(tempIngredient);
+        assertFalse(stock.getIngredientStock().isEmpty());
+        stock.removeIngredient("ABC123");
+        assertNull(stock.getIngredientFromID("ABC123"));
+        assertNull(stock.getIngredientStock().get("ABC123"));
+
+    }
+
 }

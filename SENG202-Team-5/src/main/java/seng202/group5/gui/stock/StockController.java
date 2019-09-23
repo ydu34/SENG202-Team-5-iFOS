@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 
@@ -63,6 +64,9 @@ public class StockController extends GeneralController {
     @Override
     public void pseudoInitialize() {
         warningLabel.setText("");
+        removeButton.setDisable(false);
+        modifyButton.setDisable(false);
+
 
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
                 getAppEnvironment().getStock().getIngredients().values());
@@ -80,6 +84,19 @@ public class StockController extends GeneralController {
         });
 
         stockTable.setItems(ingredients);
+
+        try {
+            getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
+
+            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+                warningLabel.setText("Can not Modify/Remove Stock when Order in progress.");
+                removeButton.setDisable(true);
+                modifyButton.setDisable(true);
+            }
+        } catch (NoOrderException e) {
+            System.out.println("tasman");
+            e.printStackTrace();
+        }
     }
 
     public void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
