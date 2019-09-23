@@ -63,9 +63,11 @@ public class StockController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        stockTable.getItems().clear();
         warningLabel.setText("");
-        removeButton.setDisable(false);
+        addButton.setDisable(false);
         modifyButton.setDisable(false);
+        removeButton.setDisable(false);
 
 
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
@@ -89,12 +91,12 @@ public class StockController extends GeneralController {
             getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
 
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
-                warningLabel.setText("Can not Modify/Remove Stock when Order in progress.");
-                removeButton.setDisable(true);
+                warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
+                addButton.setDisable(true);
                 modifyButton.setDisable(true);
+                removeButton.setDisable(true);
             }
         } catch (NoOrderException e) {
-            System.out.println("tasman");
             e.printStackTrace();
         }
     }
@@ -166,6 +168,7 @@ public class StockController extends GeneralController {
             stage.setScene(new Scene(root, 400, 200));
             stage.initModality(Modality.APPLICATION_MODAL);
 
+            controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
 
             stage.showAndWait();

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -42,7 +43,7 @@
              <Button fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
              <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
              <Button fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
-             <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
+             <Button disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
          </children>
       </GridPane>
        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -82,7 +83,9 @@
                       <center>
                           <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                            <children>
-                               <TextArea fx:id="saleSummaryText" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="780.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                               <Label fx:id="saleSummaryText" alignment="CENTER" contentDisplay="CENTER" text="Label"
+                                      AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                      AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
                            </children>
                           </AnchorPane>
                       </center>
@@ -135,7 +138,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </GridPane>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select an Item to delete or modify" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select an Item to delete or modify" textAlignment="CENTER" wrappingWidth="771.751953125" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>

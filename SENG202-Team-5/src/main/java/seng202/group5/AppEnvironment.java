@@ -4,14 +4,17 @@ import org.joda.money.Money;
 import org.xml.sax.SAXException;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.logic.Order;
-import seng202.group5.logic.*;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.logic.*;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
@@ -81,7 +84,7 @@ public class AppEnvironment {
         ClassLoader classLoader = getClass().getClassLoader();
         //Setup schema validator
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema(new File(classLoader.getResource("schema/" + schemaFileName).getFile()));
+        Schema schema = sf.newSchema( new StreamSource(getClass().getClassLoader().getResourceAsStream("schema/" + schemaFileName)));
         jaxbUnmarshaller.setSchema(schema);
 
         o = c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + "/" + fileName)));
@@ -90,7 +93,7 @@ public class AppEnvironment {
 
     /**
      * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
-     * hashmap containing the ingredient and quantity.
+     * HashMap containing the ingredient and quantity.
      *
      * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
      * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
@@ -108,8 +111,8 @@ public class AppEnvironment {
 
 
     /**
-     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe and fill up the ingredientsAmount hash map with ingredient objects using
-     * the getIngredientsFromID method.
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
      * @param menuItems Contains the menu items.
      */

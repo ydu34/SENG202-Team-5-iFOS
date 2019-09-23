@@ -6,9 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -95,6 +97,8 @@ public class OrderController extends GeneralController {
     @FXML
     private Text promptText;
 
+    @FXML
+    private AnchorPane tilePaneContainer;
 
     private Order currentOrder;
 
@@ -116,6 +120,13 @@ public class OrderController extends GeneralController {
         orderIDText.setText(currentOrder.getId());
         addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
+
+        tilePaneContainer.widthProperty().addListener((width) -> {
+            double newWidth = tilePaneContainer.getWidth();
+            tilePane.setMinWidth(newWidth);
+            tilePane.setPrefWidth(newWidth);
+            tilePane.setMaxWidth(newWidth);
+        });
     }
 
     public void sortItemsPrice(ActionEvent event) {
@@ -149,6 +160,7 @@ public class OrderController extends GeneralController {
                 tempButton.setStyle("-fx-font-size: 20; ");
                 tempButton.setPrefWidth(260);
                 tempButton.setPrefHeight(100);
+                TilePane.setMargin(tempButton, new Insets(5));
                 tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
                 buttons.add(tempButton);
             }

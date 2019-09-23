@@ -34,7 +34,7 @@
          <children>
             <Button fx:id="launchOrderButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order" />
             <Button fx:id="launchInvoiceButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
+            <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
              <Button fx:id="launchAdminButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchAdminScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
              <Button fx:id="launchHistoryButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
          </children>

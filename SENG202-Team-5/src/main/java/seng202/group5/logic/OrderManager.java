@@ -77,6 +77,13 @@ public class OrderManager {
         return currentOrder;
     }
 
+
+
+    @Deprecated
+    public void setCurrentOrder(Order order) {
+        currentOrder = order;
+    }
+
     /**
      * Gets the current stock on the food truck
      *
