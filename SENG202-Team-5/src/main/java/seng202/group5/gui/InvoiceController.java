@@ -3,20 +3,16 @@ package seng202.group5.gui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
 import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.MenuItem;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,9 +46,6 @@ public class InvoiceController extends GeneralController {
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
 
-    @FXML
-    private Button eftposButton;
-
     private ArrayList<Money> payment = new ArrayList<>();
 
     private Money total = Money.parse("NZD 0");
@@ -73,7 +66,6 @@ public class InvoiceController extends GeneralController {
 
         totalCostDisplay.setText("Total Cost: "+ totalCost);
         currentOrderTable();
-        eftposButton.setDisable(true);
     }
 
     /**

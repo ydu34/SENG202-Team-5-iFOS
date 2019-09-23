@@ -59,6 +59,9 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private Text totalCostText;
 
+    @FXML
+    private Text itemNameWarningText;
+
     private MenuItem item;
 
     private MenuManager menuManager;
@@ -81,35 +84,57 @@ public class AddRecipeController extends GeneralController {
      * Saves the recipe into the systems menu and closes the add recipe window.
      */
     public void saveRecipe() {
-        saveTextFieldValues();
-        menuManager.addItem(item);
-        closeScreen();
+        try {
+            saveTextFieldValues();
+            menuManager.addItem(item);
+            closeScreen();
+        } catch (NumberFormatException e) {
+            markupCostWarningText.setText("Invalid value");
+        } catch (Exception e) {
+            itemNameWarningText.setText("Invalid name");
+        }
     }
 
-    public void saveTextFieldValues() {
+    public void saveTextFieldValues() throws NumberFormatException, Exception{
         String name = nameField.getText();
         String markupPriceStr = markupCostField.getText();
         try {
+            Double.parseDouble(markupCostField.getText());
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
-            item.getRecipe().setName(name);
-            item.getRecipe().setRecipeText("No recipe for this");
-            item.setItemName(name);
-            item.setMarkupCost(markupPrice);
-            item.calculateFinalCost();
-        } catch(Exception e) {
-            markupCostWarningText.setText("Invalid value");
+            if (name == null | name.equals("")) {
+                throw new Exception();
+            } else {
+                item.getRecipe().setName(name);
+            }
+            if (markupPrice.isNegative()) {
+                throw new NumberFormatException();
+            } else {
+                item.getRecipe().setRecipeText("No recipe for this");
+                item.setItemName(name);
+                item.setMarkupCost(markupPrice);
+                item.calculateFinalCost();
+            }
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException();
         }
-
     }
 
+
+
     public void computeTotalCost() {
+        markupCostWarningText.setText("");
         String markupPriceStr = markupCostField.getText();
         try {
+            Double.parseDouble(markupCostField.getText());
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
-            item.setMarkupCost(markupPrice);
-            totalCostText.setText(item.calculateFinalCost().toString());
-            System.out.println(item.calculateFinalCost().toString());
-        } catch(Exception e) {
+            if (markupPrice.isNegative()) {
+                markupCostWarningText.setText("Invalid value");
+            } else {
+                item.setMarkupCost(markupPrice);
+                totalCostText.setText(item.calculateFinalCost().toString());
+                System.out.println(item.calculateFinalCost().toString());
+            }
+        } catch (NumberFormatException e) {
             markupCostWarningText.setText("Invalid value");
         }
     }
@@ -127,13 +152,19 @@ public class AddRecipeController extends GeneralController {
      * @param actionEvent
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        saveTextFieldValues();
-        AddExtraIngredientController controller =
-                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-        controller.setMenuItem(item);
-        controller.setOpenMode("Recipe");
-        controller.updateStockRecipeMode();
-        controller.initializeTable();
+        try {
+            saveTextFieldValues();
+            AddExtraIngredientController controller =
+                    (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+            controller.setMenuItem(item);
+            controller.setOpenMode("Recipe");
+            controller.updateStockRecipeMode();
+            controller.initializeTable();
+        } catch (NumberFormatException e) {
+            markupCostWarningText.setText("Invalid value");
+        } catch (Exception e) {
+            itemNameWarningText.setText("Invalid name");
+        }
     }
 
     /**

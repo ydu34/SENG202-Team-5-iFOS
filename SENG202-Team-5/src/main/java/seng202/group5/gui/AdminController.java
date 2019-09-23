@@ -14,14 +14,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import org.xml.sax.SAXException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -300,7 +298,7 @@ public class AdminController extends GeneralController {
 
             Stage stage = new Stage();
             stage.setTitle("Add a Recipe");
-            stage.setScene(new Scene(root, 600, 600));
+            stage.setScene(new Scene(root, 800, 600));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addButton.getScene().getWindow());
 
