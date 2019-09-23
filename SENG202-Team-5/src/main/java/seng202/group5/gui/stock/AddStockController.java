@@ -16,6 +16,7 @@ import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;
 
+import javax.naming.directory.InvalidAttributeValueException;
 import java.util.HashSet;
 
 /**
@@ -104,26 +105,41 @@ public class AddStockController extends GeneralController {
      */
     @FXML
     public void buttonAction(ActionEvent actionEvent) {
-        if (ingredient == null) {
-            createIngredient();
-        } else {
-            modifyIngredient();
+        try {
+            if (ingredient == null) {
+                createIngredient();
+            } else {
+                modifyIngredient();
+            }
+            // Closing window
+            Stage stage = (Stage) createButton.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            warningLabel.setText("Error creating ingredient.");
         }
-        // Closing window
-        Stage stage = (Stage) createButton.getScene().getWindow();
-        stage.close();
     }
 
     /**
      * Modifies an existing ingredient.
      */
-    public void modifyIngredient() {
-        try {
-            // Modifying the current ingredient
-            ingredient.setName(nameField.getText());
-            ingredient.setCategory(categoryField.getText());
-            ingredient.setPrice(Money.parse("NZD " + costField.getText()));
-            stock.modifyQuantity(ingredient.getID(), Integer.parseInt(quantityField.getText()));
+    public void modifyIngredient()  throws ArithmeticException{
+        // Modifying the current ingredient
+        String name = nameField.getText();
+        String category = categoryField.getText();
+        String price = costField.getText();
+        String quantity = quantityField.getText();
+
+        // Throwing exceptions if input in incorrect.
+        if (name.isEmpty() || category.isEmpty() || price.isEmpty() || quantity.isEmpty()) {
+            throw new ArithmeticException("A Field is blank.");
+        } else if (Float.parseFloat(price) < 0 || Integer.parseInt(quantity) < 0) {
+            throw new ArithmeticException("Integers are out of bounds.");
+        } else {
+
+            ingredient.setName(name);
+            ingredient.setCategory(category);
+            ingredient.setPrice(Money.parse("NZD " + price));
+            stock.modifyQuantity(ingredient.getID(), Integer.parseInt(quantity));
 
             // Clears diet info since it's just added on again later
             HashSet<DietEnum> set = new HashSet<>();
@@ -135,22 +151,26 @@ public class AddStockController extends GeneralController {
             for (MenuItem item : getAppEnvironment().getMenuManager().getItemMap().values()) {
                 for (DietEnum dietType : DietEnum.values()) item.getRecipe().checkDietaryInfo(dietType);
             }
-        } catch (Exception e) {
-            warningLabel.setText("Error modifying ingredient.");
-            e.printStackTrace();
         }
+
     }
 
     /**
      * Creates a new ingredient.
      */
-    public void createIngredient() {
-        try {
+    public void createIngredient() throws ArithmeticException {
             // Getting all the values through the text fields
-            String name = nameField.getText();
-            String category = categoryField.getText();
-            Money cost = Money.parse("NZD " + costField.getText());
-            int quantity = Integer.parseInt(quantityField.getText());
+        String name = nameField.getText();
+        String category = categoryField.getText();
+        Money cost = Money.parse("NZD " + costField.getText());
+        int quantity = Integer.parseInt(quantityField.getText());
+
+        // Throwing exceptions if input in incorrect.
+        if (name.isEmpty() || category.isEmpty() || costField.getText().isEmpty() || quantityField.getText().isEmpty()) {
+            throw new ArithmeticException("A Field is blank.");
+        } else if (Float.parseFloat(costField.getText()) < 0 || quantity < 0) {
+            throw new ArithmeticException("Integers are out of bounds.");
+        } else {
 
             // Getting dietary information of ingredient through checkboxes
             HashSet<DietEnum> dietRequirements = new HashSet<>();
@@ -169,8 +189,6 @@ public class AddStockController extends GeneralController {
             addDietaryInformation();
             // Adding ingredient to the stock
             stock.addNewIngredient(ingredient, quantity);
-        } catch (Exception e) {
-            warningLabel.setText("Error creating ingredient.");
         }
     }
 
