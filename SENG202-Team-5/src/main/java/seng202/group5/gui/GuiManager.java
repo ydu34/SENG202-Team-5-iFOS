@@ -65,10 +65,10 @@ public class GuiManager extends Application {
     public void addTestData(AppEnvironment environment) {
         Ingredient test = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         Stock stock = environment.getStock();
-        stock.addNewIngredient(test);
+        stock.addNewIngredient(test, 100);
         stock.modifyQuantity(test.getID(), 1);
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
-        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
+        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to Vege burger");
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
         }};
