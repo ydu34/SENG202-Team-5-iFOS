@@ -83,7 +83,7 @@ public class InvoiceController extends GeneralController {
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         itemPriceCol.setCellValueFactory(data -> {
                                              int quantity = orderItemsMap.get(data.getValue());
-                                             Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
+            Money totalPrice = data.getValue().calculateFinalCost().multipliedBy(quantity);
                                              return new SimpleStringProperty(totalPrice.toString());
                                          }
         );
