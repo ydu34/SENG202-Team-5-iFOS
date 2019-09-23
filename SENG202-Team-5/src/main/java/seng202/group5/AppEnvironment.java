@@ -90,7 +90,7 @@ public class AppEnvironment {
 
     /**
      * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
-     * hashmap containing the ingredient and quantity.
+     * HashMap containing the ingredient and quantity.
      *
      * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
      * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
@@ -108,8 +108,8 @@ public class AppEnvironment {
 
 
     /**
-     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe and fill up the ingredientsAmount hash map with ingredient objects using
-     * the getIngredientsFromID method.
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
      * @param menuItems Contains the menu items.
      */

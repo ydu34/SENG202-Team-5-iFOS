@@ -226,9 +226,9 @@ public class Order {
     }
 
     /**
-     * Prints the reciept of the order
+     * Prints the receipt of the order
      *
-     * @return A string of the reciept of the order
+     * @return A string of the receipt of the order
      */
     public String printReceipt() {
         StringBuilder outputString = new StringBuilder();
