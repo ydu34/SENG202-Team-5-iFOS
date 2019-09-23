@@ -63,6 +63,7 @@ public class StockController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        stockTable.getItems().clear();
         warningLabel.setText("");
         removeButton.setDisable(false);
         modifyButton.setDisable(false);
@@ -94,7 +95,6 @@ public class StockController extends GeneralController {
                 modifyButton.setDisable(true);
             }
         } catch (NoOrderException e) {
-            System.out.println("tasman");
             e.printStackTrace();
         }
     }
