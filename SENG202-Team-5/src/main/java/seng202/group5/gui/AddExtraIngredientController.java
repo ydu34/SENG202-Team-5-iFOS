@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.joda.money.Money;
 import seng202.group5.logic.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
@@ -58,6 +59,8 @@ public class AddExtraIngredientController extends GeneralController {
 
     @FXML
     private TableColumn<Ingredient, String> columnCategory = new TableColumn<>("category");
+    @FXML
+    private TableColumn<Ingredient, String> columnCost = new TableColumn<>("cost");
 
     @FXML
     private TableColumn<Ingredient, String> columnSpinner = new TableColumn<>("spinner");
@@ -81,14 +84,18 @@ public class AddExtraIngredientController extends GeneralController {
      * Sets up value factories in each column which take ingredients and populate the table with their data.
      */
     public void initializeColumns() {
-        HashMap<String, Integer> quantities = updatedStock.getIngredientStock();
         columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         columnQuantity.setCellValueFactory(data -> {
-            int quantity = quantities.get(data.getValue().getID());
+            int quantity = updatedStock.getIngredientStock().get(data.getValue().getID());
             return new SimpleStringProperty(Integer.toString(quantity));
+        });
+        //sets values for each ingredient cost.
+        columnCost.setCellValueFactory(data -> {
+            Money cost = updatedStock.getIngredients().get(data.getValue().getID()).getCost();
+            return new SimpleStringProperty(cost.toString());
         });
     }
 

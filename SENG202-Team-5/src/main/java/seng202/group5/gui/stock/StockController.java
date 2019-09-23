@@ -41,6 +41,8 @@ public class StockController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, String> rowCategory;
 
+    @FXML TableColumn<Ingredient, String> rowCost;
+
     @FXML
     private Button addButton;
 
@@ -70,6 +72,7 @@ public class StockController extends GeneralController {
         rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         rowIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
         rowCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        rowCost.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         rowQuantity.setCellValueFactory(data -> {
             int quantity = quantities.get(data.getValue().getID());
@@ -153,7 +156,6 @@ public class StockController extends GeneralController {
             pseudoInitialize();
         } catch (Exception e) {
             warningLabel.setText("Please select an item to remove.");
-            e.printStackTrace();
         }
     }
 

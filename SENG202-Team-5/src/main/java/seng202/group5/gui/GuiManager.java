@@ -101,7 +101,7 @@ public class GuiManager extends Application {
         try {
             environment.getFinance().pay(tempOrder.getTotalCost(),
                                          new ArrayList<>() {{
-                                             add(Money.parse("NZD 1000.00"));
+                                             add(Money.parse("NZD 100.00"));
                                          }},
                                          tempOrder.getDateTimeProcessed(),
                                          tempOrder.getId());

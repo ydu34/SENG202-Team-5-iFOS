@@ -146,8 +146,9 @@ public class OrderController extends GeneralController {
 
             for (MenuItem item : sortedItems) {
                 Button tempButton = new Button(item.getItemName());
-                tempButton.setPrefWidth(136);
-                tempButton.setPrefHeight(50);
+                tempButton.setStyle("-fx-font-size: 20; ");
+                tempButton.setPrefWidth(260);
+                tempButton.setPrefHeight(100);
                 tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
                 buttons.add(tempButton);
             }
