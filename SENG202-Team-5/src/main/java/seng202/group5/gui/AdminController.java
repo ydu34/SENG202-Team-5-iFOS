@@ -294,7 +294,6 @@ public class AdminController extends GeneralController {
             Parent root = loader.load();
 
             AddRecipeController controller = loader.getController();
-            System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
 
@@ -330,7 +329,6 @@ public class AdminController extends GeneralController {
                 Parent root = loader.load();
 
                 AddRecipeController controller = loader.getController();
-                System.out.println(getAppEnvironment());
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.pseudoInitialize();
                 controller.setMenuItem(selectedItem);

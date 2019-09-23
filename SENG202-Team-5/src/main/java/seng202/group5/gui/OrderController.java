@@ -221,7 +221,6 @@ public class OrderController extends GeneralController {
 
         populateTilePane(filteredMenuItems);
 
-        System.out.println(filteredMenuItems);
         return filteredMenuItems;
 
     }

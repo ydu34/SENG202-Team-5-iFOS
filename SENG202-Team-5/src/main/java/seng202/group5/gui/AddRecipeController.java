@@ -108,7 +108,6 @@ public class AddRecipeController extends GeneralController {
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
             item.setMarkupCost(markupPrice);
             totalCostText.setText(item.calculateFinalCost().toString());
-            System.out.println(item.calculateFinalCost().toString());
         } catch(Exception e) {
             markupCostWarningText.setText("Invalid value");
         }

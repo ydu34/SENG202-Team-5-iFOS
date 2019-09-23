@@ -83,11 +83,7 @@ public class InvoiceController extends GeneralController {
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
-
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-
-        System.out.println("table_view" + currentOrderTable.getItems());
-
         itemPriceCol.setCellValueFactory(data -> {
                                              int quantity = orderItemsMap.get(data.getValue());
                                              Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
@@ -112,7 +108,6 @@ public class InvoiceController extends GeneralController {
             if (getAppEnvironment().getOrderManager().getOrder().getTotalCost().equals(Money.parse("NZD 0.00"))) {
                 throw new NoOrderException("No order exists to get");
             } else {
-                System.out.println((getAppEnvironment().getOrderManager().getOrder().getTotalCost()));
                 try {
                     Order order = getAppEnvironment().getOrderManager().getOrder();
                     ArrayList<Money> change = getAppEnvironment().confirmPayment(payment);
