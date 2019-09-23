@@ -199,7 +199,7 @@
         </rowConstraints>
          <children>
              <Button fx:id="launchOrderScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order" GridPane.hgrow="ALWAYS" />
-             <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+             <Button disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
              <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
              <Button fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
              <Button fx:id="launchAdminScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchAdminScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
