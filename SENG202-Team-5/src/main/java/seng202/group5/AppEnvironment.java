@@ -4,14 +4,17 @@ import org.joda.money.Money;
 import org.xml.sax.SAXException;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.logic.Order;
-import seng202.group5.logic.*;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.logic.*;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
@@ -81,7 +84,7 @@ public class AppEnvironment {
         ClassLoader classLoader = getClass().getClassLoader();
         //Setup schema validator
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema(new File(classLoader.getResource("schema/" + schemaFileName).getFile()));
+        Schema schema = sf.newSchema( new StreamSource(getClass().getClassLoader().getResourceAsStream("schema/" + schemaFileName)));
         jaxbUnmarshaller.setSchema(schema);
 
         o = c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + "/" + fileName)));
