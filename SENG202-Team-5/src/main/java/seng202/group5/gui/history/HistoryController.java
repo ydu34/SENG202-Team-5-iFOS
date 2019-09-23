@@ -65,6 +65,9 @@ public class HistoryController extends GeneralController {
     private TableColumn<Order, String> rowOrder;
 
     @FXML
+    private TableColumn<Order, String> rowCost;
+
+    @FXML
     private TableColumn<Order, Button> rowAction;
 
     /**
@@ -89,7 +92,12 @@ public class HistoryController extends GeneralController {
             time = time.minusNanos(time.getNano());
             return new ReadOnlyStringWrapper(time.toString());
         });
-        rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        rowOrder.setCellValueFactory(cellData -> {
+            String output = cellData.getValue().printReceipt();
+            output = output.replace("\n", ", ");
+            return new ReadOnlyStringWrapper(output);
+        });
+        rowCost.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
             Button refundButton = new Button("Refund");
