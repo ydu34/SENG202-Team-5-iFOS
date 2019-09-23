@@ -24,7 +24,7 @@ public class RecipeTest {
     @BeforeEach
     public void setUp() {
         ingredientInfo = new HashSet<>() {{
-        add(DietEnum.GLUTEN_FREE); }};
+            add(DietEnum.GLUTEN_FREE); }};
         testRecipe = new Recipe("Chicken burger", "Steps to chicken burger");
         chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
     }

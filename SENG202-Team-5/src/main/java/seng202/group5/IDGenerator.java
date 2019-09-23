@@ -42,11 +42,11 @@ public class IDGenerator {
         id = Integer.parseInt(lastID);
     }
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public static void setId(int id) {
         IDGenerator.id = id;
     }
 
