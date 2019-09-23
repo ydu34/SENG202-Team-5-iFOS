@@ -2,6 +2,7 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;

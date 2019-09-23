@@ -1,7 +1,6 @@
 package seng202.group5.information;
 
 import org.joda.money.Money;
-import seng202.group5.DietEnum;
 import seng202.group5.IDGenerator;
 import seng202.group5.adapters.MoneyAdapter;
 
@@ -183,6 +182,16 @@ public class Ingredient {
      */
     public HashSet<DietEnum> getDietInfo() {
         return dietaryInformation;
+    }
+
+    /**
+     * Gets the hashcode of this ingredient
+     *
+     * @return the hashcode of this ingredient
+     */
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     /**

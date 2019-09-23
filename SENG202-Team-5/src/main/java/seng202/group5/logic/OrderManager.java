@@ -1,6 +1,5 @@
 package seng202.group5.logic;
 
-import seng202.group5.Order;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 

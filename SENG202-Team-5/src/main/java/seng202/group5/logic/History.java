@@ -1,6 +1,5 @@
 package seng202.group5.logic;
 
-import seng202.group5.Order;
 import seng202.group5.exceptions.NoPastOrderException;
 
 import javax.xml.bind.annotation.XmlAccessType;

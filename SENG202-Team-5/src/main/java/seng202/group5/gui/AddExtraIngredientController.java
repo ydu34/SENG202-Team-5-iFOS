@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import seng202.group5.Order;
+import seng202.group5.logic.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;

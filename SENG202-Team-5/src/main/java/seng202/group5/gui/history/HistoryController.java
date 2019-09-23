@@ -14,8 +14,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
-import seng202.group5.*;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.logic.Order;
 import seng202.group5.information.Transaction;
 
 import java.io.IOException;
