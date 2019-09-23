@@ -50,9 +50,6 @@ public class Ingredient {
      */
     private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
-    Ingredient() {
-    }
-
     public Ingredient(String tempName, String tempCategory, Money tempPrice) {
         name = tempName;
         category = tempCategory;
@@ -213,14 +210,29 @@ public class Ingredient {
         return price;
     }
 
+    /**
+     * Gets the id of this ingredient
+     *
+     * @return The id of this ingredient
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets the id of this ingredient
+     *
+     * @param id The new id of this ingredient
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Gets the price of this ingredient
+     *
+     * @return The price of this ingredient
+     */
     public Money getPrice() {
         return price;
     }
