@@ -121,6 +121,7 @@ public class AdminController extends GeneralController {
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        itemTable.getItems().clear();
         itemTable.setItems(items);
     }
 
@@ -338,7 +339,7 @@ public class AdminController extends GeneralController {
                 stage.initOwner(addButton.getScene().getWindow());
 
                 stage.showAndWait();
-                pseudoInitialize();
+                recipeTableInitialize();
             } catch (IOException e) {
                 e.printStackTrace();
             }
