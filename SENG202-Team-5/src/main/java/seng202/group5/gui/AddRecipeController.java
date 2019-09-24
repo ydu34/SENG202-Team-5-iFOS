@@ -96,7 +96,7 @@ public class AddRecipeController extends GeneralController {
     }
 
     /**
-     * Saves the recipe into the systems menu and closes the add recipe window.
+     * Saves the item into the system and close this window.
      */
     public void saveRecipe() {
         try {
@@ -105,12 +105,20 @@ public class AddRecipeController extends GeneralController {
             closeScreen();
         } catch (NumberFormatException e) {
             markupCostWarningText.setText("Invalid value");
+        } catch (IllegalArgumentException e) {
+            markupCostWarningText.setText("make sure there are no spaces");
         } catch (Exception e) {
             itemNameWarningText.setText("Invalid name");
         }
     }
 
-    public void saveTextFieldValues() throws NumberFormatException, Exception{
+    /**
+     * Saves the values in the text fields into the item.
+     * @throws NumberFormatException Thrown when the mark up price is negative
+     * @throws IllegalArgumentException Thrown when the mark up price is illegal
+     * @throws Exception Thrown when the name is null or ""
+     */
+    public void saveTextFieldValues() throws NumberFormatException, IllegalArgumentException, Exception{
         String name = nameField.getText();
         String markupPriceStr = markupCostField.getText();
         item.setType(menuTypeComboBox.getSelectionModel().getSelectedItem());
@@ -132,9 +140,14 @@ public class AddRecipeController extends GeneralController {
             }
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException();
         }
     }
 
+    /**
+     * Compute the total cost of the menu item and display to the user.
+     */
     public void computeTotalCost() {
         markupCostWarningText.setText("");
         String markupPriceStr = markupCostField.getText();
@@ -146,10 +159,11 @@ public class AddRecipeController extends GeneralController {
             } else {
                 item.setMarkupCost(markupPrice);
                 totalCostText.setText(item.calculateFinalCost().toString());
-                System.out.println(item.calculateFinalCost().toString());
             }
         } catch (NumberFormatException e) {
             markupCostWarningText.setText("Invalid value");
+        } catch (IllegalArgumentException e) {
+            markupCostWarningText.setText("make sure there are no spaces");
         }
     }
 
@@ -215,6 +229,9 @@ public class AddRecipeController extends GeneralController {
         totalCostText.setText(item.calculateFinalCost().toString());
     }
 
+    /**
+     * Initializes the combo box containing the menu item types.
+     */
     public void initializeTypeComboBox() {
         ObservableList<TypeEnum> typeEnumOptions =
                 FXCollections.observableArrayList(
