@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * A controller for managing the invoice screen
+ * @author Tasman Berry, Shivin Gaba
  */
 public class InvoiceController extends GeneralController {
 

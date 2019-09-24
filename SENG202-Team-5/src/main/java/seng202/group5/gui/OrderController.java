@@ -24,7 +24,8 @@ import seng202.group5.information.Recipe;
 import java.util.*;
 
 /**
- * The OrderController includes all the methods related to the every button on the order screen.
+ * This controller handles all the functionality with the making a new order or
+ * editing an existing order.
  *
  * @author Shivin Gaba
  */
@@ -129,10 +130,20 @@ public class OrderController extends GeneralController {
         });
     }
 
+    /**
+     * This function sorts the menu item by its price
+     * @param event
+     */
+
     public void sortItemsPrice(ActionEvent event) {
         sortingType = SORT_TYPE.PRICE;
         filterItems();
     }
+
+    /**
+     * Tis function sorts the menu items by its name
+     * @param event
+     */
 
     public void sortItemsName(ActionEvent event) {
         sortingType = SORT_TYPE.NAME;
@@ -173,6 +184,10 @@ public class OrderController extends GeneralController {
         PRICE
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<MenuItem> filterItems() {
         ArrayList<MenuItem> filteredMenuItems = new ArrayList<>();
         if (allItems != null) {
