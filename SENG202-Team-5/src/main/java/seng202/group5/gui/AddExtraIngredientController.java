@@ -97,7 +97,6 @@ public class AddExtraIngredientController extends GeneralController {
      * Creates the spinners that contain the ingredient objects.
      * Modified from dzim's code at:
      * https://stackoverflow.com/questions/36326058/javafx-how-to-programmatically-change-items-of-combobox-in-tablecell
-     * @author dzim
      */
     public void initializeSpinners() {
         columnSpinner.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getName()));

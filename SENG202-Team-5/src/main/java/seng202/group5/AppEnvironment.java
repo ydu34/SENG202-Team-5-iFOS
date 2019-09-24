@@ -135,6 +135,11 @@ public class AppEnvironment {
         }
     }
 
+    /**
+     * Gets the stock.xml from fileDirectory and unmarshal it to an object.
+     * @param fileDirectory The directory of the stock.xml
+     * @throws Exception throws exception if stock.xml is invalid
+     */
     public void stockXmlToObject(String fileDirectory) throws Exception {
         try {
             stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", "stock.xsd", fileDirectory);
@@ -144,6 +149,11 @@ public class AppEnvironment {
         }
     }
 
+    /**
+     * Gets the history.xml from fileDirectory and unmarshal it to an object.
+     * @param fileDirectory The directory of the history.xml
+     * @throws Exception throws exception if history.xml is invalid
+     */
     public void historyXmlToObject(String fileDirectory) throws Exception{
         try {
             history = (History) xmlToObject(History.class, history, "history.xml", "history.xsd", fileDirectory);
@@ -153,6 +163,11 @@ public class AppEnvironment {
         }
     }
 
+    /**
+     * Gets the finance.xml from fileDirectory and unmarshal it to an object.
+     * @param fileDirectory The directory of the finance.xml
+     * @throws Exception throws exception if finance.xml is invalid
+     */
     public void financeXmlToObject(String fileDirectory) throws Exception{
         try {
             finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", "finance.xsd", fileDirectory);
@@ -161,6 +176,11 @@ public class AppEnvironment {
         }
     }
 
+    /**
+     * Gets the menu.xml from fileDirectory and unmarshal it to an object.
+     * @param fileDirectory The directory of the menu.xml
+     * @throws Exception throws exception if menu.xml is invalid
+     */
     public void menuXmlToObject(String fileDirectory) throws Exception{
         try {
             menuManager = (MenuManager) xmlToObject(MenuManager.class, menuManager, "menu.xml", "menu.xsd", fileDirectory);
@@ -170,6 +190,11 @@ public class AppEnvironment {
         }
     }
 
+    /**
+     * Converts all relevant stored data in the system to xml files
+     * @param fileDirectory The destination directory for the xml files
+     * @throws Exception throws exception if failed to export data to xml
+     */
     public void allObjectsToXml(String fileDirectory) throws Exception{
         try {
             objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
