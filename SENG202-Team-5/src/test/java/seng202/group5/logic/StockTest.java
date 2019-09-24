@@ -1,4 +1,4 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,6 +83,18 @@ public class StockTest {
 
         assertTrue(stock.getIngredients().get("ID") == newstock.getIngredients().get("ID"));
         assertTrue(stock.getIngredientStock().get("ID") == newstock.getIngredientStock().get("ID"));
+    }
+
+    @Test
+    public void testRemoveIngredient() {
+        assertTrue(stock.getIngredientStock().isEmpty());
+        Ingredient tempIngredient = new Ingredient("Beef", "Meat", "ABC123", Money.parse("NZD 10.0"));
+        stock.addNewIngredient(tempIngredient);
+        assertFalse(stock.getIngredientStock().isEmpty());
+        stock.removeIngredient("ABC123");
+        assertNull(stock.getIngredientFromID("ABC123"));
+        assertNull(stock.getIngredientStock().get("ABC123"));
+
     }
 
 }

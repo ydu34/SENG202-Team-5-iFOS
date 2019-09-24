@@ -8,9 +8,7 @@ import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
-import seng202.group5.logic.History;
-import seng202.group5.logic.MenuManager;
-import seng202.group5.logic.Stock;
+
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -75,44 +73,6 @@ class AppEnvironmentTest {
         }
     }
 
-    /**
-     * Please do not touch my test case.
-     */
-    @Test
-    void test() {
-        Ingredient ing1 = new Ingredient("Milk",  "Liquid", "1", Money.parse("NZD 4.0"));
-        Ingredient ing2 = new Ingredient("Apple", "Fruit", "2", Money.parse("NZD 1.0"));
-
-        Stock stock = handler.getStock();
-        stock = new Stock();
-        stock.getIngredients().put("1", ing1);
-        stock.getIngredients().put("2", ing2);
-
-        handler.objectToXml(Stock.class, stock, "stockTest.xml", testDirectory);
-        handler.setStock(stock);
-
-        MenuManager menuManager = new MenuManager();
-        menuManager.setItemMap(new HashMap<String, MenuItem>());
-        menuManager.getItemMap().put("1", cheeseBurger);
-
-
-        handler.objectToXml(MenuManager.class, menuManager, "menuTest.xml", testDirectory);
-        HashMap<String, MenuItem> menuItems = menuManager.getItemMap();
-        handler.handleMenu(menuItems);
-        System.out.print(menuItems.get("1").getRecipe().getIngredientsAmount());
-    }
-
-    @Test
-    void testHistoryObjectToXml() {
-        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
-        orderItems.put(cheeseBurger, 1);
-        Order order = new Order(orderItems, cheeseBurger.calculateFinalCost(), "1");
-        History history = new History();
-        history.getTransactionHistory().put("1", order);
-        handler.objectToXml(History.class, history, "historyTest.xml", testDirectory);
-    }
-
-
     @Test
     public void testConfirmPaymentWithOrder() { // Need recipe and finance to be implemented properly
         Money changeSum = Money.parse("NZD 0");
@@ -145,5 +105,18 @@ class AppEnvironmentTest {
         paymentAmount.add(cheeseBurger.calculateFinalCost());
         paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
         assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
+    }
+
+    @Test
+    void testConfirmPaymentWithoutOrder() {
+        handler.getOrderManager().setCurrentOrder(null);
+
+        ArrayList<Money> paymentAmount = new ArrayList<>();
+
+        try {
+            handler.getOrderManager().getOrder();
+        } catch (NoOrderException e) {
+            assertTrue(e.getMessage() == "No order exists to get");
+        }
     }
 }

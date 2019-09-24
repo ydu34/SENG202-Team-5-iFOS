@@ -22,6 +22,7 @@ public class Stock {
     /**
      * The builder for the Stock object.
      *
+     * @param tempIngredients     A mapping from the ID of each ingredient to their instance
      * @param tempIngredientStock An initial stock for the object, leave empty if there is none.
      */
     public Stock(HashMap<String, Ingredient> tempIngredients, HashMap<String, Integer> tempIngredientStock) {
@@ -49,7 +50,17 @@ public class Stock {
         } else {
             ingredients.put(ingredient.getID(), ingredient);
             ingredientStock.put(ingredient.getID(), quantity);
+
         }
+    }
+
+    /**
+     * Removes an ingredient with the same ID.
+     * @param id The ID of the ingredient you want to remove.
+     */
+    public void removeIngredient(String id) {
+        ingredients.remove(id);
+        ingredientStock.remove(id);
     }
 
     /**
@@ -110,10 +121,19 @@ public class Stock {
         return ingredientStock.getOrDefault(id, 0);
     }
 
+    /**
+     * Returns the ingredients with their respective IDs.
+     * @return A HashMap of current ingredients.
+     */
     public HashMap<String, Ingredient> getIngredients() {
         return ingredients;
     }
 
+    /**
+     * Gets an ingredient from an ID.
+     * @param id the ID of the ingredient.
+     * @return The ingredient with the same ID.
+     */
     public Ingredient getIngredientFromID(String id) {
         return ingredients.getOrDefault(id, null);
     }

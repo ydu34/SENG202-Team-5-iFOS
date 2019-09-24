@@ -3,6 +3,7 @@ package seng202.group5.logic;
 import org.joda.money.Money;
 import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
 
 import javax.xml.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Finance class records order history, refunds past orders and calculates change.
@@ -105,9 +107,10 @@ public class Finance {
      *
      * @param startDate the first date to search from
      * @param endDate   the last date to search to
+     * @param historyItems the orders in the history
      * @return a list of Money representing total profits, average profits, and other things
      */
-    public ArrayList<Money> totalCalculator(LocalDateTime startDate, LocalDateTime endDate) {
+    public ArrayList<Money> totalCalculator(LocalDateTime startDate, LocalDateTime endDate, HashMap<String, Order> historyItems) {
         Money total = Money.parse("NZD 0");
         for (Transaction order : transactionHistory.values()) {
             if (order.getDateTime().compareTo(startDate) >= 0 &&
@@ -121,8 +124,31 @@ public class Finance {
 
         long daysBetween = ChronoUnit.DAYS.between(startDate.toLocalDate(), endDate.toLocalDate()) + 1;
         totals.add(total.dividedBy(daysBetween, RoundingMode.DOWN));
+
+        if (historyItems != null) {
+            HashMap<String, Order> newHistoryItems = new HashMap<>(historyItems);
+            for (Map.Entry<String, Order> entry : historyItems.entrySet()) {
+                if (!(entry.getValue().getDateTimeProcessed() != null &&
+                        entry.getValue().getDateTimeProcessed().isBefore(endDate) &&
+                        entry.getValue().getDateTimeProcessed().isAfter(startDate))) {
+                    newHistoryItems.remove(entry.getKey());
+                }
+            }
+            Money totalProfits = Money.parse("NZD 0.00");
+            for (Transaction transaction : transactionHistory.values()) {
+                if (transaction.getOrderID() != null && newHistoryItems.containsKey(transaction.getOrderID())) {
+                    totalProfits = totalProfits.plus(transaction.getTotalPrice());
+                    for (Map.Entry<MenuItem, Integer> entry : newHistoryItems.get(transaction.getOrderID()).getOrderItems().entrySet()) {
+                        totalProfits = totalProfits.minus(entry.getKey().calculateMakingCost().multipliedBy(entry.getValue()));
+                    }
+                }
+            }
+            totals.add(totalProfits);
+            totals.add(totalProfits.dividedBy(daysBetween, RoundingMode.DOWN));
+        }
         return totals;
     }
+
     /**
      * returns a list containing the change need to be returned
      *
@@ -135,7 +161,6 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
         change = change.plus(Money.parse("NZD 0.03"));
 
-        Money minimin = Money.parse("NZD 0.09");
         for (Money value: denomination)
         {
             while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {

@@ -110,7 +110,7 @@ public class MoneyStepDefs {
 
     @When("Sales data is viewed")
     public void salesDataIsViewed() {
-        salesData = finance.totalCalculator(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
+        salesData = finance.totalCalculator(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), null);
     }
 
     @Then("Order is in sales data")

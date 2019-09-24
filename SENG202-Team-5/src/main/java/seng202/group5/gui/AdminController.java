@@ -1,5 +1,6 @@
 package seng202.group5.gui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,14 +15,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import org.xml.sax.SAXException;
+import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -35,6 +35,7 @@ import java.util.Map;
 
 /**
  * A controller for managing the administration screen
+ *
  * @author Yu Duan
  */
 public class AdminController extends GeneralController {
@@ -46,7 +47,7 @@ public class AdminController extends GeneralController {
     private DatePicker endDate;
 
     @FXML
-    private TextArea saleSummaryText;
+    private Label saleSummaryText;
 
     @FXML
     private Button exportDataButton;
@@ -93,10 +94,22 @@ public class AdminController extends GeneralController {
     private TableColumn<MenuItem, String> nameCol;
 
     @FXML
-    private TableColumn dietaryCol;
+    private TableColumn<MenuItem, String> dietaryCol;
 
     @FXML
     private TableColumn<MenuItem, String> sellingPriceCol;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button modifyButton;
+
+    @FXML
+    private Text infoText;
+
+    @FXML
+    private Text warningText;
 
     private FileChooser fileChooser;
 
@@ -109,14 +122,46 @@ public class AdminController extends GeneralController {
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
+        checkIfOrderInProgress();
         fileMap = new HashMap<>();
+        viewHistory();
     }
+
+    /**
+     * If an order is in progress disable buttons on admin scree.
+     */
+    public void checkIfOrderInProgress() {
+        try {
+            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+                infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
+                warningText.setText("Can not Import/Export data when Order is in progress.");
+                selectFinanceButton.setDisable(true);
+                selectHistoryButton.setDisable(true);
+                selectMenuButton.setDisable(true);
+                selectStockButton.setDisable(true);
+                exportDataButton.setDisable(true);
+                addButton.setDisable(true);
+                modifyButton.setDisable(true);
+                deleteButton.setDisable(true);
+            }
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void recipeTableInitialize() {
         ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("markupCost"));
+        dietaryCol.setCellValueFactory(cellData -> {
+
+            String string = cellData.getValue().getRecipe().getDietaryInformationString();
+
+            return new SimpleStringProperty(string);
+        });
+        sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        itemTable.getItems().clear();
         itemTable.setItems(items);
     }
 
@@ -142,14 +187,21 @@ public class AdminController extends GeneralController {
             sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
         }
         if (!eDate.isBefore(sDate)) {
-            ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
-            saleSummaryText.setText("Total cost of orders: " + result.get(0) + "\nAverage daily cost: " + result.get(1));
+            ArrayList<Money> result = finance.totalCalculator(sDate, eDate, getAppEnvironment().getHistory().getTransactionHistory());
+            saleSummaryText.setText("Total cost of orders: " + result.get(0) +
+                    "\nAverage daily cost: " + result.get(1) +
+                    "\nTotal profits: " + result.get(2) +
+                    "\nAverage daily profits: " + result.get(3));
         } else {
             saleSummaryText.setText("End date is before start date");
         }
 
     }
 
+    /**
+     * Gets the file that the user selects, limits the user to only select xml files
+     * @return the selected file from the file chooser.
+     */
     public File getSelectedFile() {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
@@ -159,6 +211,13 @@ public class AdminController extends GeneralController {
 
     }
 
+    /**
+     * Compares the xml file name with the selected file name to see if the correct file
+     * is selected.
+     * @param xmlFileName The name of the xml file with .xml
+     * @param selectedFile  The selected file that the user selects
+     * @return whether or not the correct file is selected
+     */
     public boolean checkSelectedFile(String xmlFileName, File selectedFile) {
         boolean correct = false;
         if (selectedFile != null) {
@@ -170,6 +229,11 @@ public class AdminController extends GeneralController {
         return correct;
     }
 
+    /**
+     * Checks if the number of files selected by the user is four, if it is
+     * it means that all xml files are selected and ready to be imported.
+     * Therefore enable the import data button for the user to click.
+     */
     public void checkFilesSelected() {
         if (fileMap.size()==4) {
             importDataButton.setDisable(false);
@@ -178,6 +242,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Action for the select stock button to add the selected file to the list of files
+     * if it is stock.xml otherwise tell the user it is invalid.
+     */
     public void selectStock() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("stock.xml", selectedFile)) {
@@ -185,10 +253,14 @@ public class AdminController extends GeneralController {
             stockWarningText.setText("stock.xml selected");
             checkFilesSelected();
         } else {
-            stockWarningText.setText("invalid file selected");
+            stockWarningText.setText("Invalid file selected");
         }
     }
 
+    /**
+     * Action for the select menu button to add the selected file to the list of files
+     * if it is menu.xml otherwise tell the user it is invalid.
+     */
     public void selectMenu() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("menu.xml", selectedFile)) {
@@ -196,11 +268,15 @@ public class AdminController extends GeneralController {
             menuWarningText.setText("menu.xml selected");
             checkFilesSelected();
         } else {
-            menuWarningText.setText("invalid file selected");
+            menuWarningText.setText("Invalid file selected");
         }
 
     }
 
+    /**
+     * Action for the select history button to add the selected file to the list of files
+     * if it is history.xml otherwise tell the user it is invalid.
+     */
     public void selectHistory() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("history.xml", selectedFile)) {
@@ -212,6 +288,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Action for the select finance button to add the selected file to the list of files
+     * if it is finance.xml otherwise tell the user it is invalid.
+     */
     public void selectFinance() {
         File selectedFile = getSelectedFile();
         if (checkSelectedFile("finance.xml", selectedFile)) {
@@ -223,6 +303,10 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Gets all the xml files in the hashmap and unmarshal the xml files to objects.
+     * If the files are corrupted or invalid, the user is notified.
+     */
     public void importData() {
         Stock oldStock = getAppEnvironment().getStock();
         MenuManager oldMenu = getAppEnvironment().getMenuManager();
@@ -252,19 +336,59 @@ public class AdminController extends GeneralController {
             Parent root = loader.load();
 
             AddRecipeController controller = loader.getController();
-            System.out.println(getAppEnvironment());
             controller.setAppEnvironment(getAppEnvironment());
-            controller.setParentController(this);
             controller.pseudoInitialize();
 
             Stage stage = new Stage();
             stage.setTitle("Add a Recipe");
-            stage.setScene(new Scene(root, 600, 600));
+            stage.setScene(new Scene(root, 800, 600));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addButton.getScene().getWindow());
-            stage.show();
+
+            stage.showAndWait();
+            pseudoInitialize();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Action for deleteButton, deletes the selected item from the menu.
+     */
+    public void deleteSelectedItem() {
+        MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            getAppEnvironment().getMenuManager().removeItem(selectedItem.getID());
+            recipeTableInitialize();
+        }
+    }
+
+    /**
+     * Action for modifyButton, opens a new window for the use to modify the menu item.
+     */
+    public void modifySelectedItem() {
+        MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addRecipe.fxml"));
+                Parent root = loader.load();
+
+                AddRecipeController controller = loader.getController();
+                controller.setAppEnvironment(getAppEnvironment());
+                controller.pseudoInitialize();
+                controller.setMenuItem(selectedItem);
+
+                Stage stage = new Stage();
+                stage.setTitle("Add a Recipe");
+                stage.setScene(new Scene(root, 800, 600));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(addButton.getScene().getWindow());
+
+                stage.showAndWait();
+                recipeTableInitialize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -277,10 +401,12 @@ public class AdminController extends GeneralController {
         File selectedDirectory = directoryChooser.showDialog(null);
 
         if (selectedDirectory != null) {
-            System.out.println(selectedDirectory.getAbsolutePath());
-            getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
-        } else {
-            System.out.println("No directory selected");
+            try {
+                getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
+                fileNotificationText.setText("All files successfully exported!");
+            } catch (Exception e) {
+                fileNotificationText.setText("Files failed to export, please try again.");
+            }
         }
 
     }

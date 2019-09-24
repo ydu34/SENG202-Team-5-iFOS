@@ -4,25 +4,23 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.joda.money.Money;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
-import seng202.group5.Order;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * A controller for managing the invoice screen
+ * @author Tasman Berry, Shivin Gaba
  */
 public class InvoiceController extends GeneralController {
 
@@ -45,19 +43,21 @@ public class InvoiceController extends GeneralController {
     private TableColumn<MenuItem, String> itemNameCol;
 
     @FXML
+    private Button removeItem;
+
+    @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
 
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
-
-    @FXML
-    private Button eftposButton;
 
     private ArrayList<Money> payment = new ArrayList<>();
 
     private Money total = Money.parse("NZD 0");
 
     private Order currentOrder;
+
+    private boolean someOrder;
 
     private Map<MenuItem, Integer> orderItemsMap;
 
@@ -67,13 +67,20 @@ public class InvoiceController extends GeneralController {
     public void pseudoInitialize() {
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            removeItem.setDisable(true);
         } catch (NoOrderException ignored) {
         }
         Money totalCost = currentOrder.getTotalCost();
 
         totalCostDisplay.setText("Total Cost: "+ totalCost);
         currentOrderTable();
-        eftposButton.setDisable(true);
+
+        currentOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if(newSelection != null){
+                removeItem.setDisable(false);
+            }
+        });
+
     }
 
     /**
@@ -83,14 +90,10 @@ public class InvoiceController extends GeneralController {
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
-
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-
-        System.out.println("table_view" + currentOrderTable.getItems());
-
         itemPriceCol.setCellValueFactory(data -> {
                                              int quantity = orderItemsMap.get(data.getValue());
-                                             Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
+            Money totalPrice = data.getValue().calculateFinalCost().multipliedBy(quantity);
                                              return new SimpleStringProperty(totalPrice.toString());
                                          }
         );
@@ -112,28 +115,34 @@ public class InvoiceController extends GeneralController {
             if (getAppEnvironment().getOrderManager().getOrder().getTotalCost().equals(Money.parse("NZD 0.00"))) {
                 throw new NoOrderException("No order exists to get");
             } else {
-                System.out.println((getAppEnvironment().getOrderManager().getOrder().getTotalCost()));
-                try {
+                Money totalPayment = Money.parse("NZD 0.00");
+                for (Money money : payment) {
+                    totalPayment = totalPayment.plus(money);
+                }
+                if (!(getAppEnvironment().getOrderManager().getOrder().getTotalCost()).isGreaterThan(totalPayment)) {
                     Order order = getAppEnvironment().getOrderManager().getOrder();
-                    ArrayList<Money> change = getAppEnvironment().confirmPayment(payment);
-                    StringBuilder display = new StringBuilder();
-                    Money totalChange = Money.parse("NZD 0.00");
-                    Money totalPayment = Money.parse("NZD 0.00");
-                    for (Money money : change) {
-                        display.append(money).append("\n");
-                        totalChange = totalChange.plus(money);
-                    }
-                    for (Money money : payment) {
-                        totalPayment = totalPayment.plus(money);
-                    }
-                    changeDisplay.setText(display.toString());
-                    if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
-                        totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
-                    } else {
-                        totalChangeDisplay.setText("Change: " + totalChange);
+                    ArrayList<Money> change;
+                    try {
+                        change = getAppEnvironment().confirmPayment(payment);
+                        StringBuilder display = new StringBuilder();
+                        Money totalChange = Money.parse("NZD 0.00");
+                        for (Money money : change) {
+                            display.append(money).append("\n");
+                            totalChange = totalChange.plus(money);
+                        }
+                        changeDisplay.setText(display.toString());
+                        if (totalPayment.minus(totalChange).minus(order.getTotalCost()).isGreaterThan(Money.parse("NZD 0.00"))) {
+                            totalChangeDisplay.setText("Change: " + totalChange + "\nMissing Change: " + totalPayment.minus(totalChange).minus(order.getTotalCost()));
+                        } else {
+                            totalChangeDisplay.setText("Change: " + totalChange);
+                        }
+                    } catch (InsufficientCashException e) {
+                        changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
                     }
 
-                } catch (InsufficientCashException e) {
+
+
+                } else {
                     changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
 
                 }
@@ -146,10 +155,6 @@ public class InvoiceController extends GeneralController {
 
     }
 
-
-    public void editItem(){
-
-    }
 
     /**
      * Resets the list containing the currently given denominations
@@ -179,11 +184,31 @@ public class InvoiceController extends GeneralController {
      */
     @FXML
     private void cancelOrder() {
-//        clearPayment();
-//        totalCost = Money.parse("NZD 0");
-//        totalCostDisplay.setText("Total Cost: "+ totalCost);
-        super.getAppEnvironment().getOrderManager().newOrder();
+
+        try {
+
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrder.resetStock(getAppEnvironment().getStock());
+            currentOrder.clearItemsInOrder();
+        } catch (NoOrderException ignored) {
+
+        }
         pseudoInitialize();
+    }
+
+    /**
+     * This function removes the selected menu item from the current order
+     * @param actionEvent
+     */
+    @FXML
+    private void deleteRowFromTable(javafx.event.ActionEvent actionEvent ) {
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if(someOrder == true){
+            removeItem.setDisable(false);
+        }
+        System.out.println(someOrder);
+
     }
 
     @FXML

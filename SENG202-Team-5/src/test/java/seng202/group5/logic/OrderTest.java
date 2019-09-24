@@ -1,8 +1,10 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -61,7 +63,6 @@ public class OrderTest {
         assertEquals(order.getStock().getIngredientQuantity("ABC123"), 0);
 
         assertFalse(order.addItem(item, 1));
-        System.out.println(order.getOrderItems());
     }
 
 
@@ -127,4 +128,23 @@ public class OrderTest {
         assertFalse(order.modifyItemQuantity(temp, 3));
     }
 
+    @Test
+    public void testClearItems() {
+        MenuItem item = new MenuItem();
+        order.addItem(item, 2);
+
+        assertFalse(order.getOrderItems().isEmpty());
+
+        order.clearItemsInOrder();
+
+        assertTrue(order.getOrderItems().isEmpty());
+    }
+
+    @Test
+    public void testPrintReceipt() {
+        MenuItem item = new MenuItem();
+
+        order.addItem(item, 3);
+        assertEquals("3 (s) - NZD 0.00\nTotal cost - NZD 0.00", order.printReceipt());
+    }
 }

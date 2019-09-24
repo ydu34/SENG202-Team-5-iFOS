@@ -3,8 +3,6 @@
 
   <xs:element name="finance" type="finance"/>
 
-  <xs:element name="idGenerator" type="idGenerator"/>
-
   <xs:element name="till" type="till"/>
 
   <xs:element name="transaction" type="transaction"/>
@@ -39,16 +37,9 @@
       <xs:element name="datetime" type="xs:string" minOccurs="0"/>
       <xs:element name="change" type="xs:string" minOccurs="0"/>
       <xs:element name="totalPrice" type="xs:string" minOccurs="0"/>
-      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="transactionID" type="xs:string" minOccurs="0"/>
       <xs:element name="refunded" type="xs:boolean" minOccurs="0"/>
       <xs:element name="orderID" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="idGenerator">
-    <xs:sequence>
-      <xs:element name="id" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 

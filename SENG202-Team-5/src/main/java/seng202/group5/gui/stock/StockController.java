@@ -1,4 +1,4 @@
-package seng202.group5.gui;
+package seng202.group5.gui.stock;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 
 import java.io.IOException;
@@ -40,6 +42,8 @@ public class StockController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, String> rowCategory;
 
+    @FXML TableColumn<Ingredient, String> rowCost;
+
     @FXML
     private Button addButton;
 
@@ -59,7 +63,12 @@ public class StockController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        stockTable.getItems().clear();
         warningLabel.setText("");
+        addButton.setDisable(false);
+        modifyButton.setDisable(false);
+        removeButton.setDisable(false);
+
 
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
                 getAppEnvironment().getStock().getIngredients().values());
@@ -69,6 +78,7 @@ public class StockController extends GeneralController {
         rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         rowIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
         rowCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        rowCost.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         rowQuantity.setCellValueFactory(data -> {
             int quantity = quantities.get(data.getValue().getID());
@@ -76,6 +86,19 @@ public class StockController extends GeneralController {
         });
 
         stockTable.setItems(ingredients);
+
+        try {
+            getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
+
+            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+                warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
+                addButton.setDisable(true);
+                modifyButton.setDisable(true);
+                removeButton.setDisable(true);
+            }
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
     }
 
     public void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
@@ -124,7 +147,35 @@ public class StockController extends GeneralController {
             String quantity = quantities.get(currentSelected.getID()).toString();
             initialiseScreen("Modify " + currentSelected.getName(), currentSelected, quantity);
         } catch (Exception e) {
-            warningLabel.setText("Please select an item before modifying.");
+            warningLabel.setText("Please select an item to modify.");
+        }
+    }
+
+    @FXML
+    public void removeIngredient(ActionEvent event) {
+        try {
+            Ingredient item = stockTable.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/confirmRemove.fxml"));
+            Parent root = loader.load();
+
+            RemoveStockController controller = loader.getController();
+            controller.setIngredient(item);
+            controller.setStock(getAppEnvironment().getStock());
+
+            Stage stage = new Stage();
+            stage.setTitle("Remove Ingredient");
+            stage.setScene(new Scene(root, 400, 200));
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            controller.setAppEnvironment(getAppEnvironment());
+            controller.pseudoInitialize();
+
+            stage.showAndWait();
+
+            pseudoInitialize();
+        } catch (Exception e) {
+            warningLabel.setText("Please select an item to remove.");
         }
     }
 

@@ -1,7 +1,8 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
 import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.logic.Stock;
@@ -17,7 +18,10 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+
+import static java.lang.String.format;
 
 /**
  * The Order class keeps track of the current orders items and total cost. Contains methods to modify items to the order
@@ -94,6 +98,8 @@ public class Order {
 
     /**
      * The builder for an Order object with no initial values.
+     *
+     * @param tempStock the stock to keep track of
      */
     public Order(Stock tempStock) {
         orderItems = new HashMap<>();
@@ -135,8 +141,6 @@ public class Order {
         for (String id : listOfKeys) {
             // If we don't have enough in the Stock, we can't add it to order
             if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
-               // System.out.println("false");
-
                 return false;
             }
         }
@@ -216,6 +220,32 @@ public class Order {
         }
     }
 
+    public void clearItemsInOrder(){
+        orderItems.clear();
+        totalCost = Money.zero(CurrencyUnit.of("NZD"));
+    }
+
+    /**
+     * Prints the receipt of the order
+     *
+     * @return A string of the receipt of the order
+     */
+    public String printReceipt() {
+        StringBuilder outputString = new StringBuilder();
+        for (Map.Entry<MenuItem, Integer> entry : orderItems.entrySet()) {
+            MenuItem a = entry.getKey();
+            Integer b = entry.getValue();
+            outputString.append(format("%d %s(s) - %s\n",
+                                       b,
+                                       a.getItemName(),
+                                       a.calculateFinalCost().multipliedBy(b)));
+        }
+        outputString.append("Total cost - ");
+        outputString.append(getTotalCost());
+        return outputString.toString();
+    }
+    //TODO formalize receipt structure
+
     /**
      * Sets the stock to a clone of the specified stock
      *
@@ -230,14 +260,14 @@ public class Order {
      *
      * @return the ID of this order
      */
-    public String getID() {
+    public String getId() {
         return id;
     }
 
     /**
      * A getter for the current order list.
      *
-     * @return A HashMap<MenuItem, Integer> orderItems
+     * @return A HashMap of order items
      */
     public HashMap<MenuItem, Integer> getOrderItems() {
         return orderItems;
@@ -269,4 +299,7 @@ public class Order {
         this.dateTimeProcessed = dateProcessed;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

@@ -8,7 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import seng202.group5.Order;
+import org.joda.money.Money;
+import seng202.group5.logic.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
@@ -22,12 +23,6 @@ import java.util.*;
  * @author James Kwok
  */
 public class AddExtraIngredientController extends GeneralController {
-
-    @FXML
-    private Button confirmItemButton;
-
-    @FXML
-    private Button backButton;
 
     @FXML
     private String openMode;
@@ -58,6 +53,8 @@ public class AddExtraIngredientController extends GeneralController {
 
     @FXML
     private TableColumn<Ingredient, String> columnCategory = new TableColumn<>("category");
+    @FXML
+    private TableColumn<Ingredient, String> columnCost = new TableColumn<>("cost");
 
     @FXML
     private TableColumn<Ingredient, String> columnSpinner = new TableColumn<>("spinner");
@@ -81,14 +78,18 @@ public class AddExtraIngredientController extends GeneralController {
      * Sets up value factories in each column which take ingredients and populate the table with their data.
      */
     public void initializeColumns() {
-        HashMap<String, Integer> quantities = updatedStock.getIngredientStock();
         columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         columnQuantity.setCellValueFactory(data -> {
-            int quantity = quantities.get(data.getValue().getID());
+            int quantity = updatedStock.getIngredientStock().get(data.getValue().getID());
             return new SimpleStringProperty(Integer.toString(quantity));
+        });
+        //sets values for each ingredient cost.
+        columnCost.setCellValueFactory(data -> {
+            Money cost = updatedStock.getIngredients().get(data.getValue().getID()).getCost();
+            return new SimpleStringProperty(cost.toString());
         });
     }
 
@@ -133,7 +134,7 @@ public class AddExtraIngredientController extends GeneralController {
                         if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
                             ingredientAmountMap.remove(ingredient);
                         } else if (newValue != 0) {
-                            ingredientAmountMap.put(ingredient, newValue);
+                            selectedItem.getRecipe().addIngredient(ingredient,  newValue - oldValue);
                         }
                     });
                     setGraphic(spinner);
@@ -146,6 +147,7 @@ public class AddExtraIngredientController extends GeneralController {
     /**
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
      * Also updates the name of the item if it's ingredients are different to the unedited version.
+     * @param actionEvent an event that caused this to happen
      */
     public void updateItemIngredients(ActionEvent actionEvent) {
         if (openMode.equals("Order")) {
@@ -225,6 +227,7 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Returns to the previous screen, returning the original item as the selected item.
+     * @param actionEvent an event that caused this to happen
      */
     public void revertScreen(javafx.event.ActionEvent actionEvent) {
         if (openMode.equals("Order")) {

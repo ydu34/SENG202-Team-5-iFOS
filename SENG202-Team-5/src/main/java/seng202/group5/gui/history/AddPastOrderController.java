@@ -14,7 +14,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
-import seng202.group5.Order;
+import seng202.group5.logic.Order;
 import seng202.group5.gui.AddExtraIngredientController;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.gui.OrderController;

@@ -1,12 +1,9 @@
-package seng202.group5;
+package seng202.group5.logic;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.logic.History;
-import seng202.group5.logic.OrderManager;
-import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
@@ -44,6 +41,13 @@ public class OrderManagerTest {
 
     @Test
     public void testAddItemAddsItem() {
+        Stock stock = new Stock();
+        stock.addNewIngredient(bun, 200);
+        stock.addNewIngredient(patty, 100);
+        HashMap<String, Order> map = new HashMap<>();
+        History history = new History(map);
+        testOrderManager = new OrderManager(new Order(stock), stock, history);
+
         try {
             HashMap<MenuItem, Integer> initialOrderItems = (HashMap<MenuItem, Integer>)
                     testOrderManager.getOrder().getOrderItems().clone();
@@ -67,17 +71,6 @@ public class OrderManagerTest {
             assertNotSame(testOrder, testOrderManager.getOrder());
         } catch (NoOrderException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void testPrintReceipt() {
-        try {
-            testOrderManager.getOrder().addItem(testItem, 3);
-            assertEquals("3 Burger Item(s) - $0.00\nTotal cost - $0.00", testOrderManager.printReceipt());
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-            fail();
         }
     }
 

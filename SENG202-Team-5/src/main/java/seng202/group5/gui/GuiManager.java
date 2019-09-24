@@ -9,19 +9,20 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.DietEnum;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
  * A class that sets up the application and starts it
+ * @author Daniel Harris, Shivin Gaba, Yu Duan, James Kwok, Tasman Berry ,Michael Morgoun
  */
 public class GuiManager extends Application {
 
@@ -33,16 +34,15 @@ public class GuiManager extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("/gui/order.fxml"));
         FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/order.fxml"));
         Parent root = sampleLoader.load();
-        //primaryStage.setTitle("Selection Screen");
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
         int height = Screen.getMainScreen().getHeight();
         int width = Screen.getMainScreen().getWidth();
         primaryStage.setScene(new Scene(root, width, height));
+        primaryStage.setTitle("iFOS");
         primaryStage.show();
     }
 
@@ -53,7 +53,6 @@ public class GuiManager extends Application {
      */
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
-        addTestData(thing);
         return thing;
     }
 
@@ -65,10 +64,10 @@ public class GuiManager extends Application {
     public void addTestData(AppEnvironment environment) {
         Ingredient test = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         Stock stock = environment.getStock();
-        stock.addNewIngredient(test);
+        stock.addNewIngredient(test, 100);
         stock.modifyQuantity(test.getID(), 1);
         Recipe testRecipe = new Recipe("Chicken burger", "1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n");
-        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to make pad thai");
+        Recipe testRecipe2 = new Recipe("Vege burger", "Steps to Vege burger");
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
         }};
@@ -101,14 +100,14 @@ public class GuiManager extends Application {
         try {
             environment.getFinance().pay(tempOrder.getTotalCost(),
                                          new ArrayList<>() {{
-                                             add(Money.parse("NZD 1000.00"));
+                                             add(Money.parse("NZD 100.00"));
                                          }},
                                          tempOrder.getDateTimeProcessed(),
-                                         tempOrder.getID());
+                                         tempOrder.getId());
         } catch (InsufficientCashException e) {
             e.printStackTrace();
         }
-        environment.getHistory().getTransactionHistory().put(tempOrder.getID(), tempOrder);
+        environment.getHistory().getTransactionHistory().put(tempOrder.getId(), tempOrder);
 
     }
 

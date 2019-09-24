@@ -1,7 +1,5 @@
 package seng202.group5.information;
 
-import seng202.group5.DietEnum;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -48,14 +46,17 @@ public class Recipe {
 
     public Recipe() {
         name = "";
-        recipeText = "";
+        recipeText = "No recipe required";
         ingredientsAmount = new HashMap<>();
         ingredientIDs = new HashMap<>();
         dietaryInformation = new HashSet<>();
     }
 
     /**
-     * The IngredientList will contain all the ingredients used in a particular recipe
+     * A new recipe with no ingredients initially added
+     *
+     * @param tempName the name of the new recipe
+     * @param tempRecipeText the text describing the recipe steps
      */
     public Recipe(String tempName, String tempRecipeText) {
         name = tempName;
@@ -143,6 +144,21 @@ public class Recipe {
         }
     }
 
+    /**
+     * Loops over the dietEnum Hashset and creates a string representing the dietary infomraiton
+     * @return a string with all the dietary information
+     */
+    public String getDietaryInformationString() {
+        String dietInfoString= "";
+        for (DietEnum dietEnum: dietaryInformation) {
+            dietInfoString += dietEnum.toString() + ", ";
+        }
+
+        if (dietInfoString.length() > 0) {
+            dietInfoString = dietInfoString.substring(0, dietInfoString.length() - 2);
+        }
+        return dietInfoString;
+    }
 
     /**
      * Checks if this recipe satisfies one of the dietary types, and updates the dietary info accordingly
@@ -183,9 +199,7 @@ public class Recipe {
      *
      * @return Name of the recipe.
      **/
-
     public String getName() { return name; }
-
 
     /**
      * Returns all the step in written in a particular recipe
@@ -193,7 +207,6 @@ public class Recipe {
      * @return the text representing the recipe (i.e. steps to make something)
      **/
     public String getRecipeText() { return recipeText; }
-
 
     public HashMap<String, Integer> getIngredientIDs() {
         return ingredientIDs;

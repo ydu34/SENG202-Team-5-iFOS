@@ -2,6 +2,7 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -36,7 +37,7 @@ public class IDGeneratorTest {
 
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(ingredient.getID());
-        ids.add(order.getID());
+        ids.add(order.getId());
         ids.add(item.getID());
         ids.add(transaction.getTransactionID());
 
@@ -50,11 +51,22 @@ public class IDGeneratorTest {
     }
 
     @Test
-    public void testSetId() {
+    public void testSetLastId() {
         String lastID = "1";
         generator.setLastID(lastID);
 
         assertTrue(generator.newID() != lastID);
+    }
+
+    @Test
+    public void testSetID() {
+        int prevID = 6;
+
+        assertNotEquals(generator.getId(), prevID);
+
+        generator.setId(prevID);
+
+        assertEquals(generator.getId(), prevID);
     }
 
 }

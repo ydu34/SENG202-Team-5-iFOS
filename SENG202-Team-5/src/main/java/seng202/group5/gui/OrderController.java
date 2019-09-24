@@ -6,14 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import seng202.group5.Order;
-import seng202.group5.TypeEnum;
+import seng202.group5.logic.Order;
+import seng202.group5.information.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -22,7 +24,8 @@ import seng202.group5.information.Recipe;
 import java.util.*;
 
 /**
- * The OrderController includes all the methods related to the every button on the order screen.
+ * This controller handles all the functionality with the making a new order or
+ * editing an existing order.
  *
  * @author Shivin Gaba
  */
@@ -95,6 +98,8 @@ public class OrderController extends GeneralController {
     @FXML
     private Text promptText;
 
+    @FXML
+    private AnchorPane tilePaneContainer;
 
     private Order currentOrder;
 
@@ -110,19 +115,35 @@ public class OrderController extends GeneralController {
         filterItems();
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
-             currentOrder.resetStock(getAppEnvironment().getStock());
         } catch (NoOrderException e) {
             System.out.println(e);
         }
-        orderIDText.setText(currentOrder.getID());
+        orderIDText.setText(currentOrder.getId());
         addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
+
+        tilePaneContainer.widthProperty().addListener((width) -> {
+            double newWidth = tilePaneContainer.getWidth();
+            tilePane.setMinWidth(newWidth);
+            tilePane.setPrefWidth(newWidth);
+            tilePane.setMaxWidth(newWidth);
+        });
     }
+
+    /**
+     * This function sorts the menu item by its price
+     * @param event an event that caused this to happen
+     */
 
     public void sortItemsPrice(ActionEvent event) {
         sortingType = SORT_TYPE.PRICE;
         filterItems();
     }
+
+    /**
+     * Tis function sorts the menu items by its name
+     * @param event an event that caused this to happen
+     */
 
     public void sortItemsName(ActionEvent event) {
         sortingType = SORT_TYPE.NAME;
@@ -147,8 +168,10 @@ public class OrderController extends GeneralController {
 
             for (MenuItem item : sortedItems) {
                 Button tempButton = new Button(item.getItemName());
-                tempButton.setPrefWidth(136);
-                tempButton.setPrefHeight(50);
+                tempButton.setStyle("-fx-font-size: 20; ");
+                tempButton.setPrefWidth(260);
+                tempButton.setPrefHeight(100);
+                TilePane.setMargin(tempButton, new Insets(5));
                 tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
                 buttons.add(tempButton);
             }
@@ -161,7 +184,10 @@ public class OrderController extends GeneralController {
         PRICE
     }
 
-    public ArrayList<MenuItem> filterItems() {
+    /**
+     * Filters the menu items in the menu based on the check boxes on the order screen
+     */
+    public void filterItems() {
         ArrayList<MenuItem> filteredMenuItems = new ArrayList<>();
         if (allItems != null) {
             filteredMenuItems = new ArrayList<>(allItems);
@@ -221,9 +247,6 @@ public class OrderController extends GeneralController {
 
         populateTilePane(filteredMenuItems);
 
-        System.out.println(filteredMenuItems);
-        return filteredMenuItems;
-
     }
 
     /**
@@ -253,7 +276,7 @@ public class OrderController extends GeneralController {
         Integer quantity = quantitySpinner.getValue();
         if (currentOrder.addItem(item, quantity)) {
 
-           promptText.setText(quantity + "X" + item.getItemName() + " added to the current order.");
+            promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
            promptText.setFill(Color.GREEN);
        }
        else{
@@ -262,6 +285,10 @@ public class OrderController extends GeneralController {
 
        }
     }
+
+    /**
+     * This method shows the amount of ingredients in a selected menu item
+     */
 
     public void populateIngredientsTable() {
         Recipe currentRecipe = item.getRecipe();
@@ -272,11 +299,7 @@ public class OrderController extends GeneralController {
             int quantity = recipeIngredientsMap.get(data.getValue());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
-
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
-        //this code removes the scroll bar buts ends up adding an extra column
-       // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
-       // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
 
     }
 
@@ -296,6 +319,11 @@ public class OrderController extends GeneralController {
         controller.updateStock();
         controller.initializeTable();
     }
+
+    /**
+     * This method launches the addExtraIngredient Screen.
+     * @param actionEvent
+     */
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");

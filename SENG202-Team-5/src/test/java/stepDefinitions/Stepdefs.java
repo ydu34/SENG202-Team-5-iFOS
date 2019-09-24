@@ -8,7 +8,7 @@ import cucumber.api.java.en.When;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.Disabled;
-import seng202.group5.*;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
@@ -57,7 +57,6 @@ public class Stepdefs {
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {
         error = !order.addItem(burger, 1);
-
     }
 
     @Then("Orders total cost is ${double}")
@@ -126,6 +125,11 @@ public class Stepdefs {
         Burger_is_added_to_order();
     }
 
+    @And("Chips is in order")
+    public void chipsIsInOrder() {
+        chipsAreAddedToOrder();
+    }
+
     @And("order contains chips")
     public void orderContainsChips() {
         assertTrue(order.getOrderItems().containsKey(chip));
@@ -167,6 +171,11 @@ public class Stepdefs {
     @When("Burger is removed from order")
     public void burgerIsRemovedFromOrder() {
         order.removeItem(burger);
+    }
+
+    @When("Chips is removed from order")
+    public void chipIsRemovedFromOrder() {
+        order.removeItem(chip);
     }
 
 

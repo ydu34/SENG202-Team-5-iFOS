@@ -3,11 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -42,7 +42,7 @@
              <Button fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
              <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
              <Button fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
-             <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
+             <Button disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
          </children>
       </GridPane>
        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -82,25 +82,26 @@
                       <center>
                           <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                            <children>
-                               <TextArea fx:id="saleSummaryText" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="780.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                               <Label fx:id="saleSummaryText" alignment="CENTER" contentDisplay="CENTER" text="Label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                            </children>
                           </AnchorPane>
                       </center>
                   </BorderPane>
               </content>
           </Tab>
-          <Tab text="Recipe Manager">
+          <Tab text="Menu Item Manager">
                <content>
                   <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="70.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="455.0" vgrow="ALWAYS" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="67.0" prefHeight="99.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="402.0" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
-                        <TableView fx:id="itemTable" prefHeight="477.0" prefWidth="800.0" GridPane.rowIndex="1">
+                        <TableView fx:id="itemTable" prefHeight="477.0" prefWidth="800.0" GridPane.rowIndex="2">
                           <columns>
                             <TableColumn fx:id="nameCol" minWidth="250.0" prefWidth="-1.0" text="Name" />
                             <TableColumn fx:id="dietaryCol" minWidth="250.0" prefWidth="-1.0" text="Dietary" />
@@ -115,20 +116,30 @@
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="547.0" minWidth="10.0" prefWidth="547.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="200.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="200.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="200.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recipes" wrappingWidth="536.81298828125">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Menu Item Recipes" wrappingWidth="536.81298828125">
                                  <font>
                                     <Font size="36.0" />
                                  </font>
                               </Text>
                               <Button fx:id="addButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#addRecipe" prefHeight="60.0" prefWidth="200.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                              <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                              <Button fx:id="modifyButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#modifySelectedItem" prefHeight="60.0" prefWidth="200.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                              <Button fx:id="deleteButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="60.0" prefWidth="200.0" text="Delete" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
                            </children>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
                         </GridPane>
+                        <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="Select an Item to delete or modify" textAlignment="CENTER" wrappingWidth="771.751953125" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Text>
                      </children>
                   </GridPane>
                </content>
@@ -141,19 +152,21 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="171.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="172.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="253.60001220703123" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="50.0" prefWidth="200.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                        <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                        <Button fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="50.0" prefWidth="200.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                            <font>
                               <Font size="26.0" />
                            </font></Text>
-                        <GridPane GridPane.rowIndex="2">
+                        <GridPane GridPane.rowIndex="3">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
@@ -175,13 +188,15 @@
                               <Text fx:id="financeWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="finance.xml not selected" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
-                        <TextArea editable="false" prefHeight="155.0" prefWidth="800.0" text="Data files can only be imported if all four files are selected. " GridPane.rowIndex="1" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions " GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
                            <font>
                               <Font size="33.0" />
                            </font>
                         </Text>
-                        <Button fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="50.0" prefWidth="200.0" text="Import Data" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                        <Button fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="50.0" prefWidth="200.0" text="Import Data" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Import Data: All four .xml files must be imported at the same time. Please select all .xml files and click 'Import Data'." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data: Click 'Export Data' and select the distination directory" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Text fx:id="warningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </content>

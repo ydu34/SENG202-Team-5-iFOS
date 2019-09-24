@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 /**
  * An adapter for jaxb to be able to marshal and unmarshal LocalDateTime objects.
- * @Author Yu Duan
+ * @author Yu Duan
  */
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
     /**
      * @param v the LocalDateTime string
      * @return the LocalDateTime object
-     * @throws Exception
+     * @throws Exception if the unmarshalling fails
      */
     public LocalDateTime unmarshal(String v) throws Exception {
         return LocalDateTime.parse(v);
@@ -20,7 +20,7 @@ public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
     /**
      * @param v the LocalDateTime object
      * @return  the LocalDateTime string
-     * @throws Exception
+     * @throws Exception if the marshalling fails
      */
     public String marshal(LocalDateTime v) throws Exception {
         return v.toString();

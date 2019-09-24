@@ -1,18 +1,20 @@
-package seng202.group5;
+package seng202.group5.information;
+
 import org.joda.money.Money;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.information.Transaction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 
 public class TransactionTest {
+
     private Transaction testTransaction;
     private LocalDateTime testDateTime;
+
     @BeforeEach
     public void init() {
         testDateTime = LocalDateTime.now();

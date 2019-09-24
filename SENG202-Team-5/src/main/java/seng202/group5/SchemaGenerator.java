@@ -13,7 +13,7 @@ import java.io.FileWriter;
  *      menu.xsd
  *      stock.xsd
  *
- * @Author Yu Duan
+ * @author Yu Duan
  */
 public class SchemaGenerator {
 

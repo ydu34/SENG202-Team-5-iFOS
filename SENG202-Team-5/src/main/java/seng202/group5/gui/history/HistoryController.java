@@ -10,12 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
-import seng202.group5.*;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.logic.Order;
 import seng202.group5.information.Transaction;
 
 import java.io.IOException;
@@ -65,6 +65,9 @@ public class HistoryController extends GeneralController {
     private TableColumn<Order, String> rowOrder;
 
     @FXML
+    private TableColumn<Order, String> rowCost;
+
+    @FXML
     private TableColumn<Order, Button> rowAction;
 
     /**
@@ -80,7 +83,7 @@ public class HistoryController extends GeneralController {
         }
 
         // This sets the factories for creating values to display for each order
-        rowID.setCellValueFactory(new PropertyValueFactory<>("iD"));
+        rowID.setCellValueFactory(new PropertyValueFactory<>("id"));
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getDateTimeProcessed().toLocalDate().toString()));
         rowTime.setCellValueFactory(cellData -> {
@@ -89,14 +92,19 @@ public class HistoryController extends GeneralController {
             time = time.minusNanos(time.getNano());
             return new ReadOnlyStringWrapper(time.toString());
         });
-        rowOrder.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        rowOrder.setCellValueFactory(cellData -> {
+            String output = cellData.getValue().printReceipt();
+            output = output.replace("\n", ", ");
+            return new ReadOnlyStringWrapper(output);
+        });
+        rowCost.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
             Button refundButton = new Button("Refund");
             Order order = param.getValue();
             // Disable the button if the order cannot be refunded
-            if (orderIDTransactionIndex.containsKey(order.getID())) {
-                refundButton.setDisable(orderIDTransactionIndex.get(order.getID()).isRefunded());
+            if (orderIDTransactionIndex.containsKey(order.getId())) {
+                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
             } else {
                 refundButton.setDisable(true);
             }
@@ -126,9 +134,11 @@ public class HistoryController extends GeneralController {
             controller.setOrder(orderToRefund);
 
             Stage stage = new Stage();
-            stage.setTitle("Confirm refund");
+            stage.setTitle("Confirm Refund");
             stage.setScene(new Scene(root, 600, 200));
-            stage.show();
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -264,7 +274,7 @@ public class HistoryController extends GeneralController {
         for (Order order : historyValues) {
             if (order.getDateTimeProcessed().isAfter(firstTime) &&
                     order.getDateTimeProcessed().isBefore(lastTime) &&
-                    order.getID().matches(".*" + searchString + ".*")) {
+                    order.getId().matches(".*" + searchString + ".*")) {
                 historyTable.getItems().add(order);
             }
 
@@ -280,11 +290,11 @@ public class HistoryController extends GeneralController {
 
         HashMap<String, Order> history = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory();
 
-        if (history.containsKey(order.getID())) {
+        if (history.containsKey(order.getId())) {
             //TODO create a formal error display system
             System.out.println("Order already exists in history!");
         } else {
-            history.put(order.getID(), order);
+            history.put(order.getId(), order);
             updateVisibleOrders(new ActionEvent());
         }
     }

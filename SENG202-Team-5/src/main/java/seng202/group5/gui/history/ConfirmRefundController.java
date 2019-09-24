@@ -9,10 +9,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.AppEnvironment;
-import seng202.group5.Order;
+import seng202.group5.logic.Order;
 
 /**
  * A controller for confirming if the user wants to refund an order
+ *
+ * @author Daniel Harris
  */
 public class ConfirmRefundController {
 
@@ -58,7 +60,7 @@ public class ConfirmRefundController {
      * @param order the order to refund
      */
     public void setOrder(Order order) {
-        infoLabel.setText(String.format("Are you sure you want to refund Order %s?", order.getID()));
+        infoLabel.setText(String.format("Are you sure you want to refund Order %s?", order.getId()));
         this.order = order;
     }
 
@@ -70,15 +72,16 @@ public class ConfirmRefundController {
     @FXML
     public void confirmRefund(javafx.event.ActionEvent event) {
         // Showing what coins to return to the customer
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("Return the following cash:\n");
         Money moneySum = Money.parse("NZD 0.00");
-        for (Money coin : source.confirmOrderRefund(order.getID())) {
+        for (Money coin : source.confirmOrderRefund(order.getId())) {
             moneySum = moneySum.plus(coin);
             builder.append(coin.toString());
-            builder.append("\n");
+            builder.append(", ");
         }
+        builder.delete(builder.length() - 2, builder.length());
         if (moneySum.isLessThan(order.getTotalCost())) {
-            builder.append("Not enough coins in the float to fully refund");
+            builder.append("\n(Not enough coins in the float to fully refund)");
         }
         infoLabel.setText(builder.toString());
         //TODO screen is not resizing properly
@@ -90,6 +93,7 @@ public class ConfirmRefundController {
         GridPane.setColumnSpan(returnButton, 2);
         GridPane.setHalignment(returnButton, HPos.CENTER);
         returnButton.setText("Continue");
+        returnButton.getScene().getWindow().sizeToScene();
     }
 
     /**

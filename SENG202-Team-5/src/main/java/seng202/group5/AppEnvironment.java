@@ -4,13 +4,17 @@ import org.joda.money.Money;
 import org.xml.sax.SAXException;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.logic.*;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.logic.*;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
@@ -31,7 +35,7 @@ public class AppEnvironment {
     private History history;
     private MenuManager menuManager;
     private HashSet<String> acceptedFiles;
-    private Till till;
+    private IDGenerator idGenerator;
 
 
     /**
@@ -43,7 +47,7 @@ public class AppEnvironment {
         history = new History();
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock, history);
-        till = finance.getTill();
+        idGenerator = new IDGenerator();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
@@ -52,31 +56,35 @@ public class AppEnvironment {
     }
 
     /**
-     * Marshals the given object o into a xml file.
+     * Marshals the given object o into a xml file
      *
-     * @param c        The class of the object o.
-     * @param o        The object you want to marshal into xml file.
-     * @param fileName The name of the xml file.
+     * @param c        The class of the object o
+     * @param o        The object you want to marshal into xml file
+     * @param fileName The name of the xml file
+     * @param fileDirectory The directory to where the file should be marshalled
+     * @throws JAXBException if JAXB fails to convert the file
      */
-    public void objectToXml(Class c, Object o, String fileName,  String fileDirectory) {
+    public void objectToXml(Class c, Object o, String fileName,  String fileDirectory) throws JAXBException{
+        JAXBContext jaxbContext = JAXBContext.newInstance(c);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(c);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
-            jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + "/" + fileName));
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+        jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
+        jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + "/" + fileName));
     }
 
     /**
-     * Converts the xml file to an object o.
+     * Converts the xml file to an object o
      *
-     * @return an object o.
+     * @param c the class to create an instance of
+     * @param o the object being created
+     * @param fileName the name of the file to create the object from
+     * @param schemaFileName the name of the schema to use to convert the file
+     * @param fileDirectory the path to the directory the file is in
+     * @return an object o
+     * @throws JAXBException if JAXB fails to convert the file
+     * @throws SAXException if JAXB fails to convert the file
      */
     public Object xmlToObject(Class c, Object o, String fileName, String schemaFileName, String fileDirectory) throws JAXBException, SAXException{
         JAXBContext jaxbContext = JAXBContext.newInstance(c);
@@ -85,7 +93,7 @@ public class AppEnvironment {
         ClassLoader classLoader = getClass().getClassLoader();
         //Setup schema validator
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema(new File(classLoader.getResource("schema/" + schemaFileName).getFile()));
+        Schema schema = sf.newSchema( new StreamSource(getClass().getClassLoader().getResourceAsStream("schema/" + schemaFileName)));
         jaxbUnmarshaller.setSchema(schema);
 
         o = c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + "/" + fileName)));
@@ -94,7 +102,7 @@ public class AppEnvironment {
 
     /**
      * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
-     * hashmap containing the ingredient and quantity.
+     * HashMap containing the ingredient and quantity.
      *
      * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
      * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
@@ -112,8 +120,8 @@ public class AppEnvironment {
 
 
     /**
-     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe and fill up the ingredientsAmount hash map with ingredient objects using
-     * the getIngredientsFromID method.
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
      * @param menuItems Contains the menu items.
      */
@@ -162,11 +170,15 @@ public class AppEnvironment {
         }
     }
 
-    public void allObjectsToXml(String fileDirectory) {
-        objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
-        objectToXml(History.class, history, "history.xml", fileDirectory);
-        objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
-        objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+    public void allObjectsToXml(String fileDirectory) throws Exception{
+        try {
+            objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
+            objectToXml(History.class, history, "history.xml", fileDirectory);
+            objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
+            objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
+        } catch (JAXBException e) {
+            throw new Exception();
+        }
     }
 
     /**
@@ -186,7 +198,7 @@ public class AppEnvironment {
         try {
             Order order = orderManager.getOrder();
             order.setDateTimeProcessed(LocalDateTime.now());
-            orderManager.getHistory().getTransactionHistory().put(order.getID(), order);
+            orderManager.getHistory().getTransactionHistory().put(order.getId(), order);
             setStock(order.getStock().clone());
             orderManager.setStock(stock);
             orderManager.newOrder();
@@ -194,7 +206,7 @@ public class AppEnvironment {
             change = finance.pay(order.getTotalCost(),
                                  denominations,
                                  order.getDateTimeProcessed(),
-                                 order.getID());
+                                 order.getId());
 
         } catch (NoOrderException e) {
             e.printStackTrace();
@@ -250,5 +262,13 @@ public class AppEnvironment {
 
     public void setMenuManager(MenuManager menuManager) {
         this.menuManager = menuManager;
+    }
+
+    public IDGenerator getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(IDGenerator idGenerator) {
+        this.idGenerator = idGenerator;
     }
 }
