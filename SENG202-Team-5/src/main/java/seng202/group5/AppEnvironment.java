@@ -144,6 +144,7 @@ public class AppEnvironment {
         try {
             stock = (Stock) xmlToObject(Stock.class, stock, "stock.xml", "stock.xsd", fileDirectory);
             orderManager.setStock(stock);
+            orderManager.getOrder().resetStock(stock);
         } catch (JAXBException|SAXException e) {
             throw new Exception("stock.xml file is invalid");
         }
