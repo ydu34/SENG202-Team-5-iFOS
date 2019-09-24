@@ -69,8 +69,6 @@ public class AppEnvironment {
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-        jaxbMarshaller.marshal(c.cast(o), System.out); //print to sys out so we can view and check
         jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + "/" + fileName));
     }
 
