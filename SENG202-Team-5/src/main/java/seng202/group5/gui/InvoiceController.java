@@ -156,10 +156,6 @@ public class InvoiceController extends GeneralController {
     }
 
 
-    public void editItem(){
-
-    }
-
     /**
      * Resets the list containing the currently given denominations
      */
@@ -188,9 +184,7 @@ public class InvoiceController extends GeneralController {
      */
     @FXML
     private void cancelOrder() {
-//        clearPayment();
-//        totalCost = Money.parse("NZD 0");
-//        totalCostDisplay.setText("Total Cost: "+ totalCost);
+
         try {
 
             currentOrder = getAppEnvironment().getOrderManager().getOrder();

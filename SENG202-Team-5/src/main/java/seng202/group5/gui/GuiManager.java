@@ -22,6 +22,7 @@ import java.util.HashSet;
 
 /**
  * A class that sets up the application and starts it
+ * @author Daniel Harris, Shivin Gaba, Yu Duan, James Kwok, Tasman Berry ,Michael Morgoun
  */
 public class GuiManager extends Application {
 
@@ -33,10 +34,8 @@ public class GuiManager extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("/gui/order.fxml"));
         FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/order.fxml"));
         Parent root = sampleLoader.load();
-        //primaryStage.setTitle("Selection Screen");
         GeneralController controller = sampleLoader.getController();
         controller.setAppEnvironment(createAppEnvironment());
         controller.pseudoInitialize();
@@ -54,7 +53,6 @@ public class GuiManager extends Application {
      */
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
-//        addTestData(thing);
         return thing;
     }
 

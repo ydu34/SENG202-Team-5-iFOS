@@ -50,6 +50,7 @@ public class Stock {
         } else {
             ingredients.put(ingredient.getID(), ingredient);
             ingredientStock.put(ingredient.getID(), quantity);
+
         }
     }
 

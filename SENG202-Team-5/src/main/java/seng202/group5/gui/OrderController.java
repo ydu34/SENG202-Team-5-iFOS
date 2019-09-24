@@ -286,6 +286,10 @@ public class OrderController extends GeneralController {
        }
     }
 
+    /**
+     * This method shows the amount of ingredients in a selected menu item
+     */
+
     public void populateIngredientsTable() {
         Recipe currentRecipe = item.getRecipe();
         Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
@@ -296,9 +300,6 @@ public class OrderController extends GeneralController {
             return new SimpleStringProperty(Integer.toString(quantity));
         });
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
-        //this code removes the scroll bar buts ends up adding an extra column
-       // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
-       // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
 
     }
 
@@ -318,6 +319,11 @@ public class OrderController extends GeneralController {
         controller.updateStock();
         controller.initializeTable();
     }
+
+    /**
+     * This method launches the addExtraIngredient Screen.
+     * @param actionEvent
+     */
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
