@@ -21,7 +21,8 @@ import java.util.Map;
 
 /**
  * Controller for addRecipe.fxml, used to create new recipes and added to the menu.
- * @Author Yu Duan
+ *
+ * @author Yu Duan
  */
 public class AddRecipeController extends GeneralController {
 

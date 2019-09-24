@@ -34,6 +34,7 @@ import java.util.Map;
 
 /**
  * A controller for managing the administration screen
+ *
  * @author Yu Duan
  */
 public class AdminController extends GeneralController {

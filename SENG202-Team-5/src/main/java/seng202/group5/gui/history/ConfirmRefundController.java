@@ -13,6 +13,8 @@ import seng202.group5.logic.Order;
 
 /**
  * A controller for confirming if the user wants to refund an order
+ *
+ * @author Daniel Harris
  */
 public class ConfirmRefundController {
 
