@@ -139,8 +139,6 @@ public class Order {
         for (String id : listOfKeys) {
             // If we don't have enough in the Stock, we can't add it to order
             if (temporaryStock.getIngredientQuantity(id) < ingredients.get(id) * quantity) {
-               // System.out.println("false");
-
                 return false;
             }
         }
