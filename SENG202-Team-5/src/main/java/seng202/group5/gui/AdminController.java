@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
+import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.History;
@@ -103,6 +104,12 @@ public class AdminController extends GeneralController {
     @FXML
     private Button modifyButton;
 
+    @FXML
+    private Text infoText;
+
+    @FXML
+    private Text warningText;
+
     private FileChooser fileChooser;
 
     private Map<String, File> fileMap;
@@ -114,9 +121,33 @@ public class AdminController extends GeneralController {
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
+        checkIfOrderInProgress();
         fileMap = new HashMap<>();
         viewHistory();
     }
+
+    /**
+     * If an order is in progress disable buttons on admin scree.
+     */
+    public void checkIfOrderInProgress() {
+        try {
+            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+                infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
+                warningText.setText("Can not Import/Export data when Order is in progress.");
+                selectFinanceButton.setDisable(true);
+                selectHistoryButton.setDisable(true);
+                selectMenuButton.setDisable(true);
+                selectStockButton.setDisable(true);
+                exportDataButton.setDisable(true);
+                addButton.setDisable(true);
+                modifyButton.setDisable(true);
+                deleteButton.setDisable(true);
+            }
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void recipeTableInitialize() {
         ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
