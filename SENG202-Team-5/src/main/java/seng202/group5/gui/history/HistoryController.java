@@ -1,6 +1,5 @@
 package seng202.group5.gui.history;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,11 +14,13 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.gui.GeneralController;
-import seng202.group5.logic.Order;
 import seng202.group5.information.Transaction;
+import seng202.group5.logic.Order;
 
 import java.io.IOException;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -99,21 +100,21 @@ public class HistoryController extends GeneralController {
         });
         rowCost.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         // The factory for this is quite complicated since it uses a button instead
-        rowAction.setCellValueFactory(param -> {
-            Button refundButton = new Button("Refund");
-            Order order = param.getValue();
-            // Disable the button if the order cannot be refunded
-            if (orderIDTransactionIndex.containsKey(order.getId())) {
-                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
-            } else {
-                refundButton.setDisable(true);
-            }
-            refundButton.setOnAction((ActionEvent event) -> {
-                refundOrder(order, refundButton);
-                refundButton.setDisable(true);
-            });
-            return new ReadOnlyObjectWrapper<>(refundButton);
-        });
+//        rowAction.setCellValueFactory(param -> {
+//            Button refundButton = new Button("Refund");
+//            Order order = param.getValue();
+//            // Disable the button if the order cannot be refunded
+//            if (orderIDTransactionIndex.containsKey(order.getId())) {
+//                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
+//            } else {
+//                refundButton.setDisable(true);
+//            }
+//            refundButton.setOnAction((ActionEvent event) -> {
+//                refundOrder(order, refundButton);
+//                refundButton.setDisable(true);
+//            });
+//            return new ReadOnlyObjectWrapper<>(refundButton);
+//        });
 
         historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
     }
