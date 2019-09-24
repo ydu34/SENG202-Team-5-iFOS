@@ -70,15 +70,16 @@ public class ConfirmRefundController {
     @FXML
     public void confirmRefund(javafx.event.ActionEvent event) {
         // Showing what coins to return to the customer
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("Return the following cash:\n");
         Money moneySum = Money.parse("NZD 0.00");
         for (Money coin : source.confirmOrderRefund(order.getId())) {
             moneySum = moneySum.plus(coin);
             builder.append(coin.toString());
-            builder.append("\n");
+            builder.append(", ");
         }
+        builder.delete(builder.length() - 2, builder.length());
         if (moneySum.isLessThan(order.getTotalCost())) {
-            builder.append("Not enough coins in the float to fully refund");
+            builder.append("\n(Not enough coins in the float to fully refund)");
         }
         infoLabel.setText(builder.toString());
         //TODO screen is not resizing properly
@@ -90,6 +91,7 @@ public class ConfirmRefundController {
         GridPane.setColumnSpan(returnButton, 2);
         GridPane.setHalignment(returnButton, HPos.CENTER);
         returnButton.setText("Continue");
+        returnButton.getScene().getWindow().sizeToScene();
     }
 
     /**

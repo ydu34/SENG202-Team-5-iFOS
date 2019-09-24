@@ -152,7 +152,7 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="400.0" vgrow="ALWAYS" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints vgrow="ALWAYS"/>
                     </rowConstraints>
                      <children>
                          <VBox prefHeight="320.0" prefWidth="273.0" GridPane.hgrow="ALWAYS">

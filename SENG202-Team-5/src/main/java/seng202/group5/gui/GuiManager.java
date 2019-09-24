@@ -43,6 +43,7 @@ public class GuiManager extends Application {
         int height = Screen.getMainScreen().getHeight();
         int width = Screen.getMainScreen().getWidth();
         primaryStage.setScene(new Scene(root, width, height));
+        primaryStage.setTitle("iFOS");
         primaryStage.show();
     }
 
@@ -53,7 +54,7 @@ public class GuiManager extends Application {
      */
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
-        addTestData(thing);
+//        addTestData(thing);
         return thing;
     }
 

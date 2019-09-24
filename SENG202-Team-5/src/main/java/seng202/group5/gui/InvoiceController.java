@@ -115,12 +115,10 @@ public class InvoiceController extends GeneralController {
             if (getAppEnvironment().getOrderManager().getOrder().getTotalCost().equals(Money.parse("NZD 0.00"))) {
                 throw new NoOrderException("No order exists to get");
             } else {
-                System.out.println((getAppEnvironment().getOrderManager().getOrder().getTotalCost()));
                 Money totalPayment = Money.parse("NZD 0.00");
                 for (Money money : payment) {
                     totalPayment = totalPayment.plus(money);
                 }
-                System.out.println(totalPayment);
                 if (!(getAppEnvironment().getOrderManager().getOrder().getTotalCost()).isGreaterThan(totalPayment)) {
                     Order order = getAppEnvironment().getOrderManager().getOrder();
                     ArrayList<Money> change;

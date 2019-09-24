@@ -14,16 +14,17 @@
     <center>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" prefWidth="600.0"/>
-                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="600.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" prefWidth="600.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" prefWidth="600.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                <RowConstraints minHeight="100.0" vgrow="ALWAYS"/>
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="NEVER"/>
             </rowConstraints>
             <children>
                 <Label fx:id="infoLabel" alignment="CENTER" text="Are you sure you want to refund Order #####?"
-                       GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                       GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                       GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </GridPane.margin>
