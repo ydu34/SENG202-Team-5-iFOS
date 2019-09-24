@@ -11,8 +11,7 @@ import seng202.group5.logic.Stock;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test for the methods defined in the  Menu Item class where
@@ -58,38 +57,58 @@ class MenuItemTest {
      */
 
     @Test
-        void testCalculateMakingCost(){
+    void testCalculateMakingCost() {
 
-            Money makingCost = m.calculateMakingCost();
-            Money actualCost = Money.parse("NZD 12.00");
-            Money actualCost_1 = Money.parse("NZD 10.00");
-            assertTrue(makingCost.equals(actualCost));
-            assertEquals(makingCost.getAmount(), actualCost.getAmount());
-            testRecipe.removeIngredient(cheese);
-            HashMap<Ingredient, Integer> ingredients = testRecipe.getIngredientsAmount();
-            makingCost = m.calculateMakingCost();
-            assertEquals(makingCost.getAmount(), actualCost_1.getAmount());
+        Money makingCost = m.calculateMakingCost();
+        Money actualCost = Money.parse("NZD 12.00");
+        Money actualCost_1 = Money.parse("NZD 10.00");
+        assertTrue(makingCost.equals(actualCost));
+        assertEquals(makingCost.getAmount(), actualCost.getAmount());
+        testRecipe.removeIngredient(cheese);
+        HashMap<Ingredient, Integer> ingredients = testRecipe.getIngredientsAmount();
+        makingCost = m.calculateMakingCost();
+        assertEquals(makingCost.getAmount(), actualCost_1.getAmount());
     }
 
     /**
      * The below test checks if the the calculate final cost method works the same way as anticipated.
      */
+    @Test
+    void calculateFinalCost() {
+        Money markupCost = Money.parse("NZD 5.00");
+        Money makingCost = m.calculateMakingCost();
+        Money sellingCost = m.calculateFinalCost();
+        Money finalCost = Money.parse("NZD 17");
+        assertEquals(sellingCost.getAmountMajorInt(), finalCost.getAmountMajorInt());
+        testRecipe.removeIngredient(chickenPatty, 1);
+        Money updatedSellingCost = m.calculateFinalCost();
+        Money updatedFinalCost = Money.parse("NZD 12");
+        assertEquals(updatedSellingCost.getAmountMajorInt(), updatedFinalCost.getAmountMajorInt());
+        testRecipe.removeIngredient(chickenPatty);
+        Money updatedSellingCost_2 = m.calculateFinalCost();
+        Money updatedFinalCost_2 = Money.parse("NZD 7");
+        assertEquals(updatedSellingCost.getAmountMajorInt(), updatedFinalCost.getAmountMajorInt());
 
-        @Test
-        void calculateFinalCost(){
-            Money markupCost = Money.parse("NZD 5.00");
-            Money makingCost = m.calculateMakingCost();
-            Money sellingCost = m.calculateFinalCost();
-            Money finalCost = Money.parse("NZD 17");
-            assertEquals(sellingCost.getAmountMajorInt(),finalCost.getAmountMajorInt());
-            testRecipe.removeIngredient(chickenPatty,1);
-            Money updatedSellingCost = m.calculateFinalCost();
-            Money updatedFinalCost = Money.parse("NZD 12");
-            assertEquals(updatedSellingCost.getAmountMajorInt(),updatedFinalCost.getAmountMajorInt());
-            testRecipe.removeIngredient(chickenPatty);
-            Money updatedSellingCost_2 = m.calculateFinalCost();
-            Money updatedFinalCost_2 = Money.parse("NZD 7");
-            assertEquals(updatedSellingCost.getAmountMajorInt(),updatedFinalCost.getAmountMajorInt());
+    }
 
+    @Test
+    void testClone() {
+        MenuItem mClone = m.clone();
+        assertEquals(m.getID(), mClone.getID());
+        assertEquals(m.getRecipe().getIngredientsAmount(), mClone.getRecipe().getIngredientsAmount());
+        assertEquals(m.getItemName(), mClone.getItemName());
+        assertEquals(m.getMarkupCost(), mClone.getMarkupCost());
+        assertEquals(m.getTotalCost(), mClone.getTotalCost());
+        assertEquals(m.getItemType(), mClone.getItemType());
+    }
+
+    @Test
+    void testHashCode() {
+        MenuItem mClone = m.clone();
+        assertEquals(m.hashcode(), mClone.hashcode());
+        mClone.getRecipe().addIngredient(chickenPatty, 2);
+        assertNotEquals(m.hashcode(), mClone.hashcode());
+        mClone.getRecipe().removeIngredient(chickenPatty, 2);
+        assertEquals(m.hashcode(), mClone.hashcode());
     }
 }

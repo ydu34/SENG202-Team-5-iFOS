@@ -8,11 +8,17 @@ import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.History;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.OrderManager;
 
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,10 +89,7 @@ class AppEnvironmentTest {
             paymentAmount.add(Money.parse("NZD 4.0"));
             ArrayList<Money> change = handler.confirmPayment(paymentAmount);
             for (Money x : change) changeSum = changeSum.plus(x);
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-            fail();
-        } catch (InsufficientCashException e) {
+        } catch (NoOrderException | InsufficientCashException e) {
             e.printStackTrace();
             fail();
         }
@@ -116,7 +119,51 @@ class AppEnvironmentTest {
         try {
             handler.getOrderManager().getOrder();
         } catch (NoOrderException e) {
-            assertTrue(e.getMessage() == "No order exists to get");
+            assertEquals("No order exists to get", e.getMessage());
         }
     }
+
+    @Test
+    void testSetGetAcceptedFiles() {
+        HashSet<String> testSet = new HashSet<>(Arrays.asList("one.xml", "two.xml", "three.txt"));
+        HashSet<String> clone = new HashSet<>(testSet);
+        handler.setAcceptedFiles(testSet);
+        assertEquals(clone, handler.getAcceptedFiles());
+    }
+
+    @Test
+    void testSetGetOrderManager() {
+        OrderManager orderManager = new OrderManager(handler.getStock(), handler.getHistory());
+        handler.setOrderManager(orderManager);
+        assertEquals(orderManager, handler.getOrderManager());
+    }
+
+    @Test
+    void testSetGetFinance() {
+        Finance finance = new Finance();
+        handler.setFinance(finance);
+        assertEquals(finance, handler.getFinance());
+    }
+
+    @Test
+    void testSetGetHistory() {
+        History history = new History();
+        handler.setHistory(history);
+        assertEquals(history, handler.getHistory());
+    }
+
+    @Test
+    void testSetGetMenuManager() {
+        MenuManager menuManager = new MenuManager();
+        handler.setMenuManager(menuManager);
+        assertEquals(menuManager, handler.getMenuManager());
+    }
+
+    @Test
+    void testSetGetIDGenerator() {
+        IDGenerator idGenerator = new IDGenerator();
+        handler.setIdGenerator(idGenerator);
+        assertEquals(idGenerator, handler.getIdGenerator());
+    }
+
 }

@@ -210,7 +210,6 @@ public class MenuItem {
         tempList.addAll(recipe.getIngredientsAmount().values());
         tempList.addAll(recipe.getIngredientsAmount().keySet());
         tempList.add(recipe.getName());
-        tempList.addAll(recipe.getDietaryInformation());
         tempList.add(id);
         tempList.add(markupCost);
         return Objects.hash(tempList);
@@ -227,9 +226,9 @@ public class MenuItem {
      */
     public MenuItem clone() {
         Recipe tempRecipe = new Recipe(recipe.getName(),
-                recipe.getRecipeText(),
-                (HashMap<Ingredient, Integer>) recipe.getIngredientsAmount().clone(),
-                (HashMap<String, Integer>) recipe.getIngredientIDs().clone());
+                                       recipe.getRecipeText(),
+                                       new HashMap<>(recipe.getIngredientsAmount()),
+                                       new HashMap<>(recipe.getIngredientIDs()));
         MenuItem returnItem = new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
         returnItem.setEdited(edited);
         returnItem.setType(itemType);
@@ -286,6 +285,7 @@ public class MenuItem {
      * @return the total cost for a menu item
      */
     public Money getTotalCost() {
+        calculateFinalCost();
         return totalCost;
     }
 
