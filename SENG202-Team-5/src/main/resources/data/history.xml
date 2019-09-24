@@ -2,19 +2,57 @@
 <history>
     <transactionHistory>
         <entry>
-            <key>8</key>
+            <key>0</key>
             <value>
                 <orderItems>
                     <entry>
                         <key>
+                            <itemName>Medium Fries </itemName>
+                            <recipe>
+<name>Medium Fries </name>
+<recipeText>1. Deep fry fries. </recipeText>
+<ingredientIDs>
+    <entry>
+        <key>4</key>
+        <value>2</value>
+    </entry>
+</ingredientIDs>
+<dietaryInformation>VEGETARIAN</dietaryInformation>
+<dietaryInformation>VEGAN</dietaryInformation>
+<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                            </recipe>
+                            <markupCost>NZD 3.00</markupCost>
+                            <generator>
+<id>25</id>
+                            </generator>
+                            <id>32</id>
+                            <inMenu>true</inMenu>
+                            <itemType>SIDE</itemType>
+                            <edited>false</edited>
+                            <totalCost>NZD 3.20</totalCost>
+                        </key>
+                        <value>1</value>
+                    </entry>
+                    <entry>
+                        <key>
                             <itemName>Chicken Burger</itemName>
                             <recipe>
-<name>Chicken burger</name>
-<recipeText>1) Get some Chicken
-2) Get some cheese
-3) Throw the chicken on the grill and let it fry
-</recipeText>
+<name>Chicken Burger</name>
+<recipeText>1. Deep Fry chicken patty 
+2. Add cheese on top of patty
+3. Fry buns
+4. Fry onions
+5. Get one bun
+6. Place chicken patty on bun
+7. Put tomato sauce
+8. Put cheese
+9. Put onions
+10. Put other bun on top</recipeText>
 <ingredientIDs>
+    <entry>
+        <key>1</key>
+        <value>1</value>
+    </entry>
     <entry>
         <key>2</key>
         <value>1</value>
@@ -23,28 +61,63 @@
         <key>3</key>
         <value>1</value>
     </entry>
+    <entry>
+        <key>5</key>
+        <value>2</value>
+    </entry>
+    <entry>
+        <key>7</key>
+        <value>1</value>
+    </entry>
 </ingredientIDs>
-<dietaryInformation>GLUTEN_FREE</dietaryInformation>
                             </recipe>
-                            <markupCost>NZD 5.00</markupCost>
+                            <markupCost>NZD 4.30</markupCost>
                             <generator>
-<id>10</id>
+<id>25</id>
                             </generator>
-                            <id>1220</id>
+                            <id>12</id>
                             <inMenu>true</inMenu>
                             <itemType>MAIN</itemType>
                             <edited>false</edited>
-                            <totalCost>NZD 20.00</totalCost>
+                            <totalCost>NZD 6.30</totalCost>
                         </key>
-                        <value>4</value>
+                        <value>1</value>
+                    </entry>
+                    <entry>
+                        <key>
+                            <itemName>Coke Can (330mL)</itemName>
+                            <recipe>
+<name>Coke Can (330mL)</name>
+<recipeText>No recipe required</recipeText>
+<ingredientIDs>
+    <entry>
+        <key>8</key>
+        <value>1</value>
+    </entry>
+</ingredientIDs>
+<dietaryInformation>VEGETARIAN</dietaryInformation>
+<dietaryInformation>VEGAN</dietaryInformation>
+<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                            </recipe>
+                            <markupCost>NZD 1.40</markupCost>
+                            <generator>
+<id>25</id>
+                            </generator>
+                            <id>15</id>
+                            <inMenu>true</inMenu>
+                            <itemType>BEVERAGE</itemType>
+                            <edited>false</edited>
+                            <totalCost>NZD 2.00</totalCost>
+                        </key>
+                        <value>1</value>
                     </entry>
                 </orderItems>
-                <totalCost>NZD 80.00</totalCost>
-                <dateTimeProcessed>2019-09-23T15:41:35.497937</dateTimeProcessed>
+                <totalCost>NZD 11.50</totalCost>
+                <dateTimeProcessed>2019-09-24T12:18:27.589159</dateTimeProcessed>
                 <generator>
-                    <id>10</id>
+                    <id>25</id>
                 </generator>
-                <id>8</id>
+                <id>0</id>
             </value>
         </entry>
     </transactionHistory>

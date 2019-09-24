@@ -2,30 +2,30 @@
 <finance>
     <transactionHistory>
         <entry>
-            <key>9</key>
+            <key>44</key>
             <value>
-                <datetime>2019-09-23T15:41:35.497937</datetime>
+                <datetime>2019-09-24T12:18:27.589159</datetime>
                 <change>NZD 0.00</change>
-                <totalPrice>NZD 80.00</totalPrice>
-                <transactionID>9</transactionID>
+                <totalPrice>NZD 11.50</totalPrice>
+                <transactionID>44</transactionID>
                 <refunded>false</refunded>
-                <orderID>8</orderID>
+                <orderID>0</orderID>
             </value>
         </entry>
     </transactionHistory>
-    <denomination>NZD 100.00 NZD 50.00 NZD 20.00 NZD 10.00 NZD 5.00 NZD 2.00 NZD 1.00 NZD 0.50 NZD 0.20 NZD 0.10</denomination>
+    <denomination></denomination>
     <till>
         <denominations>
-            <entries key="NZD 0.10">0</entries>
-            <entries key="NZD 10.00">0</entries>
-            <entries key="NZD 2.00">0</entries>
-            <entries key="NZD 50.00">0</entries>
-            <entries key="NZD 100.00">1</entries>
-            <entries key="NZD 5.00">0</entries>
-            <entries key="NZD 1.00">0</entries>
-            <entries key="NZD 0.20">0</entries>
-            <entries key="NZD 0.50">0</entries>
-            <entries key="NZD 20.00">0</entries>
+            <entries key="NZD 0.10">1000</entries>
+            <entries key="NZD 10.00">1000</entries>
+            <entries key="NZD 2.00">1000</entries>
+            <entries key="NZD 50.00">1000</entries>
+            <entries key="NZD 100.00">1000</entries>
+            <entries key="NZD 5.00">1000</entries>
+            <entries key="NZD 1.00">1000</entries>
+            <entries key="NZD 0.20">1000</entries>
+            <entries key="NZD 0.50">1000</entries>
+            <entries key="NZD 20.00">1000</entries>
         </denominations>
     </till>
 </finance>
