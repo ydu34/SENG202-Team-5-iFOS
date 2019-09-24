@@ -132,7 +132,7 @@ public class OrderController extends GeneralController {
 
     /**
      * This function sorts the menu item by its price
-     * @param event
+     * @param event an event that caused this to happen
      */
 
     public void sortItemsPrice(ActionEvent event) {
@@ -142,7 +142,7 @@ public class OrderController extends GeneralController {
 
     /**
      * Tis function sorts the menu items by its name
-     * @param event
+     * @param event an event that caused this to happen
      */
 
     public void sortItemsName(ActionEvent event) {
@@ -185,10 +185,9 @@ public class OrderController extends GeneralController {
     }
 
     /**
-     *
-     * @return
+     * Filters the menu items in the menu based on the check boxes on the order screen
      */
-    public ArrayList<MenuItem> filterItems() {
+    public void filterItems() {
         ArrayList<MenuItem> filteredMenuItems = new ArrayList<>();
         if (allItems != null) {
             filteredMenuItems = new ArrayList<>(allItems);
@@ -248,8 +247,6 @@ public class OrderController extends GeneralController {
 
         populateTilePane(filteredMenuItems);
 
-        return filteredMenuItems;
-
     }
 
     /**
@@ -289,6 +286,10 @@ public class OrderController extends GeneralController {
        }
     }
 
+    /**
+     * This method shows the amount of ingredients in a selected menu item
+     */
+
     public void populateIngredientsTable() {
         Recipe currentRecipe = item.getRecipe();
         Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
@@ -299,9 +300,6 @@ public class OrderController extends GeneralController {
             return new SimpleStringProperty(Integer.toString(quantity));
         });
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
-        //this code removes the scroll bar buts ends up adding an extra column
-       // ingredientNameCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.40);
-       // ingredientQuantityCol.setPrefWidth(ingredientInfoTable.getPrefWidth()*0.20);
 
     }
 
@@ -321,6 +319,11 @@ public class OrderController extends GeneralController {
         controller.updateStock();
         controller.initializeTable();
     }
+
+    /**
+     * This method launches the addExtraIngredient Screen.
+     * @param actionEvent
+     */
 
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");

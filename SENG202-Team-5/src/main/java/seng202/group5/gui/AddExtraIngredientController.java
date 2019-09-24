@@ -147,6 +147,7 @@ public class AddExtraIngredientController extends GeneralController {
     /**
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
      * Also updates the name of the item if it's ingredients are different to the unedited version.
+     * @param actionEvent an event that caused this to happen
      */
     public void updateItemIngredients(ActionEvent actionEvent) {
         if (openMode.equals("Order")) {
@@ -226,6 +227,7 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Returns to the previous screen, returning the original item as the selected item.
+     * @param actionEvent an event that caused this to happen
      */
     public void revertScreen(javafx.event.ActionEvent actionEvent) {
         if (openMode.equals("Order")) {

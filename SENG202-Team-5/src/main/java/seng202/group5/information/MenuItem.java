@@ -247,7 +247,7 @@ public class MenuItem {
 
     /**
      * This function sets the itemType enum for the menu item
-     * @param itemType
+     * @param itemType the new type of the item
      */
 
     public void setType(TypeEnum itemType) {
@@ -264,6 +264,7 @@ public class MenuItem {
     }
 
     /**
+     * Checks if this menu item is edited or not
      *
      * @return the value for the boolean if the item was edited
      */
@@ -272,8 +273,8 @@ public class MenuItem {
     }
 
     /**
-     * Sets thee boolean to true if the menu item was edited
-     * @param tempEdited
+     * Sets the boolean to true if the menu item was edited
+     * @param tempEdited whether or not the item was edited
      */
 
     public void setEdited(boolean tempEdited) {

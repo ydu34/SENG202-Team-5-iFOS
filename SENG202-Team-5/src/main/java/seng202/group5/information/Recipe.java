@@ -53,7 +53,10 @@ public class Recipe {
     }
 
     /**
-     * The IngredientList will contain all the ingredients used in a particular recipe
+     * A new recipe with no ingredients initially added
+     *
+     * @param tempName the name of the new recipe
+     * @param tempRecipeText the text describing the recipe steps
      */
     public Recipe(String tempName, String tempRecipeText) {
         name = tempName;

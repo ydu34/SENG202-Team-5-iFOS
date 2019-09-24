@@ -21,7 +21,8 @@ import java.util.Map;
 
 /**
  * Controller for addRecipe.fxml, used to create new recipes and added to the menu.
- * @Author Yu Duan
+ *
+ * @author Yu Duan
  */
 public class AddRecipeController extends GeneralController {
 
@@ -177,7 +178,7 @@ public class AddRecipeController extends GeneralController {
 
     /**
      * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
         try {
