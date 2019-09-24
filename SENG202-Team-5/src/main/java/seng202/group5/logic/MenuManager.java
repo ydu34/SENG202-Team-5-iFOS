@@ -54,7 +54,9 @@ public class MenuManager {
      * @param recipe     the recipe for this item
      * @param markupCost the amount to increase the cost of this item by
      * @param inMenu     whether or not this item will be added to the menu
+     * @param id         the id of the item
      */
+    @Deprecated(since = "Uses an old MenuItem constructor, use getItemMap to insert items instead")
     public void createItem(String name, Recipe recipe, Money markupCost, String id, boolean inMenu) {
         MenuItem newItem = new MenuItem(name, recipe, markupCost, id, inMenu);
         itemMap.put(id, newItem);

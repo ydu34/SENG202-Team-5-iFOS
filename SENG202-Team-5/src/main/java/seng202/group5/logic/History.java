@@ -31,9 +31,9 @@ public class History {
      *
      * @param orderID a string representing the Order's ID
      * @return an Order of the specified ID
-     * @see Order
+     * @throws NoPastOrderException if the specified order does not exist
      */
-    public Order view(String orderID) throws NoPastOrderException { //BROKEN PLS FIX
+    public Order view(String orderID) throws NoPastOrderException {
         Order viewedOrder = getTransactionHistory().get(orderID);
         if (viewedOrder == null) {
             throw new NoPastOrderException("No order exists with ID " + orderID);

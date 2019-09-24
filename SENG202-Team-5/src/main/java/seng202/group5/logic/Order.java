@@ -98,6 +98,8 @@ public class Order {
 
     /**
      * The builder for an Order object with no initial values.
+     *
+     * @param tempStock the stock to keep track of
      */
     public Order(Stock tempStock) {
         orderItems = new HashMap<>();
@@ -265,7 +267,7 @@ public class Order {
     /**
      * A getter for the current order list.
      *
-     * @return A HashMap<MenuItem, Integer> orderItems
+     * @return A HashMap of order items
      */
     public HashMap<MenuItem, Integer> getOrderItems() {
         return orderItems;

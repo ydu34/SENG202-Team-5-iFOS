@@ -85,31 +85,40 @@ public class Ingredient {
     }
 
     /**
-     * Returns the name of the of the ingredient
+     * Returns the name of the ingredient
+     *
+     * @return the name of this ingredient
      **/
     public String getName() {
         return name;
     }
 
     /**
-     * Returns the category of the ingredient if its a spice, meat or bread.
+     * Returns the category of the ingredient i.e. if it is a spice, meat or bread.
+     *
+     * @return the category in which this ingredient is in
      **/
     public String getCategory() {
         return category;
     }
 
     /**
-     * Returns the Unique id for every ingredient
+     * Sets the category of this ingredient i.e. drink, food, spice etc.
+     *
+     * @param someCategory new category for the ingredient
+     */
+    public void setCategory(String someCategory) {
+        category = someCategory;
+    }
+
+    /**
+     * Returns the unique id for this ingredient
+     *
+     * @return the id of this ingredient
      **/
     public String getID() {
         return id;
     }
-
-    /**
-     * Sets the dietaryInformation.
-     * @param set A HashSet containing DietEnums.
-     */
-    public void setDietaryInformation(HashSet<DietEnum> set) { dietaryInformation = set; }
 
     /**
      * This method sets the name to the ingredient added to the stock
@@ -121,14 +130,15 @@ public class Ingredient {
     }
 
     /**
-     * @param someCategory Category for the newly added ingredient like drink,food,spice etc.
+     * Sets the dietary information about this ingredient
+     * @param set A HashSet containing DietEnums representing the dietary information of this ingredient
      */
-    public void setCategory(String someCategory) {
-        category = someCategory;
+    public void setDietaryInformation(HashSet<DietEnum> set) {
+        dietaryInformation = set;
     }
 
     /**
-     * This method sets the price for the ingredient.
+     * Sets the price for the ingredient.
      * @param money A new price for the ingredient using Joda Money.
      */
     public void setPrice(Money money) { price = money; }

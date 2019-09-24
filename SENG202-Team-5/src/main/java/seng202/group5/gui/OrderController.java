@@ -132,7 +132,7 @@ public class OrderController extends GeneralController {
 
     /**
      * This function sorts the menu item by its price
-     * @param event
+     * @param event an event that caused this to happen
      */
 
     public void sortItemsPrice(ActionEvent event) {
@@ -142,7 +142,7 @@ public class OrderController extends GeneralController {
 
     /**
      * Tis function sorts the menu items by its name
-     * @param event
+     * @param event an event that caused this to happen
      */
 
     public void sortItemsName(ActionEvent event) {
@@ -185,10 +185,9 @@ public class OrderController extends GeneralController {
     }
 
     /**
-     *
-     * @return
+     * Filters the menu items in the menu based on the check boxes on the order screen
      */
-    public ArrayList<MenuItem> filterItems() {
+    public void filterItems() {
         ArrayList<MenuItem> filteredMenuItems = new ArrayList<>();
         if (allItems != null) {
             filteredMenuItems = new ArrayList<>(allItems);
@@ -247,8 +246,6 @@ public class OrderController extends GeneralController {
         filteredItems = filteredMenuItems;
 
         populateTilePane(filteredMenuItems);
-
-        return filteredMenuItems;
 
     }
 

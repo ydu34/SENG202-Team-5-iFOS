@@ -22,6 +22,7 @@ public class Stock {
     /**
      * The builder for the Stock object.
      *
+     * @param tempIngredients     A mapping from the ID of each ingredient to their instance
      * @param tempIngredientStock An initial stock for the object, leave empty if there is none.
      */
     public Stock(HashMap<String, Ingredient> tempIngredients, HashMap<String, Integer> tempIngredientStock) {
@@ -121,7 +122,7 @@ public class Stock {
 
     /**
      * Returns the ingredients with their respective IDs.
-     * @return A HashMap<String, Ingredient> of current ingredients.
+     * @return A HashMap of current ingredients.
      */
     public HashMap<String, Ingredient> getIngredients() {
         return ingredients;

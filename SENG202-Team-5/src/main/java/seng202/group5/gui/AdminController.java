@@ -185,7 +185,7 @@ public class AdminController extends GeneralController {
      * is selected.
      * @param xmlFileName The name of the xml file with .xml
      * @param selectedFile  The selected file that the user selects
-     * @return
+     * @return whether or not the correct file is selected
      */
     public boolean checkSelectedFile(String xmlFileName, File selectedFile) {
         boolean correct = false;

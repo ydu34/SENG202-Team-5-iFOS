@@ -27,13 +27,13 @@ public class GeneralController {
      * AppEnvironment set, which is not available with the regular initialize method
      */
     public void pseudoInitialize() {
-        return;
     }
 
     /**
      * This method is called when the screen needs to change to a different one
-     * @param event
-     * @param scenePath
+     * @param event an event that caused this to happen
+     * @param scenePath the location of the fxml file of the new screen
+     * @return the new controller for the new screen
      */
     public GeneralController changeScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
@@ -56,7 +56,7 @@ public class GeneralController {
 
     /**
      * This method launches the order screen when clicked on the "Order" button
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/order.fxml");
@@ -64,7 +64,7 @@ public class GeneralController {
 
     /**
      * This method launches the invoice screen when clicked on the "Invoice" button
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void launchInvoiceScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/invoice.fxml");
@@ -72,7 +72,7 @@ public class GeneralController {
 
     /**
      * This method launches the stock screen when clicked on the "History" button
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/stock.fxml");
@@ -80,7 +80,7 @@ public class GeneralController {
 
     /**
      * This method launches the admin screen when clicked on the "Admin" button
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/admin.fxml");
@@ -88,7 +88,7 @@ public class GeneralController {
 
     /**
      * This method launches the order screen when clicked on the "Order" button
-     * @param actionEvent
+     * @param actionEvent an event that caused this to happen
      */
     public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/history.fxml");

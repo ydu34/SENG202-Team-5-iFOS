@@ -56,11 +56,13 @@ public class AppEnvironment {
     }
 
     /**
-     * Marshals the given object o into a xml file.
+     * Marshals the given object o into a xml file
      *
-     * @param c        The class of the object o.
-     * @param o        The object you want to marshal into xml file.
-     * @param fileName The name of the xml file.
+     * @param c        The class of the object o
+     * @param o        The object you want to marshal into xml file
+     * @param fileName The name of the xml file
+     * @param fileDirectory The directory to where the file should be marshalled
+     * @throws JAXBException if JAXB fails to convert the file
      */
     public void objectToXml(Class c, Object o, String fileName,  String fileDirectory) throws JAXBException{
         JAXBContext jaxbContext = JAXBContext.newInstance(c);
@@ -73,9 +75,16 @@ public class AppEnvironment {
     }
 
     /**
-     * Converts the xml file to an object o.
+     * Converts the xml file to an object o
      *
-     * @return an object o.
+     * @param c the class to create an instance of
+     * @param o the object being created
+     * @param fileName the name of the file to create the object from
+     * @param schemaFileName the name of the schema to use to convert the file
+     * @param fileDirectory the path to the directory the file is in
+     * @return an object o
+     * @throws JAXBException if JAXB fails to convert the file
+     * @throws SAXException if JAXB fails to convert the file
      */
     public Object xmlToObject(Class c, Object o, String fileName, String schemaFileName, String fileDirectory) throws JAXBException, SAXException{
         JAXBContext jaxbContext = JAXBContext.newInstance(c);
