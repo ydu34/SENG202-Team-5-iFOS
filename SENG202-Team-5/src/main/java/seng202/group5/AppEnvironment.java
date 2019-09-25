@@ -157,6 +157,7 @@ public class AppEnvironment {
         try {
             history = (History) xmlToObject(History.class, history, "history.xml", "history.xsd", fileDirectory);
             orderManager.setCurrentHistory(history);
+            orderManager.newOrder();
         } catch (JAXBException|SAXException e) {
             throw new Exception("history.xml file is invalid");
         }

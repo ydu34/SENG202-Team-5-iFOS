@@ -1,5 +1,6 @@
 package seng202.group5.gui.history;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -100,21 +101,21 @@ public class HistoryController extends GeneralController {
         });
         rowCost.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         // The factory for this is quite complicated since it uses a button instead
-//        rowAction.setCellValueFactory(param -> {
-//            Button refundButton = new Button("Refund");
-//            Order order = param.getValue();
-//            // Disable the button if the order cannot be refunded
-//            if (orderIDTransactionIndex.containsKey(order.getId())) {
-//                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
-//            } else {
-//                refundButton.setDisable(true);
-//            }
-//            refundButton.setOnAction((ActionEvent event) -> {
-//                refundOrder(order, refundButton);
-//                refundButton.setDisable(true);
-//            });
-//            return new ReadOnlyObjectWrapper<>(refundButton);
-//        });
+        rowAction.setCellValueFactory(param -> {
+            Button refundButton = new Button("Refund");
+            Order order = param.getValue();
+            // Disable the button if the order cannot be refunded
+            if (orderIDTransactionIndex.containsKey(order.getId())) {
+                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
+            } else {
+                refundButton.setDisable(true);
+            }
+            refundButton.setOnAction((ActionEvent event) -> {
+                refundOrder(order, refundButton);
+                refundButton.setDisable(true);
+            });
+            return new ReadOnlyObjectWrapper<>(refundButton);
+        });
 
         historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
     }
