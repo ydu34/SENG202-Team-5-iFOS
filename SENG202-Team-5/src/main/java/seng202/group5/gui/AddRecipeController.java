@@ -88,6 +88,17 @@ public class AddRecipeController extends GeneralController {
      */
     @FXML
     public void pseudoInitialize() {
+        // Listener for the markup cost text field, stops the use of letters
+        markupCostField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+                markupCostField.setText(oldValue);
+            }
+            // This is here in case we want to get rid of the Compute Total Cost button, having computeTotalCost() here
+            // means it updates as the markupCostField changes.
+            // computeTotalCost();
+        });
+
+        // Initialising the screen
         menuManager = getAppEnvironment().getMenuManager();
         item = new MenuItem();
         initializeTypeComboBox();
@@ -152,6 +163,11 @@ public class AddRecipeController extends GeneralController {
     public void computeTotalCost() {
         markupCostWarningText.setText("");
         String markupPriceStr = markupCostField.getText();
+
+        if (markupPriceStr == "") {
+            markupPriceStr = "0";
+        }
+
         try {
             Double.parseDouble(markupCostField.getText());
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
