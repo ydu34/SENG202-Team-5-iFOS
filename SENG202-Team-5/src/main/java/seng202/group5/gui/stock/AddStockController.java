@@ -89,12 +89,9 @@ public class AddStockController extends GeneralController {
                 costField.setText(oldValue);
             }
         });
-        quantityField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
-                    quantityField.setText(oldValue);
-                }
+        quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+                quantityField.setText(oldValue);
             }
         });
     }

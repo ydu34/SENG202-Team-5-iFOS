@@ -78,7 +78,7 @@
                            onShowing="#setStartDateUpdater" promptText="Start Date"/>
                <DatePicker fx:id="historyEndDatePicker" onAction="#updateSelectableStartDates"
                            onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1"/>
-               <TextField fx:id="historySearchbar" onKeyTyped="#updateVisibleOrders" promptText="Order ID search bar"
+               <TextField fx:id="historySearchBar" onKeyTyped="#updateVisibleOrders" promptText="Order ID search bar"
                           GridPane.columnIndex="2"/>
                <Button mnemonicParsing="false" onAction="#addPastOrder" text="Add Past Order" GridPane.columnIndex="4"/>
            </children>

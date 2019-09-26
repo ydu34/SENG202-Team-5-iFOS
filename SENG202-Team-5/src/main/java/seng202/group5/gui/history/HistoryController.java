@@ -44,7 +44,7 @@ public class HistoryController extends GeneralController {
      * The TextField for searching for an order by ID
      */
     @FXML
-    private TextField historySearchbar;
+    private TextField historySearchBar;
 
     /**
      * The table that displays the history of the orders
@@ -79,6 +79,13 @@ public class HistoryController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        // Listener for the historySearchBar text field to not allow letters and only numbers
+        historySearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}?")) {
+                historySearchBar.setText(oldValue);
+            }
+        });
+
         orderIDTransactionIndex = new HashMap<>();
         for (Transaction transaction : getAppEnvironment().getFinance().getTransactionHistoryClone().values()) {
             orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
@@ -272,7 +279,7 @@ public class HistoryController extends GeneralController {
         }
         Collection<Order> historyValues = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values();
         historyTable.getItems().removeAll(historyValues);
-        String searchString = historySearchbar.getCharacters().toString();
+        String searchString = historySearchBar.getCharacters().toString();
         for (Order order : historyValues) {
             if (order.getDateTimeProcessed().isAfter(firstTime) &&
                     order.getDateTimeProcessed().isBefore(lastTime) &&
