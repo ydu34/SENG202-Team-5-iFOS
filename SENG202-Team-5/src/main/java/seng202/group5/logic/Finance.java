@@ -27,9 +27,8 @@ public class Finance {
     /**
      * A list of cash denominations available
      */
-    @XmlJavaTypeAdapter(value = MoneyAdapter.class)
-    @XmlList
-    private ArrayList<Money> denomination;
+    @XmlTransient
+    private static ArrayList<Money> denomination;
     @XmlElement
     private Till till;
     
@@ -79,6 +78,7 @@ public class Finance {
     public ArrayList<Money> pay(Money totalCost, ArrayList<Money> amountPayed, LocalDateTime datetime, String orderID) throws InsufficientCashException {
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
+
         for (Money money: amountPayed)
         {
             payedSum = payedSum.plus(money);

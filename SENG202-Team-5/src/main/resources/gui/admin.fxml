@@ -195,7 +195,7 @@
                         </Text>
                         <Button fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="50.0" prefWidth="200.0" text="Import Data" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Import Data: All four .xml files must be imported at the same time. Please select all .xml files and click 'Import Data'." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data: Click 'Export Data' and select the distination directory" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data: Click 'Export Data' and select the destination directory" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         <Text fx:id="warningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>

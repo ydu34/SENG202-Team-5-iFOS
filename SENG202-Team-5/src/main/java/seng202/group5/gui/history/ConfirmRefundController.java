@@ -11,6 +11,8 @@ import org.joda.money.Money;
 import seng202.group5.AppEnvironment;
 import seng202.group5.logic.Order;
 
+import java.util.ArrayList;
+
 /**
  * A controller for confirming if the user wants to refund an order
  *
@@ -74,7 +76,8 @@ public class ConfirmRefundController {
         // Showing what coins to return to the customer
         StringBuilder builder = new StringBuilder("Return the following cash:\n");
         Money moneySum = Money.parse("NZD 0.00");
-        for (Money coin : source.confirmOrderRefund(order.getId())) {
+        ArrayList<Money> test = source.confirmOrderRefund(order.getId());
+        for (Money coin : test) {
             moneySum = moneySum.plus(coin);
             builder.append(coin.toString());
             builder.append(", ");

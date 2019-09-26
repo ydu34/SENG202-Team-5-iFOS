@@ -13,7 +13,6 @@
             </value>
         </entry>
     </transactionHistory>
-    <denomination></denomination>
     <till>
         <denominations>
             <entries key="NZD 0.10">1000</entries>
