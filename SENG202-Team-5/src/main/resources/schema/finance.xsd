@@ -23,11 +23,6 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="denomination" minOccurs="0">
-        <xs:simpleType>
-          <xs:list itemType="xs:string"/>
-        </xs:simpleType>
-      </xs:element>
       <xs:element ref="till" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
