@@ -17,6 +17,7 @@ import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -42,7 +43,8 @@ public class StockController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, String> rowCategory;
 
-    @FXML TableColumn<Ingredient, String> rowCost;
+    @FXML
+    TableColumn<Ingredient, String> rowCost;
 
     @FXML
     private Button addButton;
@@ -54,6 +56,9 @@ public class StockController extends GeneralController {
     private Button removeButton;
 
     @FXML
+    private TextField ingredientSearchField;
+
+    @FXML
     private Label warningLabel;
 
     private HashMap<String, Integer> quantities;
@@ -63,6 +68,14 @@ public class StockController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        // Listener for the ingredientSearchField to only accept numbers
+        ingredientSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}?")) {
+                ingredientSearchField.setText(oldValue);
+            }
+            updateVisibleIngredients();
+        });
+
         stockTable.getItems().clear();
         warningLabel.setText("");
         addButton.setDisable(false);
@@ -98,6 +111,18 @@ public class StockController extends GeneralController {
             }
         } catch (NoOrderException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateVisibleIngredients() {
+        stockTable.getItems().clear();
+
+        Collection<Ingredient> ingredientIDs = getAppEnvironment().getStock().getIngredients().values();
+        String searchID = ingredientSearchField.getText();
+        for (Ingredient ingredient : ingredientIDs) {
+            if (ingredient.getID().matches(".*" + searchID + ".*")) {
+                stockTable.getItems().add(ingredient);
+            }
         }
     }
 
