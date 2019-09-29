@@ -80,7 +80,6 @@ public class AddPastOrderController extends OrderController {
             sampleLoader.setControllerFactory(aClass -> new AddPastOrderController());
             sampleScene = sampleLoader.load();
             controller = sampleLoader.getController();
-            sampleLoader.setController(controller);
             controller.setAppEnvironment(caller.getAppEnvironment());
             controller.pseudoInitialize();
         } catch (IOException e) {
@@ -113,13 +112,6 @@ public class AddPastOrderController extends OrderController {
     @Override
     public void pseudoInitialize() {
         super.pseudoInitialize();
-        // Creating a new stock that has practically infinite ingredients
-        Stock maxStock = new Stock();
-        for (Ingredient ingr : getAppEnvironment().getStock().getIngredients().values()) {
-            maxStock.addNewIngredient(ingr, 9999999);
-        }
-        order = new Order(maxStock);
-        setCurrentOrder(order);
 
         // Creating the date picker
         datePicker = new DatePicker();
@@ -182,6 +174,7 @@ public class AddPastOrderController extends OrderController {
         bottomRightGridPane.addRow(4);
         bottomRightGridPane.add(cancelButton, 0, 4);
         bottomRightGridPane.add(confirmButton, 1, 4);
+
         // Setting the row constraints of the new rows
         RowConstraints row3 = new RowConstraints();
         RowConstraints row4 = new RowConstraints();
@@ -197,6 +190,19 @@ public class AddPastOrderController extends OrderController {
         bottomRightGridPane.getRowConstraints().add(row4);
 
         launchOrderButton.setDisable(false);
+        resetOrder();
+    }
+
+    /**
+     * Creates a new order
+     */
+    public void resetOrder() {
+        // Creating a new stock that has practically infinite ingredients
+        Stock maxStock = new Stock();
+        for (Ingredient ingr : getAppEnvironment().getStock().getIngredients().values()) {
+            maxStock.addNewIngredient(ingr, 9999999);
+        }
+        setOrder(new Order(maxStock));
     }
 
     /**
@@ -220,10 +226,6 @@ public class AddPastOrderController extends OrderController {
         changeScreen(event, "/gui/history.fxml");
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
     /**
      * This method launches the screen for adding extra ingredients to the selected menu item and
      * passes the item and order from the current class to the controller
@@ -244,20 +246,21 @@ public class AddPastOrderController extends OrderController {
                 public void updateItemIngredients(ActionEvent actionEvent) {
                     AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);
                     MenuItem selectedItem = getSelectedItem();
-                    String itemID = selectedItem.getID();
-                    MenuItem oldItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
+                    MenuItem oldItem = getOriginalItem();
                     if ((selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
-                        selectedItem.setEdited(true);
-                    } else {
                         selectedItem.setEdited(false);
+                    } else {
+                        selectedItem.setEdited(true);
                     }
                     controller.setMenuItem(selectedItem);
+                    controller.setOrder(getCurrentOrder());
                 }
 
                 @Override
                 public void revertScreen(ActionEvent event) {
                     AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(event, this);
-                    controller.setMenuItem(getOldItem());
+                    controller.setOrder(getCurrentOrder());
+                    controller.setMenuItem(getOriginalItem());
                 }
             });
             sampleScene = sampleLoader.load();
@@ -267,7 +270,7 @@ public class AddPastOrderController extends OrderController {
             controller.pseudoInitialize();
             controller.setMenuItem(getSelectedItem());
             controller.setCurrentOrder(order);
-            controller.updateStock();
+            controller.updateStockRecipeMode();
             controller.initializeTable();
         } catch (IOException e) {
             e.printStackTrace();
@@ -294,6 +297,12 @@ public class AddPastOrderController extends OrderController {
     public void addItemToOrder() {
         super.addItemToOrder();
         confirmButton.setDisable(false);
+    }
+
+    public void setOrder(Order order) {
+        super.setCurrentOrder(order);
+        this.order = order;
+        confirmButton.setDisable(order.getOrderItems().size() == 0);
     }
 
 }

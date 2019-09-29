@@ -181,15 +181,7 @@ public class AddExtraIngredientController extends GeneralController {
     public void updateStock() {
         updatedStock = getAppEnvironment().getStock().clone();
         if (currentOrder != null) {
-                for (MenuItem item : currentOrder.getOrderItems().keySet()) {
-                    HashMap<Ingredient, Integer> ingredientAmounts = item.getRecipe().getIngredientsAmount();
-                    for (Ingredient currentIngredient : ingredientAmounts.keySet()) {
-                        Integer amount = ingredientAmounts.get(currentIngredient);
-                        Integer updatedStockAmount =
-                                updatedStock.getIngredientQuantity(currentIngredient.getID()) - amount;
-                        updatedStock.modifyQuantity(currentIngredient.getID(), updatedStockAmount);
-                    }
-                }
+            updatedStock = currentOrder.getStock().clone();
         }
     }
 
@@ -199,7 +191,7 @@ public class AddExtraIngredientController extends GeneralController {
     public void updateStockRecipeMode() {
         updatedStock = getAppEnvironment().getStock().clone();
         for (String ingredientID : updatedStock.getIngredientStock().keySet()) {
-                updatedStock.modifyQuantity(ingredientID, 9999);
+            updatedStock.modifyQuantity(ingredientID, 9999);
         }
     }
 
@@ -246,11 +238,13 @@ public class AddExtraIngredientController extends GeneralController {
         return selectedItem;
     }
 
-    protected MenuItem getOldItem(){
-        return oldItem;
+    protected MenuItem getOriginalItem() {
+        return getAppEnvironment().getMenuManager().getMenuItems().get(selectedItem.getID());
     }
 
-
+    protected Order getCurrentOrder() {
+        return currentOrder;
+    }
 
 }
 
