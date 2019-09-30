@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.joda.money.Money;
+import seng202.group5.gui.history.AddPastOrderController;
 import seng202.group5.logic.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
@@ -23,6 +24,8 @@ import java.util.*;
  * @author James Kwok
  */
 public class AddExtraIngredientController extends GeneralController {
+
+    private static final int MAX_INGREDIENT_AMOUNT = 30;
 
     @FXML
     private String openMode;
@@ -107,11 +110,11 @@ public class AddExtraIngredientController extends GeneralController {
                 if (empty) {
                     setText(null);
                 } else {
-                    int maxAmount = 30;
+                    int maxAmount = MAX_INGREDIENT_AMOUNT;
                     Ingredient ingredient = getTableView().getItems().get(getIndex());
                     HashMap<Ingredient, Integer> ingredientAmounts = selectedItem.getRecipe().getIngredientsAmount();
-                    Integer index = getIndex();
-                    Integer quantity = Integer.parseInt(columnQuantity.getCellObservableValue(index).getValue());
+                    int index = getIndex();
+                    int quantity = Integer.parseInt(columnQuantity.getCellObservableValue(index).getValue());
                     if (quantity < 0) {
                         quantity = 0;
                     }
@@ -149,20 +152,35 @@ public class AddExtraIngredientController extends GeneralController {
      * @param actionEvent an event that caused this to happen
      */
     public void updateItemIngredients(ActionEvent actionEvent) {
-        if (openMode.equals("Order")) {
-            OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-            String itemID = selectedItem.getID();
-            MenuItem originalItem = getAppEnvironment().getMenuManager().getMenuItems().get(itemID);
-            if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
-                selectedItem.setEdited(false);
-            } else {
-                selectedItem.setEdited(true);
+        switch (openMode) {
+            case "Order": {
+                OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+                MenuItem originalItem = getOriginalItem();
+                if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
+                    selectedItem.setEdited(false);
+                } else {
+                    selectedItem.setEdited(true);
+                }
+                controller.setMenuItem(selectedItem);
+                break;
             }
-            controller.setMenuItem(selectedItem);
-        } else if (openMode.equals("Recipe")) {
-            AddRecipeController controller =
-                    (AddRecipeController) changeScreen(actionEvent, "/gui/addRecipe.fxml");
-            controller.setMenuItem(selectedItem);
+            case "Recipe": {
+                AddRecipeController controller = (AddRecipeController) changeScreen(actionEvent, "/gui/addRecipe.fxml");
+                controller.setMenuItem(selectedItem);
+                break;
+            }
+            case "PastOrder": {
+                AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);
+                MenuItem originalItem = getOriginalItem();
+                if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
+                    selectedItem.setEdited(false);
+                } else {
+                    selectedItem.setEdited(true);
+                }
+                controller.setMenuItem(selectedItem);
+                controller.setOrder(getCurrentOrder());
+                break;
+            }
         }
     }
 
@@ -191,7 +209,7 @@ public class AddExtraIngredientController extends GeneralController {
     public void updateStockRecipeMode() {
         updatedStock = getAppEnvironment().getStock().clone();
         for (String ingredientID : updatedStock.getIngredientStock().keySet()) {
-            updatedStock.modifyQuantity(ingredientID, 9999);
+            updatedStock.modifyQuantity(ingredientID, 999999);
         }
     }
 
@@ -221,12 +239,23 @@ public class AddExtraIngredientController extends GeneralController {
      * @param actionEvent an event that caused this to happen
      */
     public void revertScreen(javafx.event.ActionEvent actionEvent) {
-        if (openMode.equals("Order")) {
-            OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-            controller.setMenuItem(oldItem);
-        } else if (openMode.equals("Recipe")) {
-            AddRecipeController controller = (AddRecipeController) changeScreen(actionEvent, "/gui/addRecipe.fxml");
-            controller.setMenuItem(oldItem);
+        switch (openMode) {
+            case "Order": {
+                OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+                controller.setMenuItem(oldItem);
+                break;
+            }
+            case "Recipe": {
+                AddRecipeController controller = (AddRecipeController) changeScreen(actionEvent, "/gui/addRecipe.fxml");
+                controller.setMenuItem(oldItem);
+                break;
+            }
+            case "PastOrder": {
+                AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);
+                controller.setOrder(currentOrder);
+                controller.setMenuItem(getOriginalItem());
+                break;
+            }
         }
     }
 
@@ -238,7 +267,7 @@ public class AddExtraIngredientController extends GeneralController {
         return selectedItem;
     }
 
-    protected MenuItem getOriginalItem() {
+    private MenuItem getOriginalItem() {
         return getAppEnvironment().getMenuManager().getMenuItems().get(selectedItem.getID());
     }
 

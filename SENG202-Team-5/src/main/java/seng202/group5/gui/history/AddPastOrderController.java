@@ -240,32 +240,9 @@ public class AddPastOrderController extends OrderController {
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
             // Need to create a new class here so this screen comes back with the right controller
-            sampleLoader.setControllerFactory(aClass -> new AddExtraIngredientController() {
-                // These functions are almost the same as the overridden methods
-                @Override
-                public void updateItemIngredients(ActionEvent actionEvent) {
-                    AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);
-                    MenuItem selectedItem = getSelectedItem();
-                    MenuItem oldItem = getOriginalItem();
-                    if ((selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
-                        selectedItem.setEdited(false);
-                    } else {
-                        selectedItem.setEdited(true);
-                    }
-                    controller.setMenuItem(selectedItem);
-                    controller.setOrder(getCurrentOrder());
-                }
-
-                @Override
-                public void revertScreen(ActionEvent event) {
-                    AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(event, this);
-                    controller.setOrder(getCurrentOrder());
-                    controller.setMenuItem(getOriginalItem());
-                }
-            });
             sampleScene = sampleLoader.load();
             controller = sampleLoader.getController();
-            sampleLoader.setController(controller);
+            controller.setOpenMode("PastOrder");
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();
             controller.setMenuItem(getSelectedItem());
