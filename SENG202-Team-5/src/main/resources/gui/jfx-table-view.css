@@ -24,8 +24,8 @@
  /*TODO: Get the scroll bars right.*/
 
 .table-view {
-    -fx-table-color: rgba(82, 100, 174, 0.4);
-    -fx-table-rippler-color: rgba(82, 100, 174, 0.6);
+    -fx-table-color: rgba(249, 172, 104, 0.4);
+    -fx-table-rippler-color: rgba(249, 172, 104, 0.6);
 }
 :focused {
     -fx-background-color: -fx-table-color, -fx-box-border, -fx-control-inner-background;
