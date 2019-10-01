@@ -161,7 +161,7 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
         change = change.plus(Money.parse("NZD 0.03"));
 
-        for (Money value: denomination)
+        for (Money value : denomination)
         {
             while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {
 

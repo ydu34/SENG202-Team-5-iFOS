@@ -118,8 +118,8 @@ public class HistoryController extends GeneralController {
                 refundButton.setDisable(true);
             }
             refundButton.setOnAction((ActionEvent event) -> {
-                refundOrder(order, refundButton);
                 refundButton.setDisable(true);
+                refundOrder(order, refundButton);
             });
             return new ReadOnlyObjectWrapper<>(refundButton);
         });
@@ -314,7 +314,8 @@ public class HistoryController extends GeneralController {
      * @param event an event that caused this to happen
      */
     public void addPastOrder(ActionEvent event) {
-        AddPastOrderController.changeToPastOrderScreen(event, this);
+        AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(event, this);
+        controller.resetOrder();
     }
 
 }
