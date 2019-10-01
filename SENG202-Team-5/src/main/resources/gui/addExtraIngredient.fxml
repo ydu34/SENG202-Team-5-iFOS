@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="seng202.group5.gui.AddExtraIngredientController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AddExtraIngredientController">
     <children>
         <TableView fx:id="ingredientsTable" prefHeight="200.0" prefWidth="1920.0" stylesheets="@jfx-table-view.css" GridPane.vgrow="ALWAYS">
             <columns>
@@ -54,4 +54,11 @@
             </GridPane.margin>
         </GridPane>
     </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
