@@ -7,10 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -82,13 +79,15 @@ public class AddPastOrderController extends OrderController {
             controller = sampleLoader.getController();
             controller.setAppEnvironment(caller.getAppEnvironment());
             controller.pseudoInitialize();
+
+            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Parent finalSampleScene = sampleScene;
+            smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -> {
+                oldStage.getScene().setRoot(finalSampleScene);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-        oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
         return controller;
     }
 

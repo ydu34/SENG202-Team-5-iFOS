@@ -1,15 +1,23 @@
 package seng202.group5.gui;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seng202.group5.AppEnvironment;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -19,8 +27,39 @@ import java.io.IOException;
  */
 public class GeneralController {
 
+    private static final double FADE_DURATION = 200; // in milliseconds
+
     /** The property that is shared between all the controllers to access the AppEnvironment */
     private AppEnvironment appEnvironment;
+
+    /**
+     * A function to smoothly transition from one scene to another
+     *
+     * @param oldStage the old stage which
+     */
+    public static void smoothTransition(Stage oldStage, Pane origin, Pane destination, EventHandler<ActionEvent> event) {
+        // Creating a stack pane to transition from one screen to another
+        StackPane fadePane = new StackPane();
+        fadePane.setMaxHeight(Double.POSITIVE_INFINITY);
+        fadePane.setMaxWidth(Double.POSITIVE_INFINITY);
+        fadePane.setPrefHeight(destination.getPrefHeight());
+        fadePane.setPrefWidth(destination.getPrefWidth());
+        destination.setMouseTransparent(true);
+        origin.setMouseTransparent(true);
+        fadePane.getChildren().add(destination);
+        fadePane.getChildren().add(origin);
+        FadeTransition transition = new FadeTransition(Duration.millis(FADE_DURATION), origin);
+        transition.setFromValue(1.0);
+        transition.setToValue(0.0);
+
+        oldStage.getScene().setRoot(fadePane);
+        transition.play();
+        transition.setOnFinished((actionEvent) -> {
+            fadePane.getChildren().remove(destination);
+            destination.setMouseTransparent(false);
+            event.handle(actionEvent);
+        });
+    }
 
     /**
      * A function which can be overwritten to initialize a controller with the
@@ -38,19 +77,24 @@ public class GeneralController {
     public GeneralController changeScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
         GeneralController controller = null;
+        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
             sampleScene = sampleLoader.load();
             controller = sampleLoader.getController();
             controller.setAppEnvironment(appEnvironment);
             controller.pseudoInitialize();
+
+            double prevHeight = ((Node) event.getSource()).getScene().getHeight();
+            double prevWidth = ((Node) event.getSource()).getScene().getWidth();
+
+            Parent finalSampleScene = sampleScene;
+            smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -> {
+                oldStage.getScene().setRoot(finalSampleScene);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-        oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
         return controller;
     }
 

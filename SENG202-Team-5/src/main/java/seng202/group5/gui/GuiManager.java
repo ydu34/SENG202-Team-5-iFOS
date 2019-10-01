@@ -43,6 +43,7 @@ public class GuiManager extends Application {
         int width = Screen.getMainScreen().getWidth();
         primaryStage.setScene(new Scene(root, width, height));
         primaryStage.setTitle("iFOS");
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
