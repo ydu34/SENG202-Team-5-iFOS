@@ -23,7 +23,7 @@ import java.util.HashSet;
 /**
  * A controller for a screen that adds ingredients to the stock
  *
- * @author Michael Morgun
+ * @author Michael Morgoun
  */
 public class AddStockController extends GeneralController {
 

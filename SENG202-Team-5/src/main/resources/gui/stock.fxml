@@ -27,12 +27,12 @@
                <Button fx:id="addButton" mnemonicParsing="false" onAction="#addIngredient" prefHeight="30.0" prefWidth="118.0" text="Add" />
                <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyIngredient" prefHeight="30.0" prefWidth="118.0" text="Modify" />
                <Button fx:id="removeButton" mnemonicParsing="false" onAction="#removeIngredient" prefHeight="30.0" prefWidth="118.0" text="Remove" />
+               <TextField fx:id="ingredientSearchField" prefHeight="30.0" prefWidth="172.0" promptText="Search Ingredient ID" />
                <Label fx:id="warningLabel" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="769.0">
                    <font>
                        <Font size="18.0" />
                    </font>
                </Label>
-               <TextField fx:id="ingredientSearchField" prefHeight="30.0" prefWidth="172.0" promptText="Search Ingredient ID" />
            </children>
        </HBox>
        <TableView fx:id="stockTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" stylesheets="@jfx-table-view.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
