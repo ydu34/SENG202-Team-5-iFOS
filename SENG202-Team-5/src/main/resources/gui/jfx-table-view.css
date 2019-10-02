@@ -19,7 +19,7 @@
 
 /*
 * The following CSS has been adapted from jfx-tree-table-view.css
-* Changes made by Yu Duan.
+* Changes made by Yu Duan, James Kwok.
 */
 
 /*TODO: Get the scroll bars right.*/
@@ -27,7 +27,7 @@
 .table-view {
     -fx-table-color: rgba(249, 172, 104, 0.4);
     -fx-table-rippler-color: rgba(58, 62, 89, 0.6);
-    -fx-background-color: rgb(242, 239, 223);
+    -fx-background-color: rgba(242, 239, 223, 1.0);
     -fx-border-color: #f9ac68;
 }
 :focused {
@@ -35,7 +35,6 @@
     -fx-background-insets: -1.4, 0, 1;
     -fx-background-radius: 1.4, 0, 0;
     /*....*/
-    -fx-padding: 1; /* 0.083333em; */
 }
 
 .table-view:focused .table-row-cell:selected{
@@ -68,9 +67,9 @@
     -fx-background-color: #6f7286;
 }
 
-.table-view .column-header:last-visible {
-    -fx-border-width: 0 0 0 0;
-}
+/*.table-view .column-header:last-visible {*/
+    /*-fx-border-width: 0 0 0 0;*/
+/*}*/
 
 .table-view .column-header-background {
     -fx-border-width: 0 0.0 1 0;
@@ -102,10 +101,10 @@
     -fx-focus-color: rgb(82, 100, 174);
 }
 
-.table-row-cell .jfx-text-field:error {
-    -jfx-focus-color: #D34336;
-    -jfx-unfocus-color: #D34336;
-}
+/*.table-row-cell .jfx-text-field:error {*/
+    /*-jfx-focus-color: #D34336;*/
+    /*-jfx-unfocus-color: #D34336;*/
+/*}*/
 
 .table-row-cell .jfx-text-field .error-label {
     -fx-text-fill: #D34336;
@@ -117,9 +116,9 @@
     -fx-font-size: 1.0em;
 }
 
-.table-row-cell:grouped {
-    -fx-background-color: rgb(230, 230, 230);
-}
+/*.table-row-cell:grouped {*/
+    /*-fx-background-color: rgb(230, 230, 230);*/
+/*}*/
 
 .table-view .menu-item:focused {
     -fx-background-color: -fx-table-color;
