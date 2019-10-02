@@ -100,7 +100,7 @@
                      <font>
                         <Font size="16.0" />
                      </font></Text>
-                  <JFXTextArea fx:id="recipeTextArea" focusColor="#ed6b58" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" unFocusColor="#f9ac68" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <JFXTextArea fx:id="recipeTextArea" focusColor="#ed6b58" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f2efdf;" unFocusColor="#f9ac68" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
