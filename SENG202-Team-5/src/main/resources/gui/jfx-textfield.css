@@ -1,18 +1,19 @@
-/*TODO change colours*/
+/*Colours modified by Yu Duan */
 
 .jfx-text-field
 {
-    -jfx-focus-color: #4eb769;
+    -jfx-focus-color: #ed6b58;
+    -jfx-unfocus-color: #f9ac68;
 }
 
 .text-field
 {
-    -fx-prompt-text-fill: #fffd8c;
-    -fx-text-fill: #fffd8c;
-    -fx-highlight-fill: #4eb769;
+    -fx-prompt-text-fill: #3a3e59;
+    -fx-text-fill: #3a3e59;
+    -fx-highlight-fill: #ed6b58;
 }
 
 .text-field .input-line
 {
-    -fx-background-color: #fffd8c;
+    -fx-background-color: #f9ac68;
 }
