@@ -38,7 +38,7 @@
                </Label>
            </children>
        </HBox>
-       <TableView fx:id="stockTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" stylesheets="@ifos-theme.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+       <TableView fx:id="stockTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/ifos-theme.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
            <columns>
                <TableColumn fx:id="rowID" prefWidth="86.0" text="ID" />
                <TableColumn fx:id="rowIngredient" prefWidth="223.0" text="Ingredients" />
@@ -47,7 +47,7 @@
                <TableColumn fx:id="rowCost" prefWidth="219.0" text="Cost" />
            </columns>
        </TableView>
-      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" stylesheets="@ifos-theme.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" stylesheets="@css/ifos-theme.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
         <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
@@ -59,11 +59,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="launchOrderButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#launchOrderScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@ifos-theme.css" text="Order" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchInvoiceButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchInvoiceScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@ifos-theme.css" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-            <JFXButton alignment="CENTER" disable="true" layoutX="250.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="241.0" stylesheets="@ifos-theme.css" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchAdminButton" alignment="CENTER" layoutX="490.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchAdminScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@ifos-theme.css" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchHistoryButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchHistoryScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@ifos-theme.css" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchOrderButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#launchOrderScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Order" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchInvoiceButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchInvoiceScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+            <JFXButton alignment="CENTER" disable="true" layoutX="250.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchAdminButton" alignment="CENTER" layoutX="490.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchAdminScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchHistoryButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchHistoryScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
          </children>
       </GridPane>
    </children>

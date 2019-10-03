@@ -34,7 +34,7 @@
                 <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" valignment="BOTTOM" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TableView fx:id="ingredientsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="400.0" stylesheets="@jfx-table-view.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                <TableView fx:id="ingredientsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="400.0" stylesheets="@css/jfx-table-view.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="ingredientCol" prefWidth="175.0" text="Ingredient " />
                         <TableColumn fx:id="quantityCol" prefWidth="97.0" text="Quantity" />

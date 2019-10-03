@@ -1,0 +1,10 @@
+.jfx-check-box {
+    -jfx-checked-color: rgba(58, 62, 89, 1);
+    -jfx-unchecked-color: rgba(58, 62, 89, 1);
+    -fx-text-fill: rgba(58, 62, 89, 1);
+}
+
+/* Styling checkmark */
+.jfx-check-box .mark{
+    -fx-border-color: white;
+}
