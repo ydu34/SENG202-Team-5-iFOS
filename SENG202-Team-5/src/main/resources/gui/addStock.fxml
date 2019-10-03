@@ -68,7 +68,7 @@
             <Insets left="40.0" />
          </GridPane.margin>
       </JFXCheckBox>
-      <JFXButton fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="108.0" text="Create" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+      <JFXButton fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" onAction="#buttonAction" prefHeight="44.0" prefWidth="108.0" text="Create" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
          <font>
             <Font size="16.0" />
          </font>
