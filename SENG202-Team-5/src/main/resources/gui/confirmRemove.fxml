@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="200.0" prefWidth="400.0" stylesheets="@ifos-theme.css"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="200.0" prefWidth="400.0" stylesheets="@css/ifos-theme.css"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="seng202.group5.gui.stock.RemoveStockController">
    <children>
        <JFXButton fx:id="removeButton" layoutX="84.0" layoutY="125.0" mnemonicParsing="false" onAction="#removeIngredient"
