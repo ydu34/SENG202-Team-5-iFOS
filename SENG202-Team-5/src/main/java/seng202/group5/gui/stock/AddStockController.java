@@ -86,12 +86,12 @@ public class AddStockController extends GeneralController {
 
         // Listeners for the number only text fields such as quantity and cost
         costField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,2})?")) {
                 costField.setText(oldValue);
             }
         });
         quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,7}?")) {
                 quantityField.setText(oldValue);
             }
         });
