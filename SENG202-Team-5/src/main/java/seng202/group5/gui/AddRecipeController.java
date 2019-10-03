@@ -6,7 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.information.Ingredient;
@@ -15,6 +18,8 @@ import seng202.group5.information.Recipe;
 import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.MenuManager;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +78,12 @@ public class AddRecipeController extends GeneralController {
 
     @FXML
     private TextArea recipeTextArea;
+
+    @FXML
+    private ImageView itemImage;
+
+    @FXML
+    private Button selectImageButton;
 
 
 
@@ -266,5 +277,30 @@ public class AddRecipeController extends GeneralController {
         initializeTextValues();
         initializeTypeComboBox();
         populateIngredientsTable();
+    }
+
+    /** On action for button selectImageButton, opens a file chooser for the user
+     * to select an image for the current menu item they are making.
+     */
+    @FXML
+    public void addImageToItem() {
+        FileChooser fileChooser = new FileChooser();
+        List<String> imageExtensions = new ArrayList<>();
+        imageExtensions.add("*.png");
+        imageExtensions.add("*.jpg");
+        imageExtensions.add("*.jpeg");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", imageExtensions));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        try {
+            Image image = new Image(new FileInputStream(selectedFile.getPath()));
+            itemImage.setImage(image);
+            item.setImageString(selectedFile.getName());
+        } catch (Exception e) {
+
+        }
+
+
+
+
     }
 }

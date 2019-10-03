@@ -63,6 +63,11 @@ public class MenuItem {
     private Money totalCost;
 
     /**
+     * A string representing the image for this menu item
+     */
+    private String imageString;
+
+    /**
      * Default constructor for the menu item class
      */
     public MenuItem() {
@@ -73,6 +78,7 @@ public class MenuItem {
         itemType = TypeEnum.MAIN;
         edited = false;
         totalCost = Money.parse("NZD 0.00");
+        imageString = null;
     }
 
     /**
@@ -296,6 +302,15 @@ public class MenuItem {
     public void setTotalCost(Money totalCost) {
         this.totalCost = totalCost;
     }
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public void setImageString(String imageString) {
+        this.imageString = imageString;
+    }
+
 }
 
 
