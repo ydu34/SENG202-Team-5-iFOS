@@ -1,5 +1,9 @@
 package seng202.group5.gui.history;
 
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.skins.JFXDatePickerContent;
+import com.jfoenix.skins.JFXDatePickerSkin;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
@@ -10,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
@@ -53,7 +59,6 @@ public class HistoryController extends GeneralController {
     private TableView<Order> historyTable;
 
     // These are the rows of the history table
-
     @FXML
     private TableColumn<Order, String> rowID;
 
@@ -77,8 +82,16 @@ public class HistoryController extends GeneralController {
      */
     private HashMap<String, Transaction> orderIDTransactionIndex;
 
+    public void initialize() {
+        setStartDateUpdater();
+        setEndDateUpdater();
+    }
+
     @Override
     public void pseudoInitialize() {
+        setEndDateUpdater();
+        setStartDateUpdater();
+
         // Listener for the historySearchBar text field to not allow letters and only numbers
         historySearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d{0,7}?")) {
@@ -167,18 +180,18 @@ public class HistoryController extends GeneralController {
     /**
      * Sets the DateCell creators for the start date picker
      *
-     * @param event an event that caused this to happen
      */
-    public void setStartDateUpdater(javafx.event.Event event) {
+    public void setStartDateUpdater() {
         historyStartDatePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate endDate = historyEndDatePicker.getValue();
+                historyEndDatePicker.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
                 if (endDate == null) {
                     setDisable(empty);
                 } else {
-                    setDisable(empty || date.compareTo(endDate) > 0);
+                    setDisable(empty || date.isAfter(endDate));
                 }
             }
         });
@@ -187,7 +200,7 @@ public class HistoryController extends GeneralController {
             public LocalDate fromString(String input) {
                 LocalDate date = super.fromString(input);
                 LocalDate endDate = historyEndDatePicker.getValue();
-                if (endDate != null && date.compareTo(endDate) > 0) {
+                if (endDate != null && date.isAfter(endDate)) {
                     date = endDate;
                 }
                 return date;
@@ -198,18 +211,18 @@ public class HistoryController extends GeneralController {
     /**
      * Sets the DateCell creators for the end date picker
      *
-     * @param event an event that caused this to happen
      */
-    public void setEndDateUpdater(javafx.event.Event event) {
+    public void setEndDateUpdater() {
         historyEndDatePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate startDate = historyStartDatePicker.getValue();
+                historyStartDatePicker.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
                 if (startDate == null) {
                     setDisable(empty);
                 } else {
-                    setDisable(empty || date.compareTo(startDate) < 0);
+                    setDisable(empty || date.isBefore(startDate));
                 }
             }
         });
@@ -218,7 +231,7 @@ public class HistoryController extends GeneralController {
             public LocalDate fromString(String input) {
                 LocalDate date = super.fromString(input);
                 LocalDate startDate = historyStartDatePicker.getValue();
-                if (startDate != null && date.compareTo(startDate) < 0) {
+                if (startDate != null && date.isBefore(startDate)) {
                     date = startDate;
                 }
                 return date;
@@ -227,42 +240,10 @@ public class HistoryController extends GeneralController {
     }
 
     /**
-     * Iterates through the available end dates and sets which are selectable depending on the start date
-     *
-     * @param actionEvent an event that caused this to happen
-     */
-    public void updateSelectableEndDates(javafx.event.ActionEvent actionEvent) {
-        for (Node element : historyEndDatePicker.getChildrenUnmodifiable()) {
-            if (element instanceof DateCell) {
-                DateCell dateElement = (DateCell) element;
-                dateElement.updateItem(dateElement.getItem(), dateElement.isEmpty());
-            }
-        }
-        updateVisibleOrders(actionEvent);
-    }
-
-    /**
-     * Iterates through the available start dates and sets which are selectable depending on the end date
-     *
-     * @param actionEvent an event that caused this to happen
-     */
-    public void updateSelectableStartDates(javafx.event.ActionEvent actionEvent) {
-        for (Node element : historyStartDatePicker.getChildrenUnmodifiable()) {
-            if (element instanceof DateCell) {
-                DateCell dateElement = (DateCell) element;
-                dateElement.updateItem(dateElement.getItem(), dateElement.isEmpty());
-            }
-        }
-        updateVisibleOrders(actionEvent);
-    }
-
-
-    /**
      * Updates the orders that are visible in the order table
      *
-     * @param event an event that caused this to happen
      */
-    public void updateVisibleOrders(javafx.event.Event event) {
+    public void updateVisibleOrders() {
         LocalDate firstDate = historyStartDatePicker.getValue();
         LocalDate lastDate = historyEndDatePicker.getValue();
         LocalDateTime firstTime;
@@ -304,7 +285,7 @@ public class HistoryController extends GeneralController {
             System.out.println("Order already exists in history!");
         } else {
             history.put(order.getId(), order);
-            updateVisibleOrders(new ActionEvent());
+            updateVisibleOrders();
         }
     }
 
