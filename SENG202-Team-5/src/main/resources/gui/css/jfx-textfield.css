@@ -1,5 +1,3 @@
-/*Colours modified by Yu Duan */
-
 .jfx-text-field
 {
     -jfx-focus-color: #ed6b58;
@@ -8,9 +6,9 @@
 
 .text-field
 {
-    -fx-prompt-text-fill: #3a3e59;
-    -fx-text-fill: #3a3e59;
-    -fx-highlight-fill: #ed6b58;
+    -fx-prompt-text-fill: rgba(58, 62, 89, 1);
+    -fx-text-fill:rgba(58, 62, 89, 1);
+    -fx-highlight-fill: #3399ff;
 }
 
 .text-field .input-line
