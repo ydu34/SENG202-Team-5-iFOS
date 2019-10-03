@@ -1,5 +1,8 @@
 package seng202.group5.gui.history;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,17 +44,17 @@ public class AddPastOrderController extends OrderController {
     /**
      * A picker for the date when the order was made
      */
-    private DatePicker datePicker;
+    private JFXDatePicker datePicker;
 
     /**
      * A picker for the time at which the order was made
      */
-    private TextField timePicker;
+    private JFXTextField timePicker;
 
     /**
      * A button to confirm the new past order
      */
-    private Button confirmButton;
+    private JFXButton confirmButton;
 
     /**
      * The grid pane on the order screen that is used for the nodes added to the order screen
@@ -113,7 +116,7 @@ public class AddPastOrderController extends OrderController {
         super.pseudoInitialize();
 
         // Creating the date picker
-        datePicker = new DatePicker();
+        datePicker = new JFXDatePicker();
         setNodeConstraints(datePicker);
         datePicker.setValue(LocalDate.now());
         // This sets the factory that creates each cell in the calendar
@@ -139,7 +142,7 @@ public class AddPastOrderController extends OrderController {
         });
 
         // Creating the time picker
-        timePicker = new TextField();
+        timePicker = new JFXTextField();
         setNodeConstraints(timePicker);
         // This formats the input into a string that matches something like 2:45 am
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
@@ -156,13 +159,13 @@ public class AddPastOrderController extends OrderController {
         }, formatter.parse(formatter.format(LocalTime.now()))));
 
         // Creating the button to confirm the new order
-        confirmButton = new Button("Confirm");
+        confirmButton = new JFXButton("Confirm");
         confirmButton.setOnAction((ActionEvent event) -> sendPastOrderToHistory(event, formatter));
         confirmButton.setDisable(true);
         setNodeConstraints(confirmButton);
 
         // Creating the button to cancel the order
-        Button cancelButton = new Button("Cancel");
+        Button cancelButton = new JFXButton("Cancel");
         cancelButton.setOnAction(this::returnToHistory);
         setNodeConstraints(cancelButton);
 
