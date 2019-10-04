@@ -1,6 +1,7 @@
 package seng202.group5.gui;
 
 //import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.joda.money.Money;
 import seng202.group5.logic.Order;
 import seng202.group5.information.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
@@ -101,9 +103,23 @@ public class OrderController extends GeneralController {
     @FXML
     private AnchorPane tilePaneContainer;
 
+    @FXML
+    private TableView<MenuItem> currentOrderTable;
+
+    @FXML
+    private TableColumn<MenuItem, String> itemNameCol;
+
     private Order currentOrder;
 
     private ArrayList<MenuItem> allItems;
+
+    private Map<MenuItem, Integer> orderItemsMap;
+
+    @FXML
+    private TableColumn<MenuItem, String> itemQuantityCol;
+
+    @FXML
+    private TableColumn<MenuItem,String> itemPriceCol;
 
     private ArrayList<MenuItem> filteredItems;
     private SORT_TYPE sortingType = SORT_TYPE.NAME;
@@ -115,6 +131,7 @@ public class OrderController extends GeneralController {
         filterItems();
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrderTable();
         } catch (NoOrderException e) {
             System.out.println(e);
         }
@@ -167,7 +184,7 @@ public class OrderController extends GeneralController {
             }
 
             for (MenuItem item : sortedItems) {
-                Button tempButton = new Button(item.getItemName());
+                JFXButton tempButton = new JFXButton(item.getItemName());
                 tempButton.setStyle("-fx-font-size: 20; ");
                 tempButton.setPrefWidth(260);
                 tempButton.setPrefHeight(100);
@@ -265,19 +282,18 @@ public class OrderController extends GeneralController {
         recipeText.setText(newItem.getRecipe().getRecipeText());
     }
 
-
-
     /**
      * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
      * Otherwise displays the appropriate message if the order can/cannot be added.
      */
     public void addItemToOrder() {
-
         Integer quantity = quantitySpinner.getValue();
         if (currentOrder.addItem(item, quantity)) {
-
+            currentOrderTable();
             promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
-           promptText.setFill(Color.GREEN);
+            promptText.setFill(Color.GREEN);
+
+
        }
        else{
            promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
@@ -318,6 +334,29 @@ public class OrderController extends GeneralController {
         controller.setOpenMode("Order");
         controller.updateStock();
         controller.initializeTable();
+    }
+
+    public void currentOrderTable() {
+        orderItemsMap = currentOrder.getOrderItems();
+        System.out.println(orderItemsMap);
+        List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
+        System.out.println(orderItems);
+        itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        System.out.println(itemNameCol);
+//        itemPriceCol.setCellValueFactory(data -> {
+//                    int quantity = orderItemsMap.get(data.getValue());
+//                    Money totalPrice = data.getValue().calculateFinalCost().multipliedBy(quantity);
+//                    return new SimpleStringProperty(totalPrice.toString());
+//                }
+//        );
+
+        itemQuantityCol.setCellValueFactory(data -> {
+            int quantity = orderItemsMap.get(data.getValue());
+            return new SimpleStringProperty(Integer.toString(quantity));
+
+        });
+
+        currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
     }
 
     /**
