@@ -100,12 +100,11 @@ public class GuiManager extends Application {
         tempOrder.addItem(environment.getMenuManager().getItemMap().get("1220"), 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
         try {
-            environment.getFinance().pay(tempOrder.getTotalCost(),
-                                         new ArrayList<>() {{
+            environment.getFinance().pay(new ArrayList<>() {{
                                              add(Money.parse("NZD 100.00"));
                                          }},
-                                         tempOrder.getDateTimeProcessed(),
-                                         tempOrder.getId());
+                                         LocalDateTime.now(),
+                                         tempOrder);
         } catch (InsufficientCashException e) {
             e.printStackTrace();
         }

@@ -187,7 +187,7 @@ public class AdminController extends GeneralController {
             sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
         }
         if (!eDate.isBefore(sDate)) {
-            ArrayList<Money> result = finance.totalCalculator(sDate, eDate, getAppEnvironment().getHistory().getTransactionHistory());
+            ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
             saleSummaryText.setText("Total cost of orders: " + result.get(0) +
                     "\nAverage daily cost: " + result.get(1) +
                     "\nTotal profits: " + result.get(2) +

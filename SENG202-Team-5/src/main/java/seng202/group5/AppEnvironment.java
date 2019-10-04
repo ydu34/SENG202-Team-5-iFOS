@@ -219,7 +219,7 @@ public class AppEnvironment {
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
         //        Money totalPayment = Money.parse("NZD 0");
         //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
-        ArrayList<Money> change = new ArrayList<Money>();
+        ArrayList<Money> change = new ArrayList<>();
         try {
             Order order = orderManager.getOrder();
             order.setDateTimeProcessed(LocalDateTime.now());
@@ -228,10 +228,7 @@ public class AppEnvironment {
             orderManager.setStock(stock);
             orderManager.newOrder();
 
-            change = finance.pay(order.getTotalCost(),
-                                 denominations,
-                                 order.getDateTimeProcessed(),
-                                 order.getId());
+            change = finance.pay(denominations, LocalDateTime.now(), order);
 
         } catch (NoOrderException e) {
             e.printStackTrace();

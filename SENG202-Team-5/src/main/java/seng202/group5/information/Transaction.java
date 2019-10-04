@@ -4,6 +4,7 @@ import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
+import seng202.group5.logic.Order;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -38,14 +39,22 @@ public class Transaction {
     private Boolean refunded;
     private String orderID;
 
+    private Order order;
+
     Transaction() {}
 
-    public Transaction(LocalDateTime newDateTime, Money newChange, Money newTotalPrice, String orderID) {
+    public Transaction(LocalDateTime newDateTime, Money newChange, Order newOrder) {
         refunded = false;
         datetime = newDateTime;
         change = newChange;
-        totalPrice = newTotalPrice;
-        this.orderID = orderID;
+        if (newOrder != null) {
+            totalPrice = newOrder.getTotalCost();
+            orderID = newOrder.getId();
+        } else {
+            totalPrice = null;
+            orderID = null;
+        }
+        order = newOrder;
     }
 
     public Boolean isRefunded() {
@@ -72,6 +81,10 @@ public class Transaction {
 
     public String getOrderID() {
         return orderID;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public void setTransactionID(String transactionID) {

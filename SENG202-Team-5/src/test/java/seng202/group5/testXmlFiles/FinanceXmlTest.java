@@ -75,7 +75,7 @@ public class FinanceXmlTest {
         tempOrder.addItem(oldAppEnvironment.getMenuManager().getItemMap().get("1220"), 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
 
-        Transaction transaction = new Transaction(tempOrder.getDateTimeProcessed(), Money.parse("NZD 0.00"), tempOrder.getTotalCost(), tempOrder.getId());
+        Transaction transaction = new Transaction(tempOrder.getDateTimeProcessed(), Money.parse("NZD 0.00"), tempOrder);
         transaction.setTransactionID("9");
         oldAppEnvironment.getFinance().getTransactionHistory().put(transaction.getTransactionID(), transaction);
 
@@ -100,7 +100,7 @@ public class FinanceXmlTest {
     @Test
     public void testTransactionDateTimeIsInFinance() {
         LocalDateTime dateTime = finance.getTransactionHistory().get("9").getDateTime();
-        assertTrue(dateTime instanceof LocalDateTime);
+        assertNotNull(dateTime);
     }
 
     @Test
@@ -111,6 +111,7 @@ public class FinanceXmlTest {
 
     @Test
     public void testTransactionTotalPriceIsInFinance() {
+        System.out.println(finance);
         String totalPrice = finance.getTransactionHistory().get("9").getTotalPrice().toString();
         assertEquals("NZD 80.00", totalPrice);
     }

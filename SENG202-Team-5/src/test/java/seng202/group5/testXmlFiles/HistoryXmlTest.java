@@ -76,7 +76,7 @@ public class HistoryXmlTest {
         tempOrder.addItem(oldAppEnvironment.getMenuManager().getItemMap().get("1220"), 4);
         tempOrder.setDateTimeProcessed(LocalDateTime.now());
 
-        Transaction transaction = new Transaction(tempOrder.getDateTimeProcessed(), Money.parse("NZD 0.00"), tempOrder.getTotalCost(), tempOrder.getId());
+        Transaction transaction = new Transaction(tempOrder.getDateTimeProcessed(), Money.parse("NZD 0.00"), tempOrder);
         transaction.setTransactionID("9");
         oldAppEnvironment.getFinance().getTransactionHistory().put(transaction.getTransactionID(), transaction);
 

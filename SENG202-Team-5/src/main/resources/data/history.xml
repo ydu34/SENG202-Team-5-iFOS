@@ -7,23 +7,23 @@
                 <orderItems>
                     <entry>
                         <key>
-                            <itemName>Medium Fries </itemName>
+                            <itemName>Medium Fries</itemName>
                             <recipe>
-<name>Medium Fries </name>
-<recipeText>1. Deep fry fries. </recipeText>
-<ingredientIDs>
-    <entry>
-        <key>4</key>
-        <value>2</value>
-    </entry>
-</ingredientIDs>
-<dietaryInformation>VEGETARIAN</dietaryInformation>
-<dietaryInformation>VEGAN</dietaryInformation>
-<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                                <name>Medium Fries</name>
+                                <recipeText>1. Deep fry fries.</recipeText>
+                                <ingredientIDs>
+                                    <entry>
+                                        <key>4</key>
+                                        <value>2</value>
+                                    </entry>
+                                </ingredientIDs>
+                                <dietaryInformation>VEGETARIAN</dietaryInformation>
+                                <dietaryInformation>VEGAN</dietaryInformation>
+                                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                             </recipe>
                             <markupCost>NZD 3.00</markupCost>
                             <generator>
-<id>25</id>
+                                <id>25</id>
                             </generator>
                             <id>32</id>
                             <inMenu>true</inMenu>
@@ -37,43 +37,44 @@
                         <key>
                             <itemName>Chicken Burger</itemName>
                             <recipe>
-<name>Chicken Burger</name>
-<recipeText>1. Deep Fry chicken patty 
-2. Add cheese on top of patty
-3. Fry buns
-4. Fry onions
-5. Get one bun
-6. Place chicken patty on bun
-7. Put tomato sauce
-8. Put cheese
-9. Put onions
-10. Put other bun on top</recipeText>
-<ingredientIDs>
-    <entry>
-        <key>1</key>
-        <value>1</value>
-    </entry>
-    <entry>
-        <key>2</key>
-        <value>1</value>
-    </entry>
-    <entry>
-        <key>3</key>
-        <value>1</value>
-    </entry>
-    <entry>
-        <key>5</key>
-        <value>2</value>
-    </entry>
-    <entry>
-        <key>7</key>
-        <value>1</value>
-    </entry>
-</ingredientIDs>
+                                <name>Chicken Burger</name>
+                                <recipeText>1. Deep Fry chicken patty
+                                    2. Add cheese on top of patty
+                                    3. Fry buns
+                                    4. Fry onions
+                                    5. Get one bun
+                                    6. Place chicken patty on bun
+                                    7. Put tomato sauce
+                                    8. Put cheese
+                                    9. Put onions
+                                    10. Put other bun on top
+                                </recipeText>
+                                <ingredientIDs>
+                                    <entry>
+                                        <key>1</key>
+                                        <value>1</value>
+                                    </entry>
+                                    <entry>
+                                        <key>2</key>
+                                        <value>1</value>
+                                    </entry>
+                                    <entry>
+                                        <key>3</key>
+                                        <value>1</value>
+                                    </entry>
+                                    <entry>
+                                        <key>5</key>
+                                        <value>2</value>
+                                    </entry>
+                                    <entry>
+                                        <key>7</key>
+                                        <value>1</value>
+                                    </entry>
+                                </ingredientIDs>
                             </recipe>
                             <markupCost>NZD 4.30</markupCost>
                             <generator>
-<id>25</id>
+                                <id>25</id>
                             </generator>
                             <id>12</id>
                             <inMenu>true</inMenu>
@@ -87,21 +88,21 @@
                         <key>
                             <itemName>Coke Can (330mL)</itemName>
                             <recipe>
-<name>Coke Can (330mL)</name>
-<recipeText>No recipe required</recipeText>
-<ingredientIDs>
-    <entry>
-        <key>8</key>
-        <value>1</value>
-    </entry>
-</ingredientIDs>
-<dietaryInformation>VEGETARIAN</dietaryInformation>
-<dietaryInformation>VEGAN</dietaryInformation>
-<dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                                <name>Coke Can (330mL)</name>
+                                <recipeText>No recipe required</recipeText>
+                                <ingredientIDs>
+                                    <entry>
+                                        <key>8</key>
+                                        <value>1</value>
+                                    </entry>
+                                </ingredientIDs>
+                                <dietaryInformation>VEGETARIAN</dietaryInformation>
+                                <dietaryInformation>VEGAN</dietaryInformation>
+                                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                             </recipe>
                             <markupCost>NZD 1.40</markupCost>
                             <generator>
-<id>25</id>
+                                <id>25</id>
                             </generator>
                             <id>15</id>
                             <inMenu>true</inMenu>
