@@ -35,7 +35,7 @@ public class OrderManagerTest {
         Stock stock = new Stock();
         stock.addNewIngredient(bun, 200);
         stock.addNewIngredient(patty, 100);
-        testOrderManager = new OrderManager(new Order(stock), stock, new History(new HashMap<>()));
+        testOrderManager = new OrderManager(new Order(stock), stock);
 
     }
 
@@ -44,9 +44,7 @@ public class OrderManagerTest {
         Stock stock = new Stock();
         stock.addNewIngredient(bun, 200);
         stock.addNewIngredient(patty, 100);
-        HashMap<String, Order> map = new HashMap<>();
-        History history = new History(map);
-        testOrderManager = new OrderManager(new Order(stock), stock, history);
+        testOrderManager = new OrderManager(new Order(stock), stock);
 
         try {
             HashMap<MenuItem, Integer> initialOrderItems = (HashMap<MenuItem, Integer>)
@@ -77,22 +75,14 @@ public class OrderManagerTest {
     @Test
     public void testStockSetCorrectly() {
         Stock stock = new Stock();
-        testOrderManager = new OrderManager(new Order(stock), stock, new History(new HashMap<>()));
+        testOrderManager = new OrderManager(new Order(stock), stock);
         assertEquals(stock, testOrderManager.getStock());
         stock = new Stock();
-        testOrderManager = new OrderManager(stock, new History(new HashMap<>()));
+        testOrderManager = new OrderManager(stock);
         assertEquals(stock, testOrderManager.getStock());
         stock = new Stock();
         testOrderManager.setStock(stock);
         assertEquals(stock, testOrderManager.getStock());
-    }
-
-    @Test
-    public void testHistorySetCorrectly() {
-        Stock stock = new Stock();
-        History history = new History(new HashMap<>());
-        testOrderManager = new OrderManager(new Order(stock), stock, history);
-        assertEquals(history, testOrderManager.getHistory());
     }
 
 }

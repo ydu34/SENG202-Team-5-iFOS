@@ -1,10 +1,6 @@
 package seng202.group5.logic;
 
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.information.MenuItem;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.lang.String.format;
 
@@ -27,32 +23,23 @@ public class OrderManager {
     private Stock currentStock;
 
     /**
-     * The history of orders in this food truck
-     */
-    private History currentHistory;
-
-    /**
      * Creates a new OrderManager with the given order
      *
      * @param tempOrder   The order to create the manager with
      * @param tempStock   The stock to create the manager with
-     * @param tempHistory The history to create the manager with
      */
-    public OrderManager(Order tempOrder, Stock tempStock, History tempHistory) {
+    public OrderManager(Order tempOrder, Stock tempStock) {
         currentOrder = tempOrder;
         currentStock = tempStock;
-        currentHistory = tempHistory;
     }
 
     /**
      * Creates a new OrderManager
      *
      * @param tempStock   The stock to create the manager with
-     * @param tempHistory The history to create the manager with
      */
-    public OrderManager(Stock tempStock, History tempHistory) {
+    public OrderManager(Stock tempStock) {
         currentStock = tempStock;
-        currentHistory = tempHistory;
         newOrder();
     }
 
@@ -78,8 +65,7 @@ public class OrderManager {
     }
 
 
-
-    @Deprecated
+    @Deprecated(since = "Order made to update temporary stock")
     public void setCurrentOrder(Order order) {
         currentOrder = order;
     }
@@ -102,16 +88,4 @@ public class OrderManager {
         currentStock = newStock;
     }
 
-    /**
-     * Gets the history of orders processed by this order manager
-     *
-     * @return The history of orders
-     */
-    public History getHistory() {
-        return currentHistory;
-    }
-
-    public void setCurrentHistory(History currentHistory) {
-        this.currentHistory = currentHistory;
-    }
 }

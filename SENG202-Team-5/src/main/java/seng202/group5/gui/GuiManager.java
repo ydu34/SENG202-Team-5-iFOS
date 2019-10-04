@@ -9,11 +9,9 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.*;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.information.DietEnum;
+import seng202.group5.information.*;
 import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.Recipe;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -91,14 +89,14 @@ public class GuiManager extends Application {
         stock.addNewIngredient(chickenpatty, 100);
         stock.addNewIngredient(cheese, 200);
         stock.addNewIngredient(vegePatty, 150);
-
-        environment.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
-        environment.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+        MenuItem chickenBurger = new MenuItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), true, TypeEnum.MAIN);
+        environment.getMenuManager().getItemMap().put(chickenBurger.getID(), chickenBurger);
+        MenuItem vegeBurger = new MenuItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), true, TypeEnum.MAIN);
+        environment.getMenuManager().getItemMap().put(vegeBurger.getID(), vegeBurger);
         environment.getOrderManager().newOrder();
 
         Order tempOrder = new Order(stock);
-        tempOrder.addItem(environment.getMenuManager().getItemMap().get("1220"), 4);
-        tempOrder.setDateTimeProcessed(LocalDateTime.now());
+        tempOrder.addItem(environment.getMenuManager().getItemMap().get(chickenBurger.getID()), 4);
         try {
             environment.getFinance().pay(new ArrayList<>() {{
                                              add(Money.parse("NZD 100.00"));
@@ -108,7 +106,6 @@ public class GuiManager extends Application {
         } catch (InsufficientCashException e) {
             e.printStackTrace();
         }
-        environment.getHistory().getTransactionHistory().put(tempOrder.getId(), tempOrder);
 
     }
 

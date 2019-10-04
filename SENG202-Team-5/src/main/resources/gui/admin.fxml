@@ -172,7 +172,6 @@
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="200.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
                           </columnConstraints>
                           <rowConstraints>
@@ -182,12 +181,15 @@
                            <children>
                               <Button fx:id="selectStockButton" mnemonicParsing="false" onAction="#selectStock" text="Select stock.xml" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
                               <Button fx:id="selectMenuButton" mnemonicParsing="false" onAction="#selectMenu" text="Select menu.xml" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                              <Button fx:id="selectHistoryButton" mnemonicParsing="false" onAction="#selectHistory" text="Select history.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                              <Button fx:id="selectFinanceButton" mnemonicParsing="false" onAction="#selectFinance" text="Select finance.xml" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                               <Button fx:id="selectFinanceButton" mnemonicParsing="false" onAction="#selectFinance"
+                                       text="Select finance.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                                       GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER"
+                                       GridPane.vgrow="SOMETIMES"/>
                               <Text fx:id="stockWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="stock.xml not selected" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                               <Text fx:id="menuWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="menu.xml not selected" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <Text fx:id="historyWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="history.xml not selected" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <Text fx:id="financeWarningText" strokeType="OUTSIDE" strokeWidth="0.0" text="finance.xml not selected" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                               <Text fx:id="financeWarningText" strokeType="OUTSIDE" strokeWidth="0.0"
+                                     text="finance.xml not selected" GridPane.columnIndex="2"
+                                     GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
                            </children>
                         </GridPane>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions " GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">

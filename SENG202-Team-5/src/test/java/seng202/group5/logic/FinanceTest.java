@@ -99,7 +99,9 @@ public class FinanceTest {
         ArrayList<Money> total = new ArrayList<>();
         Order testOrder = new Order(new HashMap<>(), Money.parse("NZD 15.00"), "tempid");
         testFinance.pay(payed, LocalDateTime.now(), testOrder);
+        testOrder.setId("2");
         testFinance.pay(payed, LocalDateTime.now(), testOrder);
+        testOrder.setId("3");
         testFinance.pay(payed, LocalDateTime.now(), testOrder);
         LocalDateTime startDate = LocalDateTime.now().minusDays(1);
         LocalDateTime endDate = LocalDateTime.now();

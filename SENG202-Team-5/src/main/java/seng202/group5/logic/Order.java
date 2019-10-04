@@ -44,9 +44,6 @@ public class Order {
     @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
-    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
-    private LocalDateTime dateTimeProcessed;
-
     /**
      * The unique ID of the order given by the database
      **/
@@ -289,14 +286,6 @@ public class Order {
      */
     public Stock getStock() {
         return temporaryStock;
-    }
-
-    public LocalDateTime getDateTimeProcessed() {
-        return dateTimeProcessed;
-    }
-
-    public void setDateTimeProcessed(LocalDateTime dateProcessed) {
-        this.dateTimeProcessed = dateProcessed;
     }
 
     public void setId(String id) {

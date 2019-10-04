@@ -56,26 +56,26 @@ public class HistoryController extends GeneralController {
      * The table that displays the history of the orders
      */
     @FXML
-    private TableView<Order> historyTable;
+    private TableView<Transaction> historyTable;
 
     // These are the rows of the history table
     @FXML
-    private TableColumn<Order, String> rowID;
+    private TableColumn<Transaction, String> rowID;
 
     @FXML
-    private TableColumn<Order, String> rowDate;
+    private TableColumn<Transaction, String> rowDate;
 
     @FXML
-    private TableColumn<Order, String> rowTime;
+    private TableColumn<Transaction, String> rowTime;
 
     @FXML
-    private TableColumn<Order, String> rowOrder;
+    private TableColumn<Transaction, String> rowOrder;
 
     @FXML
-    private TableColumn<Order, String> rowCost;
+    private TableColumn<Transaction, String> rowCost;
 
     @FXML
-    private TableColumn<Order, Button> rowAction;
+    private TableColumn<Transaction, Button> rowAction;
 
     /**
      * A map from order IDs to the related transactions
@@ -105,25 +105,25 @@ public class HistoryController extends GeneralController {
         }
 
         // This sets the factories for creating values to display for each order
-        rowID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        rowID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
-                cellData.getValue().getDateTimeProcessed().toLocalDate().toString()));
+                cellData.getValue().getDateTime().toLocalDate().toString()));
         rowTime.setCellValueFactory(cellData -> {
-            LocalTime time = cellData.getValue().getDateTimeProcessed().toLocalTime();
+            LocalTime time = cellData.getValue().getDateTime().toLocalTime();
             time = time.minusSeconds(time.getSecond());
             time = time.minusNanos(time.getNano());
             return new ReadOnlyStringWrapper(time.toString());
         });
         rowOrder.setCellValueFactory(cellData -> {
-            String output = cellData.getValue().printReceipt();
+            String output = cellData.getValue().getOrder().printReceipt();
             output = output.replace("\n", ", ");
             return new ReadOnlyStringWrapper(output);
         });
-        rowCost.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
+        rowCost.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
             Button refundButton = new Button("Refund");
-            Order order = param.getValue();
+            Order order = param.getValue().getOrder();
             // Disable the button if the order cannot be refunded
             if (orderIDTransactionIndex.containsKey(order.getId())) {
                 refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
@@ -137,7 +137,7 @@ public class HistoryController extends GeneralController {
             return new ReadOnlyObjectWrapper<>(refundButton);
         });
 
-        historyTable.getItems().addAll(getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values());
+        historyTable.getItems().addAll(getAppEnvironment().getFinance().getTransactionHistory().values());
     }
 
     /**
@@ -258,14 +258,15 @@ public class HistoryController extends GeneralController {
         } else {
             lastTime = LocalDateTime.of(lastDate, LocalTime.MAX);
         }
-        Collection<Order> historyValues = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory().values();
+        Collection<Transaction> historyValues = getAppEnvironment().getFinance().getTransactionHistory().values();
         historyTable.getItems().removeAll(historyValues);
         String searchString = historySearchBar.getCharacters().toString();
-        for (Order order : historyValues) {
-            if (order.getDateTimeProcessed().isAfter(firstTime) &&
-                    order.getDateTimeProcessed().isBefore(lastTime) &&
+        for (Transaction transaction : historyValues) {
+            Order order = transaction.getOrder();
+            if (transaction.getDateTime().isAfter(firstTime) &&
+                    transaction.getDateTime().isBefore(lastTime) &&
                     order.getId().matches(".*" + searchString + ".*")) {
-                historyTable.getItems().add(order);
+                historyTable.getItems().add(transaction);
             }
 
         }
@@ -276,15 +277,16 @@ public class HistoryController extends GeneralController {
      *
      * @param order the order to add to the history
      */
-    public void addNewOrder(Order order) {
+    public void addNewOrder(Order order, LocalDateTime datetime) {
 
-        HashMap<String, Order> history = getAppEnvironment().getOrderManager().getHistory().getTransactionHistory();
+        HashMap<String, Transaction> history = getAppEnvironment().getFinance().getTransactionHistory();
 
         if (history.containsKey(order.getId())) {
             //TODO create a formal error display system
             System.out.println("Order already exists in history!");
         } else {
-            history.put(order.getId(), order);
+            Transaction tempTransaction = new Transaction(datetime, order.getTotalCost(), order);
+            history.put(order.getId(), tempTransaction);
             updateVisibleOrders();
         }
     }

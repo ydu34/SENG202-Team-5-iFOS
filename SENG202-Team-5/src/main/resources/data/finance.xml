@@ -2,14 +2,13 @@
 <finance>
     <transactionHistory>
         <entry>
-            <key>44</key>
+            <key>0</key>
             <value>
                 <datetime>2019-09-24T12:18:27.589159</datetime>
                 <change>NZD 0.00</change>
                 <totalPrice>NZD 11.50</totalPrice>
-                <transactionID>44</transactionID>
+                <transactionID>0</transactionID>
                 <refunded>false</refunded>
-                <orderID>0</orderID>
                 <order>
                     <orderItems>
                         <entry>
@@ -121,7 +120,6 @@
                         </entry>
                     </orderItems>
                     <totalCost>NZD 11.50</totalCost>
-                    <dateTimeProcessed>2019-09-24T12:18:27.589159</dateTimeProcessed>
                     <generator>
                         <id>25</id>
                     </generator>

@@ -73,7 +73,7 @@ public class AddPastOrderController extends OrderController {
      * @return the new AddPastOrderController created
      */
     public static AddPastOrderController changeToPastOrderScreen(ActionEvent event, GeneralController caller) {
-        Parent sampleScene = null;
+        Parent sampleScene;
         AddPastOrderController controller = null;
         try {
             FXMLLoader sampleLoader = new FXMLLoader(caller.getClass().getResource("/gui/order.fxml"));
@@ -85,9 +85,8 @@ public class AddPastOrderController extends OrderController {
 
             Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Parent finalSampleScene = sampleScene;
-            smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -> {
-                oldStage.getScene().setRoot(finalSampleScene);
-            });
+            smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) ->
+                    oldStage.getScene().setRoot(finalSampleScene));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -214,10 +213,9 @@ public class AddPastOrderController extends OrderController {
      * @param formatter the formatter for the time picker
      */
     public void sendPastOrderToHistory(ActionEvent event, DateTimeFormatter formatter) {
-        order.setDateTimeProcessed(LocalDateTime.of(datePicker.getValue(),
-                                                    LocalTime.from(formatter.parse(timePicker.getText()))));
         HistoryController controller = (HistoryController) changeScreen(event, "/gui/history.fxml");
-        controller.addNewOrder(order);
+        controller.addNewOrder(order, LocalDateTime.of(datePicker.getValue(),
+                                                       LocalTime.from(formatter.parse(timePicker.getText()))));
     }
 
     /**
@@ -238,7 +236,7 @@ public class AddPastOrderController extends OrderController {
     @Override
     public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
         Parent sampleScene = null;
-        AddExtraIngredientController controller = null;
+        AddExtraIngredientController controller;
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
             // Need to create a new class here so this screen comes back with the right controller
@@ -251,13 +249,13 @@ public class AddPastOrderController extends OrderController {
             controller.setCurrentOrder(order);
             controller.updateStockRecipeMode();
             controller.initializeTable();
+            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            double prevHeight = ((Node) event.getSource()).getScene().getHeight();
+            double prevWidth = ((Node) event.getSource()).getScene().getWidth();
+            oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-        double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-        oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
     }
 
     /**

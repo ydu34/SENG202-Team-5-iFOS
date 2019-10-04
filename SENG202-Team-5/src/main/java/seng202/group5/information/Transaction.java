@@ -32,12 +32,11 @@ public class Transaction {
     private Money change;
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money totalPrice;
-    private String transactionID = (new IDGenerator()).newID();
+    private String transactionID;
     /**
      * Whether or not this transaction has been refunded
      */
     private Boolean refunded;
-    private String orderID;
 
     private Order order;
 
@@ -49,10 +48,10 @@ public class Transaction {
         change = newChange;
         if (newOrder != null) {
             totalPrice = newOrder.getTotalCost();
-            orderID = newOrder.getId();
+            transactionID = newOrder.getId();
         } else {
             totalPrice = null;
-            orderID = null;
+            transactionID = (new IDGenerator()).newID();
         }
         order = newOrder;
     }
@@ -80,7 +79,7 @@ public class Transaction {
     }
 
     public String getOrderID() {
-        return orderID;
+        return order.getId();
     }
 
     public Order getOrder() {
