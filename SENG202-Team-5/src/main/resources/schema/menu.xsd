@@ -28,10 +28,11 @@
     </xs:sequence>
   </xs:complexType>
 
+
   <xs:complexType name="menuItem">
     <xs:sequence>
       <xs:element name="itemName" type="xs:string" minOccurs="0"/>
-      <xs:element ref="recipe" minOccurs="0"/>
+      <xs:element name="recipe" type="recipe" minOccurs="0"/>
       <xs:element name="markupCost" type="xs:string" minOccurs="0"/>
       <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="id" type="xs:string" minOccurs="0"/>

@@ -73,13 +73,11 @@ public class FinanceXmlTest {
         Order tempOrder = new Order(oldAppEnvironment.getStock());
         tempOrder.setId("8");
         tempOrder.addItem(oldAppEnvironment.getMenuManager().getItemMap().get("1220"), 4);
-        tempOrder.setDateTimeProcessed(LocalDateTime.now());
 
-        Transaction transaction = new Transaction(tempOrder.getDateTimeProcessed(), Money.parse("NZD 0.00"), tempOrder.getTotalCost(), tempOrder.getId());
+        Transaction transaction = new Transaction(LocalDateTime.now(), Money.parse("NZD 0.00"), tempOrder);
         transaction.setTransactionID("9");
         oldAppEnvironment.getFinance().getTransactionHistory().put(transaction.getTransactionID(), transaction);
 
-        oldAppEnvironment.getHistory().getTransactionHistory().put(tempOrder.getId(), tempOrder);
         try {
             oldAppEnvironment.objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
         } catch (JAXBException e) {
@@ -92,15 +90,14 @@ public class FinanceXmlTest {
             appEnvironment.financeXmlToObject(testDirectory);
             finance = appEnvironment.getFinance();
             assertEquals(1, finance.getTransactionHistory().size());
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
     }
 
     @Test
     public void testTransactionDateTimeIsInFinance() {
         LocalDateTime dateTime = finance.getTransactionHistory().get("9").getDateTime();
-        assertTrue(dateTime instanceof LocalDateTime);
+        assertNotNull(dateTime);
     }
 
     @Test
@@ -111,6 +108,7 @@ public class FinanceXmlTest {
 
     @Test
     public void testTransactionTotalPriceIsInFinance() {
+        System.out.println(finance);
         String totalPrice = finance.getTransactionHistory().get("9").getTotalPrice().toString();
         assertEquals("NZD 80.00", totalPrice);
     }

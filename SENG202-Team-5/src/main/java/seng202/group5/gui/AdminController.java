@@ -18,7 +18,6 @@ import org.joda.money.Money;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
-import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
 
@@ -187,7 +186,7 @@ public class AdminController extends GeneralController {
             sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
         }
         if (!eDate.isBefore(sDate)) {
-            ArrayList<Money> result = finance.totalCalculator(sDate, eDate, getAppEnvironment().getHistory().getTransactionHistory());
+            ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
             saleSummaryText.setText("Total cost of orders: " + result.get(0) +
                     "\nAverage daily cost: " + result.get(1) +
                     "\nTotal profits: " + result.get(2) +
@@ -230,12 +229,12 @@ public class AdminController extends GeneralController {
     }
 
     /**
-     * Checks if the number of files selected by the user is four, if it is
+     * Checks if the number of files selected by the user is three, if it is
      * it means that all xml files are selected and ready to be imported.
      * Therefore enable the import data button for the user to click.
      */
     public void checkFilesSelected() {
-        if (fileMap.size()==4) {
+        if (fileMap.size() == 3) {
             importDataButton.setDisable(false);
         } else {
             importDataButton.setDisable(true);
@@ -274,21 +273,6 @@ public class AdminController extends GeneralController {
     }
 
     /**
-     * Action for the select history button to add the selected file to the list of files
-     * if it is history.xml otherwise tell the user it is invalid.
-     */
-    public void selectHistory() {
-        File selectedFile = getSelectedFile();
-        if (checkSelectedFile("history.xml", selectedFile)) {
-            fileMap.put("history.xml", selectedFile);
-            historyWarningText.setText("history.xml selected");
-            checkFilesSelected();
-        } else {
-            historyWarningText.setText("invalid file selected");
-        }
-    }
-
-    /**
      * Action for the select finance button to add the selected file to the list of files
      * if it is finance.xml otherwise tell the user it is invalid.
      */
@@ -310,19 +294,16 @@ public class AdminController extends GeneralController {
     public void importData() {
         Stock oldStock = getAppEnvironment().getStock();
         MenuManager oldMenu = getAppEnvironment().getMenuManager();
-        History oldHistory = getAppEnvironment().getHistory();
         Finance oldFinance = getAppEnvironment().getFinance();
         try {
             getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
             getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
-            getAppEnvironment().historyXmlToObject(fileMap.get("history.xml").getParent());
             getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
             fileNotificationText.setText("All xml files successfully uploaded into application!");
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
             getAppEnvironment().setStock(oldStock);
             getAppEnvironment().setMenuManager(oldMenu);
-            getAppEnvironment().setHistory(oldHistory);
             getAppEnvironment().setFinance(oldFinance);
         }
     }

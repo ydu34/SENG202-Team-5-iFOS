@@ -1,0 +1,12 @@
+
+@import url("jfx-table-view.css");
+@import url("jfx-button.css");
+@import url("jfx-textfield.css");
+@import url("jfx-checkbox.css");
+
+/*
+* This is for the main back ground
+ */
+.root {
+    -fx-background-color:  #ECE6CE;
+}

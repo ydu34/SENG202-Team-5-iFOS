@@ -8,6 +8,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.logic.Finance;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Till;
 import seng202.group5.information.Transaction;
 
@@ -40,7 +41,8 @@ public class MoneyStepDefs {
     public void paymentOf$IfConfirmed(double arg0) throws InsufficientCashException {
         ArrayList<Money> payment= new ArrayList<>();
         payment.add(Money.parse("NZD "+arg0));
-        change = finance.pay(cost, payment, LocalDateTime.now(), "");
+        Order testOrder = new Order(new HashMap<>(), cost, "tempid");
+        change = finance.pay(payment, LocalDateTime.now(), testOrder);
     }
 
     @Then("${double} is displayed to be returned")
@@ -64,7 +66,8 @@ public class MoneyStepDefs {
     public void orderHasAlreadyBeenPayedFor() throws InsufficientCashException {
         ArrayList<Money> payment= new ArrayList<>();
         payment.add(cost);
-        finance.pay(cost, payment, LocalDateTime.now(), "");
+        Order testOrder = new Order(new HashMap<>(), cost, "tempid");
+        finance.pay(payment, LocalDateTime.now(), testOrder);
     }
 
     @Given("till starts with {int} ${double} notes")
@@ -110,7 +113,7 @@ public class MoneyStepDefs {
 
     @When("Sales data is viewed")
     public void salesDataIsViewed() {
-        salesData = finance.totalCalculator(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), null);
+        salesData = finance.totalCalculator(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
     }
 
     @Then("Order is in sales data")

@@ -3,8 +3,11 @@ package seng202.group5.information;
 import org.joda.money.Money;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seng202.group5.logic.Order;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +21,8 @@ public class TransactionTest {
     @BeforeEach
     public void init() {
         testDateTime = LocalDateTime.now();
-        testTransaction = new Transaction(testDateTime, Money.parse("NZD 20.00"), Money.parse("NZD 30.00"), "");
+        Order testOrder = new Order(new HashMap<>(), Money.parse("NZD 30.00"), "tempid");
+        testTransaction = new Transaction(testDateTime, Money.parse("NZD 20.00"), testOrder);
     }
 
     @Test
