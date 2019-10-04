@@ -1,5 +1,6 @@
 package seng202.group5.gui.stock;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -28,7 +29,7 @@ import java.util.HashSet;
 public class AddStockController extends GeneralController {
 
     @FXML
-    private Button createButton;
+    private JFXButton createButton;
 
     @FXML
     private TextField nameField;
@@ -63,6 +64,13 @@ public class AddStockController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        // Listener for the name field
+        nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("([\\-':]*\\w*)*")) {
+                nameField.setText(oldValue);
+            }
+        });
+
 
         // Set text of all text field to the ones of the ingredient if it exists
         if (ingredient != null) {
@@ -113,6 +121,7 @@ public class AddStockController extends GeneralController {
             Stage stage = (Stage) createButton.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
+            e.printStackTrace();
             warningLabel.setText("Error creating ingredient.");
         }
     }
