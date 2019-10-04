@@ -7,6 +7,7 @@ import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.Transaction;
 import seng202.group5.logic.*;
 
 import javax.xml.XMLConstants;
@@ -130,6 +131,25 @@ public class AppEnvironment {
         }
     }
 
+
+    /**
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
+     *
+     * @param transactionItems Contains the menu items.
+     */
+    public void handleFinance(HashMap<String, Transaction> transactionItems) {
+        for (Transaction transaction : transactionItems.values()) {
+            for (Map.Entry<MenuItem, Integer> entry : transaction.getOrder().getOrderItems().entrySet()) {
+                MenuItem menuItem = entry.getKey();
+                Recipe recipe = menuItem.getRecipe();
+                HashMap<String, Integer> ingredientIDs = menuItem.getRecipe().getIngredientIDs();
+                HashMap<Ingredient, Integer> recipeIngredients = getIngredientsFromID(ingredientIDs);
+                recipe.setIngredientsAmount(recipeIngredients);
+            }
+        }
+    }
+
     /**
      * Gets the stock.xml from fileDirectory and unmarshal it to an object.
      * @param fileDirectory The directory of the stock.xml
@@ -153,6 +173,7 @@ public class AppEnvironment {
     public void financeXmlToObject(String fileDirectory) throws Exception{
         try {
             finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", "finance.xsd", fileDirectory);
+            handleFinance(finance.getTransactionHistory());
         } catch (JAXBException|SAXException e) {
             throw new Exception("finance.xml file is invalid");
         }
