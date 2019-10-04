@@ -1,5 +1,6 @@
 package seng202.group5.gui.history;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.skins.JFXDatePickerContent;
 import com.jfoenix.skins.JFXDatePickerSkin;
@@ -75,7 +76,7 @@ public class HistoryController extends GeneralController {
     private TableColumn<Transaction, String> rowCost;
 
     @FXML
-    private TableColumn<Transaction, Button> rowAction;
+    private TableColumn<Transaction, JFXButton> rowAction;
 
     /**
      * A map from order IDs to the related transactions
@@ -122,7 +123,7 @@ public class HistoryController extends GeneralController {
         rowCost.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
-            Button refundButton = new Button("Refund");
+            JFXButton refundButton = new JFXButton("Refund");
             Order order = param.getValue().getOrder();
             // Disable the button if the order cannot be refunded
             if (orderIDTransactionIndex.containsKey(order.getId())) {
