@@ -111,12 +111,17 @@ public class OrderController extends GeneralController {
 
     private Order currentOrder;
 
+    private boolean someOrder = false;
+
     private ArrayList<MenuItem> allItems;
 
     private Map<MenuItem, Integer> orderItemsMap;
 
     @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
+
+    @FXML
+    private Button removeItemButton;
 
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
@@ -336,20 +341,14 @@ public class OrderController extends GeneralController {
         controller.initializeTable();
     }
 
+    /**
+     * This function populates the mini invoice screen with the selected menu items along with their quantity which are the part of the current order
+     */
+
     public void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
-        System.out.println(orderItemsMap);
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
-        System.out.println(orderItems);
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-        System.out.println(itemNameCol);
-//        itemPriceCol.setCellValueFactory(data -> {
-//                    int quantity = orderItemsMap.get(data.getValue());
-//                    Money totalPrice = data.getValue().calculateFinalCost().multipliedBy(quantity);
-//                    return new SimpleStringProperty(totalPrice.toString());
-//                }
-//        );
-
         itemQuantityCol.setCellValueFactory(data -> {
             int quantity = orderItemsMap.get(data.getValue());
             return new SimpleStringProperty(Integer.toString(quantity));
@@ -357,6 +356,36 @@ public class OrderController extends GeneralController {
         });
 
         currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
+    }
+
+    /**
+     * This function clears whole order when clicked on the cancel button on the mini invoice screen.
+     */
+    @FXML
+    private void cancelCurrentOrder() {
+
+        try {
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrder.resetStock(getAppEnvironment().getStock());
+            currentOrder.clearItemsInOrder();
+        } catch (NoOrderException ignored) {
+
+        }
+        pseudoInitialize();
+    }
+
+    /**
+     * This function removes the selected item from the current order when clicked on the remove button and updates the invoice display
+     * @param actionEvent
+     */
+    @FXML
+    private void removeSelectedItem(javafx.event.ActionEvent actionEvent ) {
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if(someOrder == true){
+            removeItemButton.setDisable(false);
+        }
+
     }
 
     /**

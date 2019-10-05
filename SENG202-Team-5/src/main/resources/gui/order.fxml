@@ -183,8 +183,8 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Remove" />
-                              <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cancel" GridPane.columnIndex="1" />
+                              <JFXButton fx:id="removeItemButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#removeSelectedItem" text="Remove" />
+                              <JFXButton fx:id="cancelOrderButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cancelCurrentOrder" text="Cancel" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
