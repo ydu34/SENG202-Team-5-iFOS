@@ -1,6 +1,8 @@
 package seng202.group5.gui;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,11 +17,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
+import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
+import seng202.group5.logic.Till;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +33,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,6 +119,29 @@ public class AdminController extends GeneralController {
 
     private Map<String, File> fileMap;
 
+    @FXML
+    private Spinner<Integer> spinner10c;
+    @FXML
+    private Spinner<Integer> spinner20c;
+    @FXML
+    private Spinner<Integer> spinner50c;
+    @FXML
+    private Spinner<Integer> spinner1d;
+    @FXML
+    private Spinner<Integer> spinner2d;
+    @FXML
+    private Spinner<Integer> spinner5d;
+    @FXML
+    private Spinner<Integer> spinner10d;
+    @FXML
+    private Spinner<Integer> spinner20d;
+    @FXML
+    private Spinner<Integer> spinner50d;
+    @FXML
+    private Spinner<Integer> spinner100d;
+
+    private ArrayList<Spinner<Integer>> spinnerList;
+
     /**
      * An initializer for this controller
      */
@@ -124,6 +152,26 @@ public class AdminController extends GeneralController {
         checkIfOrderInProgress();
         fileMap = new HashMap<>();
         viewHistory();
+
+        spinnerList = new ArrayList<>(Arrays.asList(
+                spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
+                spinner20d, spinner50d, spinner100d));
+        updateTillSpinners();
+        for (Spinner<Integer> spinner : spinnerList) {
+            spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+            Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
+            spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (oldValue > newValue) {
+                    try {
+                        finance.getTill().removeDenomination(amount, oldValue - newValue);
+                    } catch (InsufficientCashException e) {
+                        System.out.println("Till spinner reduced below zero!");
+                    }
+                } else if (newValue > oldValue) {
+                    finance.getTill().addDenomination(amount, newValue - oldValue);
+                }
+            });
+        }
     }
 
     /**
@@ -299,7 +347,10 @@ public class AdminController extends GeneralController {
             getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
             getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
             getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
+            updateTillSpinners();
+            System.out.println("Made it");
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
             getAppEnvironment().setStock(oldStock);
@@ -390,6 +441,23 @@ public class AdminController extends GeneralController {
             }
         }
 
+    }
+
+    /**
+     * Resets the till so that it contains no amounts of any denominations
+     */
+    public void resetTill() {
+        finance.setTill(new Till());
+        updateTillSpinners();
+    }
+
+    private void updateTillSpinners() {
+        for (Spinner<Integer> spinner : spinnerList) {
+            Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
+            Integer initialValue = finance.getTill().getDenominations().getOrDefault(amount, 0);
+            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                    0, 999999, initialValue));
+        }
     }
 
     public void setFinance(Finance newFinance) {
