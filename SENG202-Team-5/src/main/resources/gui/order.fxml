@@ -22,7 +22,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane fx:id="basePane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1200.0" prefWidth="1200.0" stylesheets="@ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.OrderController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="basePane" alignment="CENTER" maxHeight="1.7976931348623157E308"
+          maxWidth="1.7976931348623157E308" prefHeight="1200.0" prefWidth="1200.0" stylesheets="@css/ifos-theme.css"
+          xmlns="http://javafx.com/javafx/11.0.1" fx:controller="seng202.group5.gui.OrderController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="800.0" />
     </columnConstraints>
@@ -224,7 +226,8 @@
                                 <RowConstraints vgrow="NEVER" />
                             </rowConstraints>
                             <children>
-                                <Spinner fx:id="quantitySpinner" onDragDetected="#addItemToOrder" prefHeight="26.0" prefWidth="159.0" GridPane.rowIndex="1">
+                                <Spinner fx:id="quantitySpinner" prefHeight="26.0" prefWidth="159.0"
+                                         GridPane.rowIndex="1">
                                     <valueFactory>
                                         <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="1" />
                                     </valueFactory>
