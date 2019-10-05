@@ -13,9 +13,8 @@
 <?import javafx.scene.text.TextFlow?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-          prefHeight="980.0"
-          prefWidth="1020.0" xmlns="http://javafx.com/javafx/11.0.1" stylesheets="@css/ifos-theme.css"
-          fx:controller="seng202.group5.gui.InvoiceController">
+          prefHeight="980.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/11.0.1"
+          stylesheets="@css/ifos-theme.css" fx:controller="seng202.group5.gui.InvoiceController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="800.0"/>
     </columnConstraints>
@@ -115,8 +114,9 @@
                                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                            minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
                                            onAction="#addTwentyDollar" prefHeight="108.0" prefWidth="120.0"
-                                           ripplerFill="#3a3e59" text="\$20" textAlignment="CENTER"
-                                           GridPane.columnIndex="2">
+                                           ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$20" textAlignment="CENTER" GridPane.columnIndex="2">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -124,8 +124,9 @@
                                 <JFXButton fx:id="tenDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308"
                                            maxWidth="1.7976931348623157E308" minHeight="-Infinity"
                                            mnemonicParsing="false" onAction="#addTenDollar" prefHeight="108.0"
-                                           prefWidth="95.0" ripplerFill="#3a3e59" text="\$10" textAlignment="CENTER"
-                                           GridPane.columnIndex="1">
+                                           prefWidth="95.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$10" textAlignment="CENTER" GridPane.columnIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -133,8 +134,9 @@
                                 <JFXButton fx:id="fiveDollarButton" alignment="CENTER"
                                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                            minHeight="-Infinity" mnemonicParsing="false" onAction="#addFiveDollar"
-                                           prefHeight="108.0" prefWidth="95.0" ripplerFill="#3a3e59" text="\$5"
-                                           textAlignment="CENTER">
+                                           prefHeight="108.0" prefWidth="95.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$5" textAlignment="CENTER">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -143,8 +145,9 @@
                                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                            minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
                                            onAction="#addFiftyDollar" prefHeight="108.0" prefWidth="120.0"
-                                           ripplerFill="#3a3e59" text="\$50" textAlignment="CENTER"
-                                           GridPane.columnIndex="3">
+                                           ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$50" textAlignment="CENTER" GridPane.columnIndex="3">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -152,8 +155,9 @@
                                 <JFXButton fx:id="hundredDollarButton" alignment="CENTER"
                                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                            mnemonicParsing="false" onAction="#addHundredDollar" prefHeight="108.0"
-                                           prefWidth="83.0" ripplerFill="#3a3e59" text="\$100" textAlignment="CENTER"
-                                           GridPane.columnIndex="4">
+                                           prefWidth="83.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$100" textAlignment="CENTER" GridPane.columnIndex="4">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -161,8 +165,9 @@
                                 <JFXButton fx:id="tenCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308"
                                            maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
                                            mnemonicParsing="false" onAction="#addTenCent" prefHeight="108.0"
-                                           prefWidth="84.0" ripplerFill="#3a3e59" text="10c" textAlignment="CENTER"
-                                           GridPane.rowIndex="1">
+                                           prefWidth="84.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="10c" textAlignment="CENTER" GridPane.rowIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -171,8 +176,10 @@
                                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                            minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
                                            onAction="#addTwentyCent" prefHeight="108.0" prefWidth="84.0"
-                                           ripplerFill="#3a3e59" text="20c" textAlignment="CENTER"
-                                           GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                           ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="20c" textAlignment="CENTER" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -180,8 +187,10 @@
                                 <JFXButton fx:id="fiftyCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308"
                                            maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
                                            mnemonicParsing="false" onAction="#addFiftyCent" prefHeight="108.0"
-                                           prefWidth="83.0" ripplerFill="#3a3e59" text="50c" textAlignment="CENTER"
-                                           GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                           prefWidth="83.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="50c" textAlignment="CENTER" GridPane.columnIndex="2"
+                                           GridPane.rowIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -189,8 +198,10 @@
                                 <JFXButton fx:id="oneDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308"
                                            maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
                                            mnemonicParsing="false" onAction="#addOneDollar" prefHeight="108.0"
-                                           prefWidth="83.0" ripplerFill="#3a3e59" text="\$1" textAlignment="CENTER"
-                                           GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                           prefWidth="83.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$1" textAlignment="CENTER" GridPane.columnIndex="3"
+                                           GridPane.rowIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -198,8 +209,10 @@
                                 <JFXButton fx:id="twoDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308"
                                            maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
                                            mnemonicParsing="false" onAction="#addTwoDollar" prefHeight="108.0"
-                                           prefWidth="83.0" ripplerFill="#3a3e59" text="\$2" textAlignment="CENTER"
-                                           GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                           prefWidth="83.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="\$2" textAlignment="CENTER" GridPane.columnIndex="4"
+                                           GridPane.rowIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
@@ -207,8 +220,10 @@
                                 <JFXButton fx:id="clearPaymentButton" alignment="CENTER"
                                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                            mnemonicParsing="false" onAction="#clearPayment" prefHeight="108.0"
-                                           prefWidth="83.0" ripplerFill="#3a3e59" text="Clear" textAlignment="CENTER"
-                                           GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                           prefWidth="83.0" ripplerFill="#3a3e59"
+                                           style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;"
+                                           text="Clear" textAlignment="CENTER" GridPane.columnIndex="5"
+                                           GridPane.rowIndex="1">
                                     <font>
                                         <Font size="18.0"/>
                                     </font>
