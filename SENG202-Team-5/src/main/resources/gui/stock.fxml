@@ -62,7 +62,7 @@
             <JFXButton fx:id="launchOrderButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#launchOrderScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Order" GridPane.hgrow="ALWAYS" />
             <JFXButton fx:id="launchInvoiceButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchInvoiceScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
             <JFXButton alignment="CENTER" disable="true" layoutX="250.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchAdminButton" alignment="CENTER" layoutX="490.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchAdminScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchAdminButton" alignment="CENTER" layoutX="490.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchPasswordScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
             <JFXButton fx:id="launchHistoryButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchHistoryScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
          </children>
       </GridPane>

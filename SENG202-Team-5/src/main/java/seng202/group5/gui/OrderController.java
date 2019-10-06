@@ -136,10 +136,12 @@ public class OrderController extends GeneralController {
         filterItems();
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentOrderTable();
+
         } catch (NoOrderException e) {
             System.out.println(e);
         }
+
+        currentOrderTable();
         orderIDText.setText(currentOrder.getId());
         addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
@@ -294,9 +296,11 @@ public class OrderController extends GeneralController {
     public void addItemToOrder() {
         Integer quantity = quantitySpinner.getValue();
         if (currentOrder.addItem(item, quantity)) {
-            currentOrderTable();
+
             promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
             promptText.setFill(Color.GREEN);
+            //pseudoInitialize();
+            currentOrderTable();
 
 
        }
@@ -346,6 +350,7 @@ public class OrderController extends GeneralController {
      */
 
     public void currentOrderTable() {
+//        int quantity = 0;
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -414,7 +419,6 @@ public class OrderController extends GeneralController {
     protected MenuItem getSelectedItem() {
         return item;
     }
-
 
 
 
