@@ -85,6 +85,8 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private Button selectImageButton;
 
+    private String itemImageName;
+
 
 
     private MenuItem item;
@@ -114,6 +116,7 @@ public class AddRecipeController extends GeneralController {
         item = new MenuItem();
         initializeTypeComboBox();
         initializeTextValues();
+        initializeImageView();
         populateIngredientsTable();
 
     }
@@ -124,6 +127,7 @@ public class AddRecipeController extends GeneralController {
     public void saveRecipe() {
         try {
             saveTextFieldValues();
+            System.out.println("Item image" + item.getImageString());
             menuManager.addItem(item);
             closeScreen();
         } catch (NumberFormatException e) {
@@ -160,6 +164,7 @@ public class AddRecipeController extends GeneralController {
                 item.setItemName(name);
                 item.setMarkupCost(markupPrice);
                 item.calculateFinalCost();
+                item.setImageString(itemImageName);
             }
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
@@ -269,6 +274,14 @@ public class AddRecipeController extends GeneralController {
         menuTypeComboBox.getSelectionModel().select(item.getItemType());
     }
 
+    public void initializeImageView() {
+        try {
+            Image image = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
+            itemImage.setImage(image);
+        } catch (Exception e) {
+        }
+    }
+
     /**
      * @param tempItem Item that has been modified in AddExtraIngredientController.
      */
@@ -276,6 +289,7 @@ public class AddRecipeController extends GeneralController {
         item = tempItem;
         initializeTextValues();
         initializeTypeComboBox();
+        initializeImageView();
         populateIngredientsTable();
     }
 
@@ -294,9 +308,9 @@ public class AddRecipeController extends GeneralController {
         try {
             Image image = new Image(new FileInputStream(selectedFile.getPath()));
             itemImage.setImage(image);
-            item.setImageString(selectedFile.getName());
+            itemImageName = selectedFile.getName();
+            System.out.println(itemImageName);
         } catch (Exception e) {
-
         }
 
 

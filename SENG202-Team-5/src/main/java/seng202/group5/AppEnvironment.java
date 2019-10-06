@@ -36,6 +36,7 @@ public class AppEnvironment {
     private MenuManager menuManager;
     private HashSet<String> acceptedFiles;
     private IDGenerator idGenerator;
+    private String imagesFolderPath;
 
 
     /**
@@ -51,6 +52,7 @@ public class AppEnvironment {
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
         acceptedFiles.add("finance.xml");
+        imagesFolderPath = "";
     }
 
     /**
@@ -285,4 +287,13 @@ public class AppEnvironment {
     public void setIdGenerator(IDGenerator idGenerator) {
         this.idGenerator = idGenerator;
     }
+
+    public String getImagesFolderPath() {
+        return imagesFolderPath;
+    }
+
+    public void setImagesFolderPath(String imagesFolderPath) {
+        this.imagesFolderPath = imagesFolderPath;
+    }
+
 }
