@@ -39,7 +39,6 @@ public class SchemaGenerator {
      * @param schemaFileName Takes in a string to be used for the generated .xsd file.
      */
     public void writeSchemaToFile(Class c, String schemaFileName) {
-        System.out.println(generateSchema(c));
         try {
             FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema" + "/" + schemaFileName);
 
@@ -56,12 +55,14 @@ public class SchemaGenerator {
      *      finance.xsd
      *      menu.xsd
      *      stock.xsd
+     *      metadata.xsd
      */
     public void generateAllSchemas() {
 
         writeSchemaToFile(Stock.class, "stock.xsd");
         writeSchemaToFile(MenuManager.class, "menu.xsd");
         writeSchemaToFile(Finance.class, "finance.xsd");
+        writeSchemaToFile(Database.class, "metadata.xsd");
     }
 
     public static void main(String[] v) {

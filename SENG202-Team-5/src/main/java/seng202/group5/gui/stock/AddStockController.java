@@ -64,6 +64,7 @@ public class AddStockController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         // Set text of all text field to the ones of the ingredient if it exists
         if (ingredient != null) {
             nameField.setText(ingredient.getName());

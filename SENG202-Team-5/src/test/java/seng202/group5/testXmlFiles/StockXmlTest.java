@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
+import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
@@ -17,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StockXmlTest {
-    AppEnvironment appEnvironment = new AppEnvironment();
+    AppEnvironment appEnvironment = new AppEnvironment(false);
+    Database database = appEnvironment.getDatabase();
     Stock stock;
     String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
@@ -26,7 +28,7 @@ class StockXmlTest {
     @BeforeAll
     public static void createAndMarshalStockData() {
         String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
-        AppEnvironment oldAppEnvironment = new AppEnvironment();
+        AppEnvironment oldAppEnvironment = new AppEnvironment(false);
         Ingredient flour = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
@@ -60,7 +62,7 @@ class StockXmlTest {
         oldAppEnvironment.getStock().getIngredients().put(vegePatty.getID(), vegePatty);
 
         try {
-            oldAppEnvironment.objectToXml(Stock.class, oldAppEnvironment.getStock(), "stock.xml", testDirectory);
+            oldAppEnvironment.getDatabase().objectToXml(Stock.class, oldAppEnvironment.getStock(), "stock.xml", testDirectory);
         } catch (JAXBException e) {
             System.out.println("Failed to marshal object");
         }
@@ -69,7 +71,7 @@ class StockXmlTest {
     @BeforeEach
     public void testUnmarshalStock() {
         try {
-            appEnvironment.stockXmlToObject(testDirectory);
+            database.stockXmlToObject(testDirectory);
             stock = appEnvironment.getStock();
             assertTrue(stock.getIngredientStock().size() > 0);
             assertTrue(stock.getIngredients().size() > 0);

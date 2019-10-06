@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -53,6 +54,9 @@
                             <GridPane.margin>
                                 <Insets />
                             </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </JFXButton>
                         <TableView fx:id="currentOrderTable" onSort="#deleteRowFromTable" prefHeight="767.0" prefWidth="300.0" GridPane.rowIndex="1">
                             <columns>
@@ -61,7 +65,10 @@
                                 <TableColumn fx:id="itemPriceCol" prefWidth="95.0" resizable="false" text="Price " />
                             </columns>
                         </TableView>
-                        <JFXButton fx:id="removeItem" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteRowFromTable" prefHeight="48.0" prefWidth="301.0" ripplerFill="#3a3e59" text="Remove Item " GridPane.rowIndex="2" />
+                        <JFXButton fx:id="removeItem" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteRowFromTable" prefHeight="48.0" prefWidth="301.0" ripplerFill="#3a3e59" text="Remove Item " GridPane.rowIndex="2">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></JFXButton>
                     </children>
                 </GridPane>
                 <GridPane gridLinesVisible="true" GridPane.columnIndex="1">
@@ -143,6 +150,9 @@
                                     </font>
                                 </JFXButton>
                             </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </GridPane>
                         <GridPane gridLinesVisible="true" GridPane.rowIndex="1">
                             <columnConstraints>
@@ -179,6 +189,9 @@
                                     <font>
                                         <Font size="26.0" />
                                     </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                                 </JFXButton>
                             </children>
                         </GridPane>

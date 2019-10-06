@@ -1,5 +1,8 @@
 package seng202.group5.gui;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -116,9 +119,21 @@ public class AdminController extends GeneralController {
     @FXML
     private Text warningText;
 
+    @FXML
+    private JFXTabPane adminTabPane;
+
     private FileChooser fileChooser;
 
     private Map<String, File> fileMap;
+
+    @FXML
+    private JFXCheckBox autosaveCheckbox;
+
+    @FXML
+    private JFXCheckBox autoloadCheckbox;
+
+    @FXML
+    private JFXTextField autoLocation;
 
     @FXML
     private Spinner<Integer> spinner10c;
@@ -148,11 +163,13 @@ public class AdminController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
         fileMap = new HashMap<>();
         viewHistory();
 
+        // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
                 spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
                 spinner20d, spinner50d, spinner100d));
@@ -172,6 +189,11 @@ public class AdminController extends GeneralController {
                 }
             });
         }
+
+        // Setting initial values for autosaving/loading elements
+        autosaveCheckbox.setSelected(getAppEnvironment().getDatabase().isAutosaveEnabled());
+        autoloadCheckbox.setSelected(getAppEnvironment().getDatabase().isAutoloadEnabled());
+        autoLocation.setText(getAppEnvironment().getDatabase().getSaveFileLocation());
 
         // Disables buttons if an order is in progress
         checkIfOrderInProgress();
@@ -343,22 +365,13 @@ public class AdminController extends GeneralController {
      * If the files are corrupted or invalid, the user is notified.
      */
     public void importData() {
-        Stock oldStock = getAppEnvironment().getStock();
-        MenuManager oldMenu = getAppEnvironment().getMenuManager();
-        Finance oldFinance = getAppEnvironment().getFinance();
         try {
-            getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
-            getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
-            getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            getAppEnvironment().getDatabase().importData(fileMap);
             finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
-            System.out.println("Made it");
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
-            getAppEnvironment().setStock(oldStock);
-            getAppEnvironment().setMenuManager(oldMenu);
-            getAppEnvironment().setFinance(oldFinance);
         }
     }
 
@@ -437,7 +450,7 @@ public class AdminController extends GeneralController {
 
         if (selectedDirectory != null) {
             try {
-                getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
+                getAppEnvironment().getDatabase().allObjectsToXml(selectedDirectory.getPath());
                 fileNotificationText.setText("All files successfully exported!");
             } catch (Exception e) {
                 fileNotificationText.setText("Files failed to export, please try again.");
@@ -459,6 +472,34 @@ public class AdminController extends GeneralController {
             String imageFolderPath = selectedDirectory.getPath();
             getAppEnvironment().setImagesFolderPath(imageFolderPath);
             fileNotificationText.setText("Images Folder selected");
+        }
+    }
+
+    /**
+     * Sets the location where automatically saved/loaded files are found
+     */
+    public void updateAutoLocation() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory != null) {
+            String autoLocationString = selectedDirectory.getPath();
+            getAppEnvironment().getDatabase().setSaveFileLocation(autoLocationString);
+            autoLocation.setText(autoLocationString);
+        }
+    }
+
+    public void updateAutosave() {
+        getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());
+        if (autosaveCheckbox.isSelected()) {
+            autoloadCheckbox.setSelected(true);
+        }
+    }
+
+    public void updateAutoload() {
+        getAppEnvironment().getDatabase().setAutoloadEnabled(autoloadCheckbox.isSelected());
+        if (!autoloadCheckbox.isSelected()) {
+            autosaveCheckbox.setSelected(false);
         }
     }
 

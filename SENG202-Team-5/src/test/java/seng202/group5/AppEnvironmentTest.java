@@ -36,7 +36,7 @@ class AppEnvironmentTest {
 
     @BeforeEach
     void init() {
-        handler = new AppEnvironment();
+        handler = new AppEnvironment(false);
         cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerIngredients = new HashMap<>();
         cheeseBurgerIngredients.put("1", 10);
@@ -120,14 +120,6 @@ class AppEnvironmentTest {
         } catch (NoOrderException e) {
             assertEquals("No order exists to get", e.getMessage());
         }
-    }
-
-    @Test
-    void testSetGetAcceptedFiles() {
-        HashSet<String> testSet = new HashSet<>(Arrays.asList("one.xml", "two.xml", "three.txt"));
-        HashSet<String> clone = new HashSet<>(testSet);
-        handler.setAcceptedFiles(testSet);
-        assertEquals(clone, handler.getAcceptedFiles());
     }
 
     @Test
