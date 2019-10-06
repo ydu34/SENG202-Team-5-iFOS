@@ -11,18 +11,20 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import org.joda.money.Money;
-import seng202.group5.logic.Order;
-import seng202.group5.information.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
+import seng202.group5.logic.Order;
 
+import java.io.FileInputStream;
 import java.util.*;
 
 /**
@@ -137,10 +139,12 @@ public class OrderController extends GeneralController {
         filterItems();
         try {
              currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentOrderTable();
+
         } catch (NoOrderException e) {
             System.out.println(e);
         }
+
+        currentOrderTable();
         orderIDText.setText(currentOrder.getId());
         addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
@@ -179,6 +183,8 @@ public class OrderController extends GeneralController {
      */
     public void populateTilePane(Collection<MenuItem> items) {
         if (tilePane != null) {
+            tilePane.setPrefTileWidth(304);
+            tilePane.setPrefTileHeight(200);
             ObservableList<Node> buttons = tilePane.getChildren();
             buttons.clear();
             ArrayList<MenuItem> sortedItems = new ArrayList<>(items);
@@ -191,15 +197,35 @@ public class OrderController extends GeneralController {
 
             for (MenuItem item : sortedItems) {
                 JFXButton tempButton = new JFXButton(item.getItemName());
+                tempButton.setContentDisplay(ContentDisplay.TOP);
                 tempButton.setStyle("-fx-font-size: 20; ");
-                tempButton.setPrefWidth(260);
-                tempButton.setPrefHeight(100);
+                tempButton.setPrefWidth(304);
+                tempButton.setPrefHeight(200);
+                tempButton.setMaxWidth(304);
+                tempButton.setMaxHeight(200);
+                ImageView imageView = new ImageView(getItemImage(item));
+                imageView.setPreserveRatio(true);
+                imageView.setFitHeight(144);
+                imageView.setFitWidth(256);
+
+                tempButton.setGraphic(imageView);
                 TilePane.setMargin(tempButton, new Insets(5));
                 tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
                 buttons.add(tempButton);
             }
         }
 
+    }
+
+    private Image getItemImage(MenuItem item) {
+        Image itemImage = new Image(getClass().getResourceAsStream("/images/default.png"));
+        try {
+
+            itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/"+item.getImageString()));
+        } catch (Exception e) {
+
+        }
+        return itemImage;
     }
 
     private enum SORT_TYPE {
@@ -295,9 +321,11 @@ public class OrderController extends GeneralController {
     public void addItemToOrder() {
         Integer quantity = quantitySpinner.getValue();
         if (currentOrder.addItem(item, quantity)) {
-            currentOrderTable();
+
             promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
             promptText.setFill(Color.GREEN);
+            //pseudoInitialize();
+            currentOrderTable();
 
 
        }
@@ -347,6 +375,7 @@ public class OrderController extends GeneralController {
      */
 
     public void currentOrderTable() {
+//        int quantity = 0;
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -415,7 +444,6 @@ public class OrderController extends GeneralController {
     protected MenuItem getSelectedItem() {
         return item;
     }
-
 
 
 

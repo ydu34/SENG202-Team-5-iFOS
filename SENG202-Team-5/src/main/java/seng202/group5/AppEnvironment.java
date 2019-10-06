@@ -19,6 +19,7 @@ public class AppEnvironment {
     private Stock stock;
     private MenuManager menuManager;
     private IDGenerator idGenerator;
+    private String imagesFolderPath;
     private Database database;
 
 
@@ -32,6 +33,7 @@ public class AppEnvironment {
         orderManager = new OrderManager(stock);
         idGenerator = new IDGenerator();
         database = new Database(this);
+        imagesFolderPath = "";
     }
 
     /**
@@ -107,4 +109,13 @@ public class AppEnvironment {
     public Database getDatabase() {
         return database;
     }
+
+    public String getImagesFolderPath() {
+        return imagesFolderPath;
+    }
+
+    public void setImagesFolderPath(String imagesFolderPath) {
+        this.imagesFolderPath = imagesFolderPath;
+    }
+
 }

@@ -45,19 +45,19 @@ class StockXmlTest {
         }};
         Ingredient vegePatty = new Ingredient("Vegetables", "Vegetable", Money.parse("NZD 10"), ingredientInfo3);
 
-        flour.setId("1'");
+        flour.setId("INGR1");
         oldAppEnvironment.getStock().getIngredientStock().put(flour.getID(), 0);
         oldAppEnvironment.getStock().getIngredients().put(flour.getID(), flour);
 
-        chickenPatty.setId("2");
+        chickenPatty.setId("INGR2");
         oldAppEnvironment.getStock().getIngredientStock().put(chickenPatty.getID(), 100);
         oldAppEnvironment.getStock().getIngredients().put(chickenPatty.getID(), chickenPatty);
 
-        cheese.setId("3");
+        cheese.setId("INGR3");
         oldAppEnvironment.getStock().getIngredientStock().put(cheese.getID(), 200);
         oldAppEnvironment.getStock().getIngredients().put(cheese.getID(), cheese);
 
-        vegePatty.setId("4");
+        vegePatty.setId("INGR4");
         oldAppEnvironment.getStock().getIngredientStock().put(vegePatty.getID(), 150);
         oldAppEnvironment.getStock().getIngredients().put(vegePatty.getID(), vegePatty);
 
@@ -84,31 +84,31 @@ class StockXmlTest {
 
     @Test
     public void testIngredientNameInStock() {
-        String name = stock.getIngredients().get("2").getName();
+        String name = stock.getIngredients().get("INGR2").getName();
         assertEquals("Chicken", name);
     }
 
     @Test
     public void testIngredientIDInStock() {
-        String id = stock.getIngredients().get("2").getID();
-        assertEquals("2", id);
+        String id = stock.getIngredients().get("INGR2").getID();
+        assertEquals("INGR2", id);
     }
 
     @Test
     public void testIngredientCategoryInStock() {
-        String category = stock.getIngredients().get("2").getCategory();
+        String category = stock.getIngredients().get("INGR2").getCategory();
         assertEquals("Meat", category);
     }
 
     @Test
     public void testIngredientPriceInStock() {
-        String price = stock.getIngredients().get("2").getCost().toString();
+        String price = stock.getIngredients().get("INGR2").getCost().toString();
         assertEquals("NZD 10.00", price);
     }
 
     @Test
     public void testIngredientDietaryInformationInStock() {
-        HashSet<DietEnum> dietInfo= stock.getIngredients().get("2").getDietInfo();
+        HashSet<DietEnum> dietInfo= stock.getIngredients().get("INGR2").getDietInfo();
         assertTrue(dietInfo.contains(DietEnum.GLUTEN_FREE));
     }
 

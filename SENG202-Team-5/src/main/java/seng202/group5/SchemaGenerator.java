@@ -3,9 +3,8 @@ package seng202.group5;
 import seng202.group5.logic.*;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * A class made to be ran manually only by the developer to generate the XML schema files for the
@@ -18,25 +17,19 @@ import java.io.IOException;
  */
 public class SchemaGenerator {
 
-    private String filePath = System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema";
-    // "/SENG202-Team-5/src/main/resources/schema";
-    // This file path worked for me
-
     /**
      * @param c Takes in the class that has been annotated with Jaxb XML annotations.
      * @return A string representing the schema.
      */
     public String generateSchema(Class c) {
         String schema = null;
-        JAXBContext jaxbContext = null;
         try {
-            jaxbContext = JAXBContext.newInstance(c);
+            JAXBContext jaxbContext = JAXBContext.newInstance(c);
+
             ModifiedSchemaOutputResolver sor = new ModifiedSchemaOutputResolver();
             jaxbContext.generateSchema(sor);
             schema = sor.getSchema();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (Exception ignored) {
         }
         return schema;
     }
@@ -47,7 +40,8 @@ public class SchemaGenerator {
      */
     public void writeSchemaToFile(Class c, String schemaFileName) {
         try {
-            FileWriter stockSchema = new FileWriter(filePath + "/" + schemaFileName);
+            FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema" + "/" + schemaFileName);
+
             stockSchema.write(generateSchema(c));
             stockSchema.close();
         } catch (Exception e) {
