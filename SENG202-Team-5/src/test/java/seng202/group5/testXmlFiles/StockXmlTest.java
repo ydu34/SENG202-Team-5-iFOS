@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
+import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StockXmlTest {
     AppEnvironment appEnvironment = new AppEnvironment();
+    Database database = appEnvironment.getDatabase();
     Stock stock;
     String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
@@ -60,7 +62,7 @@ class StockXmlTest {
         oldAppEnvironment.getStock().getIngredients().put(vegePatty.getID(), vegePatty);
 
         try {
-            oldAppEnvironment.objectToXml(Stock.class, oldAppEnvironment.getStock(), "stock.xml", testDirectory);
+            oldAppEnvironment.getDatabase().objectToXml(Stock.class, oldAppEnvironment.getStock(), "stock.xml", testDirectory);
         } catch (JAXBException e) {
             System.out.println("Failed to marshal object");
         }
@@ -69,7 +71,7 @@ class StockXmlTest {
     @BeforeEach
     public void testUnmarshalStock() {
         try {
-            appEnvironment.stockXmlToObject(testDirectory);
+            database.stockXmlToObject(testDirectory);
             stock = appEnvironment.getStock();
             assertTrue(stock.getIngredientStock().size() > 0);
             assertTrue(stock.getIngredients().size() > 0);

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
+import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
 import seng202.group5.logic.Order;
 import seng202.group5.information.Ingredient;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FinanceXmlTest {
 
     AppEnvironment appEnvironment = new AppEnvironment();
+    Database database = appEnvironment.getDatabase();
     Finance finance;
     String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
@@ -79,7 +81,7 @@ public class FinanceXmlTest {
         oldAppEnvironment.getFinance().getTransactionHistory().put(transaction.getTransactionID(), transaction);
 
         try {
-            oldAppEnvironment.objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
+            oldAppEnvironment.getDatabase().objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
         } catch (JAXBException e) {
             System.out.println("Failed to marshal object");
         }
@@ -87,7 +89,7 @@ public class FinanceXmlTest {
     @BeforeEach
     public void testUnmarshallFinance() {
         try {
-            appEnvironment.financeXmlToObject(testDirectory);
+            database.financeXmlToObject(testDirectory);
             finance = appEnvironment.getFinance();
             assertEquals(1, finance.getTransactionHistory().size());
         } catch (Exception ignored) {

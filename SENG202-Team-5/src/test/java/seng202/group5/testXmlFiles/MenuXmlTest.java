@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.AppEnvironment;
+import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
 import seng202.group5.information.TypeEnum;
 import seng202.group5.information.Ingredient;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuXmlTest {
     AppEnvironment appEnvironment = new AppEnvironment();
+    Database database = appEnvironment.getDatabase();
     MenuManager menuManager;
     String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
@@ -67,7 +69,7 @@ public class MenuXmlTest {
         oldAppEnvironment.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         oldAppEnvironment.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
         try {
-            oldAppEnvironment.objectToXml(MenuManager.class, oldAppEnvironment.getMenuManager(), "menu.xml", testDirectory);
+            oldAppEnvironment.getDatabase().objectToXml(MenuManager.class, oldAppEnvironment.getMenuManager(), "menu.xml", testDirectory);
         } catch (JAXBException e) {
             System.out.println("Failed to marshal object");
         }
@@ -76,7 +78,7 @@ public class MenuXmlTest {
     @BeforeEach
     public void testUnmarshallMenu() {
         try {
-            appEnvironment.menuXmlToObject(testDirectory);
+            database.menuXmlToObject(testDirectory);
             menuManager = appEnvironment.getMenuManager();
             assertEquals(2, menuManager.getItemMap().size());
         } catch (Exception e) {

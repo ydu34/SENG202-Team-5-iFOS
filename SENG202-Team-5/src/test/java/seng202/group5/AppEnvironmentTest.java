@@ -123,14 +123,6 @@ class AppEnvironmentTest {
     }
 
     @Test
-    void testSetGetAcceptedFiles() {
-        HashSet<String> testSet = new HashSet<>(Arrays.asList("one.xml", "two.xml", "three.txt"));
-        HashSet<String> clone = new HashSet<>(testSet);
-        handler.setAcceptedFiles(testSet);
-        assertEquals(clone, handler.getAcceptedFiles());
-    }
-
-    @Test
     void testSetGetOrderManager() {
         OrderManager orderManager = new OrderManager(handler.getStock());
         handler.setOrderManager(orderManager);

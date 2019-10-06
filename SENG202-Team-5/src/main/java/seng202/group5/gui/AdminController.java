@@ -344,13 +344,12 @@ public class AdminController extends GeneralController {
         MenuManager oldMenu = getAppEnvironment().getMenuManager();
         Finance oldFinance = getAppEnvironment().getFinance();
         try {
-            getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
-            getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
-            getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            getAppEnvironment().getDatabase().stockXmlToObject(fileMap.get("stock.xml").getParent());
+            getAppEnvironment().getDatabase().menuXmlToObject(fileMap.get("menu.xml").getParent());
+            getAppEnvironment().getDatabase().financeXmlToObject(fileMap.get("finance.xml").getParent());
             finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
-            System.out.println("Made it");
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
             getAppEnvironment().setStock(oldStock);
@@ -434,7 +433,7 @@ public class AdminController extends GeneralController {
 
         if (selectedDirectory != null) {
             try {
-                getAppEnvironment().allObjectsToXml(selectedDirectory.getPath());
+                getAppEnvironment().getDatabase().allObjectsToXml(selectedDirectory.getPath());
                 fileNotificationText.setText("All files successfully exported!");
             } catch (Exception e) {
                 fileNotificationText.setText("Files failed to export, please try again.");
