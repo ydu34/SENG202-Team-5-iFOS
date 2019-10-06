@@ -8,7 +8,7 @@ import static org.joda.money.Money.parse;
 /**
  * The Customer class holds information about each Customer who is considered a member and have a unique ID and an
  * amount of loyalty points that can purchase food with.
- * @author Michael Morgoun, James Kwok?
+ * @author Michael Morgoun, James Kwok
  */
 public class Customer {
 
@@ -16,7 +16,7 @@ public class Customer {
     private String customerID = generator.newID();
 
     private String name;
-    private int purchasePoints = 0;
+    private int purchasePoints = 10;
 
 
     /**
