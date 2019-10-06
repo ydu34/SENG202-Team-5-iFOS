@@ -69,19 +69,29 @@ public class passwordController extends GeneralController {
     ActionEvent origin;
 
 
-
+    /**
+     * Default password that can be used to access the admin screen at the beginning of of the day
+     */
     String password = "1111";
+
+    /**
+     * The string used to check the validity of the password
+     */
     String input="";
+
+    /**
+     * This function closes the password pop up screen when clicked on cancel
+     * @param event
+     */
 
     public void closeScreen(ActionEvent event) {
         ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
 
-    public void addZero(){
-        input+= numberZero.getText();
-        warningText.setText(" ");
-    }
+    /**
+     * The function sets the text fields to  "*" when the buttons are clicked on.
+     */
 
     public void updatePasswordText(){
 
@@ -106,6 +116,20 @@ public class passwordController extends GeneralController {
         }
     }
 
+    /**
+     * Appends 0 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
+
+    public void addZero(){
+        warningText.setText(" ");
+        updatePasswordText();
+        input += numberZero.getText();
+    }
+
+    /**
+     * Appends 1 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
+
     public void addOne() {
 
         warningText.setText(" ");
@@ -113,6 +137,10 @@ public class passwordController extends GeneralController {
         input += numberOne.getText();
 
     }
+
+    /**
+     * Appends 2 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
 
     public void addTwo(){
 
@@ -122,6 +150,10 @@ public class passwordController extends GeneralController {
 
     }
 
+    /**
+     * Appends 3 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
+
     public void addThree(){
 
         warningText.setText(" ");
@@ -129,6 +161,10 @@ public class passwordController extends GeneralController {
         input+= numberThree.getText();
 
     }
+
+    /**
+     * Appends 4 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
 
     public void addFour(){
 
@@ -138,6 +174,10 @@ public class passwordController extends GeneralController {
 
     }
 
+    /**
+     * Appends 5 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
+
     public void addFive(){
 
         warningText.setText(" ");
@@ -145,6 +185,10 @@ public class passwordController extends GeneralController {
         input+= numberFive.getText();
 
     }
+
+    /**
+     * Appends 6 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
 
     public void addSix(){
 
@@ -154,6 +198,10 @@ public class passwordController extends GeneralController {
 
     }
 
+    /**
+     * Appends 7 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
+
     public void addSeven(){
 
         warningText.setText(" ");
@@ -161,6 +209,10 @@ public class passwordController extends GeneralController {
         input+= numberSeven.getText();
 
     }
+
+    /**
+     * Appends 8 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
 
     public void addEight(){
 
@@ -170,6 +222,10 @@ public class passwordController extends GeneralController {
 
     }
 
+    /**
+     * Appends 9 to the password string and checks if the password it still of the valid length updates the warning text accordingly
+     */
+
     public void addNine(){
 
         warningText.setText(" ");
@@ -177,6 +233,12 @@ public class passwordController extends GeneralController {
         input+= numberNine.getText();
 
     }
+
+    /**
+     * This function is called when the confirm button is clicked which checks if th user has entered a valid password or not and
+     * then displays the warning accordingly.
+     * @param event
+     */
 
 
     public void checkPassword(ActionEvent event){
@@ -192,11 +254,22 @@ public class passwordController extends GeneralController {
         if(input.length() != 4){
             warningText.setText("Password must be of length 4");
         }
+    }
+
+    /**
+     * This function clears the password that was in progress and lets the user enter the password again
+     */
+
+    public void clearPassword(){
+
         passwordInput1.setText("");
         passwordInput2.setText("");
         passwordInput3.setText("");
         passwordInput4.setText("");
+        warningText.setText("");
         input = "";
+
+
     }
 
     public void setSource(GeneralController controller) {
