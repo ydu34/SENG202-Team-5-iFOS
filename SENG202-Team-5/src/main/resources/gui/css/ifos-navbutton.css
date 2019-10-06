@@ -1,0 +1,8 @@
+
+.jfx-button {
+    -jfx-button-type: FLAT;
+    -fx-background-color: rgba(249, 172, 104, 1);
+    -fx-text-fill: rgba(58, 62, 89, 1);
+    -fx-font-size: 18;
+    -jfx-disable-visual-focus: true;
+}
