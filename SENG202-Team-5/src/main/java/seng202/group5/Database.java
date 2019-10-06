@@ -150,9 +150,9 @@ public class Database {
             autoloadEnabled = tempDatabase.isAutoloadEnabled();
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
             if (autoloadEnabled) {
-                File stockFile = new File(saveFileLocation + "/" + "stock.xml");
-                File menuFile = new File(saveFileLocation + "/" + "menu.xml");
-                File financeFile = new File(saveFileLocation + "/" + "finance.xml");
+                File stockFile = new File(saveFileLocation + "/stock.xml");
+                File menuFile = new File(saveFileLocation + "/menu.xml");
+                File financeFile = new File(saveFileLocation + "/finance.xml");
                 importData(Map.of("stock.xml", stockFile, "menu.xml", menuFile, "finance.xml", financeFile));
             }
         } catch (Exception e) {
@@ -181,7 +181,6 @@ public class Database {
             appEnvironment.getOrderManager().setStock(appEnvironment.getStock());
             appEnvironment.getOrderManager().newOrder();
         } catch (JAXBException | SAXException e) {
-            System.out.println("Failure!");
             throw new Exception("stock.xml file is invalid");
         }
     }
