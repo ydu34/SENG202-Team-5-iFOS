@@ -1,9 +1,9 @@
-Feature: Calculate Discount
-  Scenario: Customer uses points to get a discount
-    Given Order Costs $7.50
-    And Customer has 10 purchase points
-    When Customer uses 2 purchase points on an order which costs $7.50
-    Then Order now Costs $6.50
+#Feature: Calculate Discount
+#  Scenario: Customer uses points to get a discount
+#    Given Order Costs $7.50
+#    And Customer has 10 purchase points
+#    When Customer uses 2 purchase points on an order which costs $7.50
+#    Then Order now Costs $6.50
 
 #  Scenario: Customer uses points to get a discount
 #    Given Order Costs $10.00
