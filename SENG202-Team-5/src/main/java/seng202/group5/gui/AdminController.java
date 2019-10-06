@@ -149,7 +149,6 @@ public class AdminController extends GeneralController {
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
-        checkIfOrderInProgress();
         fileMap = new HashMap<>();
         viewHistory();
 
@@ -172,10 +171,13 @@ public class AdminController extends GeneralController {
                 }
             });
         }
+
+        // Disables buttons if an order is in progress
+        checkIfOrderInProgress();
     }
 
     /**
-     * If an order is in progress disable buttons on admin scree.
+     * If an order is in progress disable buttons on admin screen.
      */
     public void checkIfOrderInProgress() {
         try {
