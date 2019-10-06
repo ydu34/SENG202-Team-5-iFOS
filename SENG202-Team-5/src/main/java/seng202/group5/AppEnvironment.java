@@ -7,6 +7,7 @@ import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.Transaction;
 import seng202.group5.logic.*;
 
 import javax.xml.XMLConstants;
@@ -32,10 +33,10 @@ public class AppEnvironment {
     private OrderManager orderManager;
     private Finance finance;
     private Stock stock;
-    private History history;
     private MenuManager menuManager;
     private HashSet<String> acceptedFiles;
     private IDGenerator idGenerator;
+    private String imagesFolderPath;
 
 
     /**
@@ -44,15 +45,14 @@ public class AppEnvironment {
     public AppEnvironment() {
         finance = new Finance();
         stock = new Stock();
-        history = new History();
         menuManager = new MenuManager();
-        orderManager = new OrderManager(stock, history);
+        orderManager = new OrderManager(stock);
         idGenerator = new IDGenerator();
         acceptedFiles = new HashSet<>();
         acceptedFiles.add("stock.xml");
         acceptedFiles.add("menu.xml");
-        acceptedFiles.add("history.xml");
         acceptedFiles.add("finance.xml");
+        imagesFolderPath = "";
     }
 
     /**
@@ -106,7 +106,7 @@ public class AppEnvironment {
      * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
      */
     public HashMap<Ingredient, Integer> getIngredientsFromID(HashMap<String, Integer> IngredientIDs) {
-        HashMap<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
+        HashMap<Ingredient, Integer> ingredients = new HashMap<>();
         for (Map.Entry<String, Integer> entry : IngredientIDs.entrySet()) {
             String ID = entry.getKey();
             Integer quantity = entry.getValue();
@@ -133,6 +133,25 @@ public class AppEnvironment {
         }
     }
 
+
+    /**
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
+     *
+     * @param transactionItems Contains the menu items.
+     */
+    public void handleFinance(HashMap<String, Transaction> transactionItems) {
+        for (Transaction transaction : transactionItems.values()) {
+            for (Map.Entry<MenuItem, Integer> entry : transaction.getOrder().getOrderItems().entrySet()) {
+                MenuItem menuItem = entry.getKey();
+                Recipe recipe = menuItem.getRecipe();
+                HashMap<String, Integer> ingredientIDs = menuItem.getRecipe().getIngredientIDs();
+                HashMap<Ingredient, Integer> recipeIngredients = getIngredientsFromID(ingredientIDs);
+                recipe.setIngredientsAmount(recipeIngredients);
+            }
+        }
+    }
+
     /**
      * Gets the stock.xml from fileDirectory and unmarshal it to an object.
      * @param fileDirectory The directory of the stock.xml
@@ -149,21 +168,6 @@ public class AppEnvironment {
     }
 
     /**
-     * Gets the history.xml from fileDirectory and unmarshal it to an object.
-     * @param fileDirectory The directory of the history.xml
-     * @throws Exception throws exception if history.xml is invalid
-     */
-    public void historyXmlToObject(String fileDirectory) throws Exception{
-        try {
-            history = (History) xmlToObject(History.class, history, "history.xml", "history.xsd", fileDirectory);
-            orderManager.setCurrentHistory(history);
-            orderManager.newOrder();
-        } catch (JAXBException|SAXException e) {
-            throw new Exception("history.xml file is invalid");
-        }
-    }
-
-    /**
      * Gets the finance.xml from fileDirectory and unmarshal it to an object.
      * @param fileDirectory The directory of the finance.xml
      * @throws Exception throws exception if finance.xml is invalid
@@ -171,6 +175,7 @@ public class AppEnvironment {
     public void financeXmlToObject(String fileDirectory) throws Exception{
         try {
             finance = (Finance) xmlToObject(Finance.class, finance, "finance.xml", "finance.xsd", fileDirectory);
+            handleFinance(finance.getTransactionHistory());
         } catch (JAXBException|SAXException e) {
             throw new Exception("finance.xml file is invalid");
         }
@@ -198,7 +203,6 @@ public class AppEnvironment {
     public void allObjectsToXml(String fileDirectory) throws Exception{
         try {
             objectToXml(Stock.class, stock, "stock.xml", fileDirectory);
-            objectToXml(History.class, history, "history.xml", fileDirectory);
             objectToXml(Finance.class, finance, "finance.xml", fileDirectory);
             objectToXml(MenuManager.class, menuManager, "menu.xml", fileDirectory);
         } catch (JAXBException e) {
@@ -219,19 +223,14 @@ public class AppEnvironment {
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
         //        Money totalPayment = Money.parse("NZD 0");
         //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
-        ArrayList<Money> change = new ArrayList<Money>();
+        ArrayList<Money> change = new ArrayList<>();
         try {
             Order order = orderManager.getOrder();
-            order.setDateTimeProcessed(LocalDateTime.now());
-            orderManager.getHistory().getTransactionHistory().put(order.getId(), order);
             setStock(order.getStock().clone());
             orderManager.setStock(stock);
             orderManager.newOrder();
 
-            change = finance.pay(order.getTotalCost(),
-                                 denominations,
-                                 order.getDateTimeProcessed(),
-                                 order.getId());
+            change = finance.pay(denominations, LocalDateTime.now(), order);
 
         } catch (NoOrderException e) {
             e.printStackTrace();
@@ -247,10 +246,6 @@ public class AppEnvironment {
     public void setStock(Stock stock) {
         this.stock = stock;
         orderManager.setStock(stock);
-    }
-
-    public History getHistory() {
-        return history;
     }
 
     public Finance getFinance() {
@@ -281,10 +276,6 @@ public class AppEnvironment {
         this.finance = finance;
     }
 
-    public void setHistory(History history) {
-        this.history = history;
-    }
-
     public void setMenuManager(MenuManager menuManager) {
         this.menuManager = menuManager;
     }
@@ -296,4 +287,13 @@ public class AppEnvironment {
     public void setIdGenerator(IDGenerator idGenerator) {
         this.idGenerator = idGenerator;
     }
+
+    public String getImagesFolderPath() {
+        return imagesFolderPath;
+    }
+
+    public void setImagesFolderPath(String imagesFolderPath) {
+        this.imagesFolderPath = imagesFolderPath;
+    }
+
 }

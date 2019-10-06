@@ -6,7 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.information.Ingredient;
@@ -15,6 +18,8 @@ import seng202.group5.information.Recipe;
 import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.MenuManager;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +79,16 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private TextArea recipeTextArea;
 
+    @FXML
+    private ImageView itemImage;
 
+    @FXML
+    private Button selectImageButton;
+
+    @FXML
+    private Text imageWarningText;
+
+    private String itemImageName;
 
     private MenuItem item;
 
@@ -103,6 +117,7 @@ public class AddRecipeController extends GeneralController {
         item = new MenuItem();
         initializeTypeComboBox();
         initializeTextValues();
+        initializeImageView();
         populateIngredientsTable();
 
     }
@@ -113,6 +128,7 @@ public class AddRecipeController extends GeneralController {
     public void saveRecipe() {
         try {
             saveTextFieldValues();
+            System.out.println("Item image" + item.getImageString());
             menuManager.addItem(item);
             closeScreen();
         } catch (NumberFormatException e) {
@@ -149,6 +165,7 @@ public class AddRecipeController extends GeneralController {
                 item.setItemName(name);
                 item.setMarkupCost(markupPrice);
                 item.calculateFinalCost();
+                item.setImageString(itemImageName);
             }
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
@@ -258,6 +275,14 @@ public class AddRecipeController extends GeneralController {
         menuTypeComboBox.getSelectionModel().select(item.getItemType());
     }
 
+    public void initializeImageView() {
+        try {
+            Image image = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
+            itemImage.setImage(image);
+        } catch (Exception e) {
+        }
+    }
+
     /**
      * @param tempItem Item that has been modified in AddExtraIngredientController.
      */
@@ -265,6 +290,39 @@ public class AddRecipeController extends GeneralController {
         item = tempItem;
         initializeTextValues();
         initializeTypeComboBox();
+        initializeImageView();
         populateIngredientsTable();
+    }
+
+    /** On action for button selectImageButton, opens a file chooser for the user
+     * to select an image for the current menu item they are making.
+     */
+    @FXML
+    public void addImageToItem() {
+        imageWarningText.setText("");
+        FileChooser fileChooser = new FileChooser();
+        List<String> imageExtensions = new ArrayList<>();
+        imageExtensions.add("*.png");
+        imageExtensions.add("*.jpg");
+        imageExtensions.add("*.jpeg");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", imageExtensions));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            if (selectedFile.length() > 250 * 1024) {
+                imageWarningText.setText("maximum size 250kB");
+            } else {
+                try {
+                    Image image = new Image(new FileInputStream(selectedFile.getPath()));
+                    itemImage.setImage(image);
+                    itemImageName = selectedFile.getName();
+                    System.out.println(itemImageName);
+                } catch (Exception e) {
+                }
+            }
+        }
+
+
+
+
     }
 }

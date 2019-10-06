@@ -207,7 +207,6 @@ public class InvoiceController extends GeneralController {
         if(someOrder == true){
             removeItem.setDisable(false);
         }
-
     }
 
     @FXML

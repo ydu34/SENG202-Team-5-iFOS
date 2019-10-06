@@ -122,6 +122,7 @@ public class AddExtraIngredientController extends GeneralController {
 
                     int selectedAmount = ingredientAmounts.getOrDefault(ingredient, 0);
                     Spinner<Integer> spinner = new Spinner<>();
+                    spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
                     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                             0, maxAmount, selectedAmount));
 

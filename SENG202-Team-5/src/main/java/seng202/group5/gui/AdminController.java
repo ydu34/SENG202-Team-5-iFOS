@@ -15,12 +15,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
+import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
-import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
+import seng202.group5.logic.Till;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +68,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Button importDataButton;
+
+    @FXML
+    private Button selectImagesFolderButton;
 
     @FXML
     private Text fileNotificationText;
@@ -115,6 +120,29 @@ public class AdminController extends GeneralController {
 
     private Map<String, File> fileMap;
 
+    @FXML
+    private Spinner<Integer> spinner10c;
+    @FXML
+    private Spinner<Integer> spinner20c;
+    @FXML
+    private Spinner<Integer> spinner50c;
+    @FXML
+    private Spinner<Integer> spinner1d;
+    @FXML
+    private Spinner<Integer> spinner2d;
+    @FXML
+    private Spinner<Integer> spinner5d;
+    @FXML
+    private Spinner<Integer> spinner10d;
+    @FXML
+    private Spinner<Integer> spinner20d;
+    @FXML
+    private Spinner<Integer> spinner50d;
+    @FXML
+    private Spinner<Integer> spinner100d;
+
+    private ArrayList<Spinner<Integer>> spinnerList;
+
     /**
      * An initializer for this controller
      */
@@ -122,13 +150,35 @@ public class AdminController extends GeneralController {
     public void pseudoInitialize() {
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
-        checkIfOrderInProgress();
         fileMap = new HashMap<>();
         viewHistory();
+
+        spinnerList = new ArrayList<>(Arrays.asList(
+                spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
+                spinner20d, spinner50d, spinner100d));
+        updateTillSpinners();
+        for (Spinner<Integer> spinner : spinnerList) {
+            spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+            Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
+            spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (oldValue > newValue) {
+                    try {
+                        finance.getTill().removeDenomination(amount, oldValue - newValue);
+                    } catch (InsufficientCashException e) {
+                        System.out.println("Till spinner reduced below zero!");
+                    }
+                } else if (newValue > oldValue) {
+                    finance.getTill().addDenomination(amount, newValue - oldValue);
+                }
+            });
+        }
+
+        // Disables buttons if an order is in progress
+        checkIfOrderInProgress();
     }
 
     /**
-     * If an order is in progress disable buttons on admin scree.
+     * If an order is in progress disable buttons on admin screen.
      */
     public void checkIfOrderInProgress() {
         try {
@@ -187,7 +237,7 @@ public class AdminController extends GeneralController {
             sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
         }
         if (!eDate.isBefore(sDate)) {
-            ArrayList<Money> result = finance.totalCalculator(sDate, eDate, getAppEnvironment().getHistory().getTransactionHistory());
+            ArrayList<Money> result = finance.totalCalculator(sDate, eDate);
             saleSummaryText.setText("Total cost of orders: " + result.get(0) +
                     "\nAverage daily cost: " + result.get(1) +
                     "\nTotal profits: " + result.get(2) +
@@ -230,12 +280,12 @@ public class AdminController extends GeneralController {
     }
 
     /**
-     * Checks if the number of files selected by the user is four, if it is
+     * Checks if the number of files selected by the user is three, if it is
      * it means that all xml files are selected and ready to be imported.
      * Therefore enable the import data button for the user to click.
      */
     public void checkFilesSelected() {
-        if (fileMap.size()==4) {
+        if (fileMap.size() == 3) {
             importDataButton.setDisable(false);
         } else {
             importDataButton.setDisable(true);
@@ -274,21 +324,6 @@ public class AdminController extends GeneralController {
     }
 
     /**
-     * Action for the select history button to add the selected file to the list of files
-     * if it is history.xml otherwise tell the user it is invalid.
-     */
-    public void selectHistory() {
-        File selectedFile = getSelectedFile();
-        if (checkSelectedFile("history.xml", selectedFile)) {
-            fileMap.put("history.xml", selectedFile);
-            historyWarningText.setText("history.xml selected");
-            checkFilesSelected();
-        } else {
-            historyWarningText.setText("invalid file selected");
-        }
-    }
-
-    /**
      * Action for the select finance button to add the selected file to the list of files
      * if it is finance.xml otherwise tell the user it is invalid.
      */
@@ -310,19 +345,19 @@ public class AdminController extends GeneralController {
     public void importData() {
         Stock oldStock = getAppEnvironment().getStock();
         MenuManager oldMenu = getAppEnvironment().getMenuManager();
-        History oldHistory = getAppEnvironment().getHistory();
         Finance oldFinance = getAppEnvironment().getFinance();
         try {
             getAppEnvironment().stockXmlToObject(fileMap.get("stock.xml").getParent());
             getAppEnvironment().menuXmlToObject(fileMap.get("menu.xml").getParent());
-            getAppEnvironment().historyXmlToObject(fileMap.get("history.xml").getParent());
             getAppEnvironment().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
+            updateTillSpinners();
+            System.out.println("Made it");
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
             getAppEnvironment().setStock(oldStock);
             getAppEnvironment().setMenuManager(oldMenu);
-            getAppEnvironment().setHistory(oldHistory);
             getAppEnvironment().setFinance(oldFinance);
         }
     }
@@ -409,6 +444,39 @@ public class AdminController extends GeneralController {
             }
         }
 
+    }
+
+    /**
+     * The method called when selectImagesFolderButton is clicked
+     * Allows the user to select the folder containing all the images for the menu items
+     */
+    @FXML
+    public void selectImagesFolder() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory != null) {
+            String imageFolderPath = selectedDirectory.getPath();
+            getAppEnvironment().setImagesFolderPath(imageFolderPath);
+            fileNotificationText.setText("Images Folder selected");
+        }
+    }
+
+    /**
+     * Resets the till so that it contains no amounts of any denominations
+     */
+    public void resetTill() {
+        finance.setTill(new Till());
+        updateTillSpinners();
+    }
+
+    private void updateTillSpinners() {
+        for (Spinner<Integer> spinner : spinnerList) {
+            Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
+            Integer initialValue = finance.getTill().getDenominations().getOrDefault(amount, 0);
+            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                    0, 999999, initialValue));
+        }
     }
 
     public void setFinance(Finance newFinance) {

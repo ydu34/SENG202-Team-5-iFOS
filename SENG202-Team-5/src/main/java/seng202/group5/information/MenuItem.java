@@ -42,25 +42,30 @@ public class MenuItem {
     /**
      * Unique id for a menu item
      */
-    private String id = generator.newID();
+    private String id = generator.newMenuItemID();
     /**
      * Whether or not this item is in the menu
      */
     private boolean inMenu;
     /**
-     * Enum type that tells about the dietry info about the menu item
+     * Enum type that tells about the dietary info about the menu item
      */
     private TypeEnum itemType;
     /**
-     * Weather or not the item was modified
+     * Whether or not the item was modified
      */
     private boolean edited;
 
-    @XmlJavaTypeAdapter(MoneyAdapter.class)
     /**
      * total cost of the menu item
      */
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money totalCost;
+
+    /**
+     * A string representing the image for this menu item
+     */
+    private String imageString;
 
     /**
      * Default constructor for the menu item class
@@ -73,6 +78,7 @@ public class MenuItem {
         itemType = TypeEnum.MAIN;
         edited = false;
         totalCost = Money.parse("NZD 0.00");
+        imageString = null;
     }
 
     /**
@@ -296,6 +302,15 @@ public class MenuItem {
     public void setTotalCost(Money totalCost) {
         this.totalCost = totalCost;
     }
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public void setImageString(String imageString) {
+        this.imageString = imageString;
+    }
+
 }
 
 

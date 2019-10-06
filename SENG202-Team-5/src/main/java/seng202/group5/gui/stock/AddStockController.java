@@ -1,5 +1,6 @@
 package seng202.group5.gui.stock;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -17,17 +18,18 @@ import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;
 
 import javax.naming.directory.InvalidAttributeValueException;
+import java.awt.*;
 import java.util.HashSet;
 
 /**
  * A controller for a screen that adds ingredients to the stock
  *
- * @author Michael Morgun
+ * @author Michael Morgoun
  */
 public class AddStockController extends GeneralController {
 
     @FXML
-    private Button createButton;
+    private JFXButton createButton;
 
     @FXML
     private TextField nameField;
@@ -62,7 +64,6 @@ public class AddStockController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
-
         // Set text of all text field to the ones of the ingredient if it exists
         if (ingredient != null) {
             nameField.setText(ingredient.getName());
@@ -85,12 +86,12 @@ public class AddStockController extends GeneralController {
 
         // Listeners for the number only text fields such as quantity and cost
         costField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,2})?")) {
                 costField.setText(oldValue);
             }
         });
         quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,7}?")) {
                 quantityField.setText(oldValue);
             }
         });
@@ -112,6 +113,7 @@ public class AddStockController extends GeneralController {
             Stage stage = (Stage) createButton.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
+            e.printStackTrace();
             warningLabel.setText("Error creating ingredient.");
         }
     }

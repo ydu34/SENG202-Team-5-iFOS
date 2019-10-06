@@ -70,7 +70,7 @@ public class StockController extends GeneralController {
     public void pseudoInitialize() {
         // Listener for the ingredientSearchField to only accept numbers
         ingredientSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}?")) {
+            if (!newValue.matches("([\\-':]*\\w*)*")) {
                 ingredientSearchField.setText(oldValue);
             }
             updateVisibleIngredients();
@@ -118,9 +118,10 @@ public class StockController extends GeneralController {
         stockTable.getItems().clear();
 
         Collection<Ingredient> ingredientIDs = getAppEnvironment().getStock().getIngredients().values();
-        String searchID = ingredientSearchField.getText();
+        String searchID = ingredientSearchField.getText().toLowerCase();
         for (Ingredient ingredient : ingredientIDs) {
-            if (ingredient.getID().matches(".*" + searchID + ".*")) {
+            if (ingredient.getName().toLowerCase().matches(".*" + searchID + ".*") ||
+                    ingredient.getID().matches(".*" + searchID + ".*")) {
                 stockTable.getItems().add(ingredient);
             }
         }

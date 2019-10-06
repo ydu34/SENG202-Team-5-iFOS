@@ -9,7 +9,6 @@ import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 import seng202.group5.logic.Finance;
-import seng202.group5.logic.History;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.OrderManager;
 
@@ -133,7 +132,7 @@ class AppEnvironmentTest {
 
     @Test
     void testSetGetOrderManager() {
-        OrderManager orderManager = new OrderManager(handler.getStock(), handler.getHistory());
+        OrderManager orderManager = new OrderManager(handler.getStock());
         handler.setOrderManager(orderManager);
         assertEquals(orderManager, handler.getOrderManager());
     }
@@ -143,13 +142,6 @@ class AppEnvironmentTest {
         Finance finance = new Finance();
         handler.setFinance(finance);
         assertEquals(finance, handler.getFinance());
-    }
-
-    @Test
-    void testSetGetHistory() {
-        History history = new History();
-        handler.setHistory(history);
-        assertEquals(history, handler.getHistory());
     }
 
     @Test

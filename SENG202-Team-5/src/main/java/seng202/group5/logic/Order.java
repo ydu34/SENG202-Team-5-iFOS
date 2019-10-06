@@ -27,7 +27,7 @@ import static java.lang.String.format;
  * The Order class keeps track of the current orders items and total cost. Contains methods to modify items to the order
  * and give a discount to the order.
  *
- * @author Michael Morgoun, Yu Duan
+ * @author Michael Morgoun, Yu Duan, James Kwok
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -44,14 +44,11 @@ public class Order {
     @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money totalCost = Money.zero(CurrencyUnit.of("NZD"));
 
-    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
-    private LocalDateTime dateTimeProcessed;
-
     /**
      * The unique ID of the order given by the database
      **/
     private IDGenerator generator = new IDGenerator();
-    private String id = generator.newID();
+    private String id = generator.newOrderID();
 
 
     /**
@@ -117,6 +114,15 @@ public class Order {
         //TODO refactor the class so it applies the discount passively, should possibly store the discount as an attribute
         totalCost = totalCost.minus(totalCost.multipliedBy(percentage / 100.0, RoundingMode.UP));
     }
+
+    /**
+     * Applies a discount to an order.
+     *
+     * @param reduction The amount to be reduced from the order.
+     */
+    public void applyDiscount(Money reduction) {
+        totalCost = totalCost.minus(reduction);
+        }
 
     /**
      * Adds a new item/s to the order and checks the temporaryStock in case there are not enough ingredients
@@ -220,7 +226,7 @@ public class Order {
         }
     }
 
-    public void clearItemsInOrder(){
+    public void clearItemsInOrder() {
         orderItems.clear();
         totalCost = Money.zero(CurrencyUnit.of("NZD"));
     }
@@ -289,14 +295,6 @@ public class Order {
      */
     public Stock getStock() {
         return temporaryStock;
-    }
-
-    public LocalDateTime getDateTimeProcessed() {
-        return dateTimeProcessed;
-    }
-
-    public void setDateTimeProcessed(LocalDateTime dateProcessed) {
-        this.dateTimeProcessed = dateProcessed;
     }
 
     public void setId(String id) {

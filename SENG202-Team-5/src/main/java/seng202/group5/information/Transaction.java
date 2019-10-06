@@ -4,6 +4,7 @@ import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
+import seng202.group5.logic.Order;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,6 +25,7 @@ public class Transaction {
      */
     @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
     private LocalDateTime datetime;
+
     /**
      * The change given
      */
@@ -31,21 +33,29 @@ public class Transaction {
     private Money change;
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money totalPrice;
-    private String transactionID = (new IDGenerator()).newID();
+    private String transactionID;
+
     /**
      * Whether or not this transaction has been refunded
      */
     private Boolean refunded;
-    private String orderID;
+
+    private Order order;
 
     Transaction() {}
 
-    public Transaction(LocalDateTime newDateTime, Money newChange, Money newTotalPrice, String orderID) {
+    public Transaction(LocalDateTime newDateTime, Money newChange, Order newOrder) {
         refunded = false;
         datetime = newDateTime;
         change = newChange;
-        totalPrice = newTotalPrice;
-        this.orderID = orderID;
+        if (newOrder != null) {
+            totalPrice = newOrder.getTotalCost();
+            transactionID = newOrder.getId();
+        } else {
+            totalPrice = null;
+            transactionID = (new IDGenerator()).newTransactionID();
+        }
+        order = newOrder;
     }
 
     public Boolean isRefunded() {
@@ -71,7 +81,11 @@ public class Transaction {
     }
 
     public String getOrderID() {
-        return orderID;
+        return order.getId();
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public void setTransactionID(String transactionID) {

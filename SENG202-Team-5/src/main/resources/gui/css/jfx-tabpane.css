@@ -1,0 +1,25 @@
+.tab-header-background {
+    -fx-background-color: rgba(249, 172, 104, 1);
+
+}
+
+.tab {
+    -fx-background-color: rgba(249, 172, 104, 1);
+}
+
+.tab-header {
+
+}
+
+.tab .tab-label {
+    -fx-font-family: 'Open Sans', sans-serif;
+    -fx-text-fill: rgba(58, 62, 89, 1);
+}
+
+.jfx-tab-pane .headers-region > .tab > .jfx-rippler {
+    -jfx-rippler-fill: rgba(58, 62, 89, 1);
+}
+
+.jfx-tab-pane .headers-region .tab-selected-line {
+    -fx-background-color: #ed6b58;;
+}
