@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -39,6 +40,9 @@
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                     </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </JFXButton>
                 <JFXButton fx:id="backButton" onAction="#revertScreen" prefHeight="33.0" prefWidth="171.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Back" textAlignment="CENTER" textFill="#3a3e59">
                     <font>
@@ -47,6 +51,9 @@
                     <GridPane.margin>
                         <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                     </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </JFXButton>
             </children>
             <GridPane.margin>

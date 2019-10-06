@@ -2,6 +2,7 @@ package seng202.group5.gui;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -117,6 +118,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Text warningText;
+
+    @FXML
+    private JFXTabPane adminTabPane;
 
     private FileChooser fileChooser;
 

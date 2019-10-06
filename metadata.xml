@@ -2,5 +2,5 @@
 <database>
     <saveFileLocation></saveFileLocation>
     <autosaveEnabled>true</autosaveEnabled>
-    <autoloadEnabled>false</autoloadEnabled>
+    <autoloadEnabled>true</autoloadEnabled>
 </database>
