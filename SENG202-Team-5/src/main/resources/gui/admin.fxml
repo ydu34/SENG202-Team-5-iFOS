@@ -204,7 +204,7 @@
                                         <Font size="26.0" />
                                     </font>
                                 </Text>
-                                <GridPane onMousePressed="#swipeRight" GridPane.rowIndex="3">
+                                <GridPane GridPane.rowIndex="3">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
