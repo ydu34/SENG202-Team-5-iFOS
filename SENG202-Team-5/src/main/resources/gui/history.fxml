@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -32,10 +33,22 @@
                 <RowConstraints minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order" />
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
+                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
                 <JFXButton disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
             </children>
         </GridPane>
@@ -68,21 +81,33 @@
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </JFXDatePicker>
                 <JFXDatePicker fx:id="historyEndDatePicker" defaultColor="#f9ac68" onAction="#updateVisibleOrders" onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </JFXDatePicker>
                 <JFXTextField fx:id="historySearchBar" onKeyTyped="#updateVisibleOrders" promptText="Order ID search bar" GridPane.columnIndex="2">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
                 </JFXTextField>
                 <JFXButton mnemonicParsing="false" onAction="#addPastOrder" text="Add Past Order" GridPane.columnIndex="4">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </JFXButton>
             </children>
             <GridPane.margin>

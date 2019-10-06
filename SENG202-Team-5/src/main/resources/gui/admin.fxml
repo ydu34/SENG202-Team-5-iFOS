@@ -7,6 +7,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
@@ -43,14 +44,26 @@
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <JFXButton fx:id="launchOrderScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order" />
-                <JFXButton fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1" />
-                <JFXButton fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2" />
-                <JFXButton fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
+                <JFXButton fx:id="launchOrderScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+                <JFXButton fx:id="launchInvoiceButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+                <JFXButton fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+                <JFXButton fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
                 <JFXButton disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
             </children>
         </GridPane>
-        <JFXTabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+        <JFXTabPane fx:id="adminTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
             <tabs>
                 <Tab closable="false" text="Finance">
                     <content>
@@ -70,16 +83,25 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </JFXDatePicker>
                                         <JFXDatePicker fx:id="startDate" promptText="Start Date" GridPane.halignment="RIGHT">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </JFXDatePicker>
                                         <JFXButton fx:id="viewHistoryButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#viewHistory" text="Get finance information" GridPane.columnIndex="2">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </JFXButton>
                                     </children>
                                 </GridPane>
@@ -132,9 +154,18 @@
                                                 <Font size="36.0" />
                                             </font>
                                         </Text>
-                                        <JFXButton fx:id="addButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#addRecipe" prefHeight="60.0" prefWidth="200.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                                        <JFXButton fx:id="modifyButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#modifySelectedItem" prefHeight="60.0" prefWidth="200.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
-                                        <JFXButton fx:id="deleteButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="60.0" prefWidth="200.0" text="Delete" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+                                        <JFXButton fx:id="addButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#addRecipe" prefHeight="60.0" prefWidth="200.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXButton>
+                                        <JFXButton fx:id="modifyButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#modifySelectedItem" prefHeight="60.0" prefWidth="200.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXButton>
+                                        <JFXButton fx:id="deleteButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="60.0" prefWidth="200.0" text="Delete" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXButton>
                                     </children>
                                     <GridPane.margin>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -179,9 +210,18 @@
                                         <RowConstraints/>
                                     </rowConstraints>
                                     <children>
-                                        <JFXButton fx:id="selectStockButton" mnemonicParsing="false" onAction="#selectStock" text="Select stock.xml" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                                        <JFXButton fx:id="selectMenuButton" mnemonicParsing="false" onAction="#selectMenu" text="Select menu.xml" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                                        <JFXButton fx:id="selectFinanceButton" mnemonicParsing="false" onAction="#selectFinance" text="Select finance.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
+                                        <JFXButton fx:id="selectStockButton" mnemonicParsing="false" onAction="#selectStock" text="Select stock.xml" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXButton>
+                                        <JFXButton fx:id="selectMenuButton" mnemonicParsing="false" onAction="#selectMenu" text="Select menu.xml" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXButton>
+                                        <JFXButton fx:id="selectFinanceButton" mnemonicParsing="false" onAction="#selectFinance" text="Select finance.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXButton>
                                         <Text fx:id="stockWarningText" strokeType="OUTSIDE" strokeWidth="0.0"
                                               text="stock.xml not selected" textAlignment="CENTER"
                                               GridPane.halignment="CENTER" GridPane.rowIndex="1"
@@ -213,6 +253,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
                                         </JFXButton>
                                         <JFXButton fx:id="selectImagesFolderButton" alignment="CENTER"
                                                    contentDisplay="CENTER" mnemonicParsing="false"
@@ -223,6 +266,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
+                                            <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
                                         </JFXButton>
                                         <JFXButton fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER"
                                                    mnemonicParsing="false" onAction="#exportData" prefHeight="50.0"
@@ -232,6 +278,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
+                                            <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
                                         </JFXButton>
                                     </children>
                                 </GridPane>
@@ -322,6 +371,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="10c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="0">
                                             <GridPane.margin>
@@ -332,6 +384,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="20c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
                                             <GridPane.margin>
@@ -342,6 +397,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="50c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
                                             <GridPane.margin>
@@ -352,6 +410,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$1" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
                                             <GridPane.margin>
@@ -362,6 +423,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$2" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                                             <GridPane.margin>
@@ -372,6 +436,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$5" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
                                             <GridPane.margin>
@@ -382,6 +449,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$10" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
                                             <GridPane.margin>
@@ -392,6 +462,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$20" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
                                             <GridPane.margin>
@@ -402,6 +475,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$50" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="8">
                                             <GridPane.margin>
@@ -412,6 +488,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </Spinner>
                                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$100" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="9">
                                             <GridPane.margin>
@@ -422,6 +501,9 @@
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                         </JFXButton>
                                     </children>
                                     <columnConstraints>
