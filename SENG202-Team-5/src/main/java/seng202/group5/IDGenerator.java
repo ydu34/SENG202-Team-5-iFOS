@@ -21,15 +21,13 @@ public class IDGenerator {
     @XmlElement
     private static int id = 0;
 
-    public IDGenerator() {
-
-    }
+    public IDGenerator() {}
 
     /**
      * Creates a new ID but incrementing the static variable by 1.
      * @return The new ID as a string.
      */
-    public String newID() {
+    public static String newID() {
         String newID = Integer.toString(id++);
         return newID;
     }

@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ECE6CE;" stylesheets="@ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AddRecipeController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ECE6CE;" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AddRecipeController">
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="282.0" />
@@ -136,15 +136,21 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="149.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <JFXButton fx:id="selectImageButton" onAction="#addImageToItem" text="Select Image" />
-                        <ImageView fx:id="itemImage" fitHeight="90.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <ImageView fx:id="itemImage" fitHeight="90.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../images/default.png" />
                            </image>
                         </ImageView>
+                        <Text fx:id="imageWarningText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Text>
                      </children>
                   </GridPane>
                     </children>
