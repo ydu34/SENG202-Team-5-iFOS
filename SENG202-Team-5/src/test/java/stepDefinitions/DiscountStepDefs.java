@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import cucumber.api.java.da.Men;
 import org.joda.money.Money;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -11,12 +12,19 @@ import org.junit.jupiter.api.Disabled;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Customer;
+import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
 import seng202.group5.logic.*;
+
+import java.awt.*;
+import java.util.HashMap;
+
 import static org.joda.money.Money.parse;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seng202.group5.information.TypeEnum.MAIN;
 
 public class DiscountStepDefs {
 
@@ -24,13 +32,16 @@ public class DiscountStepDefs {
     private Stock stock;
     private MenuItem item1;
     private Customer customer;
+    private Recipe itemRecipe;
+    private MenuManager menuManager;
+    private Ingredient ingredient;
 
     @Before
     public void Before() {
         stock = new Stock();
+        ingredient = new Ingredient("Bun", "veg", parse("NZD 0.00"));
+        stock.addNewIngredient(ingredient, 2000);
         manager = new OrderManager(stock);
-        manager.newOrder();
-        item1 = new MenuItem();
         manager.newOrder();
         customer = new Customer();
     }
@@ -44,13 +55,14 @@ public class DiscountStepDefs {
     @When("Customer uses {int} purchase points on an order which costs ${double}")
     public void customer_uses_purchase_points(Integer int1, Double dub1) {
         Money currentCost = parse("NZD " + dub1);
-        System.out.println(currentCost);
-        item1.setTotalCost(currentCost);
-        System.out.println(item1.getTotalCost());
+        ingredient.setPrice(currentCost);
+        HashMap<Ingredient, Integer> ingredientMap = new HashMap<>();
+        ingredientMap.put(ingredient, 1);
 
+        itemRecipe =  new Recipe("recipe", "recipe", ingredientMap);
+        MenuItem item1 = new MenuItem("burger", itemRecipe, parse("NZD 0.00"), true, MAIN);
         try {
-            manager.getOrder().addItem(item1, 1);
-            System.out.println(manager.getOrder().getTotalCost());
+            boolean ans = manager.getOrder().addItem(item1, 1);
         } catch (NoOrderException e) {
             fail();
         }
@@ -66,7 +78,7 @@ public class DiscountStepDefs {
     @Then("Order now Costs ${double}")
     public void order_now_Costs_$(Double double1) {
         try {
-            assertEquals(double1, manager.getOrder().getTotalCost());
+            assertEquals(parse("NZD " + double1), manager.getOrder().getTotalCost());
         } catch (NoOrderException e) {
             fail();
         }
@@ -77,8 +89,9 @@ public class DiscountStepDefs {
         assertEquals(int1, customer.getPurchasePoints());
     }
 
-    @When("Order gets payed")
-    public void order_gets_payed() {
+    @When("Order gets payed ${double}")
+    public void order_gets_payed(double double1) {
+        customer.purchasePoints(parse("NZD " + double1));
     }
 
 }
