@@ -89,10 +89,16 @@ public class GuiManager extends Application {
         stock.addNewIngredient(chickenpatty, 100);
         stock.addNewIngredient(cheese, 200);
         stock.addNewIngredient(vegePatty, 150);
+
         MenuItem chickenBurger = new MenuItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), true, TypeEnum.MAIN);
+        chickenBurger.setImageString("chicken_burger.jpg");
         environment.getMenuManager().getItemMap().put(chickenBurger.getID(), chickenBurger);
+
         MenuItem vegeBurger = new MenuItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), true, TypeEnum.MAIN);
+        vegeBurger.setImageString("vege_burger.jpg");
         environment.getMenuManager().getItemMap().put(vegeBurger.getID(), vegeBurger);
+        
+
         environment.getOrderManager().newOrder();
 
         Order tempOrder = new Order(stock);
