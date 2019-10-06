@@ -289,4 +289,8 @@ public class Database {
         return saveFileLocation;
     }
 
+    public void setAppEnvironment(AppEnvironment appEnvironment) {
+        this.appEnvironment = appEnvironment;
+    }
+
 }

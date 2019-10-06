@@ -36,7 +36,7 @@ class AppEnvironmentTest {
 
     @BeforeEach
     void init() {
-        handler = new AppEnvironment();
+        handler = new AppEnvironment(false);
         cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerIngredients = new HashMap<>();
         cheeseBurgerIngredients.put("1", 10);

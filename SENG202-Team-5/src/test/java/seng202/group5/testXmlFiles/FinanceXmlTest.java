@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FinanceXmlTest {
 
-    AppEnvironment appEnvironment = new AppEnvironment();
+    AppEnvironment appEnvironment = new AppEnvironment(false);
     Database database = appEnvironment.getDatabase();
     Finance finance;
     String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
@@ -29,7 +29,7 @@ public class FinanceXmlTest {
     @BeforeAll
     public static void createAndMarshalFinanceData() {
         String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
-        AppEnvironment oldAppEnvironment = new AppEnvironment();
+        AppEnvironment oldAppEnvironment = new AppEnvironment(false);
         Ingredient flour = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);

@@ -18,16 +18,15 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuXmlTest {
-    AppEnvironment appEnvironment = new AppEnvironment();
+    static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
+    AppEnvironment appEnvironment = new AppEnvironment(false);
     Database database = appEnvironment.getDatabase();
     MenuManager menuManager;
-    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
-
 
     @BeforeAll
     public static void createAndMarshalMenuData() {
         String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
-        AppEnvironment oldAppEnvironment = new AppEnvironment();
+        AppEnvironment oldAppEnvironment = new AppEnvironment(false);
         Ingredient flour = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
@@ -82,7 +81,7 @@ public class MenuXmlTest {
             menuManager = appEnvironment.getMenuManager();
             assertEquals(2, menuManager.getItemMap().size());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

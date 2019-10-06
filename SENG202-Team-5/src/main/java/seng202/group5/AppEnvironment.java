@@ -36,6 +36,22 @@ public class AppEnvironment {
         imagesFolderPath = "";
     }
 
+    @Deprecated(since = "For testing use only")
+    public AppEnvironment(boolean autoload) {
+        finance = new Finance();
+        stock = new Stock();
+        menuManager = new MenuManager();
+        orderManager = new OrderManager(stock);
+        idGenerator = new IDGenerator();
+        database = new Database();
+        database.setAppEnvironment(this);
+        if (autoload) {
+            database = new Database(this);
+        } else {
+            database.setAutoloadEnabled(false);
+        }
+    }
+
     /**
      * Confirms payment for the current order, sends the order to the history,
      * sends information about the transaction to Finance and retrieves the
