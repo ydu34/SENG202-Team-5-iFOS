@@ -1,5 +1,6 @@
 package seng202.group5.gui;
 
+import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.SwipeEvent;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -115,6 +117,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Text warningText;
+
+    @FXML
+    private JFXTabPane adminTabPane;
 
     private FileChooser fileChooser;
 
@@ -477,6 +482,18 @@ public class AdminController extends GeneralController {
             spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                     0, 999999, initialValue));
         }
+    }
+
+    @FXML
+    public void swipeLeft(SwipeEvent swipeEvent) {
+        Integer currentTabIndex = adminTabPane.getSelectionModel().getSelectedIndex();
+        adminTabPane.getSelectionModel().select(currentTabIndex--);
+    }
+
+    @FXML
+    public void swipeRight(SwipeEvent swipeEvent) {
+        Integer currentTabIndex = adminTabPane.getSelectionModel().getSelectedIndex();
+        adminTabPane.getSelectionModel().select(currentTabIndex++);
     }
 
     public void setFinance(Finance newFinance) {
