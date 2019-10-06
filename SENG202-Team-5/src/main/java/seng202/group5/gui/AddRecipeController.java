@@ -85,9 +85,10 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private Button selectImageButton;
 
+    @FXML
+    private Text imageWarningText;
+
     private String itemImageName;
-
-
 
     private MenuItem item;
 
@@ -298,6 +299,7 @@ public class AddRecipeController extends GeneralController {
      */
     @FXML
     public void addImageToItem() {
+        imageWarningText.setText("");
         FileChooser fileChooser = new FileChooser();
         List<String> imageExtensions = new ArrayList<>();
         imageExtensions.add("*.png");
@@ -305,12 +307,18 @@ public class AddRecipeController extends GeneralController {
         imageExtensions.add("*.jpeg");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", imageExtensions));
         File selectedFile = fileChooser.showOpenDialog(null);
-        try {
-            Image image = new Image(new FileInputStream(selectedFile.getPath()));
-            itemImage.setImage(image);
-            itemImageName = selectedFile.getName();
-            System.out.println(itemImageName);
-        } catch (Exception e) {
+        if (selectedFile != null) {
+            if (selectedFile.length() > 250 * 1024) {
+                imageWarningText.setText("maximum size 250kB");
+            } else {
+                try {
+                    Image image = new Image(new FileInputStream(selectedFile.getPath()));
+                    itemImage.setImage(image);
+                    itemImageName = selectedFile.getName();
+                    System.out.println(itemImageName);
+                } catch (Exception e) {
+                }
+            }
         }
 
 
