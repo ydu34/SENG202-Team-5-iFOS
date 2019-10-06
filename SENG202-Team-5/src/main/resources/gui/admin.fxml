@@ -2,11 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AdminController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AdminController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="800.0" />
     </columnConstraints>
@@ -46,9 +47,9 @@
                 <JFXButton disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
             </children>
         </GridPane>
-        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+        <JFXTabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
             <tabs>
-                <Tab text="Finance">
+                <Tab closable="false" text="Finance">
                     <content>
                         <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="510.0" prefWidth="800.0">
                             <top>
@@ -90,7 +91,7 @@
                         </BorderPane>
                     </content>
                 </Tab>
-                <Tab text="Menu Item Manager">
+                <Tab closable="false" text="Menu Item Manager">
                     <content>
                         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <columnConstraints>
@@ -145,7 +146,7 @@
                         </GridPane>
                     </content>
                 </Tab>
-                <Tab text="Import/Export Data">
+                <Tab closable="false" text="Import/Export Data">
                     <content>
                         <GridPane>
                             <columnConstraints>
@@ -205,7 +206,7 @@
                         </GridPane>
                     </content>
                 </Tab>
-                <Tab text="Till Manager">
+                <Tab closable="false" text="Till Manager">
                     <content>
                         <BorderPane>
                             <center>
@@ -347,6 +348,10 @@
                     </content>
                 </Tab>
             </tabs>
-        </TabPane>
+        </JFXTabPane>
     </children>
+   <stylesheets>
+      <URL value="@css/ifos-theme.css" />
+      <URL value="@css/jfx-tabpane.css" />
+   </stylesheets>
 </GridPane>
