@@ -48,7 +48,7 @@ public class Order {
      * The unique ID of the order given by the database
      **/
     private IDGenerator generator = new IDGenerator();
-    private String id = generator.newID();
+    private String id = generator.newOrderID();
 
 
     /**

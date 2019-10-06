@@ -25,6 +25,7 @@ public class Transaction {
      */
     @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
     private LocalDateTime datetime;
+
     /**
      * The change given
      */
@@ -33,6 +34,7 @@ public class Transaction {
     @XmlJavaTypeAdapter(value = MoneyAdapter.class)
     private Money totalPrice;
     private String transactionID;
+
     /**
      * Whether or not this transaction has been refunded
      */
@@ -51,7 +53,7 @@ public class Transaction {
             transactionID = newOrder.getId();
         } else {
             totalPrice = null;
-            transactionID = (new IDGenerator()).newID();
+            transactionID = (new IDGenerator()).newTransactionID();
         }
         order = newOrder;
     }

@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import seng202.group5.AppEnvironment;
@@ -129,7 +130,28 @@ public class GeneralController {
     public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/admin.fxml");
     }
+    @FXML
+    private void launchPasswordScreen(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/password.fxml"));
+            Parent root = loader.load();
 
+            passwordController controller = loader.getController();
+            controller.setSource(this);
+            controller.setEvent(event);
+
+
+            Stage stage = new Stage();
+            stage.setTitle("Enter the password");
+            stage.setScene(new Scene(root, 601, 432));
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     /**
      * This method launches the order screen when clicked on the "Order" button
      * @param actionEvent an event that caused this to happen

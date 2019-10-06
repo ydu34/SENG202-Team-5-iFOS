@@ -1,0 +1,15 @@
+.jfx-menu-button {
+
+    -fx-background-color: rgba(242, 239, 223, 1.0);
+    -fx-border-color: #f9ac68;
+}
+
+.combo-box .list-cell:filled:selected .text,
+.choice-box .list-cell:filled:selected .text {
+    -fx-fill: black;
+}
+
+.combo-box .arrow,
+.choice-box .arrow {
+    -fx-background-color: rgba(242, 239, 223, 1.0);
+}

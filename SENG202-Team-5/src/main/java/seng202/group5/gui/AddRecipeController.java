@@ -85,7 +85,10 @@ public class AddRecipeController extends GeneralController {
     @FXML
     private Button selectImageButton;
 
+    @FXML
+    private Text imageWarningText;
 
+    private String itemImageName;
 
     private MenuItem item;
 
@@ -114,6 +117,7 @@ public class AddRecipeController extends GeneralController {
         item = new MenuItem();
         initializeTypeComboBox();
         initializeTextValues();
+        initializeImageView();
         populateIngredientsTable();
 
     }
@@ -124,6 +128,7 @@ public class AddRecipeController extends GeneralController {
     public void saveRecipe() {
         try {
             saveTextFieldValues();
+            System.out.println("Item image" + item.getImageString());
             menuManager.addItem(item);
             closeScreen();
         } catch (NumberFormatException e) {
@@ -160,6 +165,7 @@ public class AddRecipeController extends GeneralController {
                 item.setItemName(name);
                 item.setMarkupCost(markupPrice);
                 item.calculateFinalCost();
+                item.setImageString(itemImageName);
             }
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
@@ -269,6 +275,14 @@ public class AddRecipeController extends GeneralController {
         menuTypeComboBox.getSelectionModel().select(item.getItemType());
     }
 
+    public void initializeImageView() {
+        try {
+            Image image = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
+            itemImage.setImage(image);
+        } catch (Exception e) {
+        }
+    }
+
     /**
      * @param tempItem Item that has been modified in AddExtraIngredientController.
      */
@@ -276,6 +290,7 @@ public class AddRecipeController extends GeneralController {
         item = tempItem;
         initializeTextValues();
         initializeTypeComboBox();
+        initializeImageView();
         populateIngredientsTable();
     }
 
@@ -284,6 +299,7 @@ public class AddRecipeController extends GeneralController {
      */
     @FXML
     public void addImageToItem() {
+        imageWarningText.setText("");
         FileChooser fileChooser = new FileChooser();
         List<String> imageExtensions = new ArrayList<>();
         imageExtensions.add("*.png");
@@ -291,12 +307,18 @@ public class AddRecipeController extends GeneralController {
         imageExtensions.add("*.jpeg");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", imageExtensions));
         File selectedFile = fileChooser.showOpenDialog(null);
-        try {
-            Image image = new Image(new FileInputStream(selectedFile.getPath()));
-            itemImage.setImage(image);
-            item.setImageString(selectedFile.getName());
-        } catch (Exception e) {
-
+        if (selectedFile != null) {
+            if (selectedFile.length() > 250 * 1024) {
+                imageWarningText.setText("maximum size 250kB");
+            } else {
+                try {
+                    Image image = new Image(new FileInputStream(selectedFile.getPath()));
+                    itemImage.setImage(image);
+                    itemImageName = selectedFile.getName();
+                    System.out.println(itemImageName);
+                } catch (Exception e) {
+                }
+            }
         }
 
 
