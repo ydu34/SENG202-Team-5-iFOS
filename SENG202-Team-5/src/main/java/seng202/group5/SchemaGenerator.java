@@ -3,6 +3,7 @@ package seng202.group5;
 import seng202.group5.logic.*;
 
 import javax.xml.bind.JAXBContext;
+import java.io.File;
 import java.io.FileWriter;
 
 /**
@@ -15,8 +16,6 @@ import java.io.FileWriter;
  * @author Yu Duan
  */
 public class SchemaGenerator {
-
-    private String filePath = System.getProperty("user.dir") + "/src/main/resources/schema";
 
     /**
      * @param c Takes in the class that has been annotated with Jaxb XML annotations.
@@ -40,11 +39,14 @@ public class SchemaGenerator {
      * @param schemaFileName Takes in a string to be used for the generated .xsd file.
      */
     public void writeSchemaToFile(Class c, String schemaFileName) {
+        System.out.println(generateSchema(c));
         try {
-            FileWriter stockSchema = new FileWriter(filePath + "/" + schemaFileName);
+            FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema" + "/" + schemaFileName);
+
             stockSchema.write(generateSchema(c));
             stockSchema.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
