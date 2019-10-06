@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<menuManager>
+    <itemMap>
+        <entry>
+            <key>12</key>
+            <value>
+                <itemName>Chicken Burger</itemName>
+                <recipe>
+                    <name>Chicken Burger</name>
+                    <recipeText>1. Deep Fry chicken patty 
+2. Add cheese on top of patty
+3. Fry buns
+4. Fry onions
+5. Get one bun
+6. Place chicken patty on bun
+7. Put tomato sauce
+8. Put cheese
+9. Put onions
+10. Put other bun on top</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>1</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>2</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>3</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>5</key>
+                            <value>2</value>
+                        </entry>
+                        <entry>
+                            <key>7</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
+                </recipe>
+                <markupCost>NZD 4.30</markupCost>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <id>12</id>
+                <inMenu>true</inMenu>
+                <itemType>MAIN</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 6.30</totalCost>
+            </value>
+        </entry>
+        <entry>
+            <key>15</key>
+            <value>
+                <itemName>Coke Can (330mL)</itemName>
+                <recipe>
+                    <name>Coke Can (330mL)</name>
+                    <recipeText>No recipe required</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>8</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 1.40</markupCost>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <id>15</id>
+                <inMenu>true</inMenu>
+                <itemType>BEVERAGE</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 2.00</totalCost>
+            </value>
+        </entry>
+        <entry>
+            <key>38</key>
+            <value>
+                <itemName>Fruit Juice (250mL)</itemName>
+                <recipe>
+                    <name>Fruit Juice (250mL)</name>
+                    <recipeText>No recipe required</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>10</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 1.40</markupCost>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <id>38</id>
+                <inMenu>true</inMenu>
+                <itemType>BEVERAGE</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 2.20</totalCost>
+            </value>
+        </entry>
+        <entry>
+            <key>28</key>
+            <value>
+                <itemName>Vegetarian Burger</itemName>
+                <recipe>
+                    <name>Vegetarian Burger</name>
+                    <recipeText>1. Fry vegetarian patty 
+3. Fry buns
+4. Fry onions
+5. Get one bun
+6. Place vegeatarian patty on bun
+7. Put tomato sauce
+8. Put lettuce slice 
+9. Put onions
+10. Put other bun on top</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>11</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>1</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>3</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>25</key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>5</key>
+                            <value>2</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 4.00</markupCost>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <id>28</id>
+                <inMenu>true</inMenu>
+                <itemType>MAIN</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 6.10</totalCost>
+            </value>
+        </entry>
+        <entry>
+            <key>18</key>
+            <value>
+                <itemName>Sprite Can (330mL)</itemName>
+                <recipe>
+                    <name>Sprite Can (330mL)</name>
+                    <recipeText>No recipe required</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>9</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 1.40</markupCost>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <id>18</id>
+                <inMenu>true</inMenu>
+                <itemType>BEVERAGE</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 2.00</totalCost>
+            </value>
+        </entry>
+        <entry>
+            <key>32</key>
+            <value>
+                <itemName>Medium Fries </itemName>
+                <recipe>
+                    <name>Medium Fries </name>
+                    <recipeText>1. Deep fry fries. </recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>4</key>
+                            <value>2</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 3.00</markupCost>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <id>32</id>
+                <inMenu>true</inMenu>
+                <itemType>SIDE</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 3.20</totalCost>
+            </value>
+        </entry>
+    </itemMap>
+</menuManager>

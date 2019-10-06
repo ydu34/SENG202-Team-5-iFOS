@@ -150,9 +150,11 @@ public class Database {
             autoloadEnabled = tempDatabase.isAutoloadEnabled();
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
             if (autoloadEnabled) {
-                File stockFile = new File(saveFileLocation + "/stock.xml");
-                File menuFile = new File(saveFileLocation + "/menu.xml");
-                File financeFile = new File(saveFileLocation + "/finance.xml");
+                String location = saveFileLocation;
+                if (location.equals("")) location = System.getProperty("user.dir");
+                File stockFile = new File(location + "/stock.xml");
+                File menuFile = new File(location + "/menu.xml");
+                File financeFile = new File(location + "/finance.xml");
                 importData(Map.of("stock.xml", stockFile, "menu.xml", menuFile, "finance.xml", financeFile));
             }
         } catch (Exception e) {
@@ -260,7 +262,9 @@ public class Database {
      */
     public void autosave() throws Exception {
         if (autosaveEnabled) {
-            allObjectsToXml(saveFileLocation);
+            String location = saveFileLocation;
+            if (location.equals("")) location = System.getProperty("user.dir");
+            allObjectsToXml(location);
         }
     }
 
@@ -284,7 +288,7 @@ public class Database {
         this.saveFileLocation = saveFileLocation;
     }
 
-    String getSaveFileLocation() {
+    public String getSaveFileLocation() {
         return saveFileLocation;
     }
 

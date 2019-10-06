@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stock>
+    <ingredients>
+        <entry>
+            <key>11</key>
+            <value id="11">
+                <name>Vegetarian Patty</name>
+                <category>patty</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.90</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>1</key>
+            <value id="1">
+                <name>Onion (~200grams)</name>
+                <category>vegetable</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.30</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>2</key>
+            <value id="2">
+                <name>Chicken Patty</name>
+                <category>Meat</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.60</price>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>25</key>
+            <value id="25">
+                <name>Lettuce Piece </name>
+                <category>vegetable</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.10</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>3</key>
+            <value id="3">
+                <name>Tomato Sauce (~10grams)</name>
+                <category>Sauce</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.20</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>4</key>
+            <value id="4">
+                <name>Potato (~200grams)</name>
+                <category>vegetable</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.10</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>5</key>
+            <value id="5">
+                <name>Burger Bun</name>
+                <category>bread</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.30</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>6</key>
+            <value id="6">
+                <name>Gluten Free Burger Bun</name>
+                <category>bread</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.40</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>7</key>
+            <value id="7">
+                <name>Cheese Slice</name>
+                <category>dairy</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.30</price>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>8</key>
+            <value id="8">
+                <name>Coke Can (330mL)</name>
+                <category>drink</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.60</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>9</key>
+            <value id="9">
+                <name>Sprite Can (330mL)</name>
+                <category>drink</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.60</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>10</key>
+            <value id="10">
+                <name>Fruit Drink Tropical (250mL)</name>
+                <category>drink</category>
+                <generator>
+                    <ingredientID>24</ingredientID>
+                    <menuItemID>18</menuItemID>
+                    <orderID>5</orderID>
+                    <transactionID>0</transactionID>
+                </generator>
+                <price>NZD 0.80</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+            </value>
+        </entry>
+    </ingredients>
+    <ingredientStock>
+        <entry>
+            <key>11</key>
+            <value>20</value>
+        </entry>
+        <entry>
+            <key>1</key>
+            <value>49</value>
+        </entry>
+        <entry>
+            <key>2</key>
+            <value>49</value>
+        </entry>
+        <entry>
+            <key>25</key>
+            <value>60</value>
+        </entry>
+        <entry>
+            <key>3</key>
+            <value>9998</value>
+        </entry>
+        <entry>
+            <key>4</key>
+            <value>98</value>
+        </entry>
+        <entry>
+            <key>5</key>
+            <value>58</value>
+        </entry>
+        <entry>
+            <key>6</key>
+            <value>60</value>
+        </entry>
+        <entry>
+            <key>7</key>
+            <value>99</value>
+        </entry>
+        <entry>
+            <key>8</key>
+            <value>39</value>
+        </entry>
+        <entry>
+            <key>9</key>
+            <value>40</value>
+        </entry>
+        <entry>
+            <key>10</key>
+            <value>30</value>
+        </entry>
+    </ingredientStock>
+</stock>

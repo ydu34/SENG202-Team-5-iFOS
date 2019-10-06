@@ -1,5 +1,7 @@
 package seng202.group5.gui;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -121,6 +123,15 @@ public class AdminController extends GeneralController {
     private Map<String, File> fileMap;
 
     @FXML
+    private JFXCheckBox autosaveCheckbox;
+
+    @FXML
+    private JFXCheckBox autoloadCheckbox;
+
+    @FXML
+    private JFXTextField autoLocation;
+
+    @FXML
     private Spinner<Integer> spinner10c;
     @FXML
     private Spinner<Integer> spinner20c;
@@ -154,6 +165,7 @@ public class AdminController extends GeneralController {
         fileMap = new HashMap<>();
         viewHistory();
 
+        // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
                 spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
                 spinner20d, spinner50d, spinner100d));
@@ -173,6 +185,11 @@ public class AdminController extends GeneralController {
                 }
             });
         }
+
+        // Setting initial values for autosaving/loading elements
+        autosaveCheckbox.setSelected(getAppEnvironment().getDatabase().isAutosaveEnabled());
+        autoloadCheckbox.setSelected(getAppEnvironment().getDatabase().isAutoloadEnabled());
+        autoLocation.setText(getAppEnvironment().getDatabase().getSaveFileLocation());
 
         // Disables buttons if an order is in progress
         checkIfOrderInProgress();
@@ -451,6 +468,34 @@ public class AdminController extends GeneralController {
             String imageFolderPath = selectedDirectory.getPath();
             getAppEnvironment().setImagesFolderPath(imageFolderPath);
             fileNotificationText.setText("Images Folder selected");
+        }
+    }
+
+    /**
+     * Sets the location where automatically saved/loaded files are found
+     */
+    public void updateAutoLocation() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory != null) {
+            String autoLocationString = selectedDirectory.getPath();
+            getAppEnvironment().getDatabase().setSaveFileLocation(autoLocationString);
+            autoLocation.setText(autoLocationString);
+        }
+    }
+
+    public void updateAutosave() {
+        getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());
+        if (autosaveCheckbox.isSelected()) {
+            autoloadCheckbox.setSelected(true);
+        }
+    }
+
+    public void updateAutoload() {
+        getAppEnvironment().getDatabase().setAutoloadEnabled(autoloadCheckbox.isSelected());
+        if (!autoloadCheckbox.isSelected()) {
+            autosaveCheckbox.setSelected(false);
         }
     }
 
