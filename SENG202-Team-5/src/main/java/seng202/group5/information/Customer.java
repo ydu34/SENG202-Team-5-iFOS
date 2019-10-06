@@ -3,8 +3,6 @@ package seng202.group5.information;
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 
-import java.math.RoundingMode;
-
 import static org.joda.money.Money.parse;
 
 /**
