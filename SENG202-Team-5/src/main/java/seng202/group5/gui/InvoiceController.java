@@ -65,6 +65,7 @@ public class InvoiceController extends GeneralController {
      * The initializer for this controller
      */
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             removeItem.setDisable(true);

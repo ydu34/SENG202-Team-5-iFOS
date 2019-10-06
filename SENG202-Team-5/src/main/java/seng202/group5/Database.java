@@ -14,32 +14,34 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Database {
 
     @XmlTransient
     private AppEnvironment appEnvironment;
-    @XmlTransient
-    private HashSet<String> acceptedFiles;
 
     private String saveFileLocation;
     private boolean autosaveEnabled;
     private boolean autoloadEnabled;
 
+    public Database() {
+    }
+
     public Database(AppEnvironment appEnvironment) {
         this.appEnvironment = appEnvironment;
-        acceptedFiles = new HashSet<>();
-        acceptedFiles.add("stock.xml");
-        acceptedFiles.add("menu.xml");
-        acceptedFiles.add("finance.xml");
+        loadAppData();
     }
 
     /**
@@ -74,7 +76,6 @@ public class Database {
         JAXBContext jaxbContext = JAXBContext.newInstance(c);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-        ClassLoader classLoader = getClass().getClassLoader();
         //Setup schema validator
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = sf.newSchema(new StreamSource(getClass().getClassLoader().getResourceAsStream("schema/" + schemaFileName)));
@@ -103,6 +104,7 @@ public class Database {
 
 
     /**
+     acceptedFiles =
      * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
      * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
@@ -138,6 +140,36 @@ public class Database {
     }
 
     /**
+     * Gets the metadata about the application from a file in the root location of the app,
+     * then loads application data if autoload is enabled
+     */
+    public void loadAppData() {
+        try {
+            Database tempDatabase = (Database) xmlToObject(Database.class, "metadata.xml", "metadata.xsd", System.getProperty("user.dir"));
+            saveFileLocation = tempDatabase.getSaveFileLocation();
+            autoloadEnabled = tempDatabase.isAutoloadEnabled();
+            autosaveEnabled = tempDatabase.isAutosaveEnabled();
+            if (autoloadEnabled) {
+                File stockFile = new File(saveFileLocation + "/" + "stock.xml");
+                File menuFile = new File(saveFileLocation + "/" + "menu.xml");
+                File financeFile = new File(saveFileLocation + "/" + "finance.xml");
+                importData(Map.of("stock.xml", stockFile, "menu.xml", menuFile, "finance.xml", financeFile));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            saveFileLocation = System.getProperty("user.dir");
+            autosaveEnabled = true;
+            autoloadEnabled = true;
+            try {
+                objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
+            } catch (JAXBException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
      * Gets the stock.xml from fileDirectory and unmarshal it to an object.
      *
      * @param fileDirectory The directory of the stock.xml
@@ -149,6 +181,7 @@ public class Database {
             appEnvironment.getOrderManager().setStock(appEnvironment.getStock());
             appEnvironment.getOrderManager().newOrder();
         } catch (JAXBException | SAXException e) {
+            System.out.println("Failure!");
             throw new Exception("stock.xml file is invalid");
         }
     }
@@ -194,11 +227,43 @@ public class Database {
             objectToXml(Stock.class, appEnvironment.getStock(), "stock.xml", fileDirectory);
             objectToXml(Finance.class, appEnvironment.getFinance(), "finance.xml", fileDirectory);
             objectToXml(MenuManager.class, appEnvironment.getMenuManager(), "menu.xml", fileDirectory);
+            objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
         } catch (JAXBException e) {
-            throw new Exception();
+            throw new Exception(e);
         }
     }
 
+    /**
+     * Imports selected data into the application. This overrides existing data.
+     * If any of the files are not present, or are incorrect, the import is aborted
+     *
+     * @param fileMap A mapping from the name of the file to the file object
+     * @throws Exception when the files are incorrect
+     */
+    public void importData(Map<String, File> fileMap) throws Exception {
+        Stock oldStock = appEnvironment.getStock();
+        MenuManager oldMenu = appEnvironment.getMenuManager();
+        Finance oldFinance = appEnvironment.getFinance();
+        try {
+            stockXmlToObject(fileMap.get("stock.xml").getParent());
+            menuXmlToObject(fileMap.get("menu.xml").getParent());
+            financeXmlToObject(fileMap.get("finance.xml").getParent());
+        } catch (Exception e) {
+            appEnvironment.setStock(oldStock);
+            appEnvironment.setMenuManager(oldMenu);
+            appEnvironment.setFinance(oldFinance);
+            throw new Exception(e);
+        }
+    }
+
+    /**
+     * Exports all of the data to the save location if autosave is enabled
+     */
+    public void autosave() throws Exception {
+        if (autosaveEnabled) {
+            allObjectsToXml(saveFileLocation);
+        }
+    }
 
     public boolean isAutosaveEnabled() {
         return autosaveEnabled;
@@ -219,4 +284,9 @@ public class Database {
     public void setSaveFileLocation(String saveFileLocation) {
         this.saveFileLocation = saveFileLocation;
     }
+
+    String getSaveFileLocation() {
+        return saveFileLocation;
+    }
+
 }

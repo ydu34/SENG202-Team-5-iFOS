@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -90,6 +92,7 @@ public class HistoryController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         setEndDateUpdater();
         setStartDateUpdater();
 
@@ -108,7 +111,7 @@ public class HistoryController extends GeneralController {
         // This sets the factories for creating values to display for each order
         rowID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
-                cellData.getValue().getDateTime().toLocalDate().toString()));
+                cellData.getValue().getDateTime().toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));
         rowTime.setCellValueFactory(cellData -> {
             LocalTime time = cellData.getValue().getDateTime().toLocalTime();
             time = time.minusSeconds(time.getSecond());

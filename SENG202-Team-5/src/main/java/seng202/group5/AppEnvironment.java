@@ -1,29 +1,13 @@
 package seng202.group5;
 
 import org.joda.money.Money;
-import org.xml.sax.SAXException;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
-import seng202.group5.information.Recipe;
-import seng202.group5.information.Transaction;
 import seng202.group5.logic.*;
 
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  * @author Yu Duan
@@ -34,7 +18,6 @@ public class AppEnvironment {
     private Finance finance;
     private Stock stock;
     private MenuManager menuManager;
-    private HashSet<String> acceptedFiles;
     private IDGenerator idGenerator;
     private Database database;
 
@@ -49,10 +32,6 @@ public class AppEnvironment {
         orderManager = new OrderManager(stock);
         idGenerator = new IDGenerator();
         database = new Database(this);
-        acceptedFiles = new HashSet<>();
-        acceptedFiles.add("stock.xml");
-        acceptedFiles.add("menu.xml");
-        acceptedFiles.add("finance.xml");
     }
 
     /**

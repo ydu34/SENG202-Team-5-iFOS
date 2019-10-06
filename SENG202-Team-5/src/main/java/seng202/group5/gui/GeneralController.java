@@ -95,6 +95,11 @@ public class GeneralController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            appEnvironment.getDatabase().autosave();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return controller;
     }
 

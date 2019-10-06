@@ -147,6 +147,7 @@ public class AdminController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         finance = getAppEnvironment().getFinance();
         recipeTableInitialize();
         checkIfOrderInProgress();
@@ -340,21 +341,13 @@ public class AdminController extends GeneralController {
      * If the files are corrupted or invalid, the user is notified.
      */
     public void importData() {
-        Stock oldStock = getAppEnvironment().getStock();
-        MenuManager oldMenu = getAppEnvironment().getMenuManager();
-        Finance oldFinance = getAppEnvironment().getFinance();
         try {
-            getAppEnvironment().getDatabase().stockXmlToObject(fileMap.get("stock.xml").getParent());
-            getAppEnvironment().getDatabase().menuXmlToObject(fileMap.get("menu.xml").getParent());
-            getAppEnvironment().getDatabase().financeXmlToObject(fileMap.get("finance.xml").getParent());
+            getAppEnvironment().getDatabase().importData(fileMap);
             finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
-            getAppEnvironment().setStock(oldStock);
-            getAppEnvironment().setMenuManager(oldMenu);
-            getAppEnvironment().setFinance(oldFinance);
         }
     }
 

@@ -52,7 +52,7 @@ public class GuiManager extends Application {
      */
     public AppEnvironment createAppEnvironment() {
         AppEnvironment thing = new AppEnvironment();
-        addTestData(thing);
+        //addTestData(thing);
         return thing;
     }
 

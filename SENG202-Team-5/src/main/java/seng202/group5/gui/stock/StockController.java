@@ -68,6 +68,7 @@ public class StockController extends GeneralController {
      */
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         // Listener for the ingredientSearchField to only accept numbers
         ingredientSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("([\\-':]*\\w*)*")) {

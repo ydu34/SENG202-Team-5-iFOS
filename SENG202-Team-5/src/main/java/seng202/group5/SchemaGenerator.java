@@ -3,7 +3,9 @@ package seng202.group5;
 import seng202.group5.logic.*;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * A class made to be ran manually only by the developer to generate the XML schema files for the
@@ -16,7 +18,9 @@ import java.io.FileWriter;
  */
 public class SchemaGenerator {
 
-    private String filePath = System.getProperty("user.dir") + "/src/main/resources/schema";
+    private String filePath = System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema";
+    // "/SENG202-Team-5/src/main/resources/schema";
+    // This file path worked for me
 
     /**
      * @param c Takes in the class that has been annotated with Jaxb XML annotations.
@@ -24,13 +28,15 @@ public class SchemaGenerator {
      */
     public String generateSchema(Class c) {
         String schema = null;
+        JAXBContext jaxbContext = null;
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(c);
-
+            jaxbContext = JAXBContext.newInstance(c);
             ModifiedSchemaOutputResolver sor = new ModifiedSchemaOutputResolver();
             jaxbContext.generateSchema(sor);
             schema = sor.getSchema();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
         return schema;
     }
@@ -44,7 +50,8 @@ public class SchemaGenerator {
             FileWriter stockSchema = new FileWriter(filePath + "/" + schemaFileName);
             stockSchema.write(generateSchema(c));
             stockSchema.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -54,12 +61,14 @@ public class SchemaGenerator {
      *      finance.xsd
      *      menu.xsd
      *      stock.xsd
+     *      metadata.xsd
      */
     public void generateAllSchemas() {
 
         writeSchemaToFile(Stock.class, "stock.xsd");
         writeSchemaToFile(MenuManager.class, "menu.xsd");
         writeSchemaToFile(Finance.class, "finance.xsd");
+        writeSchemaToFile(Database.class, "metadata.xsd");
     }
 
     public static void main(String[] v) {

@@ -28,6 +28,7 @@ public class RemoveStockController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         removeLabel.setText("Do you want to remove " + ingredient.getName() + "?\n" +
                 "This will remove " + ingredient.getName() + " from all recipes!");
     }
