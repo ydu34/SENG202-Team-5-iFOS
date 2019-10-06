@@ -24,6 +24,7 @@ import seng202.group5.information.Recipe;
 import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.Order;
 
+import java.io.FileInputStream;
 import java.util.*;
 
 /**
@@ -216,7 +217,8 @@ public class OrderController extends GeneralController {
     private Image getItemImage(MenuItem item) {
         Image itemImage = new Image(getClass().getResourceAsStream("/images/default.png"));
         try {
-            itemImage = new Image(item.getImageString());
+
+            itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/"+item.getImageString()));
         } catch (Exception e) {
 
         }

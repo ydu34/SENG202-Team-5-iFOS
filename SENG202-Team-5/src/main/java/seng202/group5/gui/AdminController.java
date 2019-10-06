@@ -1,8 +1,6 @@
 package seng202.group5.gui;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -70,6 +68,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Button importDataButton;
+
+    @FXML
+    private Button selectImagesFolderButton;
 
     @FXML
     private Text fileNotificationText;
@@ -443,6 +444,22 @@ public class AdminController extends GeneralController {
             }
         }
 
+    }
+
+    /**
+     * The method called when selectImagesFolderButton is clicked
+     * Allows the user to select the folder containing all the images for the menu items
+     */
+    @FXML
+    public void selectImagesFolder() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory != null) {
+            String imageFolderPath = selectedDirectory.getPath();
+            getAppEnvironment().setImagesFolderPath(imageFolderPath);
+            fileNotificationText.setText("Images Folder selected");
+        }
     }
 
     /**

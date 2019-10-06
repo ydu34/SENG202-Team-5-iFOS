@@ -136,15 +136,21 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="149.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <JFXButton fx:id="selectImageButton" onAction="#addImageToItem" text="Select Image" />
-                        <ImageView fx:id="itemImage" fitHeight="90.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <ImageView fx:id="itemImage" fitHeight="90.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../images/default.png" />
                            </image>
                         </ImageView>
+                        <Text fx:id="imageWarningText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Text>
                      </children>
                   </GridPane>
                     </children>
