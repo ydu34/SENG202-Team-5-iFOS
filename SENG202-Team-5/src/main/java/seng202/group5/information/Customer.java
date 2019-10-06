@@ -44,7 +44,15 @@ public class Customer {
         name = newName;
     }
 
+    public void setPurchasePoints(int tempPurchasePoints) {
+        purchasePoints = tempPurchasePoints;
+    }
+
     public String getName() { return name; }
+
+    public int getPurchasePoints() {
+        return purchasePoints;
+    }
 
     public String getID() { return customerID; }
 
