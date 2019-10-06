@@ -9,7 +9,8 @@ import seng202.group5.IDGenerator;
  */
 public class Customer {
 
-    private String id = IDGenerator.newID();
+    private IDGenerator generator = new IDGenerator();
+    private String id = generator.newID();
 
     private String name;
     private int purchasePoints = 0;
@@ -18,7 +19,10 @@ public class Customer {
         name = newName;
     }
 
+    public String getName() { return name; }
+
     public String getID() { return id; }
 
-    
+
+
 }
