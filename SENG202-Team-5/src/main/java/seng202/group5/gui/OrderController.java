@@ -11,17 +11,18 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import org.joda.money.Money;
-import seng202.group5.logic.Order;
-import seng202.group5.information.TypeEnum;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
+import seng202.group5.logic.Order;
 
 import java.util.*;
 
@@ -178,6 +179,8 @@ public class OrderController extends GeneralController {
      */
     public void populateTilePane(Collection<MenuItem> items) {
         if (tilePane != null) {
+            tilePane.setPrefTileWidth(304);
+            tilePane.setPrefTileHeight(200);
             ObservableList<Node> buttons = tilePane.getChildren();
             buttons.clear();
             ArrayList<MenuItem> sortedItems = new ArrayList<>(items);
@@ -190,15 +193,34 @@ public class OrderController extends GeneralController {
 
             for (MenuItem item : sortedItems) {
                 JFXButton tempButton = new JFXButton(item.getItemName());
+                tempButton.setContentDisplay(ContentDisplay.TOP);
                 tempButton.setStyle("-fx-font-size: 20; ");
-                tempButton.setPrefWidth(260);
-                tempButton.setPrefHeight(100);
+                tempButton.setPrefWidth(304);
+                tempButton.setPrefHeight(200);
+                tempButton.setMaxWidth(304);
+                tempButton.setMaxHeight(200);
+                ImageView imageView = new ImageView(getItemImage(item));
+                imageView.setPreserveRatio(true);
+                imageView.setFitHeight(144);
+                imageView.setFitWidth(256);
+
+                tempButton.setGraphic(imageView);
                 TilePane.setMargin(tempButton, new Insets(5));
                 tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
                 buttons.add(tempButton);
             }
         }
 
+    }
+
+    private Image getItemImage(MenuItem item) {
+        Image itemImage = new Image(getClass().getResourceAsStream("/images/default.png"));
+        try {
+            itemImage = new Image(item.getImageString());
+        } catch (Exception e) {
+
+        }
+        return itemImage;
     }
 
     private enum SORT_TYPE {
