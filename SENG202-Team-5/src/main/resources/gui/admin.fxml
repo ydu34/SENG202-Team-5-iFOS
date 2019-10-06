@@ -47,7 +47,7 @@
                 <JFXButton disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3" />
             </children>
         </GridPane>
-        <JFXTabPane fx:id="adminTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#swipeRight" onSwipeLeft="#swipeLeft" onSwipeRight="#swipeRight" prefHeight="600.0" prefWidth="800.0" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+        <JFXTabPane fx:id="adminTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" tabMaxHeight="30.0" tabMinHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
             <tabs>
                 <Tab closable="false" text="Finance">
                     <content>
@@ -170,7 +170,7 @@
                                         <Font size="26.0" />
                                     </font>
                                 </Text>
-                                <GridPane GridPane.rowIndex="3">
+                                <GridPane onMousePressed="#swipeRight" GridPane.rowIndex="3">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" />
