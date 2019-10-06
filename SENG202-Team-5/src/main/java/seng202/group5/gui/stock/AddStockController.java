@@ -64,14 +64,6 @@ public class AddStockController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
-        // Listener for the name field
-        nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("([\\-':]*\\w*)*")) {
-                nameField.setText(oldValue);
-            }
-        });
-
-
         // Set text of all text field to the ones of the ingredient if it exists
         if (ingredient != null) {
             nameField.setText(ingredient.getName());
