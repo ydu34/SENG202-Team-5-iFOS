@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,10 +25,22 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <JFXTextField fx:id="nameField" GridPane.columnIndex="1" />
-      <JFXTextField fx:id="categoryField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <JFXTextField fx:id="costField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <JFXTextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <JFXTextField fx:id="nameField" GridPane.columnIndex="1">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></JFXTextField>
+      <JFXTextField fx:id="categoryField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></JFXTextField>
+      <JFXTextField fx:id="costField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></JFXTextField>
+      <JFXTextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></JFXTextField>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="200.0" text="Ingredient Name:">
          <font>
             <Font size="18.0" />
@@ -57,21 +70,33 @@
          <GridPane.margin>
             <Insets left="40.0" />
          </GridPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXCheckBox>
       <JFXCheckBox fx:id="vegetarianCheck" text="Vegetarian" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="40.0" />
          </GridPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXCheckBox>
       <JFXCheckBox fx:id="glutenFreeCheck" text="Gluten Free" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="40.0" />
          </GridPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXCheckBox>
       <JFXButton fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" onAction="#buttonAction" prefHeight="44.0" prefWidth="108.0" text="Create" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
          <font>
             <Font size="16.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
 </GridPane>

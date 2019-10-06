@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -50,6 +51,9 @@
                <font>
                   <Font size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             </children>
          <opaqueInsets>
@@ -106,13 +110,19 @@
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
                   </JFXTextArea>
                         <Text fx:id="markupCostWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <Text fx:id="totalCostText" fill="#3a3e59" strokeType="OUTSIDE" strokeWidth="0.0" text="NZD 0.00" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <font>
                         <Font size="16.0" />
                      </font></Text>
-                        <Button fx:id="computeTotalCostButton" mnemonicParsing="false" onAction="#computeTotalCost" text="Compute Total cost:" GridPane.rowIndex="9" />
+                        <Button fx:id="computeTotalCostButton" mnemonicParsing="false" onAction="#computeTotalCost" text="Compute Total cost:" GridPane.rowIndex="9">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                         <Text fx:id="itemNameWarningText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Text fill="#3a3e59" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu Type:" GridPane.rowIndex="4">
                      <font>
@@ -127,9 +137,18 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <JFXTextField fx:id="nameField" focusColor="#ed6b58" unFocusColor="#f7ab68" GridPane.columnIndex="1" />
-                  <JFXComboBox fx:id="menuTypeComboBox" focusColor="#ed6b58" prefHeight="26.0" prefWidth="201.0" unFocusColor="#f9ac68" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <JFXTextField fx:id="markupCostField" focusColor="#ed6b58" unFocusColor="#f9ac68" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="nameField" focusColor="#ed6b58" unFocusColor="#f7ab68" GridPane.columnIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor></JFXTextField>
+                  <JFXComboBox fx:id="menuTypeComboBox" focusColor="#ed6b58" prefHeight="26.0" prefWidth="201.0" unFocusColor="#f9ac68" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor></JFXComboBox>
+                  <JFXTextField fx:id="markupCostField" focusColor="#ed6b58" unFocusColor="#f9ac68" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor></JFXTextField>
                   <GridPane GridPane.rowIndex="3">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -140,7 +159,10 @@
                         <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <JFXButton fx:id="selectImageButton" onAction="#addImageToItem" text="Select Image" />
+                        <JFXButton fx:id="selectImageButton" onAction="#addImageToItem" text="Select Image">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
                         <ImageView fx:id="itemImage" fitHeight="90.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../images/default.png" />
@@ -168,11 +190,17 @@
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
                   <JFXButton fx:id="cancelButton" onAction="#closeScreen" prefHeight="33.0" prefWidth="171.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Cancel" textAlignment="CENTER" textFill="#3a3e59" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
                     </children>
                 </GridPane>
