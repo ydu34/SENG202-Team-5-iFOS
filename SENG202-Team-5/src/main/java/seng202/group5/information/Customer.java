@@ -21,21 +21,36 @@ public class Customer {
 
     /**
      *Calculates and adds purchase points to a customers account when they have spent money.
+     * Default Rate: NZD $10 = 1 Point = $0.50 discount
      * @param spentMoney The total amount of money spent on an order, disregarding discounts.
      */
     public void purchasePoints(Money spentMoney) {
-
+        int roundedMoney = spentMoney.getAmountMajorInt();
+        if (roundedMoney <= 0) {
+            roundedMoney = 0;
+        }
+        addPurchasePoints(roundedMoney / 10);
     }
 
     /**
      * Subtracts a given amount of purchase points from an order and returns the amount of money discounted to an order
      * Based on how many points were used.
-     * @param purchasePoints The amount of points to be used for discounts.
+     * @param usedPoints The amount of points to be used for discounts.
      * @param currentOrderPrice The price of the customers order.
      * @return discountMoney The amount of money to be removed from the order.
      */
-    public Money discount(int purchasePoints, Money currentOrderPrice) {
-        Money discountMoney = parse("NZD 0.00");
+    public Money discount(int usedPoints, Money currentOrderPrice) {
+        Money discountMoney;
+        int maxPoints = (int) Math.ceil(currentOrderPrice.getAmountMinorInt() / 50);
+
+        if (usedPoints > purchasePoints) {
+            usedPoints = purchasePoints;
+        }
+        if (usedPoints > maxPoints) {
+            usedPoints = maxPoints;
+        }
+        discountMoney = (parse("NZD 0.50").multipliedBy(usedPoints));
+        addPurchasePoints(-usedPoints);
         return discountMoney;
     }
 
@@ -48,6 +63,10 @@ public class Customer {
         purchasePoints = tempPurchasePoints;
     }
 
+    public void addPurchasePoints(int tempPurchasePoints) {
+        purchasePoints += tempPurchasePoints;
+    }
+
     public String getName() { return name; }
 
     public int getPurchasePoints() {
@@ -55,7 +74,5 @@ public class Customer {
     }
 
     public String getID() { return customerID; }
-
-
 
 }
