@@ -36,7 +36,7 @@ public class Ingredient {
      * Unique id used to identify every ingredient in the database
      **/
     @XmlAttribute
-    private String id = generator.newID();
+    private String id = generator.newIngredientID();
 
     /**
      * The price for a single unit of a ingredient

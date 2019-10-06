@@ -42,7 +42,7 @@ public class MenuItem {
     /**
      * Unique id for a menu item
      */
-    private String id = generator.newID();
+    private String id = generator.newMenuItemID();
     /**
      * Whether or not this item is in the menu
      */
