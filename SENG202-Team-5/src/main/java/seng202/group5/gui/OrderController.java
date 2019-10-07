@@ -386,6 +386,7 @@ public class OrderController extends GeneralController {
         });
 
         currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
+        currentOrderTable.refresh();
     }
 
     /**
