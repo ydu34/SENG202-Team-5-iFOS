@@ -151,6 +151,7 @@ public class Database {
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
             if (autoloadEnabled) {
                 String location = saveFileLocation;
+                System.out.println(location);
                 if (location.equals("")) location = System.getProperty("user.dir");
                 File stockFile = new File(location + "/stock.xml");
                 File menuFile = new File(location + "/menu.xml");
