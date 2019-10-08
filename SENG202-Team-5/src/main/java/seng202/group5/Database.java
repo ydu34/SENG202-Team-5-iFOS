@@ -22,6 +22,9 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.io.IOException;
+import java.net.JarURLConnection;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -145,13 +148,12 @@ public class Database {
      */
     public void loadAppData() {
         try {
-            Database tempDatabase = (Database) xmlToObject(Database.class, "metadata.xml", "metadata.xsd", System.getProperty("user.dir"));
+            Database tempDatabase = (Database) xmlToObject(Database.class, "metadata.xml", "metadata.xsd", getDefaultLocation());
             saveFileLocation = tempDatabase.getSaveFileLocation();
             autoloadEnabled = tempDatabase.isAutoloadEnabled();
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
             if (autoloadEnabled) {
-                String location = saveFileLocation;
-                if (location.equals("")) location = System.getProperty("user.dir");
+                String location = getLocation();
                 File stockFile = new File(location + "/stock.xml");
                 File menuFile = new File(location + "/menu.xml");
                 File financeFile = new File(location + "/finance.xml");
@@ -262,10 +264,30 @@ public class Database {
      */
     public void autosave() throws Exception {
         if (autosaveEnabled) {
-            String location = saveFileLocation;
-            if (location.equals("")) location = System.getProperty("user.dir");
+            String location = getLocation();
             allObjectsToXml(location);
         }
+    }
+
+    private String getLocation() {
+        String location = saveFileLocation;
+        if (location == null || location.equals("")) {
+            location = getDefaultLocation();
+        }
+        return location;
+    }
+
+    private String getDefaultLocation() {
+        String location = System.getProperty("user.dir");
+        try {
+            URLConnection thing = this.getClass().getResource("Database.class").openConnection();
+            if (!(thing instanceof JarURLConnection) && System.getProperty("os.name").toLowerCase().contains("windows")) {
+                location += "/SENG202-Team-5";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return location;
     }
 
     public boolean isAutosaveEnabled() {
