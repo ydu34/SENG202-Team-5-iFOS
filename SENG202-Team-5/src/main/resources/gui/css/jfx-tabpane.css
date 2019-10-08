@@ -20,6 +20,6 @@
     -jfx-rippler-fill: rgba(58, 62, 89, 1);
 }
 
-/*.jfx-tab-pane .headers-region .tab-selected-line {*/
-    /*-fx-background-color: #ed6b58;;*/
-/*}*/
+.jfx-tab-pane .headers-region .tab-selected-line {
+    -fx-background-color: #ed6b58;;
+}
