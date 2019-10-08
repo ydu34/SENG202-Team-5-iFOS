@@ -491,15 +491,19 @@ public class AdminController extends GeneralController {
 
     public void updateAutosave() {
         getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());
-        if (autosaveCheckbox.isSelected()) {
-            autoloadCheckbox.setSelected(true);
+        if (autosaveCheckbox.isSelected() && !autoloadCheckbox.isSelected()) {
+            // Display warning
+        } else {
+            // Remove warning
         }
     }
 
     public void updateAutoload() {
         getAppEnvironment().getDatabase().setAutoloadEnabled(autoloadCheckbox.isSelected());
-        if (!autoloadCheckbox.isSelected()) {
-            autosaveCheckbox.setSelected(false);
+        if (autosaveCheckbox.isSelected() && !autoloadCheckbox.isSelected()) {
+            // Display warning
+        } else {
+            // Remove warning
         }
     }
 

@@ -25,6 +25,12 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class containing all the methods for data importing and exporting xml files,
+ * also includes auto saving methods.
+ * 
+ * @Author Yu Duan, Daniel Harris
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Database {
@@ -104,7 +110,6 @@ public class Database {
 
 
     /**
-     acceptedFiles =
      * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
      * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
@@ -145,14 +150,12 @@ public class Database {
      */
     public void loadAppData() {
         try {
-            Database tempDatabase = (Database) xmlToObject(Database.class, "metadata.xml", "metadata.xsd", System.getProperty("user.dir"));
+            Database tempDatabase = (Database) xmlToObject(Database.class, "metadata.xml", "metadata.xsd", getDefaultLocation());
             saveFileLocation = tempDatabase.getSaveFileLocation();
             autoloadEnabled = tempDatabase.isAutoloadEnabled();
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
             if (autoloadEnabled) {
-                String location = saveFileLocation;
-                System.out.println(location);
-                if (location.equals("")) location = System.getProperty("user.dir");
+                String location = getLocation();
                 File stockFile = new File(location + "/stock.xml");
                 File menuFile = new File(location + "/menu.xml");
                 File financeFile = new File(location + "/finance.xml");
@@ -263,10 +266,21 @@ public class Database {
      */
     public void autosave() throws Exception {
         if (autosaveEnabled) {
-            String location = saveFileLocation;
-            if (location.equals("")) location = System.getProperty("user.dir");
+            String location = getLocation();
             allObjectsToXml(location);
         }
+    }
+
+    private String getLocation() {
+        if (saveFileLocation == null || saveFileLocation.equals("")) {
+            return getDefaultLocation();
+        } else {
+            return saveFileLocation;
+        }
+    }
+
+    private String getDefaultLocation() {
+        return System.getProperty("user.dir");
     }
 
     public boolean isAutosaveEnabled() {
