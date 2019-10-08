@@ -507,7 +507,7 @@ public class AdminController extends GeneralController {
      * Resets the till so that it contains no amounts of any denominations
      */
     public void resetTill() {
-        finance.setTill(new Till());
+        finance.setTill(new Till(finance.getDenomination()));
         updateTillSpinners();
     }
 
