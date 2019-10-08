@@ -22,12 +22,15 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
-import java.io.IOException;
-import java.net.JarURLConnection;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class containing all the methods for data importing and exporting xml files,
+ * also includes auto saving methods.
+ * 
+ * @Author Yu Duan, Daniel Harris
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Database {
@@ -107,7 +110,6 @@ public class Database {
 
 
     /**
-     acceptedFiles =
      * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
      * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
@@ -270,24 +272,15 @@ public class Database {
     }
 
     private String getLocation() {
-        String location = saveFileLocation;
-        if (location == null || location.equals("")) {
-            location = getDefaultLocation();
+        if (saveFileLocation == null || saveFileLocation.equals("")) {
+            return getDefaultLocation();
+        } else {
+            return saveFileLocation;
         }
-        return location;
     }
 
     private String getDefaultLocation() {
-        String location = System.getProperty("user.dir");
-        try {
-            URLConnection thing = this.getClass().getResource("Database.class").openConnection();
-            if (!(thing instanceof JarURLConnection) && System.getProperty("os.name").toLowerCase().contains("windows")) {
-                location += "/SENG202-Team-5";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return location;
+        return System.getProperty("user.dir");
     }
 
     public boolean isAutosaveEnabled() {
