@@ -123,7 +123,7 @@ public class passwordController extends GeneralController {
     public void addZero(){
         warningText.setText(" ");
         updatePasswordText();
-        input += numberZero.getText();
+        addNumber((numberZero.getText()));
     }
 
     /**
@@ -134,7 +134,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input += numberOne.getText();
+        addNumber((numberOne.getText()));
 
     }
 
@@ -146,7 +146,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberTwo.getText();
+        addNumber((numberTwo.getText()));
 
     }
 
@@ -158,7 +158,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberThree.getText();
+        addNumber((numberThree.getText()));
 
     }
 
@@ -170,7 +170,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberFour.getText();
+        addNumber((numberFour.getText()));
 
     }
 
@@ -182,7 +182,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberFive.getText();
+        addNumber((numberFive.getText()));
 
     }
 
@@ -194,7 +194,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberSix.getText();
+        addNumber((numberSix.getText()));
 
     }
 
@@ -206,7 +206,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberSeven.getText();
+        addNumber((numberSeven.getText()));
 
     }
 
@@ -218,7 +218,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberEight.getText();
+        addNumber((numberEight.getText()));
 
     }
 
@@ -230,7 +230,7 @@ public class passwordController extends GeneralController {
 
         warningText.setText(" ");
         updatePasswordText();
-        input+= numberNine.getText();
+        addNumber((numberNine.getText()));
 
     }
 
@@ -252,6 +252,19 @@ public class passwordController extends GeneralController {
 
         }
         if(input.length() != 4){
+            warningText.setText("Password must be of length 4");
+        }
+    }
+
+    /**
+     * Takes a number and adds it to the password, for checking against the set password, if the current passwords length
+     * is greater than 4, then no other number is added to the password.
+     * @param num the number to be added to the password.
+     */
+    public void addNumber(String num) {
+        if (input.length() < 4) {
+            input += num;
+        } else {
             warningText.setText("Password must be of length 4");
         }
     }
