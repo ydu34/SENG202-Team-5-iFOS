@@ -1,6 +1,6 @@
 .jfx-menu-button {
 
-    -fx-background-color: rgba(242, 239, 223, 1.0);
+    /*-fx-background-color: rgba(242, 239, 223, 1.0);*/
     -fx-border-color: #f9ac68;
 }
 
@@ -9,7 +9,7 @@
     -fx-fill: black;
 }
 
-.combo-box .arrow,
-.choice-box .arrow {
-    -fx-background-color: rgba(242, 239, 223, 1.0);
-}
+/*.combo-box .arrow,*/
+/*.choice-box .arrow {*/
+    /*-fx-background-color: rgba(242, 239, 223, 1.0);*/
+/*}*/

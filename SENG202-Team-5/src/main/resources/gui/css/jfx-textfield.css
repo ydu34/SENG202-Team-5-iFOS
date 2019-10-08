@@ -11,7 +11,7 @@
     -fx-highlight-fill: #3399ff;
 }
 
-.text-field .input-line
-{
-    -fx-background-color: #f9ac68;
-}
+/*.text-field .input-line*/
+/*{*/
+    /*-fx-background-color: #f9ac68;*/
+/*}*/

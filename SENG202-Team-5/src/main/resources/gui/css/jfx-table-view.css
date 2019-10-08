@@ -27,18 +27,18 @@
 .table-view {
     -fx-table-color: rgba(249, 172, 104, 0.4);
     -fx-table-rippler-color: rgba(58, 62, 89, 0.6);
-    -fx-background-color: rgba(242, 239, 223, 1.0);
+    /*-fx-background-color: rgba(242, 239, 223, 1.0);*/
     -fx-border-color: #f9ac68;
 }
 :focused {
-    -fx-background-color: -fx-table-color, -fx-box-border, -fx-control-inner-background;
+    /*-fx-background-color: -fx-table-color, -fx-box-border, -fx-control-inner-background;*/
     -fx-background-insets: -1.4, 0, 1;
     -fx-background-radius: 1.4, 0, 0;
     /*....*/
 }
 
 .table-view:focused .table-row-cell:selected{
-    -fx-background-color: -fx-table-color;
+    /*-fx-background-color: -fx-table-color;*/
     -fx-table-cell-border-color: -fx-table-color;
     -fx-text-fill: BLACK;
 }
@@ -49,9 +49,9 @@
 
 .table-view .column-header,
 .table-view .column-header-background,
-.table-view .column-header-background .filler {
-    -fx-background-color: TRANSPARENT;
-}
+/*.table-view .column-header-background .filler {*/
+    /*-fx-background-color: TRANSPARENT;*/
+/*}*/
 
 .table-view .column-header {
     -fx-border-width: 0 1 0 0;
@@ -63,9 +63,9 @@
     -fx-padding: 16 0 16 0;
 }
 
-.table-view .column-header .arrow, .table-view .column-header .sort-order-dot {
-    -fx-background-color: #6f7286;
-}
+/*.table-view .column-header .arrow, .table-view .column-header .sort-order-dot {*/
+    /*-fx-background-color: #6f7286;*/
+/*}*/
 
 /*.table-view .column-header:last-visible {*/
     /*-fx-border-width: 0 0 0 0;*/
@@ -82,17 +82,17 @@
     -fx-alignment: top-center;
 }
 
-.table-view .column-overlay {
-    -fx-background-color: -fx-table-color;
-}
+/*.table-view .column-overlay {*/
+    /*-fx-background-color: -fx-table-color;*/
+/*}*/
 
-.table-view .column-resize-line, .table-view .column-drag-header {
-    -fx-background-color: -fx-table-rippler-color;
-}
+/*.table-view .column-resize-line, .table-view .column-drag-header {*/
+    /*-fx-background-color: -fx-table-rippler-color;*/
+/*}*/
 
 
 .table-row-cell > .disclosure-node > .arrow {
-    -fx-background-color: -fx-text-fill;
+    /*-fx-background-color: -fx-text-fill;*/
     -fx-padding: 0.333333em 0.229em 0.333333em 0.229em; /* 4 */
     -fx-shape: "M 0 -3.5 L 4 0 L 0 3.5 z";
 }
@@ -120,10 +120,10 @@
     /*-fx-background-color: rgb(230, 230, 230);*/
 /*}*/
 
-.table-view .menu-item:focused {
-    -fx-background-color: -fx-table-color;
+/*.table-view .menu-item:focused {*/
+    /*-fx-background-color: -fx-table-color;*/
 
-}
+/*}*/
 
 .table-view .menu-item .label {
     -fx-padding: 5 0 5 0;
