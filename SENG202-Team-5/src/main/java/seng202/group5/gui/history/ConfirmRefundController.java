@@ -74,9 +74,9 @@ public class ConfirmRefundController {
     @FXML
     public void confirmRefund(javafx.event.ActionEvent event) {
         // Showing what coins to return to the customer
+        ArrayList<Money> test = source.confirmOrderRefund(order.getId());
         StringBuilder builder = new StringBuilder("Return the following cash:\n");
         Money moneySum = Money.parse("NZD 0.00");
-        ArrayList<Money> test = source.confirmOrderRefund(order.getId());
         for (Money coin : test) {
             moneySum = moneySum.plus(coin);
             builder.append(coin.toString());
@@ -84,14 +84,16 @@ public class ConfirmRefundController {
         }
         builder.delete(builder.length() - 2, builder.length());
         if (moneySum.isLessThan(order.getTotalCost())) {
-            builder.append("\n(Not enough coins in the float to fully refund)");
+            infoLabel.setText("Not enough coins in the float to fully refund");
+            returnButton.setOnAction(this::rejectOrder);
+        } else {
+            infoLabel.setText(builder.toString());
+            returnButton.setOnAction(this::closeScreen);
         }
-        infoLabel.setText(builder.toString());
         //TODO screen is not resizing properly
 
         yesButton.setVisible(false);
         // Changing the return button so it does not tell the history that this order was not refunded
-        returnButton.setOnAction(this::closeScreen);
         GridPane.setColumnIndex(returnButton, 0);
         GridPane.setColumnSpan(returnButton, 2);
         GridPane.setHalignment(returnButton, HPos.CENTER);

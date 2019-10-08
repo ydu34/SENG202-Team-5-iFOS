@@ -13,8 +13,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.90</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -30,8 +30,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.30</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -62,8 +62,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.10</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -79,8 +79,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.20</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -96,8 +96,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.10</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -129,8 +129,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.40</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -162,8 +162,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.60</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -179,8 +179,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.60</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
@@ -196,8 +196,8 @@
                     <transactionID>0</transactionID>
                 </generator>
                 <price>NZD 0.80</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>

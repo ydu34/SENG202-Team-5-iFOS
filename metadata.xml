@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <database>
-    <saveFileLocation></saveFileLocation>
-    <autosaveEnabled>true</autosaveEnabled>
+    <saveFileLocation>C:\Users\DanJH\Downloads\UCLectureNotes\SENG202\SENG202-Team-5</saveFileLocation>
+    <autosaveEnabled>false</autosaveEnabled>
     <autoloadEnabled>true</autoloadEnabled>
 </database>
