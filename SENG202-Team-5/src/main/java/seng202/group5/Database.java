@@ -270,24 +270,15 @@ public class Database {
     }
 
     private String getLocation() {
-        String location = saveFileLocation;
-        if (location == null || location.equals("")) {
-            location = getDefaultLocation();
+        if (saveFileLocation == null || saveFileLocation.equals("")) {
+            return getDefaultLocation();
+        } else {
+            return saveFileLocation;
         }
-        return location;
     }
 
     private String getDefaultLocation() {
-        String location = System.getProperty("user.dir");
-        try {
-            URLConnection thing = this.getClass().getResource("Database.class").openConnection();
-            if (!(thing instanceof JarURLConnection) && System.getProperty("os.name").toLowerCase().contains("windows")) {
-                location += "/SENG202-Team-5";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return location;
+        return System.getProperty("user.dir");
     }
 
     public boolean isAutosaveEnabled() {
