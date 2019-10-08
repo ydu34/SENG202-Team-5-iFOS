@@ -22,12 +22,15 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
-import java.io.IOException;
-import java.net.JarURLConnection;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class containing all the methods for data importing and exporting xml files,
+ * also includes auto saving methods.
+ * 
+ * @Author Yu Duan, Daniel Harris
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Database {
@@ -107,7 +110,6 @@ public class Database {
 
 
     /**
-     acceptedFiles =
      * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
      * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
      *
