@@ -67,8 +67,8 @@
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
@@ -98,8 +98,8 @@
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
@@ -183,8 +183,8 @@
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
@@ -214,8 +214,8 @@
                             <value>2</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 3.00</markupCost>

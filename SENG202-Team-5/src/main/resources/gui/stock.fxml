@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -24,13 +25,25 @@
    <children>
        <HBox>
            <children>
-               <JFXButton fx:id="addButton" mnemonicParsing="false" onAction="#addIngredient" prefHeight="30.0" prefWidth="118.0" text="Add" />
-               <JFXButton fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyIngredient" prefHeight="30.0" prefWidth="118.0" text="Modify" />
-               <JFXButton fx:id="removeButton" mnemonicParsing="false" onAction="#removeIngredient" prefHeight="30.0" prefWidth="118.0" text="Remove" />
+               <JFXButton fx:id="addButton" mnemonicParsing="false" onAction="#addIngredient" prefHeight="30.0" prefWidth="118.0" text="Add">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+               <JFXButton fx:id="modifyButton" mnemonicParsing="false" onAction="#modifyIngredient" prefHeight="30.0" prefWidth="118.0" text="Modify">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+               <JFXButton fx:id="removeButton" mnemonicParsing="false" onAction="#removeIngredient" prefHeight="30.0" prefWidth="118.0" text="Remove">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
                <JFXTextField fx:id="ingredientSearchField" prefHeight="30.0" prefWidth="237.0" promptText="Search Ingredient Name or ID">
                <HBox.margin>
                   <Insets left="2.0" />
-               </HBox.margin></JFXTextField>
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></JFXTextField>
                <Label fx:id="warningLabel" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="622.0">
                    <font>
                        <Font size="18.0" />
@@ -59,11 +72,23 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="launchOrderButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#launchOrderScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Order" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchInvoiceButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchInvoiceScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchOrderButton" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#launchOrderScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Order" GridPane.hgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+            <JFXButton fx:id="launchInvoiceButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchInvoiceScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
             <JFXButton alignment="CENTER" disable="true" layoutX="250.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchAdminButton" alignment="CENTER" layoutX="490.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchPasswordScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="launchHistoryButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchHistoryScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="launchAdminButton" alignment="CENTER" layoutX="490.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchPasswordScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+            <JFXButton fx:id="launchHistoryButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" onAction="#launchHistoryScreen" prefHeight="70.0" prefWidth="241.0" stylesheets="@css/ifos-theme.css" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
          </children>
       </GridPane>
    </children>

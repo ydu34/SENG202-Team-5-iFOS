@@ -13,6 +13,37 @@
                     <orderItems>
                         <entry>
                             <key>
+                                <itemName>Coke Can (330mL)</itemName>
+                                <recipe>
+                                    <name>Coke Can (330mL)</name>
+                                    <recipeText>No recipe required</recipeText>
+                                    <ingredientIDs>
+                                        <entry>
+                                            <key>8</key>
+                                            <value>1</value>
+                                        </entry>
+                                    </ingredientIDs>
+                                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                                    <dietaryInformation>VEGAN</dietaryInformation>
+                                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                                </recipe>
+                                <markupCost>NZD 1.40</markupCost>
+                                <generator>
+                                    <ingredientID>12</ingredientID>
+                                    <menuItemID>9</menuItemID>
+                                    <orderID>3</orderID>
+                                    <transactionID>0</transactionID>
+                                </generator>
+                                <id>15</id>
+                                <inMenu>true</inMenu>
+                                <itemType>BEVERAGE</itemType>
+                                <edited>false</edited>
+                                <totalCost>NZD 2.00</totalCost>
+                            </key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>
                                 <itemName>Medium Fries</itemName>
                                 <recipe>
                                     <name>Medium Fries</name>
@@ -23,13 +54,16 @@
                                             <value>2</value>
                                         </entry>
                                     </ingredientIDs>
-                                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                                    <dietaryInformation>VEGAN</dietaryInformation>
                                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                                    <dietaryInformation>VEGAN</dietaryInformation>
+                                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                                 </recipe>
                                 <markupCost>NZD 3.00</markupCost>
                                 <generator>
-                                    <id>25</id>
+                                    <ingredientID>12</ingredientID>
+                                    <menuItemID>9</menuItemID>
+                                    <orderID>3</orderID>
+                                    <transactionID>0</transactionID>
                                 </generator>
                                 <id>32</id>
                                 <inMenu>true</inMenu>
@@ -80,7 +114,10 @@
                                 </recipe>
                                 <markupCost>NZD 4.30</markupCost>
                                 <generator>
-                                    <id>25</id>
+                                    <ingredientID>12</ingredientID>
+                                    <menuItemID>9</menuItemID>
+                                    <orderID>3</orderID>
+                                    <transactionID>0</transactionID>
                                 </generator>
                                 <id>12</id>
                                 <inMenu>true</inMenu>
@@ -90,38 +127,13 @@
                             </key>
                             <value>1</value>
                         </entry>
-                        <entry>
-                            <key>
-                                <itemName>Coke Can (330mL)</itemName>
-                                <recipe>
-                                    <name>Coke Can (330mL)</name>
-                                    <recipeText>No recipe required</recipeText>
-                                    <ingredientIDs>
-                                        <entry>
-                                            <key>8</key>
-                                            <value>1</value>
-                                        </entry>
-                                    </ingredientIDs>
-                                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                                    <dietaryInformation>VEGAN</dietaryInformation>
-                                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                                </recipe>
-                                <markupCost>NZD 1.40</markupCost>
-                                <generator>
-                                    <id>25</id>
-                                </generator>
-                                <id>15</id>
-                                <inMenu>true</inMenu>
-                                <itemType>BEVERAGE</itemType>
-                                <edited>false</edited>
-                                <totalCost>NZD 2.00</totalCost>
-                            </key>
-                            <value>1</value>
-                        </entry>
                     </orderItems>
                     <totalCost>NZD 11.50</totalCost>
                     <generator>
-                        <id>25</id>
+                        <ingredientID>12</ingredientID>
+                        <menuItemID>9</menuItemID>
+                        <orderID>3</orderID>
+                        <transactionID>0</transactionID>
                     </generator>
                     <id>0</id>
                 </order>

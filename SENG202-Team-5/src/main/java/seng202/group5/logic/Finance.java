@@ -55,12 +55,14 @@ public class Finance {
      */
     public ArrayList<Money> refund(String ID) {
         Transaction refundedOrder = transactionHistory.get(ID);
-        Money refund = Money.parse("NZD 0");
-        if (!refundedOrder.isRefunded()) {
+        ArrayList<Money> refund = calcChange(refundedOrder.getTotalPrice());
+        Money refundSum = Money.parse("NZD 0.00");
+        for (Money amt : refund) refundSum = refundSum.plus(amt);
+        if (refundSum.equals(refundedOrder.getTotalPrice()) && !refundedOrder.isRefunded()) {
             refundedOrder.refund();
-            refund = refundedOrder.getTotalPrice();
+            return refund;
         }
-        return calcChange(refund);
+        return new ArrayList<>();
     }
 
     /**

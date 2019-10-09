@@ -133,6 +133,7 @@ public class OrderController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        super.pseudoInitialize();
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
         filterItems();
@@ -385,6 +386,7 @@ public class OrderController extends GeneralController {
         });
 
         currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
+        currentOrderTable.refresh();
     }
 
     /**
