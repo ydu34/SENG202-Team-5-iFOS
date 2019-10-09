@@ -225,7 +225,7 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <JFXButton fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" prefWidth="138.0" text="Add Extra Ingredient" textAlignment="CENTER" VBox.vgrow="NEVER">
+                        <JFXButton fx:id="addExtraIngredient" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" prefWidth="138.0" text="Modify Ingredients" textAlignment="CENTER" VBox.vgrow="NEVER">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXButton>
