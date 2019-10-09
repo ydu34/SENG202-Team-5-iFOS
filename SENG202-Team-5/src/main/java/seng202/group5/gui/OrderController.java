@@ -82,13 +82,7 @@ public class OrderController extends GeneralController {
     private Text costText;
 
     @FXML
-    private Spinner<Integer> quantitySpinner;
-
-    @FXML
     private Text menuItemName;
-
-    @FXML
-    private Button addItemButton;
 
     @FXML
     private Button addExtraIngredient;
@@ -146,7 +140,6 @@ public class OrderController extends GeneralController {
 
         currentOrderTable();
         orderIDText.setText(currentOrder.getId());
-        addItemButton.setDisable(true);
         addExtraIngredient.setDisable(true);
 
         tilePaneContainer.widthProperty().addListener((width) -> {
@@ -155,6 +148,14 @@ public class OrderController extends GeneralController {
             tilePane.setPrefWidth(newWidth);
             tilePane.setMaxWidth(newWidth);
         });
+
+        currentOrderTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            System.out.println("Yipe");
+            //launch screen prompting how many screens to change
+                //launch extraingredients
+                //update
+
+        }));
     }
 
     /**
@@ -210,7 +211,7 @@ public class OrderController extends GeneralController {
 
                 tempButton.setGraphic(imageView);
                 TilePane.setMargin(tempButton, new Insets(5));
-                tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
+                tempButton.setOnAction((ActionEvent event) -> addItemToOrder(item));
                 buttons.add(tempButton);
             }
         }
@@ -299,35 +300,35 @@ public class OrderController extends GeneralController {
     }
 
     /**
-     * Updates the given selected item in the order.
+     * Updates the display with items using the selected item.
      *
      * @param newItem the new item with updated quantities and categories.
      */
     public void setMenuItem(MenuItem newItem) {
-
         item = newItem;
+//        ObservableList<MenuItem> items = currentOrderTable.getItems();
+//        for (int i = 0; i < items.size(); i++)
+//            if (items.get(i).equals(item)) {
+//                currentOrderTable.getSelectionModel().select(i);
+//                currentOrderTable.getSelectionModel().focus(i);
+//            }
         populateIngredientsTable();
-        addItemButton.setDisable(false);
         addExtraIngredient.setDisable(false);
-        totalCostDisplay.setText(item.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount().toString());
-        menuItemName.setText(item.getItemName());
+        totalCostDisplay.setText(currentOrder.getTotalCost().toString());
         recipeText.setText(newItem.getRecipe().getRecipeText());
     }
 
     /**
      * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
      * Otherwise displays the appropriate message if the order can/cannot be added.
+     * Calls setMenuItem() if adding the item is successful.
      */
-    public void addItemToOrder() {
-        Integer quantity = quantitySpinner.getValue();
-        if (currentOrder.addItem(item, quantity)) {
-
-            promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
+    public void addItemToOrder(MenuItem item) {
+        if (currentOrder.addItem(item, 1)) {
+            promptText.setText(item.getItemName() + " was added to the current order.");
             promptText.setFill(Color.GREEN);
-            //pseudoInitialize();
             currentOrderTable();
-
-
+            setMenuItem(item);
        }
        else{
            promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");

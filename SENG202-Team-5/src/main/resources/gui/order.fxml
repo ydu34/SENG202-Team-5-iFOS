@@ -8,8 +8,6 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -67,23 +65,34 @@
                               <Font size="19.0" />
                            </font>
                         </Text>
-                        <Label prefHeight="39.0" prefWidth="147.0" text="Order Id : ">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
-                        <Text fx:id="orderIDText" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="172.1787109375">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Text>
-                        <TableView fx:id="currentOrderTable" prefHeight="1027.0" prefWidth="223.0">
+                        <GridPane prefHeight="27.0" prefWidth="222.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="147.0" text="Order Id : ">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="orderIDText" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="172.1787109375" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </GridPane>
+                        <TableView fx:id="currentOrderTable" maxHeight="-Infinity" prefHeight="1010.0" prefWidth="223.0">
                            <columns>
                               <TableColumn fx:id="itemNameCol" prefWidth="108.0" text="Item" />
                               <TableColumn fx:id="itemQuantityCol" prefWidth="109.0" text="Quantity" />
                            </columns>
                         </TableView>
-                        <GridPane>
+                        <GridPane prefHeight="51.0" prefWidth="225.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -106,7 +115,7 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="1113.0" prefWidth="269.0" GridPane.columnIndex="1">
+                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1113.0" prefWidth="300.0" GridPane.columnIndex="1">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="275.0" text="Item Ingredients" textAlignment="CENTER" wrapText="true" VBox.vgrow="NEVER">
                            <font>
@@ -130,6 +139,23 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </JFXButton>
+                        <ScrollPane prefHeight="463.0" prefWidth="223.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Text fx:id="recipeText" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </TextFlow>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
                         <GridPane fx:id="bottomRightGridPane" prefWidth="300.0" VBox.vgrow="NEVER">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="155.0" />
@@ -141,29 +167,7 @@
                               <RowConstraints vgrow="NEVER" />
                            </rowConstraints>
                            <children>
-                              <Spinner fx:id="quantitySpinner" prefHeight="26.0" prefWidth="159.0" GridPane.rowIndex="1">
-                                 <valueFactory>
-                                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="10" min="1" />
-                                 </valueFactory>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Spinner>
-                              <JFXButton fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemToOrder" prefHeight="26.0" prefWidth="72.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </JFXButton>
-                              <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Total Cost:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
@@ -176,14 +180,6 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <Text fx:id="menuItemName" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the amount of item" textAlignment="CENTER" wrappingWidth="291.7294921875">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Text>
                            </children>
                         </GridPane>
                         <GridPane minHeight="-Infinity" prefHeight="100.0" prefWidth="300.0" VBox.vgrow="NEVER">
