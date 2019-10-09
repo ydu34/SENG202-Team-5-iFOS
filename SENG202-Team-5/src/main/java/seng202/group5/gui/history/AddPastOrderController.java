@@ -271,8 +271,8 @@ public class AddPastOrderController extends OrderController {
      * Adds the selected item to the order
      */
     @Override
-    public void addItemToOrder() {
-        super.addItemToOrder();
+    public void addItemToOrder(MenuItem item) {
+        super.addItemToOrder(item);
         confirmButton.setDisable(false);
     }
 
