@@ -84,8 +84,6 @@ public class OrderController extends GeneralController {
     @FXML
     private Text menuItemName;
 
-    @FXML
-    private Button addExtraIngredient;
 
     @FXML
     private TilePane tilePane;
@@ -140,7 +138,6 @@ public class OrderController extends GeneralController {
 
         currentOrderTable();
         orderIDText.setText(currentOrder.getId());
-        addExtraIngredient.setDisable(true);
 
         tilePaneContainer.widthProperty().addListener((width) -> {
             double newWidth = tilePaneContainer.getWidth();
@@ -313,7 +310,6 @@ public class OrderController extends GeneralController {
 //                currentOrderTable.getSelectionModel().focus(i);
 //            }
         populateIngredientsTable();
-        addExtraIngredient.setDisable(false);
         totalCostDisplay.setText(currentOrder.getTotalCost().toString());
         recipeText.setText(newItem.getRecipe().getRecipeText());
     }
