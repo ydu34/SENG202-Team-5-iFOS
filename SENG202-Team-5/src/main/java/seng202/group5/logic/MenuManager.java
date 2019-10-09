@@ -1,12 +1,14 @@
 package seng202.group5.logic;
 
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 
@@ -18,6 +20,12 @@ import java.util.HashMap;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MenuManager {
+
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+    @XmlElement
+    private IDGenerator generator = new IDGenerator();
 
     /**
      * A dictionary mapping string IDs to menu items

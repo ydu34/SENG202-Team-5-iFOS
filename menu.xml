@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <menuManager>
+    <generator>
+        <ingredientID>12</ingredientID>
+        <menuItemID>10</menuItemID>
+        <orderID>5</orderID>
+        <transactionID>0</transactionID>
+        <customerID>0</customerID>
+    </generator>
     <itemMap>
         <entry>
             <key>12</key>
@@ -41,12 +48,6 @@
                     </ingredientIDs>
                 </recipe>
                 <markupCost>NZD 4.30</markupCost>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <id>12</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
@@ -72,12 +73,6 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <id>15</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
@@ -103,12 +98,6 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <id>38</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
@@ -157,12 +146,6 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 4.00</markupCost>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <id>28</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
@@ -188,12 +171,6 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <id>18</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
@@ -219,12 +196,6 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 3.00</markupCost>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <id>32</id>
                 <inMenu>true</inMenu>
                 <itemType>SIDE</itemType>

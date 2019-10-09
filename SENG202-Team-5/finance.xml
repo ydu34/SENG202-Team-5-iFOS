@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <finance>
+    <generator>
+        <ingredientID>12</ingredientID>
+        <menuItemID>9</menuItemID>
+        <orderID>3</orderID>
+        <transactionID>10</transactionID>
+        <customerID>10</customerID>
+    </generator>
     <transactionHistory>
         <entry>
             <key>0</key>
@@ -28,12 +35,6 @@
                                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                                 </recipe>
                                 <markupCost>NZD 3.00</markupCost>
-                                <generator>
-                                    <ingredientID>12</ingredientID>
-                                    <menuItemID>9</menuItemID>
-                                    <orderID>3</orderID>
-                                    <transactionID>0</transactionID>
-                                </generator>
                                 <id>32</id>
                                 <inMenu>true</inMenu>
                                 <itemType>SIDE</itemType>
@@ -82,12 +83,6 @@
     </ingredientIDs>
 </recipe>
 <markupCost>NZD 4.30</markupCost>
-<generator>
-    <ingredientID>12</ingredientID>
-    <menuItemID>9</menuItemID>
-    <orderID>3</orderID>
-    <transactionID>0</transactionID>
-</generator>
 <id>12</id>
 <inMenu>true</inMenu>
 <itemType>MAIN</itemType>
@@ -113,12 +108,6 @@
     <dietaryInformation>VEGETARIAN</dietaryInformation>
 </recipe>
 <markupCost>NZD 1.40</markupCost>
-<generator>
-    <ingredientID>12</ingredientID>
-    <menuItemID>9</menuItemID>
-    <orderID>3</orderID>
-    <transactionID>0</transactionID>
-</generator>
 <id>15</id>
 <inMenu>true</inMenu>
 <itemType>BEVERAGE</itemType>
@@ -129,12 +118,6 @@
                         </entry>
                     </orderItems>
                     <totalCost>NZD 11.50</totalCost>
-                    <generator>
-                        <ingredientID>12</ingredientID>
-                        <menuItemID>9</menuItemID>
-                        <orderID>3</orderID>
-                        <transactionID>0</transactionID>
-                    </generator>
                     <id>0</id>
                 </order>
             </value>
