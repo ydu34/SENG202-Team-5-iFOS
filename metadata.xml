@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <database>
-    <saveFileLocation>/home/cosc/student/mmo155/Documents/SENG202/iFOS</saveFileLocation>
-    <autosaveEnabled>true</autosaveEnabled>
+    <saveFileLocation></saveFileLocation>
+    <autosaveEnabled>false</autosaveEnabled>
     <autoloadEnabled>true</autoloadEnabled>
 </database>
