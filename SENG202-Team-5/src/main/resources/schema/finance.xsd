@@ -17,6 +17,7 @@
 
   <xs:complexType name="finance">
     <xs:sequence>
+        <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="transactionHistory">
         <xs:complexType>
           <xs:sequence>
@@ -35,7 +36,17 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="transaction">
+    <xs:complexType name="idGenerator">
+        <xs:sequence>
+            <xs:element name="ingredientID" type="xs:int"/>
+            <xs:element name="menuItemID" type="xs:int"/>
+            <xs:element name="orderID" type="xs:int"/>
+            <xs:element name="transactionID" type="xs:int"/>
+            <xs:element name="customerID" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="transaction">
     <xs:sequence>
       <xs:element name="datetime" type="xs:string" minOccurs="0"/>
       <xs:element name="change" type="xs:string" minOccurs="0"/>
@@ -63,7 +74,6 @@
         </xs:complexType>
       </xs:element>
       <xs:element name="totalCost" type="xs:string" minOccurs="0"/>
-      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="id" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -73,7 +83,6 @@
       <xs:element name="itemName" type="xs:string" minOccurs="0"/>
       <xs:element ref="recipe" minOccurs="0"/>
       <xs:element name="markupCost" type="xs:string" minOccurs="0"/>
-      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="id" type="xs:string" minOccurs="0"/>
       <xs:element name="inMenu" type="xs:boolean"/>
       <xs:element name="itemType" type="typeEnum" minOccurs="0"/>
@@ -102,15 +111,6 @@
         </xs:complexType>
       </xs:element>
       <xs:element name="dietaryInformation" type="dietEnum" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="idGenerator">
-    <xs:sequence>
-      <xs:element name="ingredientID" type="xs:int"/>
-      <xs:element name="menuItemID" type="xs:int"/>
-      <xs:element name="orderID" type="xs:int"/>
-      <xs:element name="transactionID" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 

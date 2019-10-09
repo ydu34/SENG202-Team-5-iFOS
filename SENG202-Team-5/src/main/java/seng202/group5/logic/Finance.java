@@ -1,6 +1,7 @@
 package seng202.group5.logic;
 
 import org.joda.money.Money;
+import seng202.group5.IDGenerator;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
@@ -19,6 +20,12 @@ import java.util.Map;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Finance {
+
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+    @XmlElement
+    private IDGenerator generator = new IDGenerator();
 
     private HashMap<String, Transaction> transactionHistory;
 
