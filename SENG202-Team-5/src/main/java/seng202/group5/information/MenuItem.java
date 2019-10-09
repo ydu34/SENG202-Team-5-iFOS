@@ -36,13 +36,9 @@ public class MenuItem {
     @XmlJavaTypeAdapter(MoneyAdapter.class)
     private Money markupCost;
     /**
-     * The unique id related to every item on the menu
-     */
-    private IDGenerator generator = new IDGenerator();
-    /**
      * Unique id for a menu item
      */
-    private String id = generator.newMenuItemID();
+    private String id = IDGenerator.newMenuItemID();
     /**
      * Whether or not this item is in the menu
      */

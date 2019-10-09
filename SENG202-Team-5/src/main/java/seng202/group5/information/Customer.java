@@ -13,7 +13,7 @@ import static org.joda.money.Money.parse;
 public class Customer {
 
     private IDGenerator generator = new IDGenerator();
-    //private String customerID = generator.newID();
+    private String customerID = generator.newCustomerID();
 
     private String name;
     private int purchasePoints = 10;
@@ -73,6 +73,6 @@ public class Customer {
         return purchasePoints;
     }
 
-    //public String getID() { return customerID; }
+    public String getID() { return customerID; }
 
 }

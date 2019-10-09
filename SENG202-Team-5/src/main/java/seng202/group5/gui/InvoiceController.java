@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * A controller for managing the invoice screen
- * @author Tasman Berry, Shivin Gaba
+ * @author Tasman Berry, Shivin Gaba, Michael Morgoun
  */
 public class InvoiceController extends GeneralController {
 
@@ -43,13 +43,13 @@ public class InvoiceController extends GeneralController {
     private TableColumn<MenuItem, String> itemNameCol;
 
     @FXML
-    private Button removeItem;
-
-    @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
 
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
+
+    @FXML
+    private Button removeItem;
 
     private ArrayList<Money> payment = new ArrayList<>();
 
@@ -60,6 +60,8 @@ public class InvoiceController extends GeneralController {
     private boolean someOrder;
 
     private Map<MenuItem, Integer> orderItemsMap;
+
+    // private ArrayList<String> denominations = new Array
 
     /**
      * The initializer for this controller
@@ -137,6 +139,10 @@ public class InvoiceController extends GeneralController {
                         } else {
                             totalChangeDisplay.setText("Change: " + totalChange);
                         }
+
+                        // Refreshing the table
+                        pseudoInitialize();
+
                     } catch (InsufficientCashException e) {
                         changeDisplay.setText("Amount payed is less than cost.\nTotal Payed: " + total);
                     }
@@ -177,7 +183,14 @@ public class InvoiceController extends GeneralController {
         Money money = Money.parse("NZD "+0.01*value);
         total = total.plus(money);
         payment.add(money);
-        changeDisplay.setText("Total Payed: "+total);
+
+        String current = "";
+
+        for (Money denom : payment) {
+
+        }
+
+        changeDisplay.setText(current);
     }
 
     /**
