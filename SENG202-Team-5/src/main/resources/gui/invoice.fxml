@@ -13,11 +13,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1680.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.InvoiceController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1680.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.invoice.InvoiceController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="800.0" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="800.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="540.0" vgrow="SOMETIMES" />
@@ -33,6 +32,208 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="540.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
+            <HBox GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+               <children>
+                        <GridPane alignment="CENTER" gridLinesVisible="true" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="229.6666717529297" prefHeight="279.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="165.66665649414062" prefHeight="257.66668701171875" vgrow="ALWAYS" />
+                                <RowConstraints maxHeight="391.33331298828125" minHeight="10.0" prefHeight="161.3333740234375" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="312.33331298828125" minHeight="115.0" prefHeight="305.6666259765625" valignment="CENTER" vgrow="ALWAYS" />
+                            </rowConstraints>
+                            <children>
+                                <VBox maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS">
+                                    <GridPane.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </GridPane.margin>
+                           <children>
+                              <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="594.0" prefWidth="742.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="362.666748046875" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="662.9999389648438" minWidth="10.0" prefWidth="379.333251953125" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Total Cost:" GridPane.halignment="RIGHT">
+                                       <font>
+                                          <Font size="26.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="totalCostLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="\$0.00" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="26.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="25.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Currently Payed:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="26.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="currentlyPayedLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="\$0.00" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="26.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="25.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                           </children>
+                                </VBox>
+                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="15.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                           <children>
+                              <JFXButton maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="Existing Member" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="189.0" text="Loyalty Club">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="New Member" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="300.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <Label fx:id="denomDollarLabel" alignment="CENTER">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="denomCentLabel" alignment="CENTER">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="150.0" left="150.0" right="150.0" top="150.0" />
+                           </padding>
+                        </HBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="3">
+                           <children>
+                                      <JFXButton fx:id="payCashButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#payCash" prefHeight="100.0" prefWidth="400.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Confirm Payment">
+                                          <font>
+                                              <Font size="26.0" />
+                                          </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                      </JFXButton>
+                              <Label fx:id="warningLabel" text="Label" textFill="RED">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                            </children>
+                        </GridPane>
+                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="286.0" prefWidth="500.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="80.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="80.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="80.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <JFXButton fx:id="twentyDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addTwentyDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$20" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="tenDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addTenDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$10" textAlignment="CENTER" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="fiveDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addFiveDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$5" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="fiftyDollarPayment" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addFiftyDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$50" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="hundredDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addHundredDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$100" textAlignment="CENTER" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="tenCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addTenCent" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="10c" textAlignment="CENTER" GridPane.rowIndex="4">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="twentyCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addTwentyCent" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="20c" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="fiftyCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addFiftyCent" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="50c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="oneDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addOneDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$1" textAlignment="CENTER" GridPane.rowIndex="3">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="twoDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addTwoDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$2" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                                <JFXButton fx:id="clearPaymentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearPayment" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="Clear" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </JFXButton>
+                            </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                        </GridPane>
+               </children>
+            </HBox>
                 <GridPane prefHeight="540.0" prefWidth="350.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" prefWidth="600.0" />
@@ -70,157 +271,8 @@
                         <JFXButton fx:id="removeItem" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteRowFromTable" prefHeight="48.0" prefWidth="301.0" ripplerFill="#3a3e59" text="Remove Item " GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></JFXButton>
-                    </children>
-                </GridPane>
-                <GridPane gridLinesVisible="true" GridPane.columnIndex="1">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="500.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints vgrow="ALWAYS" />
-                    </rowConstraints>
-                    <children>
-                  <HBox>
-                     <children>
-                              <GridPane prefHeight="286.0" prefWidth="500.0">
-                                  <columnConstraints>
-                                      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="80.0" />
-                                      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="80.0" />
-                                      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="80.0" />
-                                  </columnConstraints>
-                                  <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  </rowConstraints>
-                                  <children>
-                                      <JFXButton fx:id="twentyDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addTwentyDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$20" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="tenDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addTenDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$10" textAlignment="CENTER" GridPane.rowIndex="2">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="fiveDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addFiveDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$5" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="fiftyDollarPayment" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addFiftyDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$50" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="hundredDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addHundredDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$100" textAlignment="CENTER" GridPane.rowIndex="1">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="tenCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addTenCent" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="10c" textAlignment="CENTER" GridPane.rowIndex="4">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="twentyCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addTwentyCent" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="20c" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="fiftyCentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addFiftyCent" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="50c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="oneDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addOneDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$1" textAlignment="CENTER" GridPane.rowIndex="3">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="twoDollarButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#addTwoDollar" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="\$2" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton fx:id="clearPaymentButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#clearPayment" prefHeight="108.0" prefWidth="60.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68; -fx-border-style: solid; -fx-border-color: ffffff;" text="Clear" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                          <font>
-                                              <Font size="18.0" />
-                                          </font>
-                                      </JFXButton>
-                                  </children>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                              </GridPane>
-                              <GridPane gridLinesVisible="true" prefHeight="487.0" prefWidth="720.0">
-                                  <columnConstraints>
-                                      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" />
-                                  </columnConstraints>
-                                  <rowConstraints>
-                                      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="339.0" prefHeight="339.0" vgrow="ALWAYS" />
-                              <RowConstraints maxHeight="98.0" minHeight="10.0" prefHeight="98.0" vgrow="ALWAYS" />
-                                      <RowConstraints vgrow="ALWAYS" />
-                                  </rowConstraints>
-                                  <children>
-                                      <VBox prefHeight="320.0" prefWidth="273.0" GridPane.hgrow="ALWAYS">
-                                          <children>
-                                              <Text fx:id="totalCostDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Cost: &lt;amount&gt;" textAlignment="CENTER" wrappingWidth="252.19921875">
-                                                  <font>
-                                                      <Font size="20.0" />
-                                                  </font>
-                                              </Text>
-                                              <Text fx:id="totalChangeDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Change: &lt;amount&gt;" textAlignment="CENTER" wrappingWidth="250.572265625">
-                                                  <font>
-                                                      <Font size="20.0" />
-                                                  </font>
-                                              </Text>
-                                              <TextFlow prefHeight="325.0" prefWidth="510.0">
-                                                  <children>
-                                                      <Text fx:id="changeDisplay" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.7294921875" />
-                                                  </children>
-                                              </TextFlow>
-                                          </children>
-                                          <GridPane.margin>
-                                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                          </GridPane.margin>
-                                      </VBox>
-                                      <JFXButton fx:id="payCashButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#payCash" prefHeight="100.0" prefWidth="400.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Confirm Payment" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                                          <font>
-                                              <Font size="26.0" />
-                                          </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                                      </JFXButton>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.rowIndex="1">
-                                 <children>
-                                    <JFXButton prefHeight="48.0" prefWidth="240.0" text="Existing Member">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </JFXButton>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="189.0" text="Loyalty Club">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXButton prefHeight="48.0" prefWidth="240.0" text="New Member">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </JFXButton>
-                                 </children>
-                              </HBox>
-                                  </children>
-                              </GridPane>
-                     </children>
-                  </HBox>
+                     </cursor>
+                  </JFXButton>
                     </children>
                 </GridPane>
             </children>
