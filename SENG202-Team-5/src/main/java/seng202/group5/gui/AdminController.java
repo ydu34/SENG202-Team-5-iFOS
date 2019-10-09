@@ -524,6 +524,8 @@ public class AdminController extends GeneralController {
         }
     }
 
+
+
     public void setFinance(Finance newFinance) {
         finance = newFinance;
     }

@@ -292,4 +292,8 @@ public class passwordController extends GeneralController {
         origin = event;
     }
 
+    public String getPassword(){
+        return password;
+    }
+
 }
