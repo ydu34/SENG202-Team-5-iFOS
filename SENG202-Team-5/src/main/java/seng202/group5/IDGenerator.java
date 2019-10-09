@@ -52,43 +52,39 @@ public class IDGenerator {
      * Creates a new  Ingredient ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
-    public String newIngredientID() {
-        String newID = "INGR" + ingredientID++;
-        return newID;
+    public static String newIngredientID() {
+        return "INGR" + ingredientID++;
     }
 
     /**
      * Creates a new  MenuItem ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
-    public String newMenuItemID() {
-        String newID = "ITEM" + menuItemID++;
-        return newID;
+    public static String newMenuItemID() {
+        return "ITEM" + menuItemID++;
     }
 
     /**
      * Creates a new  Order ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
-    public String newOrderID() {
-        String newID = "ORDR" + orderID++;
-        return newID;
+    public static String newOrderID() {
+        return "ORDR" + orderID++;
     }
 
     /**
      * Creates a new  Transaction ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
-    public String newTransactionID() {
-        String newID = "TRAN" + transactionID++;
-        return newID;
+    public static String newTransactionID() {
+        return "TRAN" + transactionID++;
     }
 
     /**
      * Creates a new Customer ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
-    public String newCustomerID() {
+    public static String newCustomerID() {
         String newID = "CUST" + customerID++;
         return newID;
     }

@@ -9,6 +9,7 @@
 
   <xs:complexType name="stock">
     <xs:sequence>
+      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="ingredients">
         <xs:complexType>
           <xs:sequence>
@@ -40,17 +41,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="ingredient">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="category" type="xs:string" minOccurs="0"/>
-      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
-      <xs:element name="price" type="xs:string" minOccurs="0"/>
-      <xs:element name="dietaryInformation" type="dietEnum" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id" type="xs:string"/>
-  </xs:complexType>
-
   <xs:complexType name="idGenerator">
     <xs:sequence>
       <xs:element name="ingredientID" type="xs:int"/>
@@ -59,6 +49,16 @@
       <xs:element name="transactionID" type="xs:int"/>
       <xs:element name="customerID" type="xs:int"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ingredient">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="category" type="xs:string" minOccurs="0"/>
+      <xs:element name="price" type="xs:string" minOccurs="0"/>
+      <xs:element name="dietaryInformation" type="dietEnum" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
   </xs:complexType>
 
   <xs:simpleType name="dietEnum">

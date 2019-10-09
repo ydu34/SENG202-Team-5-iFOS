@@ -163,8 +163,8 @@ public class Database {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            saveFileLocation = System.getProperty("user.dir");
-            autosaveEnabled = true;
+            saveFileLocation = "";
+            autosaveEnabled = false;
             autoloadEnabled = true;
             try {
                 objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));

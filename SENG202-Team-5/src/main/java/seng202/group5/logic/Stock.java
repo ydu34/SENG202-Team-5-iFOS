@@ -1,5 +1,6 @@
 package seng202.group5.logic;
 
+import seng202.group5.IDGenerator;
 import seng202.group5.information.Ingredient;
 
 import javax.xml.bind.annotation.*;
@@ -15,6 +16,11 @@ import java.util.HashMap;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Stock {
 
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+    @XmlElement
+    private IDGenerator generator = new IDGenerator();
 
     private HashMap<String, Ingredient> ingredients;
     private HashMap<String, Integer> ingredientStock;
