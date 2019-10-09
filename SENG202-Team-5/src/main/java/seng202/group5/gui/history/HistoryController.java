@@ -155,7 +155,7 @@ public class HistoryController extends GeneralController {
             Parent root = loader.load();
 
             ConfirmRefundController controller = loader.getController();
-            controller.setSource(this);
+            controller.setAppEnvironment(getAppEnvironment());
             controller.setButton(button);
             controller.setOrder(orderToRefund);
 
@@ -169,16 +169,6 @@ public class HistoryController extends GeneralController {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * Confirms the refund of an order
-     *
-     * @param orderID the ID of the order to refund
-     * @return a list of coins to give back to the customer
-     */
-    public ArrayList<Money> confirmOrderRefund(String orderID) {
-        return getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID());
     }
 
     /**
