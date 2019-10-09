@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <stock>
+    <generator>
+        <ingredientID>12</ingredientID>
+        <menuItemID>9</menuItemID>
+        <orderID>3</orderID>
+        <transactionID>10</transactionID>
+        <customerID>10</customerID>
+    </generator>
     <ingredients>
         <entry>
             <key>11</key>
             <value id="11">
                 <name>Vegetarian Patty</name>
                 <category>patty</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.90</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -23,12 +24,6 @@
             <value id="1">
                 <name>Onion (~200grams)</name>
                 <category>vegetable</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.30</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -40,12 +35,6 @@
             <value id="2">
                 <name>Chicken Patty</name>
                 <category>Meat</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.60</price>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
@@ -55,12 +44,6 @@
             <value id="25">
                 <name>Lettuce Piece</name>
                 <category>vegetable</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.10</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -72,12 +55,6 @@
             <value id="3">
                 <name>Tomato Sauce (~10grams)</name>
                 <category>Sauce</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.20</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -89,12 +66,6 @@
             <value id="4">
                 <name>Potato (~200grams)</name>
                 <category>vegetable</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.10</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -106,12 +77,6 @@
             <value id="5">
                 <name>Burger Bun</name>
                 <category>bread</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.30</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
@@ -122,12 +87,6 @@
             <value id="6">
                 <name>Gluten Free Burger Bun</name>
                 <category>bread</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.40</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -139,12 +98,6 @@
             <value id="7">
                 <name>Cheese Slice</name>
                 <category>dairy</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.30</price>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
@@ -155,12 +108,6 @@
             <value id="8">
                 <name>Coke Can (330mL)</name>
                 <category>drink</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.60</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -172,12 +119,6 @@
             <value id="9">
                 <name>Sprite Can (330mL)</name>
                 <category>drink</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.60</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
@@ -189,12 +130,6 @@
             <value id="10">
                 <name>Fruit Drink Tropical (250mL)</name>
                 <category>drink</category>
-                <generator>
-                    <ingredientID>12</ingredientID>
-                    <menuItemID>9</menuItemID>
-                    <orderID>3</orderID>
-                    <transactionID>0</transactionID>
-                </generator>
                 <price>NZD 0.80</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>

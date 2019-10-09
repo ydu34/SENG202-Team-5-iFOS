@@ -29,14 +29,11 @@ public class Ingredient {
      **/
     private String category;
 
-    @XmlElement
-    private IDGenerator generator = new IDGenerator();
-
     /**
      * Unique id used to identify every ingredient in the database
      **/
     @XmlAttribute
-    private String id = generator.newIngredientID();
+    private String id = IDGenerator.newIngredientID();
 
     /**
      * The price for a single unit of a ingredient
