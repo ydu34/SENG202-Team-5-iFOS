@@ -57,6 +57,7 @@
       <xs:element name="menuItemID" type="xs:int"/>
       <xs:element name="orderID" type="xs:int"/>
       <xs:element name="transactionID" type="xs:int"/>
+      <xs:element name="customerID" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 

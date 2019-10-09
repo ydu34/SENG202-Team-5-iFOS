@@ -38,12 +38,18 @@ public class IDGenerator {
     @XmlElement
     private static int transactionID = 0;
 
+    /**
+     * A static variable ID which shows the last Customer ID used or 0 if none used so far.
+     */
+    @XmlElement
+    private static int customerID = 0;
+
     public IDGenerator() {
 
     }
 
     /**
-     * Creates a new  Ingredient ID but incrementing the static variable by 1.
+     * Creates a new  Ingredient ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
     public String newIngredientID() {
@@ -52,7 +58,7 @@ public class IDGenerator {
     }
 
     /**
-     * Creates a new  MenuItem ID but incrementing the static variable by 1.
+     * Creates a new  MenuItem ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
     public String newMenuItemID() {
@@ -61,7 +67,7 @@ public class IDGenerator {
     }
 
     /**
-     * Creates a new  Order ID but incrementing the static variable by 1.
+     * Creates a new  Order ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
     public String newOrderID() {
@@ -70,11 +76,20 @@ public class IDGenerator {
     }
 
     /**
-     * Creates a new  Transaction ID but incrementing the static variable by 1.
+     * Creates a new  Transaction ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
     public String newTransactionID() {
         String newID = "TRAN" + transactionID++;
+        return newID;
+    }
+
+    /**
+     * Creates a new Customer ID and increments the static variable by 1.
+     * @return The new ID as a string.
+     */
+    public String newCustomerID() {
+        String newID = "CUST" + customerID++;
         return newID;
     }
 
@@ -110,6 +125,14 @@ public class IDGenerator {
         transactionID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
     }
 
+    /**
+     * Sets the last Customer ID used, to the string lastID.
+     * @param lastID A string ID.
+     */
+    public void setLastCustomerID(String lastID) {
+        customerID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
+    }
+
     public static int getIngredientID() {
         return ingredientID;
     }
@@ -129,4 +152,8 @@ public class IDGenerator {
     public static int getTransactionID() { return transactionID; }
 
     public static void setTransactionID(int newTransactionID) { transactionID = newTransactionID; }
+
+    public static int getCustomerID() { return customerID; }
+
+    public static void setCustomerID(int newCustomerID) { customerID = newCustomerID; }
 }
