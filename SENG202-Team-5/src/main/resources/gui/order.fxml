@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -211,6 +212,7 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="3.0" prefWidth="3.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -252,7 +254,7 @@
                         <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </JFXCheckBox>
-                  <JFXCheckBox fx:id="mains" mnemonicParsing="false" onAction="#filterItems" selected="true" text="Mains" GridPane.columnIndex="4">
+                  <JFXCheckBox fx:id="mains" mnemonicParsing="false" onAction="#filterItems" selected="true" text="Mains" GridPane.columnIndex="5">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -260,7 +262,7 @@
                         <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </JFXCheckBox>
-                  <JFXCheckBox fx:id="sides" mnemonicParsing="false" onAction="#filterItems" text="Sides" GridPane.columnIndex="5">
+                  <JFXCheckBox fx:id="sides" mnemonicParsing="false" onAction="#filterItems" text="Sides" GridPane.columnIndex="6">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -268,7 +270,7 @@
                         <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </JFXCheckBox>
-                  <JFXCheckBox fx:id="beverages" mnemonicParsing="false" onAction="#filterItems" text="Beverages" GridPane.columnIndex="6">
+                  <JFXCheckBox fx:id="beverages" mnemonicParsing="false" onAction="#filterItems" text="Beverages" GridPane.columnIndex="7">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -276,6 +278,11 @@
                         <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </JFXCheckBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Separator>
                </children>
             </GridPane>
          </top>
