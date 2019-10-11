@@ -28,8 +28,8 @@ import java.util.Map;
 /**
  * This class containing all the methods for data importing and exporting xml files,
  * also includes auto saving methods.
- * 
- * @Author Yu Duan, Daniel Harris
+ *
+ * @author Yu Duan, Daniel Harris
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -41,6 +41,17 @@ public class Database {
     private String saveFileLocation;
     private boolean autosaveEnabled;
     private boolean autoloadEnabled;
+
+    @XmlTransient
+    public static String[] OverwriteTypeNames = {"Delete existing data and add new data",
+            "Merge existing data with new data and replace conflicting data with new data",
+            "Merge existing data with new data and keep old data when conflicting data occurs"};
+    private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
+
+    public static void main(String[] args) {
+        Database thing = new Database();
+        thing.loadAppData();
+    }
 
     public Database() {
     }
@@ -97,12 +108,13 @@ public class Database {
      * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
      * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
      */
-    private HashMap<Ingredient, Integer> getIngredientsFromID(HashMap<String, Integer> IngredientIDs) {
+    private HashMap<Ingredient, Integer> getIngredientsFromID(HashMap<String, Integer> IngredientIDs) throws NullPointerException {
         HashMap<Ingredient, Integer> ingredients = new HashMap<>();
         for (Map.Entry<String, Integer> entry : IngredientIDs.entrySet()) {
             String ID = entry.getKey();
             Integer quantity = entry.getValue();
             Ingredient ingredient = appEnvironment.getStock().getIngredients().get(ID);
+            if (ingredient == null) throw new NullPointerException("Ingredient not present!");
             ingredients.put(ingredient, quantity);
         }
         return ingredients;
@@ -115,7 +127,7 @@ public class Database {
      *
      * @param menuItems Contains the menu items.
      */
-    private void handleMenu(HashMap<String, MenuItem> menuItems) {
+    private void handleMenu(HashMap<String, MenuItem> menuItems) throws NullPointerException {
         for (Map.Entry<String, MenuItem> entry : menuItems.entrySet()) {
             MenuItem menuItem = entry.getValue();
             Recipe recipe = menuItem.getRecipe();
@@ -132,7 +144,7 @@ public class Database {
      *
      * @param transactionItems Contains the menu items.
      */
-    private void handleFinance(HashMap<String, Transaction> transactionItems) {
+    private void handleFinance(HashMap<String, Transaction> transactionItems) throws NullPointerException {
         for (Transaction transaction : transactionItems.values()) {
             for (Map.Entry<MenuItem, Integer> entry : transaction.getOrder().getOrderItems().entrySet()) {
                 MenuItem menuItem = entry.getKey();
@@ -154,6 +166,7 @@ public class Database {
             saveFileLocation = tempDatabase.getSaveFileLocation();
             autoloadEnabled = tempDatabase.isAutoloadEnabled();
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
+            overwriteSetting = tempDatabase.getOverwriteSetting();
             if (autoloadEnabled) {
                 String location = getLocation();
                 File stockFile = new File(location + "/stock.xml");
@@ -166,6 +179,7 @@ public class Database {
             saveFileLocation = "";
             autosaveEnabled = false;
             autoloadEnabled = true;
+            overwriteSetting = OverwriteType.MERGE_PREFER_NEW;
             try {
                 objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
             } catch (JAXBException e1) {
@@ -183,9 +197,32 @@ public class Database {
      */
     public void stockXmlToObject(String fileDirectory) throws Exception {
         try {
-            appEnvironment.setStock((Stock) xmlToObject(Stock.class, "stock.xml", "stock.xsd", fileDirectory));
-            appEnvironment.getOrderManager().setStock(appEnvironment.getStock());
-            appEnvironment.getOrderManager().newOrder();
+            Stock tempStock = (Stock) xmlToObject(Stock.class, "stock.xml", "stock.xsd", fileDirectory);
+            switch (overwriteSetting) {
+                case OVERWRITE_ALL:
+                    break;
+                case MERGE_PREFER_NEW:
+                    for (Map.Entry<String, Ingredient> entry : appEnvironment.getStock().getIngredients().entrySet()) {
+                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {
+                            tempStock.addNewIngredient(entry.getValue());
+                            tempStock.modifyQuantity(entry.getKey(),
+                                    appEnvironment.getStock().getIngredientStock().get(entry.getKey()));
+                        }
+                    }
+                    break;
+                case MERGE_PREFER_OLD:
+                    for (Map.Entry<String, Ingredient> entry : appEnvironment.getStock().getIngredients().entrySet()) {
+                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {
+                            tempStock.addNewIngredient(entry.getValue());
+                        }
+                        tempStock.modifyQuantity(entry.getKey(),
+                                appEnvironment.getStock().getIngredientStock().get(entry.getKey()));
+                    }
+                    break;
+                default:
+                    break;
+            }
+            appEnvironment.setStock(tempStock);
         } catch (JAXBException | SAXException e) {
             throw new Exception("stock.xml file is invalid");
         }
@@ -199,10 +236,34 @@ public class Database {
      */
     public void financeXmlToObject(String fileDirectory) throws Exception {
         try {
-            appEnvironment.setFinance((Finance) xmlToObject(Finance.class, "finance.xml", "finance.xsd", fileDirectory));
-            handleFinance(appEnvironment.getFinance().getTransactionHistory());
+            Finance tempFinance = (Finance) xmlToObject(Finance.class, "finance.xml", "finance.xsd", fileDirectory);
+            handleFinance(tempFinance.getTransactionHistory());
+            switch (overwriteSetting) {
+                case OVERWRITE_ALL:
+                    appEnvironment.setFinance(tempFinance);
+                    return;
+                case MERGE_PREFER_NEW:
+                    for (Map.Entry<String, Transaction> entry : appEnvironment.getFinance().getTransactionHistoryClone().entrySet()) {
+                        if (!tempFinance.getTransactionHistory().containsKey(entry.getKey())) {
+                            tempFinance.getTransactionHistory().put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    break;
+                case MERGE_PREFER_OLD:
+                    for (Map.Entry<String, Transaction> entry : appEnvironment.getFinance().getTransactionHistoryClone().entrySet()) {
+                        if (!tempFinance.getTransactionHistory().containsKey(entry.getKey())) {
+                            tempFinance.getTransactionHistory().put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            appEnvironment.setFinance(tempFinance);
         } catch (JAXBException | SAXException e) {
             throw new Exception("finance.xml file is invalid");
+        } catch (NullPointerException ignored) {
         }
     }
 
@@ -214,10 +275,30 @@ public class Database {
      */
     public void menuXmlToObject(String fileDirectory) throws Exception {
         try {
-            appEnvironment.setMenuManager((MenuManager) xmlToObject(MenuManager.class, "menu.xml", "menu.xsd", fileDirectory));
-            handleMenu(appEnvironment.getMenuManager().getMenuItems());
+            MenuManager tempMenu = (MenuManager) xmlToObject(MenuManager.class, "menu.xml", "menu.xsd", fileDirectory);
+            handleMenu(tempMenu.getMenuItems());
+            switch (overwriteSetting) {
+                case OVERWRITE_ALL:
+                    break;
+                case MERGE_PREFER_NEW:
+                    for (Map.Entry<String, MenuItem> entry : appEnvironment.getMenuManager().getItemMap().entrySet()) {
+                        if (!tempMenu.getItemMap().containsKey(entry.getKey())) {
+                            tempMenu.addItem(entry.getValue());
+                        }
+                    }
+                    break;
+                case MERGE_PREFER_OLD:
+                    for (Map.Entry<String, MenuItem> entry : appEnvironment.getMenuManager().getItemMap().entrySet()) {
+                        tempMenu.getItemMap().put(entry.getKey(), entry.getValue());
+                    }
+                    break;
+                default:
+                    break;
+            }
+            appEnvironment.setMenuManager(tempMenu);
         } catch (JAXBException | SAXException e) {
             throw new Exception("menu.xml file is invalid");
+        } catch (NullPointerException ignored) {
         }
     }
 
@@ -232,7 +313,6 @@ public class Database {
             objectToXml(Stock.class, appEnvironment.getStock(), "stock.xml", fileDirectory);
             objectToXml(Finance.class, appEnvironment.getFinance(), "finance.xml", fileDirectory);
             objectToXml(MenuManager.class, appEnvironment.getMenuManager(), "menu.xml", fileDirectory);
-            objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
         } catch (JAXBException e) {
             throw new Exception(e);
         }
@@ -253,6 +333,8 @@ public class Database {
             stockXmlToObject(fileMap.get("stock.xml").getParent());
             menuXmlToObject(fileMap.get("menu.xml").getParent());
             financeXmlToObject(fileMap.get("finance.xml").getParent());
+
+
         } catch (Exception e) {
             appEnvironment.setStock(oldStock);
             appEnvironment.setMenuManager(oldMenu);
@@ -307,8 +389,23 @@ public class Database {
         return saveFileLocation;
     }
 
+    public OverwriteType getOverwriteSetting() {
+        return overwriteSetting;
+    }
+
+    public void setOverwriteSetting(OverwriteType newSetting) {
+        overwriteSetting = newSetting;
+    }
+
     public void setAppEnvironment(AppEnvironment appEnvironment) {
         this.appEnvironment = appEnvironment;
+    }
+
+    @XmlTransient
+    public enum OverwriteType {
+        OVERWRITE_ALL,
+        MERGE_PREFER_NEW,
+        MERGE_PREFER_OLD
     }
 
 }

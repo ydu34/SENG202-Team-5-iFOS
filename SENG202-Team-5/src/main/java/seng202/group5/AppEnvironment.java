@@ -32,8 +32,10 @@ public class AppEnvironment {
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
         idGenerator = new IDGenerator();
-        database = new Database(this);
+
         imagesFolderPath = "";
+        // Do not set any management classes after this
+        database = new Database(this);
     }
 
     @Deprecated(since = "For testing use only")
@@ -88,6 +90,7 @@ public class AppEnvironment {
     public void setStock(Stock stock) {
         this.stock = stock;
         orderManager.setStock(stock);
+        orderManager.newOrder();
     }
 
     public Finance getFinance() {

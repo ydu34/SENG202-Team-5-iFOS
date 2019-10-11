@@ -14,6 +14,8 @@ import java.util.*;
 
 /**
  * Finance class records order history, refunds past orders and calculates change.
+ *
+ * @author Tasman Berry, Daniel Harris
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -31,24 +33,16 @@ public class Finance {
      * A list of cash denominations available
      */
     @XmlTransient
-    private static ArrayList<Money> denomination;
+    private static ArrayList<Money> denomination = new ArrayList<>(Arrays.asList(Money.parse("NZD 100.00"),
+            Money.parse("NZD 50.00"), Money.parse("NZD 20.00"), Money.parse("NZD 10.00"),
+            Money.parse("NZD 5.00"), Money.parse("NZD 2.00"), Money.parse("NZD 1.00"),
+            Money.parse("NZD 0.50"), Money.parse("NZD 0.20"), Money.parse("NZD 0.10")));
     @XmlElement
     private Till till;
     
 
     public Finance() {
         transactionHistory = new HashMap<>();
-        denomination = new ArrayList<>();
-        denomination.add(Money.parse("NZD 100.00"));
-        denomination.add(Money.parse("NZD 50.00"));
-        denomination.add(Money.parse("NZD 20.00"));
-        denomination.add(Money.parse("NZD 10.00"));
-        denomination.add(Money.parse("NZD 5.00"));
-        denomination.add(Money.parse("NZD 2.00"));
-        denomination.add(Money.parse("NZD 1.00"));
-        denomination.add(Money.parse("NZD 0.50"));
-        denomination.add(Money.parse("NZD 0.20"));
-        denomination.add(Money.parse("NZD 0.10"));
         till = new Till(denomination);
     }
 
