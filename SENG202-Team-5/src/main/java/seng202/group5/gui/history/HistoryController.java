@@ -80,11 +80,6 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableColumn<Transaction, JFXButton> rowAction;
 
-    /**
-     * A map from order IDs to the related transactions
-     */
-    private HashMap<String, Transaction> orderIDTransactionIndex;
-
     public void initialize() {
         setStartDateUpdater();
         setEndDateUpdater();
@@ -103,34 +98,36 @@ public class HistoryController extends GeneralController {
             }
         });
 
-        orderIDTransactionIndex = new HashMap<>();
-        for (Transaction transaction : getAppEnvironment().getFinance().getTransactionHistoryClone().values()) {
-            orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
-        }
 
-        // This sets the factories for creating values to display for each order
+        // Setting the factories for creating values to display for each order
         rowID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getDateTime().toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));
+
         rowTime.setCellValueFactory(cellData -> {
             LocalTime time = cellData.getValue().getDateTime().toLocalTime();
             time = time.minusSeconds(time.getSecond());
             time = time.minusNanos(time.getNano());
             return new ReadOnlyStringWrapper(time.toString());
         });
+
         rowOrder.setCellValueFactory(cellData -> {
             String output = cellData.getValue().getOrder().printReceipt();
             output = output.replace("\n", ", ");
             return new ReadOnlyStringWrapper(output);
         });
+
         rowCost.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+
         // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
             JFXButton refundButton = new JFXButton("Refund");
             Order order = param.getValue().getOrder();
             // Disable the button if the order cannot be refunded
-            if (orderIDTransactionIndex.containsKey(order.getId())) {
-                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
+            HashMap<String, Transaction> transactions = getAppEnvironment().getFinance().getTransactionHistory();
+            if (transactions.containsKey(order.getId())) {
+                refundButton.setDisable(transactions.get(order.getId()).isRefunded());
             } else {
                 refundButton.setDisable(true);
             }
