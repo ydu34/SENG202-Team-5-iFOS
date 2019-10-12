@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -225,7 +226,7 @@
                 </GridPane>
             </children>
         </GridPane>
-        <GridPane GridPane.rowIndex="1">
+        <GridPane fx:id="navGridPane" GridPane.rowIndex="1">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="100.0" />
@@ -237,11 +238,23 @@
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <JFXButton fx:id="launchOrderScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Order" GridPane.hgrow="ALWAYS" />
-                <JFXButton disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                <JFXButton fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
-                <JFXButton fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" prefWidth="160.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" />
-                <JFXButton fx:id="launchAdminScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+                <Button fx:id="launchOrderButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" text="Order" GridPane.hgrow="ALWAYS" />
+                <Button fx:id="launchInvoiceButton" disable="true" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" text="Invoice" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Button>
+                <Button fx:id="launchStockScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" text="Stock" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Button>
+                <Button fx:id="launchAdminScreenButtton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" text="Admin" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Button>
+                <Button fx:id="launchHistoryScreenButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#launchHistoryScreen" prefHeight="60.0" text="History" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Button>
             </children>
         </GridPane>
     </children>

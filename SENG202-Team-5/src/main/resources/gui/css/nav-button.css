@@ -1,0 +1,21 @@
+/* Author Yu Duan */
+
+#navGridPane .button
+{
+    -fx-background-color: rgba(249, 172, 104, 1);
+    -fx-text-fill: rgba(58, 62, 89, 1);
+    -fx-font-size: 18;
+    -fx-border-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-insets: 2;
+    -fx-background-insets: 2;
+}
+
+#navGridPane .button:disabled {
+    -fx-opacity: 1;
+    -fx-background-color: #fbc99d;
+}
+
+#navGridPane .button:hover {
+    -fx-background-color: #f68523;
+}
