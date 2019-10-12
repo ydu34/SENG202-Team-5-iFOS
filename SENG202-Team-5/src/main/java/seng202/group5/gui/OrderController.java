@@ -379,7 +379,6 @@ public class OrderController extends GeneralController {
      */
     @FXML
     private void cancelCurrentOrder() {
-        //TODO Needs to unfocus whatever item is select and reset the corresponding tables
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
@@ -408,7 +407,7 @@ public class OrderController extends GeneralController {
      * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
      * @param actionEvent an event that caused this to happen
      */
-    public void launchAddExtraIngredientScreen(ActionEvent actionEvent) {
+    public void addExtraIngredientScreen(ActionEvent actionEvent) {
         AddExtraIngredientController controller =
                 (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
         MenuItem currentItem = currentOrderTable.getSelectionModel().getSelectedItem();

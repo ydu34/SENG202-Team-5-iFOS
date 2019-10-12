@@ -21,6 +21,8 @@ public class Customer {
 
     private int purchasePoints = 10;
 
+    public Customer() {}
+
     public Customer(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
