@@ -137,6 +137,10 @@ public class Finance {
 
     /**
      * returns a list containing total profits, average profits, and other information to be displayed on the finance screen over the imputed time period
+     * Index 0: Total income before expenses
+     * Index 1: Average daily income before expenses
+     * Index 2: Total profits
+     * Index 3: Average daily profits
      *
      * @param startDate the first date to search from
      * @param endDate   the last date to search to

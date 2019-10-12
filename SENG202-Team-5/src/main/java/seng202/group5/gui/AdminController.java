@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
@@ -17,11 +19,13 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
+import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.Till;
 
@@ -89,6 +93,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Text financeWarningText;
+
+    @FXML
+    private LineChart<String, Integer> financeGraph;
 
     @FXML
     private Button addButton;
@@ -179,9 +186,11 @@ public class AdminController extends GeneralController {
     public void pseudoInitialize() {
         super.pseudoInitialize();
         finance = getAppEnvironment().getFinance();
+        financeInitialize();
+        viewHistory();
+
         recipeTableInitialize();
         fileMap = new HashMap<>();
-        viewHistory();
 
         // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
@@ -315,7 +324,90 @@ public class AdminController extends GeneralController {
         } else {
             saleSummaryText.setText("End date is before start date");
         }
+        updateFinanceGraph();
+    }
 
+    /**
+     * Initializes the start date and end date pickers for the finance tab
+     */
+    private void financeInitialize() {
+        LocalDate minDate = LocalDate.MAX;
+        LocalDate maxDate = LocalDate.MIN;
+        for (Transaction transaction : finance.getTransactionHistory().values()) {
+            if (transaction.getDateTime().toLocalDate().isBefore(minDate))
+                minDate = transaction.getDateTime().toLocalDate();
+            if (transaction.getDateTime().toLocalDate().isAfter(maxDate))
+                maxDate = transaction.getDateTime().toLocalDate();
+        }
+        startDate.setValue(minDate);
+        endDate.setValue(maxDate);
+        startDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate tempEndDate = endDate.getValue();
+                startDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
+                if (tempEndDate == null) {
+                    setDisable(empty);
+                } else {
+                    setDisable(empty || date.isAfter(tempEndDate));
+                }
+            }
+        });
+        startDate.setConverter(new LocalDateStringConverter() {
+            @Override
+            public LocalDate fromString(String input) {
+                LocalDate date = super.fromString(input);
+                LocalDate tempEndDate = endDate.getValue();
+                if (tempEndDate != null && date.isAfter(tempEndDate)) {
+                    date = tempEndDate;
+                }
+                return date;
+            }
+        });
+
+        endDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate tempStartDate = startDate.getValue();
+                endDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
+                if (tempStartDate == null) {
+                    setDisable(empty);
+                } else {
+                    setDisable(empty || date.isBefore(tempStartDate));
+                }
+            }
+        });
+        endDate.setConverter(new LocalDateStringConverter() {
+            @Override
+            public LocalDate fromString(String input) {
+                LocalDate date = super.fromString(input);
+                LocalDate tempStartDate = startDate.getValue();
+                if (tempStartDate != null && date.isBefore(tempStartDate)) {
+                    date = tempStartDate;
+                }
+                return date;
+            }
+        });
+    }
+
+    /**
+     * Updates the graph containing profits for the specified period
+     */
+    private void updateFinanceGraph() {
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        startDate.getValue().datesUntil(endDate.getValue().plusDays(1))
+                .forEach((date) -> series.getData().add(new XYChart.Data<>(DateTimeFormatter.ofPattern("dd-MM").format(date),
+                        finance.totalCalculator(LocalDateTime.of(date, LocalTime.MIN),
+                                LocalDateTime.of(date, LocalTime.MAX)).get(2).getAmountMajorInt())));
+        financeGraph.setCreateSymbols(false);
+        financeGraph.getData().clear();
+        financeGraph.getData().add(series);
+        financeGraph.setTitle(String.format("Total profits in NZD from %s to %s",
+                DateTimeFormatter.ofPattern("dd-MM-yy").format(startDate.getValue()),
+                DateTimeFormatter.ofPattern("dd-MM-yy").format(endDate.getValue())));
+        financeGraph.setLegendVisible(false);
     }
 
     /**
