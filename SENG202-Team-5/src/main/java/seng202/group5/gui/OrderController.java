@@ -7,8 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -17,6 +20,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -25,6 +30,7 @@ import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.Order;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -82,16 +88,10 @@ public class OrderController extends GeneralController {
     private Text costText;
 
     @FXML
-    private Spinner<Integer> quantitySpinner;
-
-    @FXML
     private Text menuItemName;
 
     @FXML
-    private Button addItemButton;
-
-    @FXML
-    private Button addExtraIngredient;
+    private JFXButton modifyIngredientsButton;
 
     @FXML
     private TilePane tilePane;
@@ -146,8 +146,6 @@ public class OrderController extends GeneralController {
 
         currentOrderTable();
         orderIDText.setText(currentOrder.getId());
-        addItemButton.setDisable(true);
-        addExtraIngredient.setDisable(true);
 
         tilePaneContainer.widthProperty().addListener((width) -> {
             double newWidth = tilePaneContainer.getWidth();
@@ -155,6 +153,18 @@ public class OrderController extends GeneralController {
             tilePane.setPrefWidth(newWidth);
             tilePane.setMaxWidth(newWidth);
         });
+        modifyIngredientsButton.setDisable(true);
+        currentOrderTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                recipeText.setText("");
+                ingredientInfoTable.getItems().clear();
+            } else {
+                item = newValue;
+                recipeText.setText(newValue.getRecipe().getRecipeText());
+                populateIngredientsTable();
+                modifyIngredientsButton.setDisable(false);
+            }
+        }));
     }
 
     /**
@@ -210,7 +220,7 @@ public class OrderController extends GeneralController {
 
                 tempButton.setGraphic(imageView);
                 TilePane.setMargin(tempButton, new Insets(5));
-                tempButton.setOnAction((ActionEvent event) -> setMenuItem(item));
+                tempButton.setOnAction((ActionEvent event) -> addItemToOrder(item));
                 buttons.add(tempButton);
             }
         }
@@ -293,46 +303,38 @@ public class OrderController extends GeneralController {
         }
 
         filteredItems = filteredMenuItems;
-
         populateTilePane(filteredMenuItems);
 
     }
 
     /**
-     * Updates the given selected item in the order.
+     * Updates the display with items using the selected item.
      *
      * @param newItem the new item with updated quantities and categories.
      */
     public void setMenuItem(MenuItem newItem) {
-
         item = newItem;
-        populateIngredientsTable();
-        addItemButton.setDisable(false);
-        addExtraIngredient.setDisable(false);
-        totalCostDisplay.setText(item.calculateFinalCost().multipliedBy(quantitySpinner.getValue()).getAmount().toString());
-        menuItemName.setText(item.getItemName());
-        recipeText.setText(newItem.getRecipe().getRecipeText());
+        for (int i = 0; i < currentOrderTable.getItems().size(); i++) {
+            if (currentOrderTable.getItems().get(i).equals(newItem))
+                currentOrderTable.getSelectionModel().select(i);
+        }
+        totalCostDisplay.setText(currentOrder.getTotalCost().toString());
     }
 
     /**
      * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
      * Otherwise displays the appropriate message if the order can/cannot be added.
+     * Calls setMenuItem() if adding the item is successful.
      */
-    public void addItemToOrder() {
-        Integer quantity = quantitySpinner.getValue();
-        if (currentOrder.addItem(item, quantity)) {
-
-            promptText.setText(quantity + " x " + item.getItemName() + " added to the current order.");
+    public void addItemToOrder(MenuItem item) {
+        if (currentOrder.addItem(item, 1)) {
+            promptText.setText(item.getItemName() + " was added to the current order.");
             promptText.setFill(Color.GREEN);
-            //pseudoInitialize();
             currentOrderTable();
-
-
-       }
-       else{
+            setMenuItem(item);
+       } else {
            promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
            promptText.setFill(Color.RED);
-
        }
     }
 
@@ -350,24 +352,8 @@ public class OrderController extends GeneralController {
             return new SimpleStringProperty(Integer.toString(quantity));
         });
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
+        ingredientInfoTable.refresh();
 
-    }
-
-
-    /**
-     * This method launches the screen for adding extra ingredients to the selected menu item and
-     * passes the item and order from the current class to the controller
-     *
-     * @param event an event that caused this to happen
-     * @param scenePath the path to the screen file
-     */
-    public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
-        AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);
-        controller.setMenuItem(item);
-        controller.setCurrentOrder(currentOrder);
-        controller.setOpenMode("Order");
-        controller.updateStock();
-        controller.initializeTable();
     }
 
     /**
@@ -375,7 +361,6 @@ public class OrderController extends GeneralController {
      */
 
     public void currentOrderTable() {
-//        int quantity = 0;
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -394,7 +379,6 @@ public class OrderController extends GeneralController {
      */
     @FXML
     private void cancelCurrentOrder() {
-
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
@@ -411,21 +395,27 @@ public class OrderController extends GeneralController {
      */
     @FXML
     private void removeSelectedItem(javafx.event.ActionEvent actionEvent ) {
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
         someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
         if(someOrder == true){
             removeItemButton.setDisable(false);
         }
-
     }
 
-    /**
-     * This method launches the addExtraIngredient Screen.
-     * @param actionEvent
-     */
 
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+    /**
+     * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
+     * @param actionEvent an event that caused this to happen
+     */
+    public void addExtraIngredientScreen(ActionEvent actionEvent) {
+        AddExtraIngredientController controller =
+                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        MenuItem currentItem = currentOrderTable.getSelectionModel().getSelectedItem();
+        controller.setMenuItem(currentItem);
+        controller.setCurrentOrder(currentOrder);
+        controller.updateStock();
+        controller.setOpenMode("Order");
+        controller.initializeTable();
     }
 
     /**

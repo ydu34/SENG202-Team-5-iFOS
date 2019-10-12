@@ -103,4 +103,13 @@ public class Till {
         return denominations;
     }
 
+
+    /**
+     * Copies the current till.
+     * @return A new till with a copy of the denominations.
+     */
+    public Till clone() {
+        return new Till((HashMap<Money, Integer>) denominations.clone());
+    }
+
 }

@@ -2,10 +2,10 @@
 <stock>
     <generator>
         <ingredientID>12</ingredientID>
-        <menuItemID>10</menuItemID>
-        <orderID>5</orderID>
-        <transactionID>0</transactionID>
-        <customerID>0</customerID>
+        <menuItemID>9</menuItemID>
+        <orderID>3</orderID>
+        <transactionID>10</transactionID>
+        <customerID>10</customerID>
     </generator>
     <ingredients>
         <entry>
@@ -14,17 +14,6 @@
                 <name>Vegetarian Patty</name>
                 <category>patty</category>
                 <price>NZD 0.90</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
-            </value>
-        </entry>
-        <entry>
-            <key>25</key>
-            <value id="25">
-                <name>Lettuce Piece</name>
-                <category>vegetable</category>
-                <price>NZD 0.10</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
@@ -48,6 +37,17 @@
                 <category>Meat</category>
                 <price>NZD 0.60</price>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>25</key>
+            <value id="25">
+                <name>Lettuce Piece</name>
+                <category>vegetable</category>
+                <price>NZD 0.10</price>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -140,23 +140,23 @@
     <ingredientStock>
         <entry>
             <key>11</key>
-            <value>19</value>
-        </entry>
-        <entry>
-            <key>25</key>
-            <value>59</value>
+            <value>20</value>
         </entry>
         <entry>
             <key>1</key>
-            <value>47</value>
+            <value>49</value>
         </entry>
         <entry>
             <key>2</key>
-            <value>48</value>
+            <value>49</value>
+        </entry>
+        <entry>
+            <key>25</key>
+            <value>60</value>
         </entry>
         <entry>
             <key>3</key>
-            <value>9996</value>
+            <value>9998</value>
         </entry>
         <entry>
             <key>4</key>
@@ -164,7 +164,7 @@
         </entry>
         <entry>
             <key>5</key>
-            <value>54</value>
+            <value>58</value>
         </entry>
         <entry>
             <key>6</key>
@@ -172,7 +172,7 @@
         </entry>
         <entry>
             <key>7</key>
-            <value>98</value>
+            <value>99</value>
         </entry>
         <entry>
             <key>8</key>
