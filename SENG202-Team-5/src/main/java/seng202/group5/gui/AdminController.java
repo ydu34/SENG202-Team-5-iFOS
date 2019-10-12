@@ -22,8 +22,6 @@ import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
-import seng202.group5.logic.MenuManager;
-import seng202.group5.logic.Stock;
 import seng202.group5.logic.Till;
 
 import java.io.File;
@@ -236,10 +234,11 @@ public class AdminController extends GeneralController {
      * If an order is in progress disable buttons on admin screen.
      */
     public void checkIfOrderInProgress() {
+
         try {
+            System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
                 infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
-                warningText.setText("Can not Import/Export data when Order is in progress.");
                 selectFinanceButton.setDisable(true);
                 selectMenuButton.setDisable(true);
                 selectStockButton.setDisable(true);
