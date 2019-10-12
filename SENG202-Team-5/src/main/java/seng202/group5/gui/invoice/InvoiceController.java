@@ -51,13 +51,10 @@ public class InvoiceController extends GeneralController {
     private Label totalCostLabel;
 
     @FXML
+    private Label discountLabel;
+
+    @FXML
     private Label currentlyPayedLabel;
-
-    @FXML
-    private Text denomDollarLabel;
-
-    @FXML
-    private Text denomCentLabel;
 
     @FXML
     private Label warningLabel;
@@ -69,10 +66,22 @@ public class InvoiceController extends GeneralController {
     private Label customerPointsLabel;
 
     @FXML
+    private Text denomDollarLabel;
+
+    @FXML
+    private Text denomCentLabel;
+
+    @FXML
     private Button removeItem;
 
     @FXML
     private Button payCashButton;
+
+    @FXML
+    private Button existingMemberButton;
+
+    @FXML
+    private Button newMemberButton;
 
     private HashMap<Money, Integer> currentPayment = new HashMap<>();
 
@@ -85,6 +94,8 @@ public class InvoiceController extends GeneralController {
     private Map<MenuItem, Integer> orderItemsMap;
 
     private Customer currentCustomer;
+
+    private int customerPoints;
 
 
     /**
@@ -114,8 +125,12 @@ public class InvoiceController extends GeneralController {
 
         // If a customer exists, displays information about the customer
         if (currentCustomer != null) {
-            customerNameLabel.setText("Currently Selected Member: " + currentCustomer.getName());
+            customerNameLabel.setText("Selected Member: " + currentCustomer.getName());
             customerPointsLabel.setText("Current Points: " + currentCustomer.getPurchasePoints());
+
+            // Change button labels to when a customer exists
+            existingMemberButton.setText("Clear Selected Member");
+            newMemberButton.setText("Apply Discount");
         }
 
         // Disabling payCashButton
@@ -151,68 +166,123 @@ public class InvoiceController extends GeneralController {
 
     /**
      * Opens a screen to search and choose and existing member of the loyalty club.
+     * Or if a customer already exists, it clears the selected customer.
      */
     @FXML
     private void existingMember() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/existingCustomer.fxml"));
-            Parent root = loader.load();
+        if (currentCustomer != null) {
+            clearSelectedMember();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/existingCustomer.fxml"));
+                Parent root = loader.load();
 
-            ExistingCustomerController controller = loader.getController();
+                ExistingCustomerController controller = loader.getController();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root, 545, 650));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Find an existing Member!");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root, 545, 650));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Find an existing Member!");
 
-            // Set AppEnvironment so that it can change the current customer
-            controller.setAppEnvironment(getAppEnvironment());
-            controller.pseudoInitialize();
+                // Set AppEnvironment so that it can change the current customer
+                controller.setAppEnvironment(getAppEnvironment());
+                controller.pseudoInitialize();
 
-            // Waits for the window to close before reinitialising
-            stage.showAndWait();
-            pseudoInitialize();
-        } catch (IOException e) {
-            e.printStackTrace();
+                // Waits for the window to close before reinitialising
+                stage.showAndWait();
+                pseudoInitialize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /**
      * This method opens the menu for a new Member.
+     * Or if a customer is already a part of the order, it opens the Apply Discount screen.
      */
     @FXML
     private void newMember() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/newCustomer.fxml"));
-            Parent root = loader.load();
+        if (currentCustomer != null) {
+            applyDiscount();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/newCustomer.fxml"));
+                Parent root = loader.load();
 
-            NewCustomerController controller = loader.getController();
+                NewCustomerController controller = loader.getController();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root, 600, 400));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Create a new Member!");
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root, 600, 400));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Create a new Member!");
 
-            controller.pseudoInitialize();
+                controller.pseudoInitialize();
 
-            stage.showAndWait();
+                stage.showAndWait();
 
-            // If a new customer was created, show that information on the screen
-            Customer customer = controller.getCustomer();
-            if (customer != null) {
-                // Sets the currentCustomer of the order to the new one
-                currentOrder.setCurrentCustomer(customer);
-                currentCustomer = customer;
+                // If a new customer was created, show that information on the screen
+                Customer customer = controller.getCustomer();
+                if (customer != null) {
+                    // Sets the currentCustomer of the order to the new one
+                    currentOrder.setCurrentCustomer(customer);
 
-                // Displays customer information
-                customerNameLabel.setText("Currently Selected: " + customer.getName());
-                customerPointsLabel.setText("Current Points: " + customer.getPurchasePoints());
+                    pseudoInitialize();
+                }
 
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    public void applyDiscount() {
+        if (currentOrder.getOrderItems().isEmpty()) {
+            warningLabel.setTextFill(Color.RED);
+            warningLabel.setText("There is no order to discount!");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/applyDiscount.fxml"));
+                Parent root = loader.load();
+
+                ApplyDiscountController controller = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root, 600, 400));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Apply a discount!");
+
+                controller.setAppEnvironment(getAppEnvironment());
+                controller.setCustomer(currentCustomer);
+                controller.setMaxPrice(currentOrder.getTotalCost().minus(total));
+                controller.pseudoInitialize();
+
+                stage.showAndWait();
+
+                // Set the discount
+                Money moneySaved = controller.getMoneySaved();
+                currentOrder.setDiscount(moneySaved);
+
+                customerPoints = controller.getPoints();
+                discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
+                totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+                pseudoInitialize();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    public void clearSelectedMember() {
+        currentOrder.setCurrentCustomer(null);
+        currentCustomer.addPurchasePoints(customerPoints);
+        currentCustomer = null;
+        customerPoints = 0;
+        // Clear labels
+        discountLabel.setText("$0.00");
+        customerNameLabel.setText("");
+        customerPointsLabel.setText("");
+        existingMemberButton.setText("Existing Member");
+        newMemberButton.setText("New Member");
     }
 
     /**
@@ -227,6 +297,7 @@ public class InvoiceController extends GeneralController {
 
             // Refresh table
             pseudoInitialize();
+            cancelOrder();
             clearPayment();
         } catch (InsufficientCashException e) { ;
         warningLabel.setTextFill(Color.RED);
@@ -310,6 +381,9 @@ public class InvoiceController extends GeneralController {
             Money money = Money.parse("NZD " + 0.01 * value);
             total = total.plus(money);
 
+            // Minus the money from the visual total
+            totalCostLabel.setText("$" + Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("[^\\d.]", ""));
+
             // Adding money to a HashSet containing it's quantity
             if (currentPayment.containsKey(money)) {
                 currentPayment.replace(money, currentPayment.get(money) + 1);
@@ -357,6 +431,8 @@ public class InvoiceController extends GeneralController {
             currentOrder.clearItemsInOrder();
 
             // Clear customer labels
+            discountLabel.setText("$0.00");
+            customerPoints = 0;
             currentCustomer = null;
             customerNameLabel.setText("");
             customerPointsLabel.setText("");

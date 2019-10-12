@@ -57,6 +57,12 @@ public class Order {
     private Customer currentCustomer;
 
     /**
+     * The discount if it exists, for the order.
+     */
+    @XmlTransient
+    private Money discount = Money.parse("NZD 0");
+
+    /**
      * The Stock to update when creating this order
      */
     @XmlTransient
@@ -290,7 +296,7 @@ public class Order {
      * @return the totalCost of the order.
      */
     public Money getTotalCost() {
-        return totalCost;
+        return totalCost.minus(discount);
     }
 
     /**
@@ -301,6 +307,12 @@ public class Order {
     public Stock getStock() {
         return temporaryStock;
     }
+
+    /**
+     * Returns the discount.
+     * @return A money type discount.
+     */
+    public Money getDiscount() { return discount; }
 
     /**
      * Sets the id of the order. Not necessary since it creates a new ID when initialised.
@@ -321,4 +333,10 @@ public class Order {
      * @param customer The new customer of the order.
      */
     public void setCurrentCustomer(Customer customer) { currentCustomer = customer; }
+
+    /**
+     * Sets the discount for the order.
+     * @param tempMoney The money saved.
+     */
+    public void setDiscount(Money tempMoney) { discount = tempMoney; }
 }
