@@ -401,13 +401,16 @@ public class OrderController extends GeneralController {
      * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
      * @param actionEvent an event that caused this to happen
      */
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+    public void launchAddExtraIngredientScreen(ActionEvent actionEvent) {
         AddExtraIngredientController controller =
                 (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
         controller.setMenuItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        controller.setCurrentOrder(currentOrder);
+        controller.updateStock();
         controller.setOpenMode("Order");
         controller.initializeTable();
     }
+
     /**
      * A method to set the current order for the alternate order screen in history
      *

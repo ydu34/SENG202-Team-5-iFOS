@@ -152,7 +152,7 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <JFXButton fx:id="modifyIngredientsButton" maxHeight="-Infinity" minWidth="-Infinity" onAction="#selectModifiableItemsScreen" prefHeight="40.0" prefWidth="222.0" text="Modify Ingredients" />
+                        <JFXButton fx:id="modifyIngredientsButton" maxHeight="-Infinity" minWidth="-Infinity" onAction="#launchAddExtraIngredientScreen" prefHeight="40.0" prefWidth="222.0" text="Modify Ingredients" />
                         <GridPane fx:id="bottomRightGridPane" prefWidth="300.0" VBox.vgrow="NEVER">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="155.0" />
