@@ -153,12 +153,16 @@ public class OrderController extends GeneralController {
             tilePane.setPrefWidth(newWidth);
             tilePane.setMaxWidth(newWidth);
         });
-
+        modifyIngredientsButton.setDisable(true);
         currentOrderTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 recipeText.setText("");
+                ingredientInfoTable.getItems().clear();
             } else {
+                item = newValue;
                 recipeText.setText(newValue.getRecipe().getRecipeText());
+                populateIngredientsTable();
+                modifyIngredientsButton.setDisable(false);
             }
         }));
     }
@@ -310,9 +314,11 @@ public class OrderController extends GeneralController {
      */
     public void setMenuItem(MenuItem newItem) {
         item = newItem;
-        populateIngredientsTable();
+        for (int i = 0; i < currentOrderTable.getItems().size(); i++) {
+            if (currentOrderTable.getItems().get(i).equals(newItem))
+                currentOrderTable.getSelectionModel().select(i);
+        }
         totalCostDisplay.setText(currentOrder.getTotalCost().toString());
-        recipeText.setText(newItem.getRecipe().getRecipeText());
     }
 
     /**
@@ -346,6 +352,7 @@ public class OrderController extends GeneralController {
             return new SimpleStringProperty(Integer.toString(quantity));
         });
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
+        ingredientInfoTable.refresh();
 
     }
 
@@ -389,7 +396,7 @@ public class OrderController extends GeneralController {
      */
     @FXML
     private void removeSelectedItem(javafx.event.ActionEvent actionEvent ) {
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
         someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
         if(someOrder == true){
             removeItemButton.setDisable(false);
@@ -404,7 +411,8 @@ public class OrderController extends GeneralController {
     public void launchAddExtraIngredientScreen(ActionEvent actionEvent) {
         AddExtraIngredientController controller =
                 (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-        controller.setMenuItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        MenuItem currentItem = currentOrderTable.getSelectionModel().getSelectedItem();
+        controller.setMenuItem(currentItem);
         controller.setCurrentOrder(currentOrder);
         controller.updateStock();
         controller.setOpenMode("Order");

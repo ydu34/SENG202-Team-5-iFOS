@@ -86,12 +86,28 @@ public class OrderTest {
         order.addItem(item, 1);
 
 
-        assertTrue(order.removeItem(item));
+        assertTrue(order.removeItem(item, true));
 
         assertEquals(order.getStock().getIngredientQuantity("ABC123"), 1);
 
-        assertFalse(order.removeItem(item));
+        assertFalse(order.removeItem(item, true));
+    }
 
+    @Test
+    public void testOneRemoveItemRemovesItemFromOrder() {
+        Ingredient ingredient = new Ingredient("Name", "Cate", "ABC123", Money.parse("NZD 10.0"));
+        MenuItem item = new MenuItem();
+
+        HashMap<String, Ingredient> ingredientStock = new HashMap<String, Ingredient>();
+        ingredientStock.put(ingredient.getID(), ingredient);
+        HashMap<String, Integer> numberStock = new HashMap<String, Integer>();
+        numberStock.put(ingredient.getID(), 1);
+        Stock stock = new Stock(ingredientStock, numberStock);
+
+        order = new Order(stock);
+        order.addItem(item, 5);
+        order.removeItem(item, false);
+        assertEquals(4, order.getOrderItems().get(item));
     }
 
     @Test

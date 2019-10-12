@@ -203,7 +203,7 @@ public class InvoiceController extends GeneralController {
      */
     @FXML
     private void deleteRowFromTable(javafx.event.ActionEvent actionEvent ) {
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
         someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
         if(someOrder == true){
             removeItem.setDisable(false);

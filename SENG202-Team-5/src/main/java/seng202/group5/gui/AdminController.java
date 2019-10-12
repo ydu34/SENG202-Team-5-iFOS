@@ -208,7 +208,6 @@ public class AdminController extends GeneralController {
                 infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
                 warningText.setText("Can not Import/Export data when Order is in progress.");
                 selectFinanceButton.setDisable(true);
-                selectHistoryButton.setDisable(true);
                 selectMenuButton.setDisable(true);
                 selectStockButton.setDisable(true);
                 exportDataButton.setDisable(true);

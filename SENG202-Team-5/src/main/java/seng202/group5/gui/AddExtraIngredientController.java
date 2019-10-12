@@ -157,14 +157,21 @@ public class AddExtraIngredientController extends GeneralController {
     public void updateItemIngredients(ActionEvent actionEvent) {
         switch (openMode) {
             case "Order": {
-                OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
                 MenuItem originalItem = getOriginalItem();
                 if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
                     selectedItem.setEdited(false);
                 } else {
                     selectedItem.setEdited(true);
                 }
+                if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
+                    currentOrder.removeItem(oldItem, false);
+                    currentOrder.addItem(selectedItem, 1);
+                }
+
+                OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+                controller.setCurrentOrder(currentOrder);
                 controller.setMenuItem(selectedItem);
+                controller.populateIngredientsTable();
                 break;
             }
             case "Recipe": {
