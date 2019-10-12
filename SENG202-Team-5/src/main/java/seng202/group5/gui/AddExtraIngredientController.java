@@ -163,6 +163,7 @@ public class AddExtraIngredientController extends GeneralController {
                 } else {
                     selectedItem.setEdited(true);
                 }
+
                 if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
                     currentOrder.removeItem(oldItem, false);
                     currentOrder.addItem(selectedItem, 1);

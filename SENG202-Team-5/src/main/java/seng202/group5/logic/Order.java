@@ -200,6 +200,9 @@ public class Order {
             } else {
                 int oldCount = orderItems.get(item);
                 orderItems.replace(item, oldCount, oldCount -1);
+                if (orderItems.get(item) == 0) {
+                    orderItems.remove(item);
+                }
             }
             // Minuses the price of the item from the total cost
             totalCost = totalCost.minus(item.calculateFinalCost().multipliedBy(quantity));
