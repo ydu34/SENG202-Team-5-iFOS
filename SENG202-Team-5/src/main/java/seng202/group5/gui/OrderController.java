@@ -147,11 +147,7 @@ public class OrderController extends GeneralController {
         });
 
         currentOrderTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            System.out.println("Yipe");
-            //launch screen prompting how many screens to change
-                //launch extraingredients
-                //update
-
+            recipeText.setText(newValue.getRecipe().getRecipeText());
         }));
     }
 

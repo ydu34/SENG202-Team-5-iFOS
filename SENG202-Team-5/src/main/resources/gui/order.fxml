@@ -87,7 +87,7 @@
                               </Text>
                            </children>
                         </GridPane>
-                        <TableView fx:id="currentOrderTable" maxHeight="-Infinity" onMouseClicked="#launchAddExtraIngredientScreen" prefHeight="1010.0" prefWidth="223.0">
+                        <TableView fx:id="currentOrderTable" maxHeight="-Infinity" prefHeight="1010.0" prefWidth="223.0">
                            <columns>
                               <TableColumn fx:id="itemNameCol" prefWidth="108.0" text="Item" />
                               <TableColumn fx:id="itemQuantityCol" prefWidth="109.0" text="Quantity" />
