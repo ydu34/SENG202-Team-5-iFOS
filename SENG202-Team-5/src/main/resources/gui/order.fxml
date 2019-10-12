@@ -147,11 +147,11 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </TableView>
-                        <ScrollPane prefHeight="463.0" prefWidth="223.0">
+                        <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="310.0">
                           <content>
-                            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="310.0">
+                            <AnchorPane maxWidth="-Infinity">
                                  <children>
-                                    <TextFlow maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="417.0" prefWidth="220.0">
+                                    <TextFlow maxHeight="-Infinity" maxWidth="-Infinity">
                                        <children>
                                           <Text fx:id="recipeText" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
                                              <font>
