@@ -155,7 +155,11 @@ public class OrderController extends GeneralController {
         });
 
         currentOrderTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            recipeText.setText(newValue.getRecipe().getRecipeText());
+            if (newValue == null) {
+                recipeText.setText("");
+            } else {
+                recipeText.setText(newValue.getRecipe().getRecipeText());
+            }
         }));
     }
 

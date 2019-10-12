@@ -23,12 +23,12 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Spinner fx:id="modifyingItemCountSpinner" editable="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <JFXButton fx:id="confirmButton" onAction="#launchAddExtraIngredientScreen" prefHeight="47.0" prefWidth="130.0" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <Spinner fx:id="modifyingItemCountSpinner" prefHeight="49.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+      <JFXButton fx:id="confirmButton" onAction="#addExtraIngredientScreen" prefHeight="75.0" prefWidth="210.0" stylesheets="@css/ifos-theme.css" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="17.0" />
          </font></JFXButton>
-      <JFXButton fx:id="backButton" prefHeight="47.0" prefWidth="130.0" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <JFXButton fx:id="backButton" onAction="#closeScreen" prefHeight="75.0" prefWidth="210.0" stylesheets="@css/ifos-theme.css" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <font>
             <Font size="17.0" />
          </font></JFXButton>
