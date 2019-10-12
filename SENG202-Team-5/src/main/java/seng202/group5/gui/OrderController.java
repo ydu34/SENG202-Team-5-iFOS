@@ -7,8 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -17,6 +20,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -25,6 +30,7 @@ import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.Order;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -84,6 +90,8 @@ public class OrderController extends GeneralController {
     @FXML
     private Text menuItemName;
 
+    @FXML
+    private JFXButton modifyIngredientsButton;
 
     @FXML
     private TilePane tilePane;
@@ -287,7 +295,6 @@ public class OrderController extends GeneralController {
         }
 
         filteredItems = filteredMenuItems;
-
         populateTilePane(filteredMenuItems);
 
     }
@@ -299,12 +306,6 @@ public class OrderController extends GeneralController {
      */
     public void setMenuItem(MenuItem newItem) {
         item = newItem;
-//        ObservableList<MenuItem> items = currentOrderTable.getItems();
-//        for (int i = 0; i < items.size(); i++)
-//            if (items.get(i).equals(item)) {
-//                currentOrderTable.getSelectionModel().select(i);
-//                currentOrderTable.getSelectionModel().focus(i);
-//            }
         populateIngredientsTable();
         totalCostDisplay.setText(currentOrder.getTotalCost().toString());
         recipeText.setText(newItem.getRecipe().getRecipeText());
@@ -352,23 +353,39 @@ public class OrderController extends GeneralController {
      * passes the item and order from the current class to the controller
      *
      * @param event an event that caused this to happen
-     * @param scenePath the path to the screen file
      */
-    public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
-        AddExtraIngredientController controller = (AddExtraIngredientController) changeScreen(event, scenePath);
-        controller.setMenuItem(item);
-        controller.setCurrentOrder(currentOrder);
-        controller.setOpenMode("Order");
-        controller.updateStock();
-        controller.initializeTable();
+    public void selectModifiableItemsScreen(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/selectModifiableItems.fxml"));
+            Parent root = loader.load();
+            SelectModifiableItemsController controller = loader.getController();
+            controller.setAppEnvironment(getAppEnvironment());
+
+            int index = currentOrderTable.getSelectionModel().getFocusedIndex();
+            controller.setModifyingItem(currentOrderTable.getItems().get(index));
+            controller.setMaxQuantity(Integer.parseInt(itemQuantityCol.getCellObservableValue(index).getValue()));
+            controller.pseudoInitialize();
+            Stage stage = new Stage();
+            stage.setTitle("Select Number of Modifiable Items");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            pseudoInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
+
+
+
 
     /**
      * This function populates the mini invoice screen with the selected menu items along with their quantity which are the part of the current order
      */
 
     public void currentOrderTable() {
-//        int quantity = 0;
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -387,7 +404,7 @@ public class OrderController extends GeneralController {
      */
     @FXML
     private void cancelCurrentOrder() {
-
+        //TODO Needs to unfocus whatever item is select and reset the corresponding tables
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
@@ -412,14 +429,6 @@ public class OrderController extends GeneralController {
 
     }
 
-    /**
-     * This method launches the addExtraIngredient Screen.
-     * @param actionEvent
-     */
-
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-    }
 
     /**
      * A method to set the current order for the alternate order screen in history

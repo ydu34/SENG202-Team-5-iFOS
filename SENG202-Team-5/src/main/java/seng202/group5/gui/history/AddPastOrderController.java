@@ -226,46 +226,46 @@ public class AddPastOrderController extends OrderController {
         changeScreen(event, "/gui/history.fxml");
     }
 
-    /**
-     * This method launches the screen for adding extra ingredients to the selected menu item and
-     * passes the item and order from the current class to the controller
-     *
-     * @param event     an event that caused this to happen
-     * @param scenePath the path to the screen to change to
-     */
-    @Override
-    public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
-        Parent sampleScene = null;
-        AddExtraIngredientController controller;
-        try {
-            FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
-            // Need to create a new class here so this screen comes back with the right controller
-            sampleScene = sampleLoader.load();
-            controller = sampleLoader.getController();
-            controller.setOpenMode("PastOrder");
-            controller.setAppEnvironment(getAppEnvironment());
-            controller.pseudoInitialize();
-            controller.setMenuItem(getSelectedItem());
-            controller.setCurrentOrder(order);
-            controller.updateStockRecipeMode();
-            controller.initializeTable();
-            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-            double prevWidth = ((Node) event.getSource()).getScene().getWidth();
-            oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Launches the screen to edit the ingredient counts of a menu item
-     * @param actionEvent an event that caused this to happen
-     */
-    @Override
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-    }
+//    /**
+//     * This method launches the screen for adding extra ingredients to the selected menu item and
+//     * passes the item and order from the current class to the controller
+//     *
+//     * @param event     an event that caused this to happen
+//     * @param scenePath the path to the screen to change to
+//     */
+//    @Override
+//    public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
+//        Parent sampleScene = null;
+//        AddExtraIngredientController controller;
+//        try {
+//            FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
+//            // Need to create a new class here so this screen comes back with the right controller
+//            sampleScene = sampleLoader.load();
+//            controller = sampleLoader.getController();
+//            controller.setOpenMode("PastOrder");
+//            controller.setAppEnvironment(getAppEnvironment());
+//            controller.pseudoInitialize();
+//            controller.setMenuItem(getSelectedItem());
+//            controller.setCurrentOrder(order);
+//            controller.updateStockRecipeMode();
+//            controller.initializeTable();
+//            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            double prevHeight = ((Node) event.getSource()).getScene().getHeight();
+//            double prevWidth = ((Node) event.getSource()).getScene().getWidth();
+//            oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    /**
+//     * Launches the screen to edit the ingredient counts of a menu item
+//     * @param actionEvent an event that caused this to happen
+//     */
+//    @Override
+//    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+//        addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+//    }
 
     /**
      * Adds the selected item to the order

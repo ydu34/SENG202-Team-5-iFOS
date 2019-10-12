@@ -18,13 +18,19 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select the number of items you want to modify" wrappingWidth="221.5693359375" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select the number of items you want to modify:" wrappingWidth="221.5693359375" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
-      <Spinner fx:id="modifyingItemCountSpinner" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <JFXButton fx:id="confirmButton" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <JFXButton fx:id="backButton" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Spinner fx:id="modifyingItemCountSpinner" editable="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+      <JFXButton fx:id="confirmButton" onAction="#launchAddExtraIngredientScreen" prefHeight="47.0" prefWidth="130.0" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="17.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="backButton" prefHeight="47.0" prefWidth="130.0" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="17.0" />
+         </font></JFXButton>
    </children>
 </GridPane>
