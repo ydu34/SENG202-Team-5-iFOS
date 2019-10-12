@@ -65,15 +65,18 @@ public class AppEnvironment {
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
         ArrayList<Money> change = new ArrayList<>();
         try {
-            Order order = orderManager.getOrder();
-            setStock(order.getStock().clone());
-            orderManager.setStock(stock);
-            orderManager.newOrder();
+            if (finance.enoughMoney(denominations, orderManager.getOrder())) {
+                Order order = orderManager.getOrder();
+                setStock(order.getStock().clone());
+                orderManager.setStock(stock);
+                orderManager.newOrder();
 
-            change = finance.pay(denominations, LocalDateTime.now(), order);
-
+                change = finance.pay(denominations, LocalDateTime.now(), order);
+            } else {
+                throw new InsufficientCashException();
+            }
         } catch (NoOrderException e) {
-            e.printStackTrace();
+            System.out.println("No Order! Ya dingus");
         }
 
         return change;

@@ -182,7 +182,7 @@ public class AdminController extends GeneralController {
                     try {
                         finance.getTill().removeDenomination(amount, oldValue - newValue);
                     } catch (InsufficientCashException e) {
-                        System.out.println("Till spinner reduced below zero!");
+
                     }
                 } else if (newValue > oldValue) {
                     finance.getTill().addDenomination(amount, newValue - oldValue);

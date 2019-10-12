@@ -122,21 +122,21 @@
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" spacing="300.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="denomDollarLabel" alignment="CENTER">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="denomCentLabel" alignment="CENTER">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
                            <padding>
                               <Insets bottom="150.0" left="150.0" right="150.0" top="150.0" />
                            </padding>
+                           <children>
+                              <Text fx:id="denomDollarLabel" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="denomCentLabel" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="3">
                            <children>
@@ -150,7 +150,7 @@
                                       </JFXButton>
                               <Label fx:id="warningLabel" text="Label" textFill="RED">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="24.0" />
                                  </font>
                               </Label>
                            </children>

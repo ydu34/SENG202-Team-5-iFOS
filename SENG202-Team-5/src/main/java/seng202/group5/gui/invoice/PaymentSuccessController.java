@@ -10,6 +10,7 @@ import org.joda.money.Money;
 import seng202.group5.gui.GeneralController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PaymentSuccessController extends GeneralController {
 
@@ -22,7 +23,7 @@ public class PaymentSuccessController extends GeneralController {
     private Text paymentText;
 
     @FXML
-    private Label changeLabel;
+    private Text changeLabel;
 
     @FXML
     private Button okButton;
@@ -34,7 +35,7 @@ public class PaymentSuccessController extends GeneralController {
         // Getting the total change
         Money totalChange = Money.parse("NZD 0");
         for (Money money : change) {
-            totalChange.plus(money);
+            totalChange = totalChange.plus(money);
         }
         totalChangeLabel.setText("$" + totalChange.toString().replaceAll("[^\\d.]", ""));
 
@@ -42,12 +43,29 @@ public class PaymentSuccessController extends GeneralController {
     }
 
     public void showChange() {
+        // Initialising local variables
         StringBuilder display = new StringBuilder();
-        Money totalChange = Money.parse("NZD 0.00");
+        HashMap<String, Integer> changeSet = new HashMap<>();
+
+        // Adding the money from the array to a HashMap containing the quantity of each denomination
         for (Money money : change) {
-            display.append(money).append("\n");
-            totalChange = totalChange.plus(money);
+            // The Key for the HashMap
+            String key = "$" + money.toString().replaceAll("[^\\d.]", "");
+
+            if (changeSet.containsKey(key)) {
+                changeSet.replace(key, changeSet.get(key) + 1);
+            } else {
+                changeSet.put(key, 1);
+            }
         }
+
+        for (Object key : changeSet.keySet().toArray()) {
+            display.append(key);
+            display.append(": ");
+            display.append(changeSet.get(key));
+            display.append("\n");
+        }
+        System.out.println(display.toString());
         changeLabel.setText(display.toString());
     }
 

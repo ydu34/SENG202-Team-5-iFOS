@@ -110,6 +110,65 @@ public class Finance {
     }
 
     /**
+     * Returns a list containing the change need to be returned.
+     *
+     * @param change the first date to search from
+     * @return returns a list containing the change need to be returned
+     */
+    public ArrayList<Money> calcChange(Money change) {
+
+
+        ArrayList<Money> totalChange = new ArrayList<>();
+        change = change.plus(Money.parse("NZD 0.03"));
+
+        for (Money value : denomination) {
+            while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {
+                totalChange.add(value);
+                change = change.minus(value);
+
+                try {
+                    till.removeDenomination(value, 1);
+                } catch (InsufficientCashException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return totalChange;
+    }
+
+    /**
+     * Checks the till for if there are enough denominations to give change
+     * @param payment The ArrayList of money given from the customer.
+     * @param order The order which the customer is paying for.
+     * @return A boolean saying whether there is enough money in the till to give back change.
+     */
+    public boolean enoughMoney(ArrayList<Money> payment, Order order) {
+        // Copy the till so that changes can be made without affecting the main program
+        Till copyTill = till.clone();
+
+        // Calculating the total amount remaining after payment
+        Money totalPayed = Money.parse("NZD 0");
+        for (Money money : payment) {
+            totalPayed = totalPayed.plus(money);
+            copyTill.addDenomination(money, 1);
+        }
+
+
+        Money total = totalPayed.minus(order.getTotalCost()).rounded(1, RoundingMode.HALF_DOWN);
+        try {
+            for (Money money : denomination) {
+                while (total.isGreaterThan(money)) {
+                    total = total.minus(money);
+                    copyTill.removeDenomination(money, 1);
+                }
+            }
+        } catch (InsufficientCashException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * returns a list containing total profits, average profits, and other information to be displayed on the finance screen over the imputed time period
      *
      * @param startDate the first date to search from
@@ -141,34 +200,6 @@ public class Finance {
         totals.add(totalProfits.dividedBy(daysBetween, RoundingMode.DOWN));
 
         return totals;
-    }
-
-    /**
-     * returns a list containing the change need to be returned
-     *
-     * @param change the first date to search from
-     * @return returns a list containing the change need to be returned
-     */
-    public ArrayList<Money> calcChange(Money change) {
-
-
-        ArrayList<Money> totalChange = new ArrayList<>();
-        change = change.plus(Money.parse("NZD 0.03"));
-
-        for (Money value : denomination)
-        {
-            while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {
-
-                totalChange.add(value);
-                change = change.minus(value);
-                try {
-                    till.removeDenomination(value, 1);
-                } catch (InsufficientCashException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return totalChange;
     }
 
     /**

@@ -49,9 +49,10 @@
       </JFXButton>
    </bottom>
    <center>
-      <Label fx:id="changeLabel" BorderPane.alignment="TOP_CENTER">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin></Label>
+      <Text fx:id="changeLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" BorderPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </center>
 </BorderPane>

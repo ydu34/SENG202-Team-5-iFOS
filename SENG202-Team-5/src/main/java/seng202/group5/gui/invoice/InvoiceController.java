@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
@@ -52,10 +53,10 @@ public class InvoiceController extends GeneralController {
     private Label currentlyPayedLabel;
 
     @FXML
-    private Label denomDollarLabel;
+    private Text denomDollarLabel;
 
     @FXML
-    private Label denomCentLabel;
+    private Text denomCentLabel;
 
     @FXML
     private Label warningLabel;
@@ -134,6 +135,7 @@ public class InvoiceController extends GeneralController {
      */
     public void payCash() {
         try {
+            // Pass through the payment to AppEnvironment
             ArrayList<Money> change = getAppEnvironment().confirmPayment(paymentArray);
 
             initialiseChangeScreen(change);
@@ -141,9 +143,9 @@ public class InvoiceController extends GeneralController {
             // Refresh table
             pseudoInitialize();
             clearPayment();
-        } catch (InsufficientCashException e) {
-            e.printStackTrace();
-            warningLabel.setText("Not enough money in the till for change!");
+        } catch (InsufficientCashException e) { ;
+        warningLabel.setTextFill(Color.RED);
+        warningLabel.setText("Not enough money in the till for change!");
         }
     }
 
@@ -186,41 +188,73 @@ public class InvoiceController extends GeneralController {
     }
 
     /**
+     * A method used to create the string to visualise the denominations payed in the current payment.
+     * @param builder The StringBuilder.
+     * @param key The String key which is the denomination.
+     * @param tempKey The Money tempKey which is used to get the number of denominations.
+     * @return The final StringBuilder built.
+     */
+    public StringBuilder stringBuilder(StringBuilder builder, String key, Money tempKey) {
+        builder.append("$");
+        builder.append(Float.parseFloat(key));
+        builder.append(": ");
+        builder.append(currentPayment.get(tempKey));
+        builder.append("\n");
+
+        return builder;
+    }
+
+    /**
      * Adds the specified cash denomination to add to the total
      *
      * @param value the cash denomination to add in cents
      */
     private void addMoney(int value){
-        Money money = Money.parse("NZD "+0.01*value);
-        total = total.plus(money);
-        if (currentPayment.containsKey(money)) {
-            currentPayment.replace(money, currentPayment.get(money) + 1);
+        if (currentOrder.getOrderItems().isEmpty()) {
+            warningLabel.setTextFill(Color.RED);
+            warningLabel.setText("There is no order to pay for!");
         } else {
-            currentPayment.put(money, 1);
-        }
+            // Setting the label to nothing in case it's set to something already
+            warningLabel.setText("");
 
-        if (!currentOrder.getOrderItems().isEmpty() && (total.isGreaterThan(currentOrder.getTotalCost()) || total.isEqual(currentOrder.getTotalCost()))) {
-            payCashButton.setDisable(false);
-        }
+            // Adding the money to the total
+            Money money = Money.parse("NZD " + 0.01 * value);
+            total = total.plus(money);
 
-        paymentArray.add(money);
-
-        ArrayList<Money> keyArray = new ArrayList<>(currentPayment.keySet());
-
-        String tempDollar = "";
-        String tempCent = "";
-        for (Money tempKey : keyArray) {
-            if (tempKey.isLessThan(Money.parse("NZD 5.00"))) {
-                String key = tempKey.toString().replaceAll("[^\\d.]", "");
-                tempCent += "$" + Float.parseFloat(key) + ": " + currentPayment.get(tempKey) + "\n";
+            // Adding money to a HashSet containing it's quantity
+            if (currentPayment.containsKey(money)) {
+                currentPayment.replace(money, currentPayment.get(money) + 1);
             } else {
-                String key = tempKey.toString().replaceAll("[^\\d.]", "");
-                tempDollar += "$" + Float.parseFloat(key) + " : " + currentPayment.get(tempKey) + "\n";
+                currentPayment.put(money, 1);
             }
+
+            // Disable pay button when there isn't enough money payed yet
+            if (total.isGreaterThan(currentOrder.getTotalCost()) || total.isEqual(currentOrder.getTotalCost())) {
+                payCashButton.setDisable(false);
+            }
+
+            // Adding the money to the array that will be passed into the AppEnvironment
+            paymentArray.add(money);
+
+            ArrayList<Money> keyArray = new ArrayList<>(currentPayment.keySet());
+
+            // Creating the strings to visualise the amount payed thus far
+            StringBuilder tempDollar = new StringBuilder();
+            StringBuilder tempCent = new StringBuilder();
+            for (Money tempKey : keyArray) {
+                if (tempKey.isLessThan(Money.parse("NZD 5.00"))) {
+                    String key = tempKey.toString().replaceAll("[^\\d.]", "");
+                    tempCent = stringBuilder(tempCent, key, tempKey);
+                } else {
+                    String key = tempKey.toString().replaceAll("[^\\d.]", "");
+                    tempDollar = stringBuilder(tempDollar, key, tempKey);
+                }
+            }
+            // Setting the labels to the strings.
+            denomCentLabel.setText(tempCent.toString());
+            denomDollarLabel.setText(tempDollar.toString());
+            currentlyPayedLabel.setText("$" + total.toString().replaceAll("[^\\d.]", ""));
         }
-        denomCentLabel.setText(tempCent);
-        denomDollarLabel.setText(tempDollar);
-        currentlyPayedLabel.setText("$" + total.toString().replaceAll("[^\\d.]", ""));
     }
 
     /**
