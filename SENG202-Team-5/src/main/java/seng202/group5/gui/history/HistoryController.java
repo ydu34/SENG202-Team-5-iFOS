@@ -21,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
+import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Order;
@@ -80,6 +81,9 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableColumn<Transaction, JFXButton> rowAction;
 
+    @FXML
+    private JFXButton addPastOrderButton;
+
     public void initialize() {
         setStartDateUpdater();
         setEndDateUpdater();
@@ -137,6 +141,12 @@ public class HistoryController extends GeneralController {
             });
             return new ReadOnlyObjectWrapper<>(refundButton);
         });
+
+        try {
+            addPastOrderButton.setDisable(!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty());
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
 
         historyTable.getItems().addAll(getAppEnvironment().getFinance().getTransactionHistory().values());
     }
