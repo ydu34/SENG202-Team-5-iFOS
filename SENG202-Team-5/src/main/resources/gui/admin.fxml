@@ -9,6 +9,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -210,6 +212,7 @@
                               <RowConstraints maxHeight="133.3333282470703" minHeight="10.0" prefHeight="133.3333282470703" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="91.66667175292969" minHeight="27.666671752929688" prefHeight="27.666671752929688" vgrow="SOMETIMES" />
                                         <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                                         <RowConstraints />
@@ -248,7 +251,10 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
                                         </Text>
-                                      <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                        <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              textAlignment="CENTER" wrappingWidth="794.13671875"
+                                              GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6"
+                                              GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                                           <font>
                                               <Font size="26.0" />
                                           </font>
@@ -256,7 +262,30 @@
                                               <Insets />
                                           </GridPane.margin>
                                       </Text>
-                                        <JFXButton fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="40.0" prefWidth="200.0" text="Import Data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                        <MenuButton fx:id="dataMergeTypeMenu" alignment="CENTER" contentDisplay="CENTER"
+                                                    maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                    text="Data Merge Type" GridPane.columnSpan="3"
+                                                    GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                                                    GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeOverwriteAll"
+                                                          text="Overwrite: Delete existing data and add new data (WARNING - Your existing data will not be stored by the application)"/>
+                                                <MenuItem mnemonicParsing="false"
+                                                          onAction="#overwriteTypeMergePreferNew"
+                                                          text="Merge and replace with new data: Merge existing data with new data and replace conflicting data with new data"/>
+                                                <MenuItem mnemonicParsing="false"
+                                                          onAction="#overwriteTypeMergePreferOld"
+                                                          text="Merge and keep old data: Merge new data with existing data and keep old data when conflicting data occurs"/>
+                                            </items>
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="50.0" right="50.0" top="10.0"/>
+                                            </GridPane.margin>
+                                        </MenuButton>
+                                        <JFXButton fx:id="importDataButton" disable="true" mnemonicParsing="false"
+                                                   onAction="#importData" prefHeight="40.0" prefWidth="200.0"
+                                                   text="Import Data" GridPane.columnIndex="1"
+                                                   GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                                                   GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets />
                                             </GridPane.margin>
@@ -290,8 +319,19 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                                      <Label text="Autosave will save the program data to the selected location whenever the screen is changed." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                      <Label alignment="CENTER" contentDisplay="CENTER" text="Autoload will load all data from the selected location on startup." GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                               <Label text="Autosave will save the program data to the selected location whenever the screen is changed."
+                                      GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                   <font>
+                                       <Font size="18.0"/>
+                                   </font>
+                               </Label>
+                               <Label alignment="CENTER" contentDisplay="CENTER"
+                                      text="Autoload will load all data from the selected location on startup."
+                                      GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                   <font>
+                                       <Font size="18.0"/>
+                                   </font>
+                               </Label>
                                       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                                           <children>
                                               <JFXCheckBox fx:id="autosaveCheckbox" alignment="CENTER" onAction="#updateAutosave" text="Autosave" HBox.hgrow="NEVER">
@@ -352,7 +392,13 @@
                                     <Font size="40.0" />
                                  </font>
                               </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select the folder where you store images for the menu items" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                               <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                     text="Please select the folder where you store images for the menu items"
+                                     GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                   <font>
+                                       <Font size="18.0"/>
+                                   </font>
+                               </Text>
                            </children>
                         </GridPane>
                         <GridPane GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">

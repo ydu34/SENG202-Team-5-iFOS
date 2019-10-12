@@ -42,10 +42,29 @@ public class Database {
     private boolean autosaveEnabled;
     private boolean autoloadEnabled;
 
-    @XmlTransient
-    public static String[] OverwriteTypeNames = {"Delete existing data and add new data",
-            "Merge existing data with new data and replace conflicting data with new data",
-            "Merge existing data with new data and keep old data when conflicting data occurs"};
+    /**
+     * Imports selected data into the application. This overrides existing data.
+     * If any of the files are not present, or are incorrect, the import is aborted
+     *
+     * @param fileMap A mapping from the name of the file to the file object
+     * @throws Exception when the files are incorrect
+     */
+    public void importData(Map<String, File> fileMap) throws Exception {
+        Stock oldStock = appEnvironment.getStock();
+        MenuManager oldMenu = appEnvironment.getMenuManager();
+        Finance oldFinance = appEnvironment.getFinance();
+        try {
+            if (fileMap.containsKey("stock.xml")) stockXmlToObject(fileMap.get("stock.xml").getParent());
+            if (fileMap.containsKey("menu.xml")) menuXmlToObject(fileMap.get("menu.xml").getParent());
+            if (fileMap.containsKey("finance.xml")) financeXmlToObject(fileMap.get("finance.xml").getParent());
+        } catch (Exception e) {
+            appEnvironment.setStock(oldStock);
+            appEnvironment.setMenuManager(oldMenu);
+            appEnvironment.setFinance(oldFinance);
+            throw new Exception(e);
+        }
+    }
+
     private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
 
     public static void main(String[] args) {
@@ -319,38 +338,21 @@ public class Database {
     }
 
     /**
-     * Imports selected data into the application. This overrides existing data.
-     * If any of the files are not present, or are incorrect, the import is aborted
-     *
-     * @param fileMap A mapping from the name of the file to the file object
-     * @throws Exception when the files are incorrect
-     */
-    public void importData(Map<String, File> fileMap) throws Exception {
-        Stock oldStock = appEnvironment.getStock();
-        MenuManager oldMenu = appEnvironment.getMenuManager();
-        Finance oldFinance = appEnvironment.getFinance();
-        try {
-            stockXmlToObject(fileMap.get("stock.xml").getParent());
-            menuXmlToObject(fileMap.get("menu.xml").getParent());
-            financeXmlToObject(fileMap.get("finance.xml").getParent());
-
-
-        } catch (Exception e) {
-            appEnvironment.setStock(oldStock);
-            appEnvironment.setMenuManager(oldMenu);
-            appEnvironment.setFinance(oldFinance);
-            throw new Exception(e);
-        }
-    }
-
-    /**
      * Exports all of the data to the save location if autosave is enabled
      */
     public void autosave() throws Exception {
+        objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
         if (autosaveEnabled) {
             String location = getLocation();
             allObjectsToXml(location);
         }
+    }
+
+    @XmlTransient
+    public enum OverwriteType {
+        OVERWRITE_ALL,
+        MERGE_PREFER_NEW,
+        MERGE_PREFER_OLD
     }
 
     private String getLocation() {
@@ -399,13 +401,6 @@ public class Database {
 
     public void setAppEnvironment(AppEnvironment appEnvironment) {
         this.appEnvironment = appEnvironment;
-    }
-
-    @XmlTransient
-    public enum OverwriteType {
-        OVERWRITE_ALL,
-        MERGE_PREFER_NEW,
-        MERGE_PREFER_OLD
     }
 
 }

@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
+import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
@@ -43,9 +44,13 @@ import java.util.Map;
 /**
  * A controller for managing the administration screen
  *
- * @author Yu Duan, Shivin Gaba
+ * @author Yu Duan, Shivin Gaba, Daniel Harris
  */
 public class AdminController extends GeneralController {
+
+    public static String[] OverwriteTypeNames = {"Overwrite: Delete existing data and add new data (WARNING - Your existing data will not be stored by the application)",
+            "Merge and replace with new data: Merge existing data with new data and replace conflicting data with new data",
+            "Merge and keep old data: Merge new data with existing data and keep old data when conflicting data occurs"};
 
     @FXML
     private DatePicker startDate;
@@ -120,8 +125,9 @@ public class AdminController extends GeneralController {
 
     @FXML
     private JFXTabPane adminTabPane;
-
-    private FileChooser fileChooser;
+    private static int NUM_DATA_FILES = 3;
+    @FXML
+    private MenuButton dataMergeTypeMenu;
 
     private Map<String, File> fileMap;
 
@@ -188,7 +194,6 @@ public class AdminController extends GeneralController {
         textFieldListeners(newPasswordText);
         textFieldListeners(confirmPasswordText);
 
-
         for (Spinner<Integer> spinner : spinnerList) {
             spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
             Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
@@ -203,6 +208,19 @@ public class AdminController extends GeneralController {
                     finance.getTill().addDenomination(amount, newValue - oldValue);
                 }
             });
+        }
+
+        // Setting the text for the overwrite setting of the database
+        switch (getAppEnvironment().getDatabase().getOverwriteSetting()) {
+            case OVERWRITE_ALL:
+                dataMergeTypeMenu.setText(OverwriteTypeNames[0]);
+                break;
+            case MERGE_PREFER_NEW:
+                dataMergeTypeMenu.setText(OverwriteTypeNames[1]);
+                break;
+            case MERGE_PREFER_OLD:
+                dataMergeTypeMenu.setText(OverwriteTypeNames[2]);
+                break;
         }
 
         // Setting initial values for autosaving/loading elements
@@ -305,7 +323,7 @@ public class AdminController extends GeneralController {
      * @return the selected file from the file chooser.
      */
     public File getSelectedFile() {
-        fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
         File selectedFile = fileChooser.showOpenDialog(null);
         fileNotificationText.setText(null);
@@ -337,7 +355,9 @@ public class AdminController extends GeneralController {
      * Therefore enable the import data button for the user to click.
      */
     public void checkFilesSelected() {
-        if (fileMap.size() == 3) {
+        if ((fileMap.size() >= 1 &&
+                getAppEnvironment().getDatabase().getOverwriteSetting() != Database.OverwriteType.OVERWRITE_ALL) ||
+                fileMap.size() == NUM_DATA_FILES) {
             importDataButton.setDisable(false);
         } else {
             importDataButton.setDisable(true);
@@ -519,22 +539,43 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Updates the autosave feature of the database
+     */
     public void updateAutosave() {
         getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());
-        if (autosaveCheckbox.isSelected() && !autoloadCheckbox.isSelected()) {
-            // Display warning
-        } else {
-            // Remove warning
-        }
+        dataMergeTypeMenu.setText("Overwrite");
     }
 
+    /**
+     * Updates the autoload feature of the database
+     */
     public void updateAutoload() {
         getAppEnvironment().getDatabase().setAutoloadEnabled(autoloadCheckbox.isSelected());
-        if (autosaveCheckbox.isSelected() && !autoloadCheckbox.isSelected()) {
-            // Display warning
-        } else {
-            // Remove warning
-        }
+    }
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void overwriteTypeOverwriteAll() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.OVERWRITE_ALL);
+        dataMergeTypeMenu.setText(OverwriteTypeNames[0]);
+    }
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void overwriteTypeMergePreferNew() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.MERGE_PREFER_NEW);
+        dataMergeTypeMenu.setText(OverwriteTypeNames[1]);
+    }
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void overwriteTypeMergePreferOld() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.MERGE_PREFER_OLD);
+        dataMergeTypeMenu.setText(OverwriteTypeNames[2]);
     }
 
     /**
