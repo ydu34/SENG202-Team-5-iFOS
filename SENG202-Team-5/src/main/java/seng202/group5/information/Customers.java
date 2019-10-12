@@ -1,21 +1,28 @@
 package seng202.group5.information;
 
-
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Holds the list of customers, allows JAXB to easily import and export the customers data
  * @author James Kwok
  */
 public class Customers {
-    private HashMap<Integer, Customer> customerMap;
 
+    private static ArrayList<Customer> customerList;
 
-    public void setCustomerMap(HashMap<Integer, Customer> tempCustomerMap) {
-        customerMap = tempCustomerMap;
+    public Customers() {
+        customerList = new ArrayList<>();
     }
 
-    public HashMap<Integer, Customer> getCustomerMap() {
-        return customerMap;
+    public static void add(Customer customer) {
+        customerList.add(customer);
+    }
+
+    public void setCustomerMap(ArrayList<Customer> tempCustomerSet) {
+        customerList = tempCustomerSet;
+    }
+
+    public ArrayList<Customer> getCustomerSet() {
+        return customerList;
     }
 }
