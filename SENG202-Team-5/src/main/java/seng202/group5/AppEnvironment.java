@@ -63,19 +63,20 @@ public class AppEnvironment {
      *                                   to pay for the order
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
-        //        Money totalPayment = Money.parse("NZD 0");
-        //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
         ArrayList<Money> change = new ArrayList<>();
         try {
-            Order order = orderManager.getOrder();
-            setStock(order.getStock().clone());
-            orderManager.setStock(stock);
-            orderManager.newOrder();
+            if (finance.enoughMoney(denominations, orderManager.getOrder())) {
+                Order order = orderManager.getOrder();
+                setStock(order.getStock().clone());
+                orderManager.setStock(stock);
+                orderManager.newOrder();
 
-            change = finance.pay(denominations, LocalDateTime.now(), order);
-
+                change = finance.pay(denominations, LocalDateTime.now(), order);
+            } else {
+                throw new InsufficientCashException();
+            }
         } catch (NoOrderException e) {
-            e.printStackTrace();
+            System.out.println("No Order! Ya dingus");
         }
 
         return change;
