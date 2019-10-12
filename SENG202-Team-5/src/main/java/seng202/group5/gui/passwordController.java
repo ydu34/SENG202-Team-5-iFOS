@@ -78,7 +78,7 @@ public class passwordController extends GeneralController {
     /**
      * Default password that can be used to access the admin screen at the beginning of of the day
      */
-    private String password;
+    private int password;
 
     /**
      * The string used to check the validity of the password
@@ -249,7 +249,7 @@ public class passwordController extends GeneralController {
 
 
     public void checkPassword(ActionEvent event){
-        if(input.equals(password)){
+        if(input.hashCode() == password){
             source.launchAdminScreen(origin);
             closeScreen(event);
         }
@@ -299,7 +299,7 @@ public class passwordController extends GeneralController {
         origin = event;
     }
 
-    public void setPassword(String newPassword) {
+    public void setPassword(int newPassword) {
         password = newPassword;
     }
 

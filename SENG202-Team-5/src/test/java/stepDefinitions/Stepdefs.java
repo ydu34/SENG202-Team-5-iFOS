@@ -170,12 +170,12 @@ public class Stepdefs {
 
     @When("Burger is removed from order")
     public void burgerIsRemovedFromOrder() {
-        order.removeItem(burger);
+        order.removeItem(burger, true);
     }
 
     @When("Chips is removed from order")
     public void chipIsRemovedFromOrder() {
-        order.removeItem(chip);
+        order.removeItem(chip, true);
     }
 
 

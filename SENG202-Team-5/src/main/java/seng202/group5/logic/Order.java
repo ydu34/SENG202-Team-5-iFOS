@@ -184,11 +184,15 @@ public class Order {
      * it was successful or not.
      *
      * @param item The item that is to be removed from the order.
+     * @param all True if all items are to be removed. If False, then only one item is removed.
      * @return The boolean success of the removal.
      */
-    public boolean removeItem(MenuItem item) {
+    public boolean removeItem(MenuItem item, boolean all) {
         if (orderItems.containsKey(item)) {
-            int quantity = orderItems.get(item);
+            int quantity = 1;
+            if (all == true) {
+                quantity = orderItems.get(item);
+            }
             // Getting the ingredient HashMap and creating an Arraylist to iterate through out of the keys in the HashMap
             HashMap<Ingredient, Integer> ingredientQuantities = item.getRecipe().getIngredientsAmount();
             HashMap<String, Integer> ingredients = new HashMap<>();
@@ -203,8 +207,15 @@ public class Order {
                 temporaryStock.modifyQuantity(id, temporaryStock.getIngredientQuantity(id) + ingredients.get(id) * quantity);
             }
 
-            orderItems.remove(item);
-
+            if (all == true) {
+                orderItems.remove(item);
+            } else {
+                int oldCount = orderItems.get(item);
+                orderItems.replace(item, oldCount, oldCount -1);
+                if (orderItems.get(item) == 0) {
+                    orderItems.remove(item);
+                }
+            }
             // Minuses the price of the item from the total cost
             totalCost = totalCost.minus(item.calculateFinalCost().multipliedBy(quantity));
 
@@ -225,7 +236,7 @@ public class Order {
     public boolean modifyItemQuantity(MenuItem item, int quantity) {
         if (orderItems.containsKey(item)) {
             int currentCount = orderItems.get(item);
-            removeItem(item);
+            removeItem(item, true);
             if (!addItem(item, quantity)) {
                 addItem(item, currentCount);
                 return false;

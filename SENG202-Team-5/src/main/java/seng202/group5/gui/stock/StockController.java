@@ -103,7 +103,7 @@ public class StockController extends GeneralController {
         stockTable.setItems(ingredients);
 
         try {
-            getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
+            ///getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
 
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
                 warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");

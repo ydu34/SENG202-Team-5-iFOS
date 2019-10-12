@@ -26,7 +26,7 @@ public class AppEnvironment {
      * Default password when the app is launched for the first time.
      * The detail about this password would also be mentioned in the user manual as well.
      */
-    private String password = "1111";
+    private int password = "1111".hashCode();
 
 
     /**
@@ -142,11 +142,11 @@ public class AppEnvironment {
         this.imagesFolderPath = imagesFolderPath;
     }
 
-    public String getPassword(){
+    public int getPassword(){
         return password;
     }
 
-    public void setPassword(String newPassword){
+    public void setPassword(int newPassword){
         password = newPassword;
     }
 

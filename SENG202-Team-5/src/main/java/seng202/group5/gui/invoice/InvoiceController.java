@@ -530,7 +530,7 @@ public class InvoiceController extends GeneralController {
     private void deleteRowFromTable() {
         boolean someOrder;
 
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
         someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
         if(someOrder){
             removeItem.setDisable(false);
