@@ -571,10 +571,16 @@
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="86.0" minHeight="2.0" prefHeight="10.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
+                                 <children>
+                                    <JFXButton fx:id="saveButton" onAction="#updateOldPassword" prefHeight="43.0" prefWidth="139.0" text="Confirm &amp; Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                                       <GridPane.margin>
+                                          <Insets right="18.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                 </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="1">
                                 <columnConstraints>
@@ -591,7 +597,7 @@
                                     <JFXTextField fx:id="oldPasswordText" prefHeight="26.0" prefWidth="234.0" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
-                              <GridPane fx:id="newPasswordText" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="275.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0" prefWidth="374.0" />
@@ -603,6 +609,7 @@
                                 </rowConstraints>
                                  <children>
                                     <JFXTextField fx:id="newPasswordText" prefHeight="26.0" prefWidth="234.0" GridPane.rowIndex="1" />
+                                    <Text fx:id="promptText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="240.7294921875" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">

@@ -7,10 +7,9 @@ import seng202.group5.logic.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
- * @author Yu Duan
+ * @author Yu Duan, Shivin Gaba
  */
 public class AppEnvironment {
 
@@ -21,6 +20,11 @@ public class AppEnvironment {
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
+    /**
+     * Default password when the app is launched for the first time.
+     * The detail about this password would also be mentioned in the user manual as well.
+     */
+    private String password = "1111";
 
 
     /**
@@ -132,6 +136,14 @@ public class AppEnvironment {
 
     public void setImagesFolderPath(String imagesFolderPath) {
         this.imagesFolderPath = imagesFolderPath;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setPassword(String newPassword){
+        password = newPassword;
     }
 
 }
