@@ -3,15 +3,17 @@ package seng202.group5.gui.history;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.AppEnvironment;
 import seng202.group5.logic.Order;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * A controller for confirming if the user wants to refund an order
@@ -35,7 +37,6 @@ public class ConfirmRefundController {
     @FXML
     private Label infoLabel;
 
-    private HistoryController source;
     /**
      * The order to refund
      */
@@ -46,13 +47,12 @@ public class ConfirmRefundController {
     private Button button;
     private AppEnvironment appEnvironment;
 
-    /**
-     * Sets the controller that created the screen this controller is using
-     *
-     * @param controller the controller that created this
-     */
-    public void setSource(HistoryController controller) {
-        source = controller;
+    private boolean isRefunded = false;
+
+    public void onClose() {
+        if (!isRefunded) {
+            button.setDisable(false);
+        }
     }
 
     /**
@@ -74,21 +74,30 @@ public class ConfirmRefundController {
     @FXML
     public void confirmRefund(javafx.event.ActionEvent event) {
         // Showing what coins to return to the customer
-        ArrayList<Money> test = source.confirmOrderRefund(order.getId());
+        ArrayList<Money> refundCoins = appEnvironment.getFinance().refund(order.getId());
         StringBuilder builder = new StringBuilder("Return the following cash:\n");
         Money moneySum = Money.parse("NZD 0.00");
-        for (Money coin : test) {
+        HashMap<Money, Integer> moneyCounts = new HashMap<>();
+        for (Money coin : refundCoins) {
             moneySum = moneySum.plus(coin);
-            builder.append(coin.toString());
-            builder.append(", ");
+            moneyCounts.put(coin, moneyCounts.getOrDefault(coin, 0) + 1);
         }
-        builder.delete(builder.length() - 2, builder.length());
+        ArrayList<Map.Entry<Money, Integer>> moneyCountEntries = new ArrayList<>(moneyCounts.entrySet());
+        moneyCountEntries.sort((a, b) -> (-a.getKey().compareTo(b.getKey())));
+        for (Map.Entry<Money, Integer> coinEntry : moneyCountEntries) {
+            builder.append(coinEntry.getKey().toString());
+            builder.append(" x ");
+            builder.append(coinEntry.getValue().toString());
+            builder.append("\n");
+        }
+        builder.delete(builder.length() - 1, builder.length());
         if (moneySum.isLessThan(order.getTotalCost())) {
             infoLabel.setText("Not enough coins in the float to fully refund");
             returnButton.setOnAction(this::rejectOrder);
         } else {
             infoLabel.setText(builder.toString());
             returnButton.setOnAction(this::closeScreen);
+            isRefunded = true;
         }
         //TODO screen is not resizing properly
 
@@ -98,7 +107,7 @@ public class ConfirmRefundController {
         GridPane.setColumnSpan(returnButton, 2);
         GridPane.setHalignment(returnButton, HPos.CENTER);
         returnButton.setText("Continue");
-        returnButton.getScene().getWindow().sizeToScene();
+        returnButton.getScene().getWindow().setHeight(returnButton.getScene().getWindow().getHeight() + infoLabel.getHeight());
     }
 
     /**

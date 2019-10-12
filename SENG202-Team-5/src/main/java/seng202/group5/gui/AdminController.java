@@ -1,17 +1,17 @@
 package seng202.group5.gui;
 
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -22,8 +22,6 @@ import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Finance;
-import seng202.group5.logic.MenuManager;
-import seng202.group5.logic.Stock;
 import seng202.group5.logic.Till;
 
 import java.io.File;
@@ -41,7 +39,7 @@ import java.util.Map;
 /**
  * A controller for managing the administration screen
  *
- * @author Yu Duan
+ * @author Yu Duan, Shivin Gaba
  */
 public class AdminController extends GeneralController {
 
@@ -62,9 +60,6 @@ public class AdminController extends GeneralController {
 
     @FXML
     private Button selectMenuButton;
-
-    @FXML
-    private Button selectHistoryButton;
 
     @FXML
     private Button selectFinanceButton;
@@ -155,6 +150,20 @@ public class AdminController extends GeneralController {
     private Spinner<Integer> spinner50d;
     @FXML
     private Spinner<Integer> spinner100d;
+    @FXML
+    private Text promptText;
+    @FXML
+    private Text oldPasswordWarning;
+    @FXML
+    private Text newPasswordWarning;
+    @FXML
+    private JFXButton saveButton;
+    @FXML
+    private JFXPasswordField oldPasswordText;
+    @FXML
+    private JFXPasswordField newPasswordText;
+    @FXML
+    private JFXPasswordField confirmPasswordText;
 
     private ArrayList<Spinner<Integer>> spinnerList;
 
@@ -174,6 +183,12 @@ public class AdminController extends GeneralController {
                 spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
                 spinner20d, spinner50d, spinner100d));
         updateTillSpinners();
+
+        textFieldListeners(oldPasswordText);
+        textFieldListeners(newPasswordText);
+        textFieldListeners(confirmPasswordText);
+
+
         for (Spinner<Integer> spinner : spinnerList) {
             spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
             Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
@@ -182,7 +197,7 @@ public class AdminController extends GeneralController {
                     try {
                         finance.getTill().removeDenomination(amount, oldValue - newValue);
                     } catch (InsufficientCashException e) {
-                        System.out.println("Till spinner reduced below zero!");
+
                     }
                 } else if (newValue > oldValue) {
                     finance.getTill().addDenomination(amount, newValue - oldValue);
@@ -200,15 +215,31 @@ public class AdminController extends GeneralController {
     }
 
     /**
+     * This function adds listeners to the text fields under the password setting tab pane and only allow the user to enter a
+     * a 4 digit pin. It also prevents the user form typing and special characters or alphabets.
+     * @param someTextField
+     */
+
+    public void textFieldListeners(JFXPasswordField someTextField){
+
+        someTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,4}?")) {
+                someTextField.setText(oldValue);
+            }
+        });
+
+    }
+
+    /**
      * If an order is in progress disable buttons on admin screen.
      */
     public void checkIfOrderInProgress() {
+
         try {
+            System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
                 infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
-                warningText.setText("Can not Import/Export data when Order is in progress.");
                 selectFinanceButton.setDisable(true);
-                selectHistoryButton.setDisable(true);
                 selectMenuButton.setDisable(true);
                 selectStockButton.setDisable(true);
                 exportDataButton.setDisable(true);
@@ -525,8 +556,45 @@ public class AdminController extends GeneralController {
     }
 
 
-
     public void setFinance(Finance newFinance) {
         finance = newFinance;
     }
+
+    /**
+     * This function checks all the fields on password settings screen and checks if they are valid and accordingly allows
+     * user to update the password.
+     * @param event
+     */
+
+    public void updateOldPassword(ActionEvent event) {
+        int oldPassword = getAppEnvironment().getPassword();
+
+        if (oldPassword == oldPasswordText.getText().hashCode()) {
+            if (newPasswordText.getText().equals(confirmPasswordText.getText())){
+                if(newPasswordText.getText().length() == 4 && confirmPasswordText.getText().length() == 4){
+                    oldPasswordWarning.setText("");
+                    newPasswordWarning.setFill(Color.GREEN);
+                    newPasswordWarning.setText("Password updated!!");
+                    getAppEnvironment().setPassword(newPasswordText.getText().hashCode());
+                }
+                else if (newPasswordText.getText().length() < 4 || confirmPasswordText.getText().length() < 4){
+                    newPasswordWarning.setFill(Color.RED);
+                    newPasswordWarning.setText("Password has to be 4 digit long");
+                    oldPasswordWarning.setText("");
+                }
+                }
+            else{
+                newPasswordWarning.setFill(Color.RED);
+                newPasswordWarning.setText("The new password and confirm password does not match");
+                oldPasswordWarning.setText("");
+            }
+        }
+        else{
+            oldPasswordWarning.setFill(Color.RED);
+            oldPasswordWarning.setText("Password does not match the old password");
+
+        }
+    }
 }
+
+

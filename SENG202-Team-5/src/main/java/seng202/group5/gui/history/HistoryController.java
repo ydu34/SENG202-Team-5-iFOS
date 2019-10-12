@@ -21,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
+import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Order;
@@ -80,10 +81,8 @@ public class HistoryController extends GeneralController {
     @FXML
     private TableColumn<Transaction, JFXButton> rowAction;
 
-    /**
-     * A map from order IDs to the related transactions
-     */
-    private HashMap<String, Transaction> orderIDTransactionIndex;
+    @FXML
+    private JFXButton addPastOrderButton;
 
     public void initialize() {
         setStartDateUpdater();
@@ -103,34 +102,36 @@ public class HistoryController extends GeneralController {
             }
         });
 
-        orderIDTransactionIndex = new HashMap<>();
-        for (Transaction transaction : getAppEnvironment().getFinance().getTransactionHistoryClone().values()) {
-            orderIDTransactionIndex.put(transaction.getOrderID(), transaction);
-        }
 
-        // This sets the factories for creating values to display for each order
+        // Setting the factories for creating values to display for each order
         rowID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+
         rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getDateTime().toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));
+
         rowTime.setCellValueFactory(cellData -> {
             LocalTime time = cellData.getValue().getDateTime().toLocalTime();
             time = time.minusSeconds(time.getSecond());
             time = time.minusNanos(time.getNano());
             return new ReadOnlyStringWrapper(time.toString());
         });
+
         rowOrder.setCellValueFactory(cellData -> {
             String output = cellData.getValue().getOrder().printReceipt();
             output = output.replace("\n", ", ");
             return new ReadOnlyStringWrapper(output);
         });
+
         rowCost.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+
         // The factory for this is quite complicated since it uses a button instead
         rowAction.setCellValueFactory(param -> {
             JFXButton refundButton = new JFXButton("Refund");
             Order order = param.getValue().getOrder();
             // Disable the button if the order cannot be refunded
-            if (orderIDTransactionIndex.containsKey(order.getId())) {
-                refundButton.setDisable(orderIDTransactionIndex.get(order.getId()).isRefunded());
+            HashMap<String, Transaction> transactions = getAppEnvironment().getFinance().getTransactionHistory();
+            if (transactions.containsKey(order.getId())) {
+                refundButton.setDisable(transactions.get(order.getId()).isRefunded());
             } else {
                 refundButton.setDisable(true);
             }
@@ -140,6 +141,12 @@ public class HistoryController extends GeneralController {
             });
             return new ReadOnlyObjectWrapper<>(refundButton);
         });
+
+        try {
+            addPastOrderButton.setDisable(!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty());
+        } catch (NoOrderException e) {
+            e.printStackTrace();
+        }
 
         historyTable.getItems().addAll(getAppEnvironment().getFinance().getTransactionHistory().values());
     }
@@ -155,7 +162,7 @@ public class HistoryController extends GeneralController {
             Parent root = loader.load();
 
             ConfirmRefundController controller = loader.getController();
-            controller.setSource(this);
+            controller.setAppEnvironment(getAppEnvironment());
             controller.setButton(button);
             controller.setOrder(orderToRefund);
 
@@ -169,16 +176,6 @@ public class HistoryController extends GeneralController {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * Confirms the refund of an order
-     *
-     * @param orderID the ID of the order to refund
-     * @return a list of coins to give back to the customer
-     */
-    public ArrayList<Money> confirmOrderRefund(String orderID) {
-        return getAppEnvironment().getFinance().refund(orderIDTransactionIndex.get(orderID).getTransactionID());
     }
 
     /**

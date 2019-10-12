@@ -51,7 +51,7 @@ public class FinanceTest {
         expectedResult.add(Money.parse("NZD 2.00"));
         expectedResult.add(Money.parse("NZD 1.00"));
         expectedResult.add(Money.parse("NZD 0.20"));
-        assertEquals(result, expectedResult);
+        assertEquals(expectedResult, result);
     }
 
     @Test

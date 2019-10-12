@@ -102,7 +102,7 @@ public class StockController extends GeneralController {
         stockTable.setItems(ingredients);
 
         try {
-            getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
+            ///getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
 
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
                 warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
@@ -192,8 +192,9 @@ public class StockController extends GeneralController {
 
             Stage stage = new Stage();
             stage.setTitle("Remove Ingredient");
-            stage.setScene(new Scene(root, 400, 200));
+            stage.setScene(new Scene(root, 600, 200));
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
 
             controller.setAppEnvironment(getAppEnvironment());
             controller.pseudoInitialize();

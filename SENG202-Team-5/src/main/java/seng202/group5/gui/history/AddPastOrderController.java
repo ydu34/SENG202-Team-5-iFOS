@@ -231,14 +231,13 @@ public class AddPastOrderController extends OrderController {
      * passes the item and order from the current class to the controller
      *
      * @param event     an event that caused this to happen
-     * @param scenePath the path to the screen to change to
      */
     @Override
-    public void addExtraIngredientScreen(ActionEvent event, String scenePath) {
+    public void addExtraIngredientScreen(ActionEvent event) {
         Parent sampleScene = null;
         AddExtraIngredientController controller;
         try {
-            FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));
+            FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/addExtraIngredient.fxml"));
             // Need to create a new class here so this screen comes back with the right controller
             sampleScene = sampleLoader.load();
             controller = sampleLoader.getController();
@@ -259,22 +258,15 @@ public class AddPastOrderController extends OrderController {
     }
 
     /**
-     * Launches the screen to edit the ingredient counts of a menu item
-     * @param actionEvent an event that caused this to happen
-     */
-    @Override
-    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
-        addExtraIngredientScreen(actionEvent, "/gui/addExtraIngredient.fxml");
-    }
-
-    /**
      * Adds the selected item to the order
      */
     @Override
-    public void addItemToOrder() {
-        super.addItemToOrder();
+    public void addItemToOrder(MenuItem item) {
+        super.addItemToOrder(item);
         confirmButton.setDisable(false);
     }
+
+    //TODO make this change what is in the current order table
 
     public void setOrder(Order order) {
         super.setCurrentOrder(order);

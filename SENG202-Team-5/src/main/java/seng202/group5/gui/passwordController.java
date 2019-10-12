@@ -8,6 +8,12 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 
+/**
+ * A controller for managing the password feature in the application
+ *
+ * @author Shivin Gaba
+ */
+
 public class passwordController extends GeneralController {
 
     @FXML
@@ -72,7 +78,7 @@ public class passwordController extends GeneralController {
     /**
      * Default password that can be used to access the admin screen at the beginning of of the day
      */
-    String password = "1111";
+    private int password;
 
     /**
      * The string used to check the validity of the password
@@ -87,6 +93,7 @@ public class passwordController extends GeneralController {
     public void closeScreen(ActionEvent event) {
         ((Stage) cancelButton.getScene().getWindow()).close();
     }
+
 
 
     /**
@@ -242,7 +249,7 @@ public class passwordController extends GeneralController {
 
 
     public void checkPassword(ActionEvent event){
-        if(input.equals(password)){
+        if(input.hashCode() == password){
             source.launchAdminScreen(origin);
             closeScreen(event);
         }
@@ -292,8 +299,10 @@ public class passwordController extends GeneralController {
         origin = event;
     }
 
-    public String getPassword(){
-        return password;
+    public void setPassword(int newPassword) {
+        password = newPassword;
     }
+
+
 
 }

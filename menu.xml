@@ -2,10 +2,10 @@
 <menuManager>
     <generator>
         <ingredientID>12</ingredientID>
-        <menuItemID>10</menuItemID>
-        <orderID>5</orderID>
-        <transactionID>0</transactionID>
-        <customerID>0</customerID>
+        <menuItemID>9</menuItemID>
+        <orderID>3</orderID>
+        <transactionID>10</transactionID>
+        <customerID>10</customerID>
     </generator>
     <itemMap>
         <entry>

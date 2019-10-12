@@ -10,9 +10,7 @@ import javax.xml.bind.annotation.*;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Finance class records order history, refunds past orders and calculates change.
@@ -68,8 +66,10 @@ public class Finance {
         if (refundSum.equals(refundedOrder.getTotalPrice()) && !refundedOrder.isRefunded()) {
             refundedOrder.refund();
             return refund;
+        } else {
+            for (Money coin : refund) till.addDenomination(coin, 1);
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
 
     /**
@@ -98,7 +98,7 @@ public class Finance {
         {
             till.addDenomination(money, 1);
         }
-        ArrayList<Money> change = calcChange(payedSum.minus(totalCost));
+        ArrayList<Money> change = calcChange(payedSum.minus(totalCost).rounded(1, RoundingMode.HALF_DOWN));
         for (Money money: change)
         {
             changeSum = changeSum.plus(money);
@@ -107,6 +107,38 @@ public class Finance {
         transactionHistory.put(transaction.getTransactionID(), transaction);
 
         return change;
+    }
+
+    /**
+     * Checks the till for if there are enough denominations to give change
+     * @param payment The ArrayList of money given from the customer.
+     * @param order The order which the customer is paying for.
+     * @return A boolean saying whether there is enough money in the till to give back change.
+     */
+    public boolean enoughMoney(ArrayList<Money> payment, Order order) {
+        // Copy the till so that changes can be made without affecting the main program
+        Till copyTill = till.clone();
+
+        // Calculating the total amount remaining after payment
+        Money totalPayed = Money.parse("NZD 0");
+        for (Money money : payment) {
+            totalPayed = totalPayed.plus(money);
+            copyTill.addDenomination(money, 1);
+        }
+
+
+        Money total = totalPayed.minus(order.getTotalCost()).rounded(1, RoundingMode.HALF_DOWN);
+        try {
+            for (Money money : denomination) {
+                while (total.isGreaterThan(money)) {
+                    total = total.minus(money);
+                    copyTill.removeDenomination(money, 1);
+                }
+            }
+        } catch (InsufficientCashException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -150,24 +182,76 @@ public class Finance {
      * @return returns a list containing the change need to be returned
      */
     public ArrayList<Money> calcChange(Money change) {
-
-
         ArrayList<Money> totalChange = new ArrayList<>();
-        change = change.plus(Money.parse("NZD 0.03"));
 
-        for (Money value : denomination)
-        {
-            while (change.isGreaterThan(value) && till.getDenominations().get(value) > 0) {
-
-                totalChange.add(value);
-                change = change.minus(value);
+        // First try a greedy algorithm
+        change = change.rounded(1, RoundingMode.HALF_UP);
+        for (Money value : denomination) {
+            while (!change.isLessThan(value) && till.getDenominations().get(value) > 0) {
                 try {
                     till.removeDenomination(value, 1);
+                    totalChange.add(value);
+                    change = change.minus(value);
                 } catch (InsufficientCashException e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        // Return the result if it matches the amount required
+        if (change.isZero()) {
+            return totalChange;
+        }
+
+        // Otherwise, try a dynamic programming approach
+        for (Money coin : totalChange) till.addDenomination(coin, 1);
+        totalChange = new ArrayList<>();
+        ArrayList<Map.Entry<Money, Money>> valueList = new ArrayList<>(); // Helper value, Actual value (weight)
+        ArrayList<Money> tempDenominations = (ArrayList<Money>) denomination.clone();
+        tempDenominations.sort(Money::compareTo);
+        for (Money coin : tempDenominations) {
+            for (int i = 0; i < till.getDenominations().getOrDefault(coin, 0); i++) {
+                valueList.add(Map.entry(coin.minus(Money.parse("NZD 0.01")), coin));
+            }
+        }
+
+        ArrayList<ArrayList<Money>> cache = new ArrayList<>();
+        ArrayList<Money> tempList = new ArrayList<>();
+        for (Money i = Money.parse("NZD 0.00");
+             i.isLessThan(change) || i.isEqual(change);
+             i = i.plus(Money.parse("NZD 0.10"))) {
+            tempList.add(Money.parse("NZD 0.00"));
+        }
+        for (int i = 0; i <= valueList.size(); i++) cache.add((ArrayList<Money>) tempList.clone());
+
+        for (int n = 1; n <= valueList.size(); n++) {
+            for (int top = 1; top < cache.get(0).size(); top++) {
+                Money best = cache.get(n - 1).get(top);
+                Money valueWithoutLast = best;
+                Map.Entry<Money, Money> coin = valueList.get(n - 1);
+                if (!coin.getValue().isGreaterThan(Money.parse("NZD 0.10").multipliedBy(top))) {
+                    Money valueWithLast = coin.getKey().plus(cache.get(n - 1).get(top - coin.getValue()
+                            .multipliedBy(10).getAmountMajorInt()));
+                    if (valueWithLast.isGreaterThan(valueWithoutLast)) best = valueWithLast;
+                }
+                cache.get(n).set(top, best);
+            }
+        }
+
+        int x = cache.get(0).size() - 1;
+        int y = cache.size() - 1;
+        while (x != 0 && y != 0) {
+            Money value = valueList.get(y - 1).getKey();
+            Money coin = valueList.get(y - 1).getValue();
+            int diff = coin.multipliedBy(10).getAmountMajorInt();
+            if (x >= diff && !cache.get(y - 1).get(x).isGreaterThan(
+                    cache.get(y - 1).get(x - diff).plus(value))) {
+                totalChange.add(coin);
+                x = x - diff;
+            }
+            y--;
+        }
+
         return totalChange;
     }
 
