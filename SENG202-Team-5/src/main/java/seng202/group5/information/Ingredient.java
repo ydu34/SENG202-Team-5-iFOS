@@ -63,7 +63,7 @@ public class Ingredient {
         dietaryInformation = dietInfo;
     }
 
-
+    @Deprecated(since = "Used for testing only")
     public Ingredient(String tempName, String tempCategory, String tempId, Money tempPrice) {
         name = tempName;
         category = tempCategory;

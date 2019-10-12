@@ -1,5 +1,6 @@
 package seng202.group5;
 
+import org.joda.money.Money;
 import org.xml.sax.SAXException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -22,6 +23,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,26 +45,22 @@ public class Database {
     private boolean autoloadEnabled;
 
     /**
-     * Imports selected data into the application. This overrides existing data.
-     * If any of the files are not present, or are incorrect, the import is aborted
+     * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
+     * HashMap containing the ingredient and quantity.
      *
-     * @param fileMap A mapping from the name of the file to the file object
-     * @throws Exception when the files are incorrect
+     * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
+     * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
      */
-    public void importData(Map<String, File> fileMap) throws Exception {
-        Stock oldStock = appEnvironment.getStock();
-        MenuManager oldMenu = appEnvironment.getMenuManager();
-        Finance oldFinance = appEnvironment.getFinance();
-        try {
-            if (fileMap.containsKey("stock.xml")) stockXmlToObject(fileMap.get("stock.xml").getParent());
-            if (fileMap.containsKey("menu.xml")) menuXmlToObject(fileMap.get("menu.xml").getParent());
-            if (fileMap.containsKey("finance.xml")) financeXmlToObject(fileMap.get("finance.xml").getParent());
-        } catch (Exception e) {
-            appEnvironment.setStock(oldStock);
-            appEnvironment.setMenuManager(oldMenu);
-            appEnvironment.setFinance(oldFinance);
-            throw new Exception(e);
+    private HashMap<Ingredient, Integer> getIngredientsFromID(HashMap<String, Integer> IngredientIDs) throws NullPointerException {
+        HashMap<Ingredient, Integer> ingredients = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : IngredientIDs.entrySet()) {
+            String ID = entry.getKey();
+            Integer quantity = entry.getValue();
+            Ingredient ingredient = appEnvironment.getStock().getIngredients().get(ID);
+            if (ingredient == null) throw new NullPointerException("Some required ingredients are not present!");
+            ingredients.put(ingredient, quantity);
         }
+        return ingredients;
     }
 
     private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
@@ -121,22 +119,43 @@ public class Database {
     }
 
     /**
-     * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
-     * HashMap containing the ingredient and quantity.
+     * Gets the stock.xml from fileDirectory and unmarshal it to an object.
+     * The original stock from the app environment is not modified by this function
      *
-     * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
-     * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
+     * @param fileDirectory The directory of the stock.xml
+     * @throws Exception throws exception if stock.xml is invalid
      */
-    private HashMap<Ingredient, Integer> getIngredientsFromID(HashMap<String, Integer> IngredientIDs) throws NullPointerException {
-        HashMap<Ingredient, Integer> ingredients = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : IngredientIDs.entrySet()) {
-            String ID = entry.getKey();
-            Integer quantity = entry.getValue();
-            Ingredient ingredient = appEnvironment.getStock().getIngredients().get(ID);
-            if (ingredient == null) throw new NullPointerException("Ingredient not present!");
-            ingredients.put(ingredient, quantity);
+    public void stockXmlToObject(String fileDirectory) throws Exception {
+        try {
+            Stock tempStock = (Stock) xmlToObject(Stock.class, "stock.xml", "stock.xsd", fileDirectory);
+            switch (overwriteSetting) {
+                case OVERWRITE_ALL:
+                    break;
+                case MERGE_PREFER_NEW:
+                    for (Map.Entry<String, Ingredient> entry : appEnvironment.getStock().getIngredients().entrySet()) {
+                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {
+                            tempStock.addNewIngredient(entry.getValue());
+                            tempStock.modifyQuantity(entry.getKey(),
+                                    appEnvironment.getStock().getIngredientStock().get(entry.getKey()));
+                        }
+                    }
+                    break;
+                case MERGE_PREFER_OLD:
+                    for (Map.Entry<String, Ingredient> entry : appEnvironment.getStock().getIngredients().entrySet()) {
+                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {
+                            tempStock.addNewIngredient(entry.getValue());
+                        }
+                        tempStock.modifyQuantity(entry.getKey(),
+                                appEnvironment.getStock().getIngredientStock().get(entry.getKey()));
+                    }
+                    break;
+                default:
+                    break;
+            }
+            appEnvironment.setStock(tempStock);
+        } catch (JAXBException | SAXException e) {
+            throw new Exception("stock.xml file is invalid");
         }
-        return ingredients;
     }
 
 
@@ -207,48 +226,9 @@ public class Database {
         }
     }
 
-
-    /**
-     * Gets the stock.xml from fileDirectory and unmarshal it to an object.
-     *
-     * @param fileDirectory The directory of the stock.xml
-     * @throws Exception throws exception if stock.xml is invalid
-     */
-    public void stockXmlToObject(String fileDirectory) throws Exception {
-        try {
-            Stock tempStock = (Stock) xmlToObject(Stock.class, "stock.xml", "stock.xsd", fileDirectory);
-            switch (overwriteSetting) {
-                case OVERWRITE_ALL:
-                    break;
-                case MERGE_PREFER_NEW:
-                    for (Map.Entry<String, Ingredient> entry : appEnvironment.getStock().getIngredients().entrySet()) {
-                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {
-                            tempStock.addNewIngredient(entry.getValue());
-                            tempStock.modifyQuantity(entry.getKey(),
-                                    appEnvironment.getStock().getIngredientStock().get(entry.getKey()));
-                        }
-                    }
-                    break;
-                case MERGE_PREFER_OLD:
-                    for (Map.Entry<String, Ingredient> entry : appEnvironment.getStock().getIngredients().entrySet()) {
-                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {
-                            tempStock.addNewIngredient(entry.getValue());
-                        }
-                        tempStock.modifyQuantity(entry.getKey(),
-                                appEnvironment.getStock().getIngredientStock().get(entry.getKey()));
-                    }
-                    break;
-                default:
-                    break;
-            }
-            appEnvironment.setStock(tempStock);
-        } catch (JAXBException | SAXException e) {
-            throw new Exception("stock.xml file is invalid");
-        }
-    }
-
     /**
      * Gets the finance.xml from fileDirectory and unmarshal it to an object.
+     * The original finance from the app environment is not modified by this function
      *
      * @param fileDirectory The directory of the finance.xml
      * @throws Exception throws exception if finance.xml is invalid
@@ -270,9 +250,10 @@ public class Database {
                     break;
                 case MERGE_PREFER_OLD:
                     for (Map.Entry<String, Transaction> entry : appEnvironment.getFinance().getTransactionHistoryClone().entrySet()) {
-                        if (!tempFinance.getTransactionHistory().containsKey(entry.getKey())) {
-                            tempFinance.getTransactionHistory().put(entry.getKey(), entry.getValue());
-                        }
+                        tempFinance.getTransactionHistory().put(entry.getKey(), entry.getValue());
+                    }
+                    for (Map.Entry<Money, Integer> entry : appEnvironment.getFinance().getTill().getDenominations().entrySet()) {
+                        tempFinance.getTill().getDenominations().put(entry.getKey(), entry.getValue());
                     }
                     break;
                 default:
@@ -282,12 +263,12 @@ public class Database {
             appEnvironment.setFinance(tempFinance);
         } catch (JAXBException | SAXException e) {
             throw new Exception("finance.xml file is invalid");
-        } catch (NullPointerException ignored) {
         }
     }
 
     /**
      * Gets the menu.xml from fileDirectory and unmarshal it to an object.
+     * The original menu from the app environment is not modified by this function
      *
      * @param fileDirectory The directory of the menu.xml
      * @throws Exception throws exception if menu.xml is invalid
@@ -317,7 +298,6 @@ public class Database {
             appEnvironment.setMenuManager(tempMenu);
         } catch (JAXBException | SAXException e) {
             throw new Exception("menu.xml file is invalid");
-        } catch (NullPointerException ignored) {
         }
     }
 
@@ -333,8 +313,66 @@ public class Database {
             objectToXml(Finance.class, appEnvironment.getFinance(), "finance.xml", fileDirectory);
             objectToXml(MenuManager.class, appEnvironment.getMenuManager(), "menu.xml", fileDirectory);
         } catch (JAXBException e) {
-            throw new Exception(e);
+            throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * Imports selected data into the application. This overrides existing data.
+     * If any of the files are not present, or are incorrect, the import is aborted
+     *
+     * @param fileMap A mapping from the name of the file to the file object
+     * @throws Exception when the files are incorrect
+     */
+    public void importData(Map<String, File> fileMap) throws Exception {
+        Stock oldStock = appEnvironment.getStock();
+        MenuManager oldMenu = appEnvironment.getMenuManager();
+        Finance oldFinance = appEnvironment.getFinance();
+        try {
+            if (fileMap.containsKey("stock.xml")) stockXmlToObject(fileMap.get("stock.xml").getParent());
+            if (fileMap.containsKey("menu.xml")) menuXmlToObject(fileMap.get("menu.xml").getParent());
+            if (fileMap.containsKey("finance.xml")) financeXmlToObject(fileMap.get("finance.xml").getParent());
+            checkDataIntegrity();
+        } catch (Exception e) {
+            appEnvironment.setStock(oldStock);
+            appEnvironment.setMenuManager(oldMenu);
+            appEnvironment.setFinance(oldFinance);
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * Checks that all data in the application is not dependent on unimported data
+     */
+    public void checkDataIntegrity() throws Exception {
+        Stock stock = appEnvironment.getStock();
+        if (!stock.getIngredients().keySet().equals(stock.getIngredientStock().keySet())) {
+            throw new Exception("Stock ingredients/quantity mismatch!");
+        }
+        HashMap<String, MenuItem> menuItems = appEnvironment.getMenuManager().getItemMap();
+        for (MenuItem item : menuItems.values()) {
+            for (Ingredient ingredient : item.getRecipe().getIngredientsAmount().keySet()) {
+                if (!stock.getIngredients().containsKey(ingredient.getID())) {
+                    throw new Exception("Menu items contain unstored ingredients!");
+                }
+            }
+        }
+        for (Transaction transaction : appEnvironment.getFinance().getTransactionHistory().values()) {
+            for (MenuItem item : transaction.getOrder().getOrderItems().keySet()) {
+                for (Ingredient ingredient : item.getRecipe().getIngredientsAmount().keySet()) {
+                    if (!stock.getIngredients().containsKey(ingredient.getID())) {
+                        throw new Exception("Transactions contain unstored ingredients!");
+                    }
+                }
+            }
+        }
+    }
+
+    @XmlTransient
+    public enum OverwriteType {
+        OVERWRITE_ALL,
+        MERGE_PREFER_NEW,
+        MERGE_PREFER_OLD
     }
 
     /**
@@ -346,13 +384,6 @@ public class Database {
             String location = getLocation();
             allObjectsToXml(location);
         }
-    }
-
-    @XmlTransient
-    public enum OverwriteType {
-        OVERWRITE_ALL,
-        MERGE_PREFER_NEW,
-        MERGE_PREFER_OLD
     }
 
     private String getLocation() {

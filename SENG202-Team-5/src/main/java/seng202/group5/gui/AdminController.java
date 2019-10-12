@@ -48,9 +48,9 @@ import java.util.Map;
  */
 public class AdminController extends GeneralController {
 
-    public static String[] OverwriteTypeNames = {"Overwrite: Delete existing data and add new data (WARNING - Your existing data will not be stored by the application)",
-            "Merge and replace with new data: Merge existing data with new data and replace conflicting data with new data",
-            "Merge and keep old data: Merge new data with existing data and keep old data when conflicting data occurs"};
+    public static String[] OverwriteTypeNames = {"Overwrite",// Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)
+            "Merge and replace with imported data",// Merge existing data with imported data and replace conflicting data with imported data
+            "Merge and keep data in application"};// Merge imported data with existing data and keep existing data when conflicts occurs
 
     @FXML
     private DatePicker startDate;
@@ -125,7 +125,6 @@ public class AdminController extends GeneralController {
 
     @FXML
     private JFXTabPane adminTabPane;
-    private static int NUM_DATA_FILES = 3;
     @FXML
     private MenuButton dataMergeTypeMenu;
 
@@ -355,9 +354,7 @@ public class AdminController extends GeneralController {
      * Therefore enable the import data button for the user to click.
      */
     public void checkFilesSelected() {
-        if ((fileMap.size() >= 1 &&
-                getAppEnvironment().getDatabase().getOverwriteSetting() != Database.OverwriteType.OVERWRITE_ALL) ||
-                fileMap.size() == NUM_DATA_FILES) {
+        if (fileMap.size() >= 1) {
             importDataButton.setDisable(false);
         } else {
             importDataButton.setDisable(true);
