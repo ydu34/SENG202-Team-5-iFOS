@@ -3,6 +3,7 @@ package seng202.group5;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.Customers;
 import seng202.group5.logic.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class AppEnvironment {
     private Finance finance;
     private Stock stock;
     private MenuManager menuManager;
+    private Customers customers;
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
@@ -35,6 +37,7 @@ public class AppEnvironment {
         stock = new Stock();
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
+        customers = new Customers();
         idGenerator = new IDGenerator();
         database = new Database(this);
         imagesFolderPath = "";
@@ -67,19 +70,20 @@ public class AppEnvironment {
      *                                   to pay for the order
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
-        //        Money totalPayment = Money.parse("NZD 0");
-        //        for (Money coin : denominations) totalPayment = totalPayment.plus(coin);
         ArrayList<Money> change = new ArrayList<>();
         try {
-            Order order = orderManager.getOrder();
-            setStock(order.getStock().clone());
-            orderManager.setStock(stock);
-            orderManager.newOrder();
+            if (finance.enoughMoney(denominations, orderManager.getOrder())) {
+                Order order = orderManager.getOrder();
+                setStock(order.getStock().clone());
+                orderManager.setStock(stock);
+                orderManager.newOrder();
 
-            change = finance.pay(denominations, LocalDateTime.now(), order);
-
+                change = finance.pay(denominations, LocalDateTime.now(), order);
+            } else {
+                throw new InsufficientCashException();
+            }
         } catch (NoOrderException e) {
-            e.printStackTrace();
+            System.out.println("No Order! Ya dingus");
         }
 
         return change;

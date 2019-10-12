@@ -78,7 +78,8 @@
                 <RowConstraints maxHeight="-Infinity" />
             </rowConstraints>
             <children>
-                <JFXDatePicker fx:id="historyStartDatePicker" defaultColor="#f9ac68" onAction="#updateVisibleOrders" onShowing="#setStartDateUpdater" promptText="Start Date">
+                <JFXDatePicker fx:id="historyStartDatePicker" onAction="#updateVisibleOrders"
+                               onShowing="#setStartDateUpdater" promptText="Start Date">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
@@ -86,7 +87,8 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </JFXDatePicker>
-                <JFXDatePicker fx:id="historyEndDatePicker" defaultColor="#f9ac68" onAction="#updateVisibleOrders" onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1">
+                <JFXDatePicker fx:id="historyEndDatePicker" onAction="#updateVisibleOrders"
+                               onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
@@ -102,7 +104,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
                 </JFXTextField>
-                <JFXButton mnemonicParsing="false" onAction="#addPastOrder" text="Add Past Order" GridPane.columnIndex="4">
+                <JFXButton fx:id="addPastOrderButton" mnemonicParsing="false" onAction="#addPastOrder" text="Add Past Order" GridPane.columnIndex="4">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
