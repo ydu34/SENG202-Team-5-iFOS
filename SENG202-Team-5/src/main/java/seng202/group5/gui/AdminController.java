@@ -1,11 +1,13 @@
 package seng202.group5.gui;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,7 +43,7 @@ import java.util.Map;
 /**
  * A controller for managing the administration screen
  *
- * @author Yu Duan
+ * @author Yu Duan, Shivin Gaba
  */
 public class AdminController extends GeneralController {
 
@@ -152,6 +154,16 @@ public class AdminController extends GeneralController {
     private Spinner<Integer> spinner50d;
     @FXML
     private Spinner<Integer> spinner100d;
+    @FXML
+    private Text promptText;
+    @FXML
+    private JFXButton saveButton;
+    @FXML
+    private JFXTextField oldPasswordText;
+    @FXML
+    private JFXTextField newPasswordText;
+    @FXML
+    private JFXTextField confirmPasswordText;
 
     private ArrayList<Spinner<Integer>> spinnerList;
 
@@ -171,6 +183,12 @@ public class AdminController extends GeneralController {
                 spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
                 spinner20d, spinner50d, spinner100d));
         updateTillSpinners();
+
+        textFieldListeners(oldPasswordText);
+        textFieldListeners(newPasswordText);
+        textFieldListeners(confirmPasswordText);
+
+
         for (Spinner<Integer> spinner : spinnerList) {
             spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
             Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);
@@ -194,6 +212,22 @@ public class AdminController extends GeneralController {
 
         // Disables buttons if an order is in progress
         checkIfOrderInProgress();
+    }
+
+    /**
+     * This function adds listeners to the text fields under the password setting tab pane and only allow the user to enter a
+     * a 4 digit pin. It also prevents the user form typing and special characters or alphabets.
+     * @param someTextField
+     */
+
+    public void textFieldListeners(JFXTextField someTextField){
+
+        someTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,4}?")) {
+                someTextField.setText(oldValue);
+            }
+        });
+
     }
 
     /**
@@ -521,8 +555,31 @@ public class AdminController extends GeneralController {
     }
 
 
-
     public void setFinance(Finance newFinance) {
         finance = newFinance;
     }
+
+    /**
+     * This function checks all the fields on password settings screen and checks if they are valid and accordingly allows
+     * user to update the password.
+     * @param event
+     */
+
+    public void updateOldPassword(ActionEvent event) {
+        String oldPassword = getAppEnvironment().getPassword();
+        if(oldPassword.equals(oldPasswordText.getText())) {
+            if (newPasswordText.getText().equals(confirmPasswordText.getText())){
+                promptText.setText("password changed");
+                getAppEnvironment().setPassword(newPasswordText.getText());
+                promptText.setText("password changed");
+                System.out.println(getAppEnvironment().getPassword());
+            }
+        }
+        else{
+            promptText.setText("wrong password entered");
+
+        }
+    }
 }
+
+

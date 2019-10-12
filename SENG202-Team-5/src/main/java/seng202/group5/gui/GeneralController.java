@@ -145,6 +145,8 @@ public class GeneralController {
             controller.setSource(this);
             controller.setEvent(event);
 
+            controller.setPassword(getAppEnvironment().getPassword());
+
 
             Stage stage = new Stage();
             stage.setTitle("Enter the password");
