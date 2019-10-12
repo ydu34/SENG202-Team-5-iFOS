@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -125,7 +126,6 @@ public class OrderController extends GeneralController {
         filterItems();
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
-
         } catch (NoOrderException e) {
             System.out.println(e);
         }
@@ -272,7 +272,6 @@ public class OrderController extends GeneralController {
             }
         }
 
-        filteredItems = filteredMenuItems;
         populateTilePane(filteredMenuItems);
 
     }
@@ -290,16 +289,12 @@ public class OrderController extends GeneralController {
 
     /**
      * This function removes the selected item from the current order when clicked on the remove button and updates the invoice display
-     *
-     * @param actionEvent
      */
     @FXML
-    private void removeSelectedItem(javafx.event.ActionEvent actionEvent) {
+    private void removeSelectedItem() {
         currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
         boolean someOrder = this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
-        if (someOrder == true) {
-            removeItemButton.setDisable(false);
-        }
+        if (someOrder) removeItemButton.setDisable(false);
     }
 
     /**
@@ -348,7 +343,8 @@ public class OrderController extends GeneralController {
         });
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
         ingredientInfoTable.refresh();
-
+        ingredientInfoTable.getSortOrder().add(ingredientNameCol);
+        ingredientInfoTable.sort();
     }
 
     /**

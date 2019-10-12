@@ -192,15 +192,15 @@ public class AdminController extends GeneralController {
         recipeTableInitialize();
         fileMap = new HashMap<>();
 
+        textFieldListeners(oldPasswordText);
+        textFieldListeners(newPasswordText);
+        textFieldListeners(confirmPasswordText);
+
         // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
                 spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
                 spinner20d, spinner50d, spinner100d));
         updateTillSpinners();
-
-        textFieldListeners(oldPasswordText);
-        textFieldListeners(newPasswordText);
-        textFieldListeners(confirmPasswordText);
 
         for (Spinner<Integer> spinner : spinnerList) {
             spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
@@ -292,10 +292,8 @@ public class AdminController extends GeneralController {
         sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         itemTable.getItems().clear();
         itemTable.setItems(items);
-    }
-
-    public void selectTime(javafx.event.ActionEvent actionEvent) {
-        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+        itemTable.getSortOrder().add(nameCol);
+        itemTable.sort();
     }
 
     /**

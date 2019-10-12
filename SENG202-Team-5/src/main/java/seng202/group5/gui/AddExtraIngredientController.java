@@ -66,8 +66,6 @@ public class AddExtraIngredientController extends GeneralController {
 
     private ObservableList<Ingredient> itemIngredients;
 
-    int numberOfItems;
-
     /**
      * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
      */
@@ -77,13 +75,14 @@ public class AddExtraIngredientController extends GeneralController {
         initializeRemainingIngredients();
         initializeSpinners();
         ingredientsTable.setItems(itemIngredients);
+        ingredientsTable.getSortOrder().add(columnIngredientName);
+        ingredientsTable.sort();
     }
 
     /**
      * Sets up value factories in each column which take ingredients and populate the table with their data.
      */
     public void initializeColumns() {
-        columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -280,10 +279,6 @@ public class AddExtraIngredientController extends GeneralController {
 
     private MenuItem getOriginalItem() {
         return getAppEnvironment().getMenuManager().getMenuItems().get(selectedItem.getID());
-    }
-
-    public void setNumberItems(int tempNumber) {
-        numberOfItems = tempNumber;
     }
 
     protected Order getCurrentOrder() {
