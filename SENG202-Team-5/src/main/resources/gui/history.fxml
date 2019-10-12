@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -21,7 +22,7 @@
         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" snapToPixel="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+        <GridPane fx:id="navGridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" snapToPixel="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,23 +34,23 @@
                 <RowConstraints minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order">
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></JFXButton>
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1">
+               </cursor></Button>
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></JFXButton>
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2">
+               </cursor></Button>
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></JFXButton>
-                <JFXButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3">
+               </cursor></Button>
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></JFXButton>
-                <JFXButton disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
+               </cursor></Button>
+                <Button fx:id="navButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
             </children>
         </GridPane>
         <TableView fx:id="historyTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="500.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">

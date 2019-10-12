@@ -101,6 +101,10 @@
     -fx-focus-color: rgb(82, 100, 174);
 }
 
+.table-row-cell:selected {
+    -fx-background-color: #f9ac68;
+}
+
 /*.table-row-cell .jfx-text-field:error {*/
     /*-jfx-focus-color: #D34336;*/
     /*-jfx-unfocus-color: #D34336;*/
