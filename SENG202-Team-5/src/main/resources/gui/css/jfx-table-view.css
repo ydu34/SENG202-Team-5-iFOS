@@ -98,7 +98,11 @@
 }
 
 .table-row-cell .jfx-text-field {
-    -fx-focus-color: #f9ac68;
+    -fx-focus-color: rgb(82, 100, 174);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #f9ac68;
 }
 
 /*.table-row-cell .jfx-text-field:error {*/
@@ -128,4 +132,3 @@
 .table-view .menu-item .label {
     -fx-padding: 5 0 5 0;
 }
-
