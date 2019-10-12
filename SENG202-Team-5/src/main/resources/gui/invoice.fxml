@@ -93,7 +93,7 @@
                                 </VBox>
                         <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="15.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                            <children>
-                              <JFXButton fx:id="existingMemberButton" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="Existing Member" HBox.hgrow="ALWAYS">
+                              <JFXButton fx:id="existingMemberButton" maxWidth="1.7976931348623157E308" onAction="#existingMember" prefHeight="48.0" prefWidth="240.0" text="Existing Member" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -109,7 +109,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <JFXButton fx:id="newMemberButton" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="New Member" HBox.hgrow="ALWAYS">
+                              <JFXButton fx:id="newMemberButton" maxWidth="1.7976931348623157E308" onAction="#newMember" prefHeight="48.0" prefWidth="240.0" text="New Member" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -141,6 +141,20 @@
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="3">
                            <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                                 <children>
+                                    <Label fx:id="customerNameLabel">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="customerPointsLabel">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
                                       <JFXButton fx:id="payCashButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#payCash" prefHeight="100.0" prefWidth="400.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Confirm Payment">
                                           <font>
                                               <Font size="26.0" />

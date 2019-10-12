@@ -12,6 +12,11 @@ import seng202.group5.gui.GeneralController;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The Controller for the screen after payment is accepted. This screen shows the change quantities for the worker
+ * to give to the customer.
+ * @author Michael Morgoun
+ */
 public class PaymentSuccessController extends GeneralController {
 
     private ArrayList<Money> change;

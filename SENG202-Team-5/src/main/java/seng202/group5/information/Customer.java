@@ -12,19 +12,13 @@ import static org.joda.money.Money.parse;
  */
 public class Customer {
 
-    private IDGenerator generator = new IDGenerator();
-    private String customerID = generator.newCustomerID();
+    private String customerID = IDGenerator.newCustomerID();
 
     private String name;
 
     private String phoneNumber;
 
     private int purchasePoints = 10;
-
-    public Customer(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
 
     /**
      *Calculates and adds purchase points to a customers account when they have spent money.

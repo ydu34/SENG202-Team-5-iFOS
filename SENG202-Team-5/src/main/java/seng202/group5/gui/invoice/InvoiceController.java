@@ -19,6 +19,7 @@ import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Customer;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Order;
 
@@ -62,13 +63,13 @@ public class InvoiceController extends GeneralController {
     private Label warningLabel;
 
     @FXML
+    private Label customerNameLabel;
+
+    @FXML
+    private Label customerPointsLabel;
+
+    @FXML
     private Button removeItem;
-
-    @FXML
-    private Button existingMemberButton;
-
-    @FXML
-    private Button newMemberButton;
 
     @FXML
     private Button payCashButton;
@@ -83,27 +84,39 @@ public class InvoiceController extends GeneralController {
 
     private Map<MenuItem, Integer> orderItemsMap;
 
+    private Customer currentCustomer;
+
 
     /**
      * The initializer for this controller
      */
     public void pseudoInitialize() {
         super.pseudoInitialize();
+
+        // Attempts to get the current order and customer
         try {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentCustomer = currentOrder.getCurrentCustomer();
             removeItem.setDisable(true);
-        } catch (NoOrderException ignored) {
-        }
-        Money totalCost = currentOrder.getTotalCost();
+        } catch (NoOrderException ignored) { }
 
+        // Sets the total cost of the order
+        Money totalCost = currentOrder.getTotalCost();
         totalCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
         currentOrderTable();
 
+        // Creates a new listener for the removeItem button
         currentOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if(newSelection != null){
                 removeItem.setDisable(false);
             }
         });
+
+        // If a customer exists, displays information about the customer
+        if (currentCustomer != null) {
+            customerNameLabel.setText("Currently Selected Member: " + currentCustomer.getName());
+            customerPointsLabel.setText("Current Points: " + currentCustomer.getPurchasePoints());
+        }
 
         // Disabling payCashButton
         payCashButton.setDisable(true);
@@ -134,6 +147,72 @@ public class InvoiceController extends GeneralController {
         });
 
         currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));
+    }
+
+    /**
+     * Opens a screen to search and choose and existing member of the loyalty club.
+     */
+    @FXML
+    private void existingMember() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/existingCustomer.fxml"));
+            Parent root = loader.load();
+
+            ExistingCustomerController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 545, 650));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Find an existing Member!");
+
+            // Set AppEnvironment so that it can change the current customer
+            controller.setAppEnvironment(getAppEnvironment());
+            controller.pseudoInitialize();
+
+            // Waits for the window to close before reinitialising
+            stage.showAndWait();
+            pseudoInitialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method opens the menu for a new Member.
+     */
+    @FXML
+    private void newMember() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/newCustomer.fxml"));
+            Parent root = loader.load();
+
+            NewCustomerController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 600, 400));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Create a new Member!");
+
+            controller.pseudoInitialize();
+
+            stage.showAndWait();
+
+            // If a new customer was created, show that information on the screen
+            Customer customer = controller.getCustomer();
+            if (customer != null) {
+                // Sets the currentCustomer of the order to the new one
+                currentOrder.setCurrentCustomer(customer);
+                currentCustomer = customer;
+
+                // Displays customer information
+                customerNameLabel.setText("Currently Selected: " + customer.getName());
+                customerPointsLabel.setText("Current Points: " + customer.getPurchasePoints());
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -183,14 +262,17 @@ public class InvoiceController extends GeneralController {
      * Resets the list containing the currently given denominations
      */
     public void clearPayment() {
+        // Clear local variables
         total = Money.parse("NZD 0");
         currentPayment = new HashMap<>();
         paymentArray = new ArrayList<>();
 
+        // Clear money labels
         currentlyPayedLabel.setText("$0.00");
         denomDollarLabel.setText("");
         denomCentLabel.setText("");
 
+        // Disable the pay button
         payCashButton.setDisable(true);
     }
 
@@ -273,6 +355,11 @@ public class InvoiceController extends GeneralController {
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
             currentOrder.clearItemsInOrder();
+
+            // Clear customer labels
+            currentCustomer = null;
+            customerNameLabel.setText("");
+            customerPointsLabel.setText("");
         } catch (NoOrderException ignored) {
 
         }
@@ -280,51 +367,81 @@ public class InvoiceController extends GeneralController {
         pseudoInitialize();
     }
 
+    /**
+     * Adds 10 Cents to the payment.
+     */
     @FXML
     private void addTenCent(){
         addMoney(10);
     }
 
+    /**
+     * Adds 20 cents to the payment.
+     */
     @FXML
     private void addTwentyCent(){
         addMoney(20);
     }
 
+    /**
+     * Adds 50 cents to the payment.
+     */
     @FXML
     private void addFiftyCent(){
         addMoney(50);
     }
 
+    /**
+     * Adds 1 dollar to the payment.
+     */
     @FXML
     private void addOneDollar(){
         addMoney(100);
     }
 
+    /**
+     * Adds 2 dollars to the payment.
+     */
     @FXML
     private void addTwoDollar(){
         addMoney(200);
     }
 
+    /**
+     * Adds 5 dollars to the payment.
+     */
     @FXML
     private void addFiveDollar(){
         addMoney(500);
     }
 
+    /**
+     * Adds 10 dollars to the payment.
+     */
     @FXML
     private void addTenDollar(){
         addMoney(1000);
     }
 
+    /**
+     * Adds 20 dollars to the payment.
+     */
     @FXML
     private void addTwentyDollar(){
         addMoney(2000);
     }
 
+    /**
+     * Adds 50 dollars to the payment.
+     */
     @FXML
     private void addFiftyDollar(){
         addMoney(5000);
     }
 
+    /**
+     * Adds 100 dollars to the payment.
+     */
     @FXML
     private void addHundredDollar(){
         addMoney(10000);

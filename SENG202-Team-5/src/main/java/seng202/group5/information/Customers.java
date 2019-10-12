@@ -18,11 +18,11 @@ public class Customers {
         customerList.add(customer);
     }
 
-    public void setCustomerMap(ArrayList<Customer> tempCustomerSet) {
+    public void setCustomerList(ArrayList<Customer> tempCustomerSet) {
         customerList = tempCustomerSet;
     }
 
-    public ArrayList<Customer> getCustomerSet() {
+    public static ArrayList<Customer> getCustomerList() {
         return customerList;
     }
 }
