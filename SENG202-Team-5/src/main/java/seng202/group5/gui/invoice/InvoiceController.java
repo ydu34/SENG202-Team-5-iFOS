@@ -179,6 +179,7 @@ public class InvoiceController extends GeneralController {
     public void clearPayment() {
         total = Money.parse("NZD 0");
         currentPayment = new HashMap<>();
+        paymentArray = new ArrayList<>();
 
         currentlyPayedLabel.setText("$0.00");
         denomDollarLabel.setText("");
