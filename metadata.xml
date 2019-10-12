@@ -3,5 +3,5 @@
     <saveFileLocation></saveFileLocation>
     <autosaveEnabled>false</autosaveEnabled>
     <autoloadEnabled>true</autoloadEnabled>
-    <overwriteSetting>OVERWRITE_ALL</overwriteSetting>
+    <overwriteSetting>MERGE_PREFER_NEW</overwriteSetting>
 </database>

@@ -858,8 +858,10 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Text>
-                                    <JFXPasswordField fx:id="oldPasswordText" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"prefHeight="26.0"
-                                                              prefWidth="176.0" GridPane.rowIndex="1"/>
+                                                <JFXPasswordField fx:id="oldPasswordText" maxWidth="-Infinity"
+                                                                  minHeight="-Infinity" minWidth="-Infinity"
+                                                                  prefHeight="26.0"
+                                                                  prefWidth="176.0" GridPane.rowIndex="1"/>
                                             </children>
                                         </GridPane>
                                         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -875,8 +877,9 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                             </rowConstraints>
                                             <children>
-                                                <JFXPasswordField fx:id="newPasswordText" maxWidth="-Infinity"prefHeight="26.0"
-                                                              prefWidth="176.0" GridPane.rowIndex="1"/>
+                                                <JFXPasswordField fx:id="newPasswordText" maxWidth="-Infinity"
+                                                                  prefHeight="26.0"
+                                                                  prefWidth="176.0" GridPane.rowIndex="1"/>
                                                 <Text fx:id="promptText" strokeType="OUTSIDE" strokeWidth="0.0"
                                                       wrappingWidth="196.7294921875" GridPane.columnIndex="1"
                                                       GridPane.halignment="RIGHT" GridPane.rowIndex="1"/>
@@ -899,8 +902,9 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                             </rowConstraints>
                                             <children>
-                                                <JFXPasswordField fx:id="confirmPasswordText" maxWidth="-Infinity"prefHeight="26.0"
-                                                              prefWidth="176.0" GridPane.rowIndex="1"/>
+                                                <JFXPasswordField fx:id="confirmPasswordText" maxWidth="-Infinity"
+                                                                  prefHeight="26.0"
+                                                                  prefWidth="176.0" GridPane.rowIndex="1"/>
                                             </children>
                                         </GridPane>
                                     </children></GridPane>
