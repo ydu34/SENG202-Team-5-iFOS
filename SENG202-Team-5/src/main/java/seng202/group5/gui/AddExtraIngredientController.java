@@ -25,7 +25,7 @@ import java.util.*;
  */
 public class AddExtraIngredientController extends GeneralController {
 
-    private static final int MAX_INGREDIENT_AMOUNT = 30;
+    private static final int MAX_INGREDIENT_AMOUNT = 50;
 
     @FXML
     private String openMode;
@@ -65,6 +65,8 @@ public class AddExtraIngredientController extends GeneralController {
     private Set<Ingredient> selectedIngredientSet;
 
     private ObservableList<Ingredient> itemIngredients;
+
+    int numberOfItems;
 
     /**
      * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
@@ -270,6 +272,10 @@ public class AddExtraIngredientController extends GeneralController {
 
     private MenuItem getOriginalItem() {
         return getAppEnvironment().getMenuManager().getMenuItems().get(selectedItem.getID());
+    }
+
+    public void setNumberItems(int tempNumber) {
+        numberOfItems = tempNumber;
     }
 
     protected Order getCurrentOrder() {

@@ -326,11 +326,9 @@ public class OrderController extends GeneralController {
             promptText.setFill(Color.GREEN);
             currentOrderTable();
             setMenuItem(item);
-       }
-       else{
+       } else {
            promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
            promptText.setFill(Color.RED);
-
        }
     }
 
@@ -350,40 +348,6 @@ public class OrderController extends GeneralController {
         ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));
 
     }
-
-
-    /**
-     * This method launches the screen for adding extra ingredients to the selected menu item and
-     * passes the item and order from the current class to the controller
-     *
-     * @param event an event that caused this to happen
-     */
-    public void selectModifiableItemsScreen(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/selectModifiableItems.fxml"));
-            Parent root = loader.load();
-            SelectModifiableItemsController controller = loader.getController();
-            controller.setAppEnvironment(getAppEnvironment());
-
-            int index = currentOrderTable.getSelectionModel().getFocusedIndex();
-            controller.setModifyingItem(currentOrderTable.getItems().get(index));
-            controller.setMaxQuantity(Integer.parseInt(itemQuantityCol.getCellObservableValue(index).getValue()));
-            controller.pseudoInitialize();
-            Stage stage = new Stage();
-            stage.setTitle("Select Number of Modifiable Items");
-            stage.setScene(new Scene(root, 800, 600));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            pseudoInitialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
 
     /**
      * This function populates the mini invoice screen with the selected menu items along with their quantity which are the part of the current order
@@ -430,10 +394,20 @@ public class OrderController extends GeneralController {
         if(someOrder == true){
             removeItemButton.setDisable(false);
         }
-
     }
 
 
+    /**
+     * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
+     * @param actionEvent an event that caused this to happen
+     */
+    public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
+        AddExtraIngredientController controller =
+                (AddExtraIngredientController) changeScreen(actionEvent, "/gui/addExtraIngredient.fxml");
+        controller.setMenuItem(currentOrderTable.getSelectionModel().getSelectedItem());
+        controller.setOpenMode("Order");
+        controller.initializeTable();
+    }
     /**
      * A method to set the current order for the alternate order screen in history
      *
