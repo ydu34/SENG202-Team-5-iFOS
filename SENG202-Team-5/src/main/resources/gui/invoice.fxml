@@ -93,7 +93,7 @@
                                 </VBox>
                         <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="15.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                            <children>
-                              <JFXButton maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="Existing Member" HBox.hgrow="ALWAYS">
+                              <JFXButton fx:id="existingMemberButton" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="Existing Member" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -109,7 +109,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <JFXButton maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="New Member" HBox.hgrow="ALWAYS">
+                              <JFXButton fx:id="newMemberButton" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="240.0" text="New Member" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

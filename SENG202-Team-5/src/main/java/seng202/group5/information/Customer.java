@@ -16,8 +16,15 @@ public class Customer {
     private String customerID = generator.newCustomerID();
 
     private String name;
+
+    private String phoneNumber;
+
     private int purchasePoints = 10;
 
+    public Customer(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
     /**
      *Calculates and adds purchase points to a customers account when they have spent money.
@@ -59,6 +66,10 @@ public class Customer {
         name = newName;
     }
 
+    public void setPhoneNumber(String newPhoneNumber) {
+        phoneNumber = newPhoneNumber;
+    }
+
     public void setPurchasePoints(int tempPurchasePoints) {
         purchasePoints = tempPurchasePoints;
     }
@@ -68,6 +79,8 @@ public class Customer {
     }
 
     public String getName() { return name; }
+
+    public String getPhoneNumber() { return phoneNumber; }
 
     public int getPurchasePoints() {
         return purchasePoints;

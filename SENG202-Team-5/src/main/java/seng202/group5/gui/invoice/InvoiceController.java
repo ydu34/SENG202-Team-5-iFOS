@@ -65,6 +65,12 @@ public class InvoiceController extends GeneralController {
     private Button removeItem;
 
     @FXML
+    private Button existingMemberButton;
+
+    @FXML
+    private Button newMemberButton;
+
+    @FXML
     private Button payCashButton;
 
     private HashMap<Money, Integer> currentPayment = new HashMap<>();

@@ -3,6 +3,7 @@ package seng202.group5;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.Customers;
 import seng202.group5.logic.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class AppEnvironment {
     private Finance finance;
     private Stock stock;
     private MenuManager menuManager;
+    private Customers customers;
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
@@ -35,6 +37,7 @@ public class AppEnvironment {
         stock = new Stock();
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
+        customers = new Customers();
         idGenerator = new IDGenerator();
         database = new Database(this);
         imagesFolderPath = "";
