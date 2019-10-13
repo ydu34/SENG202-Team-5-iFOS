@@ -1,5 +1,6 @@
 package seng202.group5;
 
+import seng202.group5.information.Customers;
 import seng202.group5.logic.*;
 
 import javax.xml.bind.JAXBContext;
@@ -55,6 +56,7 @@ public class SchemaGenerator {
      *      finance.xsd
      *      menu.xsd
      *      stock.xsd
+     *      customers.xsd
      *      metadata.xsd
      */
     public void generateAllSchemas() {
@@ -62,6 +64,7 @@ public class SchemaGenerator {
         writeSchemaToFile(Stock.class, "stock.xsd");
         writeSchemaToFile(MenuManager.class, "menu.xsd");
         writeSchemaToFile(Finance.class, "finance.xsd");
+        writeSchemaToFile(Customers.class, "customers.xsd");
         writeSchemaToFile(Database.class, "metadata.xsd");
     }
 

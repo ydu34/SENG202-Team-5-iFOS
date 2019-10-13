@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

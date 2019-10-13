@@ -184,6 +184,8 @@ public class InvoiceController extends GeneralController {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Find an existing Member!");
 
+                controller.setCustomers(getAppEnvironment().getCustomers());
+
                 // Set AppEnvironment so that it can change the current customer
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.pseudoInitialize();
@@ -217,6 +219,7 @@ public class InvoiceController extends GeneralController {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Create a new Member!");
 
+                controller.setCustomers(getAppEnvironment().getCustomers());
                 controller.pseudoInitialize();
 
                 stage.showAndWait();
@@ -240,6 +243,9 @@ public class InvoiceController extends GeneralController {
         if (currentOrder.getOrderItems().isEmpty()) {
             warningLabel.setTextFill(Color.RED);
             warningLabel.setText("There is no order to discount!");
+        } else if (!paymentArray.isEmpty()) {
+            warningLabel.setTextFill(Color.RED);
+            warningLabel.setText("Can not apply discount after inputting cash!");
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/applyDiscount.fxml"));
@@ -436,6 +442,10 @@ public class InvoiceController extends GeneralController {
             currentCustomer = null;
             customerNameLabel.setText("");
             customerPointsLabel.setText("");
+
+            // Reset Customer Buttons
+            existingMemberButton.setText("Existing Member");
+            newMemberButton.setText("New Member");
         } catch (NoOrderException ignored) {
 
         }

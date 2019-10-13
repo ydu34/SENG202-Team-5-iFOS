@@ -31,6 +31,8 @@ public class NewCustomerController extends GeneralController {
 
     private Customer customer;
 
+    private Customers customers;
+
     @Override
     public void pseudoInitialize() {
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -57,7 +59,7 @@ public class NewCustomerController extends GeneralController {
             customer = new Customer();
             customer.setName(nameField.getText());
             customer.setPhoneNumber(phoneNumberField.getText());
-            Customers.add(customer);
+            customers.add(customer);
 
             // Close the current window
             Stage stage = (Stage) confirmButton.getScene().getWindow();
@@ -66,5 +68,7 @@ public class NewCustomerController extends GeneralController {
     }
 
     public Customer getCustomer() { return customer; }
+
+    public void setCustomers(Customers newCustomers) { customers = newCustomers; }
 
 }

@@ -2,6 +2,7 @@ package seng202.group5.information;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 
@@ -13,13 +14,14 @@ import java.util.ArrayList;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Customers {
 
-    private static ArrayList<Customer> customerList;
+    @XmlElement
+    private ArrayList<Customer> customerList;
 
     public Customers() {
         customerList = new ArrayList<>();
     }
 
-    public static void add(Customer customer) {
+    public void add(Customer customer) {
         customerList.add(customer);
     }
 
@@ -27,7 +29,7 @@ public class Customers {
         customerList = tempCustomerSet;
     }
 
-    public static ArrayList<Customer> getCustomerList() {
+    public ArrayList<Customer> getCustomerList() {
         return customerList;
     }
 }

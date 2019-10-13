@@ -39,6 +39,8 @@ public class ExistingCustomerController extends GeneralController {
     @FXML
     private TextField idField;
 
+    private Customers customers;
+
     @Override
     public void pseudoInitialize() {
         // Listeners for the TextFields to stop incorrect characters
@@ -62,14 +64,14 @@ public class ExistingCustomerController extends GeneralController {
         });
 
         // Populating the TableView
-        ObservableList<Customer> customers = FXCollections.observableArrayList(
-                Customers.getCustomerList());
+        ObservableList<Customer> customersList = FXCollections.observableArrayList(
+                customers.getCustomerList());
 
         rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
         rowName.setCellValueFactory(new PropertyValueFactory<>("name"));
         rowPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
-        customerTable.setItems(customers);
+        customerTable.setItems(customersList);
     }
 
     @FXML
@@ -90,7 +92,7 @@ public class ExistingCustomerController extends GeneralController {
         customerTable.getItems().clear();
 
         // Collect all customers
-        Collection<Customer> customers = Customers.getCustomerList();
+        Collection<Customer> customersList = customers.getCustomerList();
 
         // Collect each search element
         String searchName = nameField.getText().toLowerCase();
@@ -98,7 +100,7 @@ public class ExistingCustomerController extends GeneralController {
         String searchID = idField.getText().toLowerCase();
 
         // Match the fields with customers
-        for (Customer customer : customers) {
+        for (Customer customer : customersList) {
             if (customer.getName().toLowerCase().matches(".*" + searchName + ".*") &&
             customer.getPhoneNumber().matches(".*" + searchPhone + ".*") &&
             customer.getID().toLowerCase().matches(".*" + searchID + ".*")) {
@@ -115,4 +117,6 @@ public class ExistingCustomerController extends GeneralController {
         Stage stage = (Stage) customerTable.getScene().getWindow();
         stage.close();
     }
+
+    public void setCustomers(Customers newCustomers) { customers = newCustomers; }
 }
