@@ -56,9 +56,10 @@ public class NewCustomerController extends GeneralController {
             warningLabel.setText("Please Fill All Fields!");
         } else {
             // Create the new Customer
-            customer = new Customer(getAppEnvironment().getCustomerSettings());
+            customer = new Customer();
             customer.setName(nameField.getText());
             customer.setPhoneNumber(phoneNumberField.getText());
+            customer.setPurchasePoints(customers.getCustomerSettings().getInitialPurchasePoints());
             customers.add(customer);
 
             // Close the current window

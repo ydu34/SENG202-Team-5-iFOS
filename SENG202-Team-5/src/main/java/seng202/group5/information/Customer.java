@@ -19,22 +19,16 @@ import static org.joda.money.Money.parse;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Customer {
 
-    private CustomerSettings currentSettings;
-
     private String customerID = IDGenerator.newCustomerID();
 
     private String name;
 
     private String phoneNumber;
 
-    private int purchasePoints;
+    private int purchasePoints = 1;
 
-    @XmlTransient
-    private Money pointValue = Money.parse("NZD 0.50");
+    public Customer()  {
 
-    public Customer(CustomerSettings tempCustomerSettings)  {
-        currentSettings = tempCustomerSettings;
-        purchasePoints = currentSettings.getInitialPurchasePoints();
     }
 
     /**
@@ -42,12 +36,12 @@ public class Customer {
      * Default Rate: NZD $10 gives 1 Point = $0.50 discount
      * @param spentMoney The total amount of money spent on an order, disregarding discounts.
      */
-    public void purchasePoints(Money spentMoney) {
+    public void purchasePoints(Money spentMoney, int ratio) {
         int roundedMoney = spentMoney.getAmountMajorInt();
         if (roundedMoney <= 0) {
             roundedMoney = 0;
         }
-        addPurchasePoints(roundedMoney / currentSettings.getRatio());
+        addPurchasePoints(roundedMoney / ratio);
     }
 
     /**
@@ -57,7 +51,7 @@ public class Customer {
      * @param currentOrderPrice The price of the customers order.
      * @return discountMoney The amount of money to be removed from the order.
      */
-    public Money discount(int usedPoints, Money currentOrderPrice) {
+    public Money discount(int usedPoints, Money currentOrderPrice, Money pointValue) {
         Money discountMoney;
         int maxPoints = (int) Math.ceil(currentOrderPrice.getAmountMinorInt() / 50);
 
@@ -81,8 +75,6 @@ public class Customer {
         phoneNumber = newPhoneNumber;
     }
 
-    public void setPointValue(Money tempPointValue) { pointValue = tempPointValue; }
-
     public void setPurchasePoints(int tempPurchasePoints) {
         purchasePoints = tempPurchasePoints;
     }
@@ -98,8 +90,6 @@ public class Customer {
     public int getPurchasePoints() {
         return purchasePoints;
     }
-
-    public Money getPointValue() { return pointValue; }
 
     public String getID() { return customerID; }
 

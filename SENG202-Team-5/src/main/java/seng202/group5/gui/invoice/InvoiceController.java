@@ -20,6 +20,7 @@ import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
+import seng202.group5.information.CustomerSettings;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Order;
 
@@ -92,6 +93,8 @@ public class InvoiceController extends GeneralController {
     private Order currentOrder;
 
     private Map<MenuItem, Integer> orderItemsMap;
+
+    private CustomerSettings customerSettings;
 
     private Customer currentCustomer;
 
@@ -266,6 +269,7 @@ public class InvoiceController extends GeneralController {
 
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.setCustomer(currentCustomer);
+                controller.setCustomerSettings(customerSettings);
                 controller.setMaxPrice(currentOrder.getTotalCost().minus(totalPayed));
                 controller.pseudoInitialize();
 

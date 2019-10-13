@@ -312,6 +312,7 @@ public class Database {
     public void customersXmlToObject(String fileDirectory) throws Exception {
         try {
             Customers tempCustomers = (Customers) xmlToObject(Customers.class, "customers.xml", "customers.xsd", fileDirectory);
+            CustomerSettings tempSettings = tempCustomers.getCustomerSettings();
             ArrayList<String> tempCustomerIDs = new ArrayList<>();
             tempCustomers.getCustomerList().forEach(customer -> tempCustomerIDs.add(customer.getID()));
             switch (overwriteSetting) {
@@ -324,6 +325,7 @@ public class Database {
                             tempCustomers.add(entry);
                         }
                     }
+                    appEnvironment.getCustomers().setCustomerSettings(tempSettings);
                     break;
                 case MERGE_PREFER_OLD:
                     for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {

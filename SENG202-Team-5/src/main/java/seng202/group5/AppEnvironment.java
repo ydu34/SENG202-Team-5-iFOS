@@ -23,7 +23,6 @@ public class AppEnvironment {
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
-    private CustomerSettings customerSettings;
     private int maxIngredientAmount = 50;
 
     /**
@@ -49,7 +48,6 @@ public class AppEnvironment {
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
         idGenerator = new IDGenerator();
-        customerSettings = new CustomerSettings();
         database = new Database();
         database.setAppEnvironment(this);
         if (autoload) {
@@ -76,7 +74,7 @@ public class AppEnvironment {
                 Order order = orderManager.getOrder();
 
                 if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-                    order.getCurrentCustomer().purchasePoints(order.getTotalCost());
+                    order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
                 }
                 setStock(order.getStock().clone());
                 orderManager.setStock(stock);
@@ -156,9 +154,5 @@ public class AppEnvironment {
     }
     public void setMaxIngredientAmount(int tempMaxIngredientAmount) {
         maxIngredientAmount = tempMaxIngredientAmount;
-    }
-
-    public CustomerSettings getCustomerSettings() {
-        return customerSettings;
     }
 }

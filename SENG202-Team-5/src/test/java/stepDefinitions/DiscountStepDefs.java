@@ -45,7 +45,7 @@ public class DiscountStepDefs {
         customerSettings = new CustomerSettings();
         customerSettings.setRatio(10);
         customerSettings.setInitialPurchasePoints(1);
-        customer = new Customer(customerSettings);
+        customer = new Customer();
     }
 
 
@@ -69,7 +69,7 @@ public class DiscountStepDefs {
             fail();
         }
 
-        Money result = customer.discount(int1, parse("NZD " + dub1));
+        Money result = customer.discount(int1, parse("NZD " + dub1), Money.parse("NZD " + 0.01 * customerSettings.getPointValue()));
         try {
             manager.getOrder().applyDiscount(result);
         } catch (NoOrderException e) {
@@ -93,7 +93,7 @@ public class DiscountStepDefs {
 
     @When("Order gets payed ${double}")
     public void order_gets_payed(double double1) {
-        customer.purchasePoints(parse("NZD " + double1));
+        customer.purchasePoints(parse("NZD " + double1), customerSettings.getRatio());
     }
 
 }

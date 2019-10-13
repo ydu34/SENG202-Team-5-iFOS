@@ -17,13 +17,23 @@ public class Customers {
     @XmlElement
     private ArrayList<Customer> customerList = new ArrayList<>();
 
+    private CustomerSettings customerSettings = new CustomerSettings();
+
     public Customers() {    }
 
     public void add(Customer customer) {
+        customer.setPurchasePoints(customerSettings.getInitialPurchasePoints());
         customerList.add(customer);
     }
 
     public ArrayList<Customer> getCustomerList() {
         return customerList;
     }
+
+    public CustomerSettings getCustomerSettings() { return customerSettings; }
+
+    public void setCustomerSettings(CustomerSettings customerSettings) {
+        this.customerSettings = customerSettings;
+    }
+
 }
