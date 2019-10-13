@@ -154,6 +154,20 @@
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="3">
                             <children>
+                        <HBox alignment="CENTER" prefHeight="69.0" prefWidth="730.0" spacing="50.0">
+                           <children>
+                              <Label fx:id="customerNameLabel">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="customerPointsLabel">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                                 <JFXButton fx:id="payCashButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#payCash" prefHeight="100.0" prefWidth="400.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Confirm Payment">
                                     <font>
                                         <Font size="26.0" />
