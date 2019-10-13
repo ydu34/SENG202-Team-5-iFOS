@@ -20,20 +20,38 @@ import java.util.HashMap;
  */
 public class PaymentSuccessController extends GeneralController {
 
+    /**
+     * An ArrayList which is of all the change that must be given to the customer.
+     */
     private ArrayList<Money> change;
 
+    /**
+     * The label which shows the total amount of change to give back.
+     */
     @FXML
     private Label totalChangeLabel;
 
+    /**
+     * Text which states "Payment Success!".
+     */
     @FXML
     private Text paymentText;
 
+    /**
+     * The label where all the change will be shown.
+     */
     @FXML
     private Text changeLabel;
 
+    /**
+     * A button for closing the screen and continuing.
+     */
     @FXML
     private Button okButton;
 
+    /**
+     * Initialises the screen with all relevant information.
+     */
     @Override
     public void pseudoInitialize() {
         paymentText.setFill(Color.GREEN);
@@ -48,6 +66,9 @@ public class PaymentSuccessController extends GeneralController {
         showChange();
     }
 
+    /**
+     * A method which creates a string that shows all the change denominations and their quantities.
+     */
     public void showChange() {
         // Initialising local variables
         StringBuilder display = new StringBuilder();
@@ -65,21 +86,28 @@ public class PaymentSuccessController extends GeneralController {
             }
         }
 
+        // For each object, append them to the display.
         for (Object key : changeSet.keySet().toArray()) {
             display.append(key);
             display.append(": ");
             display.append(changeSet.get(key));
             display.append("\n");
         }
-        System.out.println(display.toString());
         changeLabel.setText(display.toString());
     }
 
+    /**
+     * Closes the screen.
+     */
     public void close() {
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Sets the change to give back to the customer.
+     * @param tempChange The change to be given.
+     */
     public void setChange(ArrayList<Money> tempChange) { change = tempChange ;}
 
 }
