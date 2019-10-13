@@ -120,21 +120,23 @@ public class passwordController extends GeneralController {
      * Appends 0 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addZero(){
+    public void addZero(ActionEvent event){
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberZero.getText()));
+        checkPassword(event);
     }
 
     /**
      * Appends 1 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addOne() {
+    public void addOne(ActionEvent event) {
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberOne.getText()));
+        checkPassword(event);
 
     }
 
@@ -142,11 +144,12 @@ public class passwordController extends GeneralController {
      * Appends 2 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addTwo(){
+    public void addTwo(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberTwo.getText()));
+        checkPassword(event);
 
     }
 
@@ -154,11 +157,12 @@ public class passwordController extends GeneralController {
      * Appends 3 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addThree(){
+    public void addThree(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberThree.getText()));
+        checkPassword(event);
 
     }
 
@@ -166,11 +170,12 @@ public class passwordController extends GeneralController {
      * Appends 4 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addFour(){
+    public void addFour(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberFour.getText()));
+        checkPassword(event);
 
     }
 
@@ -178,11 +183,12 @@ public class passwordController extends GeneralController {
      * Appends 5 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addFive(){
+    public void addFive(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberFive.getText()));
+        checkPassword(event);
 
     }
 
@@ -190,11 +196,12 @@ public class passwordController extends GeneralController {
      * Appends 6 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addSix(){
+    public void addSix(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberSix.getText()));
+        checkPassword(event);
 
     }
 
@@ -202,11 +209,12 @@ public class passwordController extends GeneralController {
      * Appends 7 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addSeven(){
+    public void addSeven(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberSeven.getText()));
+        checkPassword(event);
 
     }
 
@@ -214,11 +222,12 @@ public class passwordController extends GeneralController {
      * Appends 8 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addEight(){
+    public void addEight(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberEight.getText()));
+        checkPassword(event);
 
     }
 
@@ -226,13 +235,15 @@ public class passwordController extends GeneralController {
      * Appends 9 to the password string and checks if the password it still of the valid length updates the warning text accordingly
      */
 
-    public void addNine(){
+    public void addNine(ActionEvent event){
 
         warningText.setText(" ");
         updatePasswordText();
         addNumber((numberNine.getText()));
+        checkPassword(event);
 
     }
+
 
     /**
      * This function is called when the confirm button is clicked which checks if th user has entered a valid password or not and
@@ -241,18 +252,16 @@ public class passwordController extends GeneralController {
      */
 
 
-    public void checkPassword(ActionEvent event){
-        if (passwordChecker.check(input.hashCode())) {
-            source.launchAdminScreen(origin);
-            closeScreen(event);
-        }
-
+    public void checkPassword(ActionEvent event) {
         if (input.length() == 4) {
-            warningText.setText("Incorrect Password");
-            clearPassword();
-        }
-        if (input.length() != 4) {
-            warningText.setText("Password must be of length 4");
+            if (passwordChecker.check(input.hashCode())) {
+                source.launchAdminScreen(origin);
+                closeScreen(event);
+            } else {
+                warningText.setText("Incorrect Password");
+                System.out.println("wrong password");
+                clearPassword();
+            }
         }
     }
 
@@ -279,7 +288,6 @@ public class passwordController extends GeneralController {
         passwordInput2.setText("");
         passwordInput3.setText("");
         passwordInput4.setText("");
-        warningText.setText("");
         input = "";
 
 
