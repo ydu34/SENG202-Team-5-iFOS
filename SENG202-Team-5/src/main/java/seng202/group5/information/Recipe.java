@@ -104,6 +104,22 @@ public class Recipe {
     }
 
     /**
+     * Checks if an ingredient breaks the current dietary requirements of an item.
+     * @param ingredientToBeAdded The item which is going to be added into an item.
+     * @return HashSet(DietEnum) which contains all of the broken dietary requirements when adding the item.
+     */
+    public HashSet<DietEnum> checkInconsistency(Ingredient ingredientToBeAdded) {
+        HashSet<DietEnum> notRetainedDietaryInfo = new HashSet<>();
+        for (DietEnum value : DietEnum.values()) {
+            notRetainedDietaryInfo.add(value);
+        }
+        HashSet<DietEnum> ingredientDietInfo = ingredientToBeAdded.getDietInfo();
+        notRetainedDietaryInfo.retainAll(getDietaryInformation());
+        notRetainedDietaryInfo.removeAll(ingredientDietInfo);
+        return notRetainedDietaryInfo;
+    }
+
+    /**
      * This function removes the specified ingredient from the recipe and returns the boolean accordingly.
      *
      * @param someIngredient ingredient that needs to be removed

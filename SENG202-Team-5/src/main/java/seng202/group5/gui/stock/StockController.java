@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.group5.exceptions.NoOrderException;
@@ -57,7 +58,7 @@ public class StockController extends GeneralController {
     private TextField ingredientSearchField;
 
     @FXML
-    private Label warningLabel;
+    private Text warningLabel;
 
     private HashMap<String, Integer> quantities;
 
@@ -103,10 +104,9 @@ public class StockController extends GeneralController {
         stockTable.sort();
 
         try {
-
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+                warningLabel.setFill(Color.RED);
                 warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
-                warningLabel.setTextFill(Color.RED);
                 addButton.setDisable(true);
                 modifyButton.setDisable(true);
                 removeButton.setDisable(true);

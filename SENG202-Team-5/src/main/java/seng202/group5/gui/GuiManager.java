@@ -33,7 +33,7 @@ public class GuiManager extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/order.fxml"));
+        FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/admin.fxml"));
         Parent root = sampleLoader.load();
         GeneralController controller = sampleLoader.getController();
         AppEnvironment appEnvironment = createAppEnvironment();

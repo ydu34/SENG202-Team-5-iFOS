@@ -279,10 +279,6 @@
         </rowConstraints>
          <children>
              <JFXComboBox fx:id="sortingBox" onAction="#sortItems" prefHeight="31.0" prefWidth="140.0">
-                 <!--<items>
-                    <MenuItem mnemonicParsing="false" onAction="#sortItemsName" text="Name" />
-                    <MenuItem mnemonicParsing="false" onAction="#sortItemsPrice" text="Price" />
-                 </items>-->
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

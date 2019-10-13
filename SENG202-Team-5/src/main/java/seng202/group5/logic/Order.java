@@ -250,7 +250,8 @@ public class Order {
 
     public void clearItemsInOrder() {
         orderItems.clear();
-        totalCost = Money.zero(CurrencyUnit.of("NZD"));
+        totalCost = Money.parse("NZD 0");
+        discount = Money.parse("NZD 0");
     }
 
     /**
