@@ -344,7 +344,7 @@ public class AdminController extends GeneralController {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate tempEndDate = endDate.getValue();
-                startDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
+                endDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
                 if (tempEndDate == null) {
                     setDisable(empty);
                 } else {
@@ -369,7 +369,7 @@ public class AdminController extends GeneralController {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate tempStartDate = startDate.getValue();
-                endDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
+                startDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
                 if (tempStartDate == null) {
                     setDisable(empty);
                 } else {
