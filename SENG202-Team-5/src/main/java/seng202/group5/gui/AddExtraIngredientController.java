@@ -187,8 +187,14 @@ public class AddExtraIngredientController extends GeneralController {
                 } else {
                     selectedItem.setEdited(true);
                 }
-                controller.setMenuItem(selectedItem);
+
+                if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
+                    currentOrder.removeItem(oldItem, false);
+                    currentOrder.addItem(selectedItem, 1);
+                }
                 controller.setOrder(getCurrentOrder());
+                controller.setMenuItem(selectedItem);
+                controller.populateIngredientsTable();
                 break;
             }
         }

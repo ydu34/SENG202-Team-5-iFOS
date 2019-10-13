@@ -330,10 +330,11 @@ public class OrderController extends GeneralController {
             promptText.setFill(Color.GREEN);
             currentOrderTable();
             setMenuItem(item);
-       } else {
-           promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
-           promptText.setFill(Color.RED);
-       }
+        } else {
+            promptText.setText("Some ingredients are low in stock!\n" + item.getItemName() + " was not added to the current order");
+            promptText.setFill(Color.RED);
+        }
+        totalCostDisplay.setText(currentOrder.getTotalCost().toString());
     }
 
     /**
@@ -411,6 +412,7 @@ public class OrderController extends GeneralController {
      */
     protected void setCurrentOrder(Order order) {
         currentOrder = order;
+        currentOrderTable();
     }
 
     /**

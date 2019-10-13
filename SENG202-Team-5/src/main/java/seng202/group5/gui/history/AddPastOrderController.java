@@ -171,11 +171,9 @@ public class AddPastOrderController extends OrderController {
         RowConstraints row4 = new RowConstraints();
         row3.setVgrow(Priority.NEVER);
         row3.setMinHeight(Region.USE_PREF_SIZE);
-        row3.setPrefHeight(40);
         row3.setMaxHeight(Region.USE_PREF_SIZE);
         row4.setVgrow(Priority.NEVER);
         row4.setMinHeight(Region.USE_PREF_SIZE);
-        row4.setPrefHeight(40);
         row4.setMaxHeight(Region.USE_PREF_SIZE);
         bottomRightGridPane.getRowConstraints().add(row3);
         bottomRightGridPane.getRowConstraints().add(row4);
