@@ -28,9 +28,9 @@
       </HBox>
       <TableView fx:id="customerTable" prefHeight="580.0" prefWidth="545.0">
         <columns>
-          <TableColumn fx:id="rowID" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="rowName" prefWidth="250.0" text="Name" />
-            <TableColumn fx:id="rowPhoneNumber" prefWidth="220.0" text="Phone Number" />
+          <TableColumn fx:id="colID" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="colName" prefWidth="250.0" text="Name" />
+            <TableColumn fx:id="colPhoneNumber" prefWidth="220.0" text="Phone Number" />
         </columns>
       </TableView>
       <HBox alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="545.0">

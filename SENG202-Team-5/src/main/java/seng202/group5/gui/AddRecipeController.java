@@ -105,9 +105,12 @@ public class AddRecipeController extends GeneralController {
             if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
                 markupCostField.setText(oldValue);
             }
-            // This is here in case we want to get rid of the Compute Total Cost button, having computeTotalCost() here
-            // means it updates as the markupCostField changes.
-            // computeTotalCost();
+            if (newValue.isBlank() || newValue.isEmpty()) {
+                markupCostField.setText("0");
+            } else if(newValue.matches("0[\\d]")) {
+                markupCostField.setText(newValue.replace("0", ""));
+            }
+            computeTotalCost();
         });
 
         // Initialising the screen
@@ -175,13 +178,9 @@ public class AddRecipeController extends GeneralController {
     /**
      * Compute the total cost of the menu item and display to the user.
      */
-    public void computeTotalCost() {
+    private void computeTotalCost() {
         markupCostWarningText.setText("");
         String markupPriceStr = markupCostField.getText();
-
-        if (markupPriceStr == "") {
-            markupPriceStr = "0";
-        }
 
         try {
             Double.parseDouble(markupCostField.getText());
