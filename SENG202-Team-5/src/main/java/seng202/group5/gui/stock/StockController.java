@@ -3,7 +3,6 @@ package seng202.group5.gui.stock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +14,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 
@@ -103,16 +101,12 @@ public class StockController extends GeneralController {
         stockTable.getSortOrder().add(columnID);
         stockTable.sort();
 
-        try {
-            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
-                warningLabel.setFill(Color.RED);
-                warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
-                addButton.setDisable(true);
-                modifyButton.setDisable(true);
-                removeButton.setDisable(true);
-            }
-        } catch (NoOrderException e) {
-            e.printStackTrace();
+        if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+            warningLabel.setFill(Color.RED);
+            warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
+            addButton.setDisable(true);
+            modifyButton.setDisable(true);
+            removeButton.setDisable(true);
         }
     }
 

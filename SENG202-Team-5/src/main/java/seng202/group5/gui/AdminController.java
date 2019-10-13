@@ -23,7 +23,6 @@ import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
@@ -259,20 +258,16 @@ public class AdminController extends GeneralController {
      */
     public void checkIfOrderInProgress() {
 
-        try {
-            System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
-            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
-                infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
-                selectFinanceButton.setDisable(true);
-                selectMenuButton.setDisable(true);
-                selectStockButton.setDisable(true);
-                exportDataButton.setDisable(true);
-                addButton.setDisable(true);
-                modifyButton.setDisable(true);
-                deleteButton.setDisable(true);
-            }
-        } catch (NoOrderException e) {
-            e.printStackTrace();
+        System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
+        if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+            infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
+            selectFinanceButton.setDisable(true);
+            selectMenuButton.setDisable(true);
+            selectStockButton.setDisable(true);
+            exportDataButton.setDisable(true);
+            addButton.setDisable(true);
+            modifyButton.setDisable(true);
+            deleteButton.setDisable(true);
         }
     }
 

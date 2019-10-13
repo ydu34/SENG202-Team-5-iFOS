@@ -2,7 +2,6 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Customers;
 import seng202.group5.logic.*;
 
@@ -67,23 +66,19 @@ public class AppEnvironment {
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
         ArrayList<Money> change = new ArrayList<>();
-        try {
-            if (finance.enoughMoney(denominations, orderManager.getOrder())) {
-                Order order = orderManager.getOrder();
+        if (finance.enoughMoney(denominations, orderManager.getOrder())) {
+            Order order = orderManager.getOrder();
 
-                if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-                    order.getCurrentCustomer().purchasePoints(order.getTotalCost());
-                }
-                setStock(order.getStock().clone());
-                orderManager.setStock(stock);
-                orderManager.newOrder();
-
-                change = finance.pay(denominations, LocalDateTime.now(), order);
-            } else {
-                throw new InsufficientCashException();
+            if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
+                order.getCurrentCustomer().purchasePoints(order.getTotalCost());
             }
-        } catch (NoOrderException e) {
-            System.out.println("No Order! Ya dingus");
+            setStock(order.getStock().clone());
+            orderManager.setStock(stock);
+            orderManager.newOrder();
+
+            change = finance.pay(denominations, LocalDateTime.now(), order);
+        } else {
+            throw new InsufficientCashException();
         }
 
         return change;

@@ -1,13 +1,11 @@
 package seng202.group5.gui.invoice;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
 
@@ -91,16 +89,14 @@ public class ApplyDiscountController extends GeneralController {
             calculatedLabel.setTextFill(Color.RED);
             calculatedLabel.setText("Discount is more than price of Order!");
         } else {
-            try {
-                customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost());
+            customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost());
 
-                // Set the moneySaved
-                moneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
+            // Set the moneySaved
+            moneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
 
-                // Close the window
-                Stage stage = (Stage) calculatedLabel.getScene().getWindow();
-                stage.close();
-            } catch (NoOrderException ignored) {}
+            // Close the window
+            Stage stage = (Stage) calculatedLabel.getScene().getWindow();
+            stage.close();
         }
     }
 

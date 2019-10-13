@@ -3,7 +3,6 @@ package seng202.group5.logic;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
@@ -46,29 +45,21 @@ public class OrderManagerTest {
         stock.addNewIngredient(patty, 100);
         testOrderManager = new OrderManager(new Order(stock), stock);
 
-        try {
-            HashMap<MenuItem, Integer> initialOrderItems = new HashMap<>(testOrderManager.getOrder().getOrderItems());
-            initialOrderItems.put(testItem, 3);
-            testOrderManager.getOrder().addItem(testItem, 3);
-            assertEquals(initialOrderItems, testOrderManager.getOrder().getOrderItems());
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-            fail("No order!");
-        }
+        HashMap<MenuItem, Integer> initialOrderItems = (HashMap<MenuItem, Integer>)
+                testOrderManager.getOrder().getOrderItems().clone();
+        initialOrderItems.put(testItem, 3);
+        testOrderManager.getOrder().addItem(testItem, 3);
+        assertEquals(initialOrderItems, testOrderManager.getOrder().getOrderItems());
     }
 
     @Test
     public void testNewOrderReplacesOrder() {
-        try {
-            Order testOrder = testOrderManager.getOrder();
-            testOrderManager.newOrder();
-            assertNotSame(testOrder, testOrderManager.getOrder());
-            testOrder = testOrderManager.getOrder();
-            testOrderManager.newOrder();
-            assertNotSame(testOrder, testOrderManager.getOrder());
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-        }
+        Order testOrder = testOrderManager.getOrder();
+        testOrderManager.newOrder();
+        assertNotSame(testOrder, testOrderManager.getOrder());
+        testOrder = testOrderManager.getOrder();
+        testOrderManager.newOrder();
+        assertNotSame(testOrder, testOrderManager.getOrder());
     }
 
     @Test

@@ -10,12 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
 import seng202.group5.information.Customers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class ExistingCustomerController extends GeneralController {
@@ -106,12 +104,10 @@ public class ExistingCustomerController extends GeneralController {
 
     @FXML
     public void selectCustomer() {
-        try {
-            Customer customer = customerTable.getSelectionModel().getSelectedItem();
+        Customer customer = customerTable.getSelectionModel().getSelectedItem();
 
-            getAppEnvironment().getOrderManager().getOrder().setCurrentCustomer(customer);
-            close();
-        } catch (NoOrderException ignored) { }
+        getAppEnvironment().getOrderManager().getOrder().setCurrentCustomer(customer);
+        close();
     }
 
     /**
