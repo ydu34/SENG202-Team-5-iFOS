@@ -776,7 +776,7 @@ public class AdminController extends GeneralController {
      */
     private void initialiseSettingsTextFields(TextField field) {
         field.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("\\d{0,7}")) {
                 field.setText(oldValue);
             }
             if (newValue.isBlank() || newValue.isEmpty()) {
