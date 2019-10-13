@@ -43,6 +43,19 @@ public class FinanceTest {
     }
 
     @Test
+    public void testChangeCalculatorWithoutGreedyAlg() throws InsufficientCashException {
+        testFinance.getTill().removeDenomination(Money.parse("NZD 10.00"), 10);
+        testFinance.getTill().removeDenomination(Money.parse("NZD 5.00"), 10);
+        testFinance.getTill().removeDenomination(Money.parse("NZD 2.00"), 10);
+        testFinance.getTill().removeDenomination(Money.parse("NZD 1.00"), 10);
+        testFinance.getTill().removeDenomination(Money.parse("NZD 0.50"), 10);
+        testFinance.getTill().removeDenomination(Money.parse("NZD 0.20"), 10);
+        testFinance.getTill().removeDenomination(Money.parse("NZD 0.10"), 10);
+        assertEquals(new ArrayList<>(Arrays.asList(Money.parse("NZD 20.00"), Money.parse("NZD 20.00"), Money.parse("NZD 20.00"))),
+                     testFinance.calcChange(Money.parse("NZD 60.00")));
+    }
+
+    @Test
     public void testPay() throws InsufficientCashException {
         ArrayList<Money> result;
         Order testOrder = new Order(new HashMap<>(), Money.parse("NZD 16.75"), "tempid");

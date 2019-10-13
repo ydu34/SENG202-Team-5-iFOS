@@ -29,6 +29,12 @@ public class RecipeTest {
         chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
     }
 
+    @Test
+    public void testDietaryInformationString() {
+        assertEquals("Gluten free, Vegan, Vegetarian", testRecipe.getDietaryInformationString());
+        testRecipe.addIngredient(chickenPatty, 1);
+        assertEquals("Gluten free", testRecipe.getDietaryInformationString());
+    }
 
     @Test
     public void testAddIngredient() {

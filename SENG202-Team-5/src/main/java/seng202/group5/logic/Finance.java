@@ -183,13 +183,13 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
 
         // First try a greedy algorithm
-        change = change.rounded(1, RoundingMode.HALF_UP);
+        Money tempChange = change.rounded(1, RoundingMode.HALF_UP);
         for (Money value : denomination) {
-            while (!change.isLessThan(value) && till.getDenominations().get(value) > 0) {
+            while (!tempChange.isLessThan(value) && till.getDenominations().get(value) > 0) {
                 try {
                     till.removeDenomination(value, 1);
                     totalChange.add(value);
-                    change = change.minus(value);
+                    tempChange = tempChange.minus(value);
                 } catch (InsufficientCashException e) {
                     e.printStackTrace();
                 }
@@ -197,7 +197,7 @@ public class Finance {
         }
 
         // Return the result if it matches the amount required
-        if (change.isZero()) {
+        if (tempChange.isZero()) {
             return totalChange;
         }
 
