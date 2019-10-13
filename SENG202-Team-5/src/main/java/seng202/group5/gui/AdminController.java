@@ -69,6 +69,9 @@ public class AdminController extends GeneralController {
     private Button selectFinanceButton;
 
     @FXML
+    private Button selectCustomersButton;
+
+    @FXML
     private Button importDataButton;
 
     @FXML
@@ -84,7 +87,7 @@ public class AdminController extends GeneralController {
     private Text menuWarningText;
 
     @FXML
-    private Text historyWarningText;
+    private Text customersWarningText;
 
     @FXML
     private Text financeWarningText;
@@ -486,6 +489,17 @@ public class AdminController extends GeneralController {
             checkFilesSelected();
         } else {
             financeWarningText.setText("invalid file selected");
+        }
+    }
+
+    public void selectCustomers() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("customers.xml", selectedFile)) {
+            fileMap.put("customers.xml", selectedFile);
+            customersWarningText.setText("customers.xml selected");
+            checkFilesSelected();
+        } else {
+            customersWarningText.setText("invalid file selected");
         }
     }
 
