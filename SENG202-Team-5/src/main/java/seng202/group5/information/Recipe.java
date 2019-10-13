@@ -109,13 +109,12 @@ public class Recipe {
      * @return HashSet(DietEnum) which contains all of the broken dietary requirements when adding the item.
      */
     public HashSet<DietEnum> checkInconsistency(Ingredient ingredientToBeAdded) {
-        HashSet<DietEnum> ingredientDietInfo = ingredientToBeAdded.getDietInfo();
-        HashSet<DietEnum> notRetainedDietaryInfo = new HashSet<DietEnum>();
-        for (DietEnum ingredient : ingredientDietInfo) {
-            if (!getDietaryInformation().contains(ingredient)) {
-                notRetainedDietaryInfo.add(ingredient);
-            }
+        HashSet<DietEnum> notRetainedDietaryInfo = new HashSet<>();
+        for (DietEnum value : DietEnum.values()) {
+            notRetainedDietaryInfo.add(value);
         }
+        HashSet<DietEnum> ingredientDietInfo = ingredientToBeAdded.getDietInfo();
+        notRetainedDietaryInfo.removeAll(ingredientDietInfo);
         return notRetainedDietaryInfo;
     }
 

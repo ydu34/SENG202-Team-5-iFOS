@@ -18,7 +18,8 @@
                 <TableColumn fx:id="columnCategory" prefWidth="750.0" text="Categories" />
                 <TableColumn fx:id="columnQuantity" prefWidth="220.0" text="Quantity" />
                 <TableColumn fx:id="columnCost" prefWidth="200.0" text="Cost per Unit" />
-                <TableColumn fx:id="columnSpinner" prefWidth="200.0" text="Selected" />
+            <TableColumn fx:id="columnWarning" prefWidth="100.0" text="Warning" />
+                <TableColumn fx:id="columnSpinner" prefWidth="500.0" text="Selected" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -33,7 +34,7 @@
                 <RowConstraints vgrow="NEVER" />
             </rowConstraints>
             <children>
-                <JFXButton fx:id="confirmItemButton" onAction="#updateItemIngredients" prefHeight="33.0" prefWidth="171.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Confirm" textAlignment="CENTER" textFill="#3a3e59" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                <JFXButton fx:id="confirmItemButton" onAction="#updateItemIngredients" prefHeight="33.0" prefWidth="171.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Confirm" textAlignment="CENTER" textFill="#3a3e59" GridPane.halignment="LEFT">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -44,12 +45,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </JFXButton>
-                <JFXButton fx:id="backButton" onAction="#revertScreen" prefHeight="33.0" prefWidth="171.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Back" textAlignment="CENTER" textFill="#3a3e59">
+                <JFXButton fx:id="backButton" onAction="#revertScreen" prefHeight="33.0" prefWidth="171.0" ripplerFill="#3a3e59" style="-fx-background-color: f9ac68;" text="Back" textAlignment="CENTER" textFill="#3a3e59" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                     <font>
                         <Font size="16.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
                     </GridPane.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />

@@ -1,20 +1,30 @@
 package seng202.group5.gui;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.gui.history.AddPastOrderController;
+import seng202.group5.information.DietEnum;
 import seng202.group5.logic.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -62,6 +72,12 @@ public class AddExtraIngredientController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, String> columnSpinner = new TableColumn<>("spinner");
 
+    @FXML
+    private JFXButton backButton;
+
+    @FXML
+    private TableColumn<Ingredient, String> columnWarning = new TableColumn<>("warning");
+
     private Set<Ingredient> selectedIngredientSet;
 
     private ObservableList<Ingredient> itemIngredients;
@@ -76,6 +92,7 @@ public class AddExtraIngredientController extends GeneralController {
         initializeSelectedIngredients();
         initializeRemainingIngredients();
         initializeSpinners();
+
         ingredientsTable.setItems(itemIngredients);
     }
 
@@ -87,6 +104,11 @@ public class AddExtraIngredientController extends GeneralController {
         columnIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        columnWarning.setCellValueFactory(data -> {
+            HashSet<DietEnum> dietInconsistencySet =
+                    selectedItem.getRecipe().checkInconsistency(data.getValue());
+            return new SimpleStringProperty((dietInconsistencySet.toString()));
+        });
         columnQuantity.setCellValueFactory(data -> {
             int quantity = updatedStock.getIngredientStock().get(data.getValue().getID());
             return new SimpleStringProperty(Integer.toString(quantity));
@@ -96,6 +118,30 @@ public class AddExtraIngredientController extends GeneralController {
             Money cost = updatedStock.getIngredients().get(data.getValue().getID()).getCost();
             return new SimpleStringProperty(cost.toString());
         });
+    }
+
+    /**
+     * Opens the warning screen when a user tries to add an ingredient which doesn't meet an items dietary requirements.
+     */
+    public void addItemPrompt(Ingredient ingredient, HashSet<DietEnum> brokenDietEnums) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addItemWarning.fxml"));
+            Parent root = loader.load();
+            AddItemWarningController controller = loader.getController();
+            controller.setParentController(this);
+            controller.setCurrentIngredient(ingredient);
+            controller.setDietRequirements(brokenDietEnums);
+            controller.pseudoInitialize();
+
+            Stage stage = new Stage();
+            stage.setTitle("Dietary Requirement Not Met");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(backButton.getScene().getWindow());
+            stage.showAndWait();
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
     }
 
     /**
@@ -134,14 +180,15 @@ public class AddExtraIngredientController extends GeneralController {
                      * removes the ingredient from the map.
                      */
                     spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        HashMap<Ingredient,Integer> ingredientAmountMap =
-                                selectedItem.getRecipe().getIngredientsAmount();
-                        if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
-                            ingredientAmountMap.remove(ingredient);
-                        } else if (newValue != 0) {
-                            selectedItem.getRecipe().addIngredient(ingredient,  newValue - oldValue);
-                        }
+                            HashMap<Ingredient,Integer> ingredientAmountMap =
+                                    selectedItem.getRecipe().getIngredientsAmount();
+                            if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
+                                ingredientAmountMap.remove(ingredient);
+                            } else if (newValue != 0) {
+                                selectedItem.getRecipe().addIngredient(ingredient, newValue - oldValue);
+                            }
                     });
+
                     setGraphic(spinner);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 }
