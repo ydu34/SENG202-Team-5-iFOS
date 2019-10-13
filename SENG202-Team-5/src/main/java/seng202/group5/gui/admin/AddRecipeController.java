@@ -1,4 +1,4 @@
-package seng202.group5.gui;
+package seng202.group5.gui.admin;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -12,6 +12,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.joda.money.Money;
+import seng202.group5.gui.AddExtraIngredientController;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;

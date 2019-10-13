@@ -1,10 +1,11 @@
-package seng202.group5.gui;
+package seng202.group5.gui.admin;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seng202.group5.gui.GeneralController;
 
 import java.awt.*;
 import java.util.concurrent.Callable;
@@ -15,7 +16,7 @@ import java.util.concurrent.Callable;
  * @author Shivin Gaba
  */
 
-public class passwordController extends GeneralController {
+public class PasswordController extends GeneralController {
 
     @FXML
     private JFXButton cancelButton;
