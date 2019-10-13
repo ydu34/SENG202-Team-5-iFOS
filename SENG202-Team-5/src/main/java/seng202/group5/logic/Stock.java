@@ -102,8 +102,8 @@ public class Stock {
      * @return A clone of this stock class
      */
     public Stock clone() {
-        HashMap<String, Ingredient> tempIngredients = (HashMap<String, Ingredient>) ingredients.clone();
-        HashMap<String, Integer> tempStock = (HashMap<String, Integer>) ingredientStock.clone();
+        HashMap<String, Ingredient> tempIngredients = new HashMap<>(ingredients);
+        HashMap<String, Integer> tempStock = new HashMap<>(ingredientStock);
         return new Stock(tempIngredients, tempStock);
     }
 

@@ -107,7 +107,7 @@ public class OrderTest {
         order = new Order(stock);
         order.addItem(item, 5);
         order.removeItem(item, false);
-        assertEquals(4, order.getOrderItems().get(item));
+        assertEquals(4, (int) order.getOrderItems().get(item));
     }
 
     @Test
@@ -135,9 +135,9 @@ public class OrderTest {
 
         assertTrue(order.modifyItemQuantity(item, 2));
 
-        assertEquals(order.getOrderItems().get(item), 2);
+        assertEquals(2, (int) order.getOrderItems().get(item));
         assertFalse(order.modifyItemQuantity(item, 3));
-        assertEquals(order.getOrderItems().get(item), 2);
+        assertEquals(2, (int) order.getOrderItems().get(item));
 
 
         MenuItem temp = new MenuItem(null, null, null, false, null);

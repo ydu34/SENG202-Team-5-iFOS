@@ -86,7 +86,7 @@ public class DiscountStepDefs {
 
     @Then("Customer now has {int} purchase points")
     public void customer_now_has_purchase_points(Integer int1) {
-        assertEquals(int1, customer.getPurchasePoints());
+        assertEquals((int) int1, customer.getPurchasePoints());
     }
 
     @When("Order gets payed ${double}")

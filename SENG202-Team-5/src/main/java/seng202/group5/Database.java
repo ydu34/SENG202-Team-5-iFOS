@@ -21,7 +21,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,21 +67,6 @@ public class Database {
     }
 
     private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
-
-    public static void main(String[] args) {
-        Database thing = new Database();
-        AppEnvironment other = new AppEnvironment(false);
-        thing.saveFileLocation = "";
-        thing.autosaveEnabled = false;
-        thing.autoloadEnabled = true;
-        thing.overwriteSetting = OverwriteType.MERGE_PREFER_NEW;
-        thing.setAppEnvironment(other);
-        try {
-            thing.customersXmlToObject(thing.getDefaultLocation());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public Database() {
     }

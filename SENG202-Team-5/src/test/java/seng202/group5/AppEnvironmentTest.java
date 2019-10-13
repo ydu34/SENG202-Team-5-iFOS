@@ -16,9 +16,7 @@ import seng202.group5.logic.OrderManager;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,7 +89,7 @@ class AppEnvironmentTest {
             for (Money x : change) changeSum = changeSum.plus(x);
         } catch (NoOrderException | InsufficientCashException e) {
             e.printStackTrace();
-            fail();
+            fail("No order!");
         }
 
         assertTrue(changeSum.isEqual(Money.parse("NZD 4.0")));

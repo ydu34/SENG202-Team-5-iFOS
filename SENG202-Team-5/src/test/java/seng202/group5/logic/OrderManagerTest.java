@@ -47,14 +47,13 @@ public class OrderManagerTest {
         testOrderManager = new OrderManager(new Order(stock), stock);
 
         try {
-            HashMap<MenuItem, Integer> initialOrderItems = (HashMap<MenuItem, Integer>)
-                    testOrderManager.getOrder().getOrderItems().clone();
+            HashMap<MenuItem, Integer> initialOrderItems = new HashMap<>(testOrderManager.getOrder().getOrderItems());
             initialOrderItems.put(testItem, 3);
             testOrderManager.getOrder().addItem(testItem, 3);
             assertEquals(initialOrderItems, testOrderManager.getOrder().getOrderItems());
         } catch (NoOrderException e) {
             e.printStackTrace();
-            fail();
+            fail("No order!");
         }
     }
 

@@ -30,11 +30,11 @@ public class StockTest {
         Ingredient tempIngredient = new Ingredient("Beef", "Meat", "ABC123", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient);
         assertFalse(stock.getIngredientStock().isEmpty());
-        assertEquals(0, stock.getIngredientStock().get("ABC123"));
+        assertEquals(0, (int) stock.getIngredientStock().get("ABC123"));
         // Adding an ingredient with our own quantity
         tempIngredient = new Ingredient("Apple", "Fruit", "Apple", Money.parse("NZD 10.0"));
         stock.addNewIngredient(tempIngredient, 10);
-        assertEquals(10, stock.getIngredientStock().get("Apple"));
+        assertEquals(10, (int) stock.getIngredientStock().get("Apple"));
         // Adding an ingredient that is already in the stock
         stock.addNewIngredient(tempIngredient);
     }
@@ -47,7 +47,7 @@ public class StockTest {
 
         assertTrue(stock.modifyQuantity("ABC123", 10));
 
-        assertEquals(10, stock.getIngredientStock().get("ABC123"));
+        assertEquals(10, (int) stock.getIngredientStock().get("ABC123"));
 
         // Attempting to modify an ingredient that is not present
         Ingredient ingredient = new Ingredient("Jerky", "Meat", "DBC247", Money.parse("NZD 9.0"));
