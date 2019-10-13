@@ -16,34 +16,65 @@ import seng202.group5.information.Customers;
 
 import java.util.Collection;
 
+/**
+ * The Controller for the Existing Member screen off of the invoice screen.
+ * @author Michael Morgoun
+ */
 public class ExistingCustomerController extends GeneralController {
 
+    /**
+     * The customerTable where you view all customers.
+     */
     @FXML
     private TableView<Customer> customerTable;
 
+    /**
+     * The column for IDs.
+     */
     @FXML
-    private TableColumn<Customer, String> rowID;
+    private TableColumn<Customer, String> colID;
 
+    /**
+     * The column for the names.
+     */
     @FXML
-    private TableColumn<Customer, String> rowName;
+    private TableColumn<Customer, String> colName;
 
+    /**
+     * The column for the phone numbers.
+     */
     @FXML
-    private TableColumn<Customer, String> rowPhoneNumber;
+    private TableColumn<Customer, String> colPhoneNumber;
 
+    /**
+     * The search bar for the name.
+     */
     @FXML
     private TextField nameField;
 
+    /**
+     * The search bar for the phone number.
+     */
     @FXML
     private TextField phoneNumberField;
 
+    /**
+     * The search bar for the ID.
+     */
     @FXML
     private TextField idField;
 
+    /**
+     * All customers in the system.
+     */
     private Customers customers;
 
+    /**
+     * Initialises the screen with all necessary information and listeners.
+     */
     @Override
     public void pseudoInitialize() {
-        // Initalise the context menu for right clicking on existing members
+        // Initialise the context menu for right clicking on existing members
         createContextMenu();
 
         // Listeners for the TextFields to stop incorrect characters
@@ -70,29 +101,36 @@ public class ExistingCustomerController extends GeneralController {
         ObservableList<Customer> customersList = FXCollections.observableArrayList(
                 customers.getCustomerList());
 
-        rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        rowName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        rowPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        colID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         customerTable.setItems(customersList);
     }
 
+    /**
+     * Creates the Context Menu when right clicking an item, or selects the item if double clicked.
+     */
     private void createContextMenu() {
         ContextMenu deleteMenu = new ContextMenu();
         MenuItem deleteMenuItem = new MenuItem("Delete Member");
         deleteMenu.getItems().add(deleteMenuItem);
 
         customerTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
+            // Mouse Listeners for a double click, a right click and nothing
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                     deleteMenu.show(customerTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && customerTable.getSelectionModel().getSelectedItem() != null) {
+                    selectCustomer();
                 } else {
                     deleteMenu.hide();
                 }
             }
         });
 
+        // Updates the visible customers if a member was deleted
         deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -102,6 +140,10 @@ public class ExistingCustomerController extends GeneralController {
         });
     }
 
+    /**
+     * Selects the current customer that is selected.
+     * Possible for it to be null.
+     */
     @FXML
     public void selectCustomer() {
         Customer customer = customerTable.getSelectionModel().getSelectedItem();
@@ -144,5 +186,9 @@ public class ExistingCustomerController extends GeneralController {
         stage.close();
     }
 
+    /**
+     * Sets the customers.
+     * @param newCustomers The new customers to be set.
+     */
     public void setCustomers(Customers newCustomers) { customers = newCustomers; }
 }

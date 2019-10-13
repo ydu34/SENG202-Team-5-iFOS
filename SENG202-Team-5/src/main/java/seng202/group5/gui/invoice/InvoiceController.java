@@ -26,74 +26,140 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * A controller for managing the invoice screen
+ * A controller for managing the invoice screen.
  * @author Tasman Berry, Shivin Gaba, Michael Morgoun
  */
 public class InvoiceController extends GeneralController {
 
     /**
-     * Displays the items in the order
+     * Displays the items in the order.
      */
     @FXML
     private TableView<MenuItem> currentOrderTable;
 
+    /**
+     * The column for the item name.
+     */
     @FXML
     private TableColumn<MenuItem, String> itemNameCol;
 
+    /**
+     * The column for the item quantity.
+     */
     @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
 
+    /**
+     * The column for the item price.
+     */
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
 
+    /**
+     * The label which shows the remaining cost.
+     */
     @FXML
     private Label remainingCostLabel;
 
+    /**
+     * The label which shows the current discount for the order.
+     */
     @FXML
     private Label discountLabel;
 
+    /**
+     * The label which shows the total cost of the order.
+     */
     @FXML
     private Label totalPayedLabel;
 
+    /**
+     * A warning label which shows information when something is wrong.
+     */
     @FXML
     private Label warningLabel;
 
+    /**
+     * The label which shows the orders' customer name.
+     */
     @FXML
     private Label customerNameLabel;
 
+    /**
+     * The label which shows the current customers amount of points.
+     */
     @FXML
     private Label customerPointsLabel;
 
+    /**
+     * The label which shows all the denominations payed thus far.
+     */
     @FXML
     private Text denomDollarLabel;
 
+    /**
+     * The label which shows all the denominations payed thus far.
+     */
     @FXML
     private Text denomCentLabel;
 
+    /**
+     * The button which removes a selected item.
+     */
     @FXML
     private Button removeItem;
 
+    /**
+     * A button which prompts the payCash() method.
+     */
     @FXML
     private Button payCashButton;
 
+    /**
+     * A button for opening the existing member screen or to clear the selected member.
+     */
     @FXML
     private Button existingMemberButton;
 
+    /**
+     * A button for creating a new member or applying a discount.
+     */
     @FXML
     private Button newMemberButton;
 
+    /**
+     * A HashMap which shows which denominations have been payed so far and how many of each.
+     */
     private HashMap<Money, Integer> currentPayment = new HashMap<>();
 
+    /**
+     * An ArrayList which shows all the cash payed so far. To be passed into AppEnvironment for the payment.
+     */
     private ArrayList<Money> paymentArray = new ArrayList<>();
 
+    /**
+     * The total amount of money payed.
+     */
     private Money totalPayed = Money.parse("NZD 0");
 
+    /**
+     * The current order on the system.
+     */
     private Order currentOrder;
 
+    /**
+     * A Map of the order items and their quantities.
+     */
     private Map<MenuItem, Integer> orderItemsMap;
 
+    /**
+     * The current customer of the order. Can be null.
+     */
     private Customer currentCustomer;
 
+    /**
+     * How many points have been used so far.
+     */
     private int customerPoints;
 
 
@@ -110,7 +176,7 @@ public class InvoiceController extends GeneralController {
 
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
-        remainingCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
+        remainingCostLabel.setText("$" + totalCost.minus(totalPayed).toString().replace("NZD ", ""));
         totalPayedLabel.setText("$" + currentOrder.getDiscount().plus(currentOrder.getTotalCost()).toString().replaceAll("[^\\d.]", ""));
         currentOrderTable();
 
@@ -132,7 +198,7 @@ public class InvoiceController extends GeneralController {
         }
 
         // Disabling payCashButton
-        if (currentOrder.getTotalCost().isPositive() || currentOrder.getOrderItems().isEmpty()) {
+        if (currentOrder.getTotalCost().minus(totalPayed).isPositive() || currentOrder.getOrderItems().isEmpty()) {
             payCashButton.setDisable(true);
             payCashButton.setTextFill(Color.GREY);
         } else {
@@ -242,7 +308,11 @@ public class InvoiceController extends GeneralController {
         }
     }
 
+    /**
+     * This method is called if there is a currentCustomer. Opens the screen for where the discount can be applied.
+     */
     private void applyDiscount() {
+        // Can not apply discount if order it empty, or if there is cash already paid.
         if (currentOrder.getOrderItems().isEmpty()) {
             warningLabel.setTextFill(Color.RED);
             warningLabel.setText("There is no order to discount!");
@@ -280,26 +350,37 @@ public class InvoiceController extends GeneralController {
         }
     }
 
+    /**
+     * Clears the selected member and returns any points they might have used before paying for the order.
+     */
     private void clearSelectedMember() {
+        // Removing the customer from the order.
         currentOrder.setCurrentCustomer(null);
+        // Resetting the discount
         currentOrder.setDiscount(Money.parse("NZD 0"));
+
+        // Returns the points they used in the order before paying for it
         if (customerPoints != 0) {
             currentCustomer.addPurchasePoints(customerPoints);
         }
+
+        // Clearing the local variables of the customer
         currentCustomer = null;
         customerPoints = 0;
-        // Clear labels
+
+        // Clearing labels
         discountLabel.setText("$0.00");
         customerNameLabel.setText("");
         customerPointsLabel.setText("");
         existingMemberButton.setText("Existing Member");
         newMemberButton.setText("New Member");
 
+        // Reinitialise the screen
         pseudoInitialize();
     }
 
     /**
-     * Confirms order payment in cash
+     * Confirms order payment in cash.
      */
     public void payCash() {
         try {
@@ -354,7 +435,6 @@ public class InvoiceController extends GeneralController {
         remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
 
         // Clear money labels
-        totalPayedLabel.setText("$0.00");
         denomDollarLabel.setText("");
         denomCentLabel.setText("");
 
@@ -436,8 +516,22 @@ public class InvoiceController extends GeneralController {
             // Setting the labels to the strings.
             denomCentLabel.setText(tempCent.toString());
             denomDollarLabel.setText(tempDollar.toString());
-            totalPayedLabel.setText("$" + totalPayed.toString().replaceAll("[^\\d.]", ""));
         }
+    }
+
+    /**
+     * This function removes the selected menu item from the current order.
+     */
+    @FXML
+    private void deleteRowFromTable() {
+        boolean someOrder;
+
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
+        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if(someOrder){
+            removeItem.setDisable(false);
+        }
+        pseudoInitialize();
     }
 
     /**
@@ -447,6 +541,7 @@ public class InvoiceController extends GeneralController {
     private void cancelOrder() {
         clearPayment();
         remainingCostLabel.setText("$0.00");
+        totalPayedLabel.setText("$0.00");
 
         currentOrder = getAppEnvironment().getOrderManager().getOrder();
         currentOrder.resetStock(getAppEnvironment().getStock());
@@ -544,19 +639,5 @@ public class InvoiceController extends GeneralController {
     @FXML
     private void addHundredDollar(){
         addMoney(10000);
-    }
-
-    /**
-     * This function removes the selected menu item from the current order.
-     */
-    @FXML
-    private void deleteRowFromTable() {
-        boolean someOrder;
-
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
-        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
-        if(someOrder){
-            removeItem.setDisable(false);
-        }
     }
 }

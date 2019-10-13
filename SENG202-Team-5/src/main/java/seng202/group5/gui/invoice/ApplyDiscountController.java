@@ -9,23 +9,48 @@ import org.joda.money.Money;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
 
+/**
+ * This Controller is for when the worker wants to apply a discount. A screen is opened controlled by this class.
+ * @author Michael Morgoun
+ */
 public class ApplyDiscountController extends GeneralController {
 
+    /**
+     * How many points the customer currently has.
+     */
     @FXML
     private Label pointsLabel;
 
+    /**
+     * The field where the points they want to use are inputted.
+     */
     @FXML
     private TextField pointField;
 
+    /**
+     * This label shows how much money they are saving if they spend so many points.
+     */
     @FXML
     private Label calculatedLabel;
 
+    /**
+     * This is how much money is being saved by using however many points.
+     */
     private Money moneySaved;
 
+    /**
+     * The max price of the order so they don't exceed it.
+     */
     private Money maxPrice;
 
+    /**
+     * The current customer of the order.
+     */
     private Customer customer;
 
+    /**
+     * Initialises the screen by showing all relevant information.
+     */
     @Override
     public void pseudoInitialize() {
         // Listener for the points textfield

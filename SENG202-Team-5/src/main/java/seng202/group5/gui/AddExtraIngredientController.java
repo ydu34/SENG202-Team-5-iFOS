@@ -26,8 +26,7 @@ import java.util.*;
 
 /**
  * Handles adding and removing ingredients and items from the selected item it is passed.
- * TODO: Add handling for dietary requirements if a selected ingredients breaks the selected dietary rule.
- * TODO: Add method to handle and change the names of a menu item given that it is edited, eg Chicken Burger {+1 Cheese}
+ *
  * @author James Kwok
  */
 public class AddExtraIngredientController extends GeneralController {
@@ -326,33 +325,54 @@ public class AddExtraIngredientController extends GeneralController {
         }
     }
 
-
-
+    /**
+     * Sets the MenuItem.
+     * @param newItem The MenuItem being modified.
+     */
     public void setMenuItem(MenuItem newItem) {
         oldItemRef = newItem;
         oldItem = newItem.clone();
         selectedItem = newItem.clone();
     }
 
+    /**
+     * Sets the currentOrder.
+     * @param tempOrder The order being modifed.
+     */
     public void setCurrentOrder(Order tempOrder) {
         currentOrder = tempOrder;
     }
 
+    /**
+     * Sets the openMode.
+     * @param tempOpenMode the new openMode.
+     */
     public void setOpenMode(String tempOpenMode) {
         openMode = tempOpenMode;
     }
 
+    /**
+     * Gets the original item, before modification.
+     * @return The original MenuItem.
+     */
     private MenuItem getOriginalItem() {
         return getAppEnvironment().getMenuManager().getMenuItems().get(selectedItem.getID());
     }
 
+    /**
+     * Gets the current order.
+     * @return The currentOrder.
+     */
     protected Order getCurrentOrder() {
         return currentOrder;
     }
 
+    /**
+     * Sets the isConfirmed boolean.
+     * @param tempIsConfirmed the new boolean isConfirmed.
+     */
     public void setIsConfirmed(boolean tempIsConfirmed) {
         isConfirmed = tempIsConfirmed;
     }
-
 }
 
