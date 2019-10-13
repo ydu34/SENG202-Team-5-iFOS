@@ -1,4 +1,4 @@
-package seng202.group5.testXmlFiles;
+package seng202.group5;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeAll;

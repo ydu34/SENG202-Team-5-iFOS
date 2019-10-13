@@ -85,7 +85,7 @@ public class Database {
      * @param fileDirectory The directory to where the file should be marshalled
      * @throws JAXBException if JAXB fails to convert the file
      */
-    public void objectToXml(Class c, Object o, String fileName, String fileDirectory) throws JAXBException {
+    void objectToXml(Class c, Object o, String fileName, String fileDirectory) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(c);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
@@ -123,7 +123,7 @@ public class Database {
      * @param fileDirectory The directory of the stock.xml
      * @throws Exception throws exception if stock.xml is invalid
      */
-    public void stockXmlToObject(String fileDirectory) throws Exception {
+    void stockXmlToObject(String fileDirectory) throws Exception {
         try {
             Stock tempStock = (Stock) xmlToObject(Stock.class, "stock.xml", "stock.xsd", fileDirectory);
             switch (overwriteSetting) {
@@ -196,7 +196,7 @@ public class Database {
      * Gets the metadata about the application from a file in the root location of the app,
      * then loads application data if autoload is enabled
      */
-    public void loadAppData() {
+    private void loadAppData() {
         try {
             Database tempDatabase = (Database) xmlToObject(Database.class, "metadata.xml", "metadata.xsd", getDefaultLocation());
             saveFileLocation = tempDatabase.getSaveFileLocation();
@@ -234,7 +234,7 @@ public class Database {
      * @param fileDirectory The directory of the finance.xml
      * @throws Exception throws exception if finance.xml is invalid
      */
-    public void financeXmlToObject(String fileDirectory) throws Exception {
+    void financeXmlToObject(String fileDirectory) throws Exception {
         try {
             Finance tempFinance = (Finance) xmlToObject(Finance.class, "finance.xml", "finance.xsd", fileDirectory);
             handleFinance(tempFinance.getTransactionHistory());
@@ -274,7 +274,7 @@ public class Database {
      * @param fileDirectory The directory of the menu.xml
      * @throws Exception throws exception if menu.xml is invalid
      */
-    public void menuXmlToObject(String fileDirectory) throws Exception {
+    void menuXmlToObject(String fileDirectory) throws Exception {
         try {
             MenuManager tempMenu = (MenuManager) xmlToObject(MenuManager.class, "menu.xml", "menu.xsd", fileDirectory);
             handleMenu(tempMenu.getMenuItems());
@@ -309,7 +309,7 @@ public class Database {
      * @param fileDirectory The directory of the customers.xml
      * @throws Exception throws exception if customers.xml is invalid
      */
-    public void customersXmlToObject(String fileDirectory) throws Exception {
+    void customersXmlToObject(String fileDirectory) throws Exception {
         try {
             Customers tempCustomers = (Customers) xmlToObject(Customers.class, "customers.xml", "customers.xsd", fileDirectory);
             ArrayList<String> tempCustomerIDs = new ArrayList<>();
@@ -391,7 +391,7 @@ public class Database {
     /**
      * Checks that all data in the application is not dependent on unimported data
      */
-    public void checkDataIntegrity() throws Exception {
+    private void checkDataIntegrity() throws Exception {
         Stock stock = appEnvironment.getStock();
         if (!stock.getIngredients().keySet().equals(stock.getIngredientStock().keySet())) {
             throw new Exception("Stock ingredients/quantity mismatch!");
