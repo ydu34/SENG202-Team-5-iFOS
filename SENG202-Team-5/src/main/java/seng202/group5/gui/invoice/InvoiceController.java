@@ -87,7 +87,7 @@ public class InvoiceController extends GeneralController {
 
     private ArrayList<Money> paymentArray = new ArrayList<>();
 
-    private Money total = Money.parse("NZD 0");
+    private Money totalPayed = Money.parse("NZD 0");
 
     private Order currentOrder;
 
@@ -114,6 +114,7 @@ public class InvoiceController extends GeneralController {
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
         totalCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
+        currentlyPayedLabel.setText("$" + currentOrder.getDiscount().toString().replaceAll("[^\\d.]", ""));
         currentOrderTable();
 
         // Creates a new listener for the removeItem button
@@ -134,10 +135,14 @@ public class InvoiceController extends GeneralController {
         }
 
         // Disabling payCashButton
-        payCashButton.setDisable(true);
-        payCashButton.setTextFill(Color.GREY);
+        if (currentOrder.getTotalCost().isPositive()) {
+            payCashButton.setDisable(true);
+            payCashButton.setTextFill(Color.GREY);
+        } else {
+            payCashButton.setDisable(false);
+            payCashButton.setTextFill(Color.GREEN);
+        }
         // Settings all labels to default
-        currentlyPayedLabel.setText("$0.00");
         warningLabel.setText("");
     }
 
@@ -145,7 +150,7 @@ public class InvoiceController extends GeneralController {
      * This method goes through the list which contains the list of menu items for the current order and displays the menu item
      * and the price and its quantity on the in the table view.
      */
-    public void currentOrderTable() {
+    private void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -240,7 +245,7 @@ public class InvoiceController extends GeneralController {
         }
     }
 
-    public void applyDiscount() {
+    private void applyDiscount() {
         if (currentOrder.getOrderItems().isEmpty()) {
             warningLabel.setTextFill(Color.RED);
             warningLabel.setText("There is no order to discount!");
@@ -261,7 +266,7 @@ public class InvoiceController extends GeneralController {
 
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.setCustomer(currentCustomer);
-                controller.setMaxPrice(currentOrder.getTotalCost().minus(total));
+                controller.setMaxPrice(currentOrder.getTotalCost().minus(totalPayed));
                 controller.pseudoInitialize();
 
                 stage.showAndWait();
@@ -274,14 +279,16 @@ public class InvoiceController extends GeneralController {
                 discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
                 totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
                 pseudoInitialize();
-            } catch (IOException e) {
-            }
+            } catch (IOException e) {}
         }
     }
 
-    public void clearSelectedMember() {
+    private void clearSelectedMember() {
         currentOrder.setCurrentCustomer(null);
-        currentCustomer.addPurchasePoints(customerPoints);
+        currentOrder.setDiscount(Money.parse("NZD 0"));
+        if (customerPoints != 0) {
+            currentCustomer.addPurchasePoints(customerPoints);
+        }
         currentCustomer = null;
         customerPoints = 0;
         // Clear labels
@@ -290,6 +297,8 @@ public class InvoiceController extends GeneralController {
         customerPointsLabel.setText("");
         existingMemberButton.setText("Existing Member");
         newMemberButton.setText("New Member");
+
+        pseudoInitialize();
     }
 
     /**
@@ -306,9 +315,10 @@ public class InvoiceController extends GeneralController {
             pseudoInitialize();
             cancelOrder();
             clearPayment();
+            clearSelectedMember();
         } catch (InsufficientCashException e) {
-            warningLabel.setTextFill(Color.RED);
-            warningLabel.setText("Not enough money in the till for change!");
+        warningLabel.setTextFill(Color.RED);
+        warningLabel.setText("Not enough money in the till for change!");
         }
     }
 
@@ -316,7 +326,7 @@ public class InvoiceController extends GeneralController {
      * This method intialises the screen used for a successful payment.
      * @param change An ArrayList<Money> which has all the change required.
      */
-    public void initialiseChangeScreen(ArrayList<Money> change) {
+    private void initialiseChangeScreen(ArrayList<Money> change) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/paymentSuccess.fxml"));
             Parent root = loader.load();
@@ -341,7 +351,7 @@ public class InvoiceController extends GeneralController {
      */
     public void clearPayment() {
         // Clear local variables
-        total = Money.parse("NZD 0");
+        totalPayed = Money.parse("NZD 0");
         currentPayment = new HashMap<>();
         paymentArray = new ArrayList<>();
         totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
@@ -363,7 +373,7 @@ public class InvoiceController extends GeneralController {
      * @param tempKey The Money tempKey which is used to get the number of denominations.
      * @return The final StringBuilder built.
      */
-    public StringBuilder stringBuilder(StringBuilder builder, String key, Money tempKey) {
+    private StringBuilder stringBuilder(StringBuilder builder, String key, Money tempKey) {
         builder.append("$");
         builder.append(Float.parseFloat(key));
         builder.append(": ");
@@ -388,7 +398,7 @@ public class InvoiceController extends GeneralController {
 
             // Adding the money to the total
             Money money = Money.parse("NZD " + 0.01 * value);
-            total = total.plus(money);
+            totalPayed = totalPayed.plus(money);
 
             // Minus the money from the visual total
             totalCostLabel.setText("$" + Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("NZD", ""));
@@ -400,17 +410,17 @@ public class InvoiceController extends GeneralController {
                 currentPayment.put(money, 1);
             }
 
+            // Adding the money to the array that will be passed into the AppEnvironment
+            paymentArray.add(money);
+
             // Disable pay button when there isn't enough money payed yet
-            if (!total.isGreaterThan(currentOrder.getTotalCost()) || !total.isEqual(currentOrder.getTotalCost())) {
+            if (Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).isPositive()) {
                 payCashButton.setDisable(true);
                 payCashButton.setTextFill(Color.GREY);
             } else {
                 payCashButton.setDisable(false);
                 payCashButton.setTextFill(Color.GREEN);
             }
-
-            // Adding the money to the array that will be passed into the AppEnvironment
-            paymentArray.add(money);
 
             ArrayList<Money> keyArray = new ArrayList<>(currentPayment.keySet());
 
@@ -429,7 +439,7 @@ public class InvoiceController extends GeneralController {
             // Setting the labels to the strings.
             denomCentLabel.setText(tempCent.toString());
             denomDollarLabel.setText(tempDollar.toString());
-            currentlyPayedLabel.setText("$" + total.toString().replaceAll("[^\\d.]", ""));
+            currentlyPayedLabel.setText("$" + totalPayed.toString().replaceAll("[^\\d.]", ""));
         }
     }
 

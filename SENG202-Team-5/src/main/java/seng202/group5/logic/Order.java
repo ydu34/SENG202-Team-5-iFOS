@@ -190,7 +190,7 @@ public class Order {
     public boolean removeItem(MenuItem item, boolean all) {
         if (orderItems.containsKey(item)) {
             int quantity = 1;
-            if (all == true) {
+            if (all) {
                 quantity = orderItems.get(item);
             }
             // Getting the ingredient HashMap and creating an Arraylist to iterate through out of the keys in the HashMap
@@ -207,7 +207,7 @@ public class Order {
                 temporaryStock.modifyQuantity(id, temporaryStock.getIngredientQuantity(id) + ingredients.get(id) * quantity);
             }
 
-            if (all == true) {
+            if (all) {
                 orderItems.remove(item);
             } else {
                 int oldCount = orderItems.get(item);
@@ -273,7 +273,6 @@ public class Order {
         outputString.append(getTotalCost());
         return outputString.toString();
     }
-    //TODO formalize receipt structure
 
     /**
      * Sets the stock to a clone of the specified stock
