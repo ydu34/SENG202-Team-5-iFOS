@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Order;
@@ -128,11 +127,7 @@ public class HistoryController extends GeneralController {
             return new ReadOnlyObjectWrapper<>(refundButton);
         });
 
-        try {
-            addPastOrderButton.setDisable(!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty());
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-        }
+        addPastOrderButton.setDisable(!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty());
 
         historyTable.getItems().addAll(getAppEnvironment().getFinance().getTransactionHistory().values());
         historyTable.getSortOrder().add(columnID);

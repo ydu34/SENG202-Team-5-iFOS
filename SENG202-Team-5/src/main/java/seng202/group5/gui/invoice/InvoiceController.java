@@ -17,7 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
 import seng202.group5.information.MenuItem;
@@ -171,11 +170,9 @@ public class InvoiceController extends GeneralController {
         super.pseudoInitialize();
 
         // Attempts to get the current order and customer
-        try {
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentCustomer = currentOrder.getCurrentCustomer();
-            removeItem.setDisable(true);
-        } catch (NoOrderException ignored) { }
+        currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        currentCustomer = currentOrder.getCurrentCustomer();
+        removeItem.setDisable(true);
 
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
@@ -542,28 +539,23 @@ public class InvoiceController extends GeneralController {
      */
     @FXML
     private void cancelOrder() {
-        try {
-            clearPayment();
-            remainingCostLabel.setText("$0.00");
-            totalPayedLabel.setText("$0.00");
+        clearPayment();
+        remainingCostLabel.setText("$0.00");
 
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentOrder.resetStock(getAppEnvironment().getStock());
-            currentOrder.clearItemsInOrder();
+        currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        currentOrder.resetStock(getAppEnvironment().getStock());
+        currentOrder.clearItemsInOrder();
 
-            // Clear customer labels
-            discountLabel.setText("$0.00");
-            customerPoints = 0;
-            currentOrder.setCurrentCustomer(null);
-            customerNameLabel.setText("");
-            customerPointsLabel.setText("");
+        // Clear customer labels
+        discountLabel.setText("$0.00");
+        customerPoints = 0;
+        currentOrder.setCurrentCustomer(null);
+        customerNameLabel.setText("");
+        customerPointsLabel.setText("");
 
-            // Reset Customer Buttons
-            existingMemberButton.setText("Existing Member");
-            newMemberButton.setText("New Member");
-        } catch (NoOrderException ignored) {
-
-        }
+        // Reset Customer Buttons
+        existingMemberButton.setText("Existing Member");
+        newMemberButton.setText("New Member");
         // Refresh currentOrderTable
         currentOrderTable();
     }
