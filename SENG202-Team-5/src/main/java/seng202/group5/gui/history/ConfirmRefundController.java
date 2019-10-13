@@ -3,11 +3,9 @@ package seng202.group5.gui.history;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.AppEnvironment;
@@ -68,11 +66,9 @@ public class ConfirmRefundController {
 
     /**
      * Confirms the refund of the order
-     *
-     * @param event an event that caused this to happen
      */
     @FXML
-    public void confirmRefund(javafx.event.ActionEvent event) {
+    public void confirmRefund() {
         // Showing what coins to return to the customer
         ArrayList<Money> refundCoins = appEnvironment.getFinance().refund(order.getId());
         StringBuilder builder = new StringBuilder("Return the following cash:\n");
@@ -99,7 +95,6 @@ public class ConfirmRefundController {
             returnButton.setOnAction(this::closeScreen);
             isRefunded = true;
         }
-        //TODO screen is not resizing properly
 
         yesButton.setVisible(false);
         // Changing the return button so it does not tell the history that this order was not refunded
@@ -125,7 +120,7 @@ public class ConfirmRefundController {
      * Closes this screen
      * @param event an event that caused this to happen
      */
-    public void closeScreen(ActionEvent event) {
+    private void closeScreen(ActionEvent event) {
         ((Stage) returnButton.getScene().getWindow()).close();
     }
 

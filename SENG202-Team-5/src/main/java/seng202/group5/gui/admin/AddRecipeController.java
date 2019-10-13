@@ -146,7 +146,7 @@ public class AddRecipeController extends GeneralController {
      * @throws IllegalArgumentException Thrown when the mark up price is illegal
      * @throws Exception Thrown when the name is null or ""
      */
-    public void saveTextFieldValues() throws NumberFormatException, IllegalArgumentException, Exception{
+    private void saveTextFieldValues() throws NumberFormatException, IllegalArgumentException, Exception {
         String name = nameField.getText();
         String markupPriceStr = markupCostField.getText();
         item.setType(menuTypeComboBox.getSelectionModel().getSelectedItem());
@@ -181,7 +181,7 @@ public class AddRecipeController extends GeneralController {
         markupCostWarningText.setText("");
         String markupPriceStr = markupCostField.getText();
 
-        if (markupPriceStr == "") {
+        if (markupPriceStr.equals("")) {
             markupPriceStr = "0";
         }
 
@@ -232,7 +232,7 @@ public class AddRecipeController extends GeneralController {
     /**
      * Populates the table using the item's ingredients and quantities.
      */
-    public void populateIngredientsTable() {
+    private void populateIngredientsTable() {
         Recipe currentRecipe = item.getRecipe();
         Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
         List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
@@ -254,7 +254,7 @@ public class AddRecipeController extends GeneralController {
     /**
      * Initializes the text fields with values of the item.
      */
-    public void initializeTextValues() {
+    private void initializeTextValues() {
         nameField.setText(item.getItemName());
         recipeTextArea.setText(item.getRecipe().getRecipeText());
         ingredientCostText.setText(item.calculateMakingCost().toString());
@@ -265,7 +265,7 @@ public class AddRecipeController extends GeneralController {
     /**
      * Initializes the combo box containing the menu item types.
      */
-    public void initializeTypeComboBox() {
+    private void initializeTypeComboBox() {
         ObservableList<TypeEnum> typeEnumOptions =
                 FXCollections.observableArrayList(
                         TypeEnum.values()
@@ -274,11 +274,11 @@ public class AddRecipeController extends GeneralController {
         menuTypeComboBox.getSelectionModel().select(item.getItemType());
     }
 
-    public void initializeImageView() {
+    private void initializeImageView() {
         try {
             Image image = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
             itemImage.setImage(image);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -315,7 +315,7 @@ public class AddRecipeController extends GeneralController {
                     itemImage.setImage(image);
                     itemImageName = selectedFile.getName();
                     System.out.println(itemImageName);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         }

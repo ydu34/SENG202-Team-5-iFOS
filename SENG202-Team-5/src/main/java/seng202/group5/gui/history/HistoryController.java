@@ -265,13 +265,12 @@ public class HistoryController extends GeneralController {
 
         HashMap<String, Transaction> history = getAppEnvironment().getFinance().getTransactionHistory();
 
-        if (history.containsKey(order.getId())) {
-            //TODO create a formal error display system
-            System.out.println("Order already exists in history!");
-        } else {
+        if (!history.containsKey(order.getId())) {
             Transaction tempTransaction = new Transaction(datetime, order.getTotalCost(), order);
             history.put(order.getId(), tempTransaction);
             updateVisibleOrders();
+        } else {
+            System.out.println("Order already exists in history!");
         }
     }
 

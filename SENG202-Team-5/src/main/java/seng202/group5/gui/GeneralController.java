@@ -35,7 +35,7 @@ public class GeneralController {
      *
      * @param oldStage the old stage which
      */
-    public static void smoothTransition(Stage oldStage, Pane origin, Pane destination, EventHandler<ActionEvent> event) {
+    protected static void smoothTransition(Stage oldStage, Pane origin, Pane destination, EventHandler<ActionEvent> event) {
         // Creating a stack pane to transition from one screen to another
         StackPane fadePane = new StackPane();
         fadePane.setMaxHeight(Double.POSITIVE_INFINITY);
@@ -72,8 +72,8 @@ public class GeneralController {
      * @param scenePath the location of the fxml file of the new screen
      * @return the new controller for the new screen
      */
-    public GeneralController changeScreen(ActionEvent event, String scenePath) {
-        Parent sampleScene = null;
+    protected GeneralController changeScreen(ActionEvent event, String scenePath) {
+        Parent sampleScene;
         GeneralController controller = null;
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
@@ -82,9 +82,6 @@ public class GeneralController {
             controller = sampleLoader.getController();
             controller.setAppEnvironment(appEnvironment);
             controller.pseudoInitialize();
-
-            double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-            double prevWidth = ((Node) event.getSource()).getScene().getWidth();
 
             Parent finalSampleScene = sampleScene;
             smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -> {
