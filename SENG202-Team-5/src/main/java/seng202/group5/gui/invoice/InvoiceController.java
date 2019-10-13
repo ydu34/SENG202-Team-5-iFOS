@@ -163,7 +163,7 @@ public class InvoiceController extends GeneralController {
     /**
      * How many points have been used so far.
      */
-    private int customerPoints;
+    private int customerPoints = 0;
 
 
     /**
@@ -345,14 +345,14 @@ public class InvoiceController extends GeneralController {
                 stage.showAndWait();
 
                 // Set the discount
+                customerPoints += controller.getPoints();
                 Money moneySaved = controller.getMoneySaved();
                 if (moneySaved != null) {
-                    currentOrder.setDiscount(moneySaved);
-                    customerPoints = controller.getPoints();
+                    currentOrder.setDiscount(currentOrder.getDiscount().plus(moneySaved));
                     discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
                     remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
-                    pseudoInitialize();
                 }
+                pseudoInitialize();
             } catch (IOException e) {}
         }
     }
