@@ -114,6 +114,8 @@ public class InvoiceController extends GeneralController {
             removeItem.setDisable(true);
         } catch (NoOrderException ignored) { }
 
+        customerSettings = getAppEnvironment().getCustomers().getCustomerSettings();
+
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
         remainingCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
