@@ -432,6 +432,8 @@ public class InvoiceController extends GeneralController {
     @FXML
     private void cancelOrder() {
         try {
+            clearPayment();
+
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
             currentOrder.clearItemsInOrder();
