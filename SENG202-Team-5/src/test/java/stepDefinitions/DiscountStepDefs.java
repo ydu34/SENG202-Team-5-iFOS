@@ -1,21 +1,15 @@
 package stepDefinitions;
 
-import cucumber.api.java.da.Men;
 import org.joda.money.Money;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
-import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.information.*;
+import seng202.group5.information.Customer;
+import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.*;
 
-import java.awt.*;
 import java.util.HashMap;
 
 import static org.joda.money.Money.parse;
@@ -63,11 +57,7 @@ public class DiscountStepDefs {
 
         itemRecipe =  new Recipe("recipe", "recipe", ingredientMap);
         MenuItem item1 = new MenuItem("burger", itemRecipe, parse("NZD 0.00"), true, MAIN);
-        try {
-            boolean ans = manager.getOrder().addItem(item1, 1);
-        } catch (NoOrderException e) {
-            fail();
-        }
+        boolean ans = manager.getOrder().addItem(item1, 1);
 
         Money result = customer.discount(int1, parse("NZD " + dub1), Money.parse("NZD " + 0.01 * customerSettings.getPointValue()));
         try {
@@ -79,11 +69,7 @@ public class DiscountStepDefs {
 
     @Then("Order now Costs ${double}")
     public void order_now_Costs_$(Double double1) {
-        try {
-            assertEquals(parse("NZD " + double1), manager.getOrder().getTotalCost());
-        } catch (NoOrderException e) {
-            fail();
-        }
+        assertEquals(parse("NZD " + double1), manager.getOrder().getTotalCost());
     }
 
     @Then("Customer now has {int} purchase points")

@@ -69,10 +69,15 @@ public class AppEnvironment {
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
         ArrayList<Money> change = new ArrayList<>();
-        try {
-            if (finance.enoughMoney(denominations, orderManager.getOrder())) {
-                Order order = orderManager.getOrder();
+        if (finance.enoughMoney(denominations, orderManager.getOrder())) {
+            Order order = orderManager.getOrder();
 
+            if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
+                order.getCurrentCustomer().purchasePoints(order.getTotalCost());
+            }
+            setStock(order.getStock().clone());
+            orderManager.setStock(stock);
+            orderManager.newOrder();
                 if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
                     order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
                 }
@@ -80,12 +85,9 @@ public class AppEnvironment {
                 orderManager.setStock(stock);
                 orderManager.newOrder();
 
-                change = finance.pay(denominations, LocalDateTime.now(), order);
-            } else {
-                throw new InsufficientCashException();
-            }
-        } catch (NoOrderException e) {
-            System.out.println("No Order! Ya dingus");
+            change = finance.pay(denominations, LocalDateTime.now(), order);
+        } else {
+            throw new InsufficientCashException();
         }
 
         return change;
