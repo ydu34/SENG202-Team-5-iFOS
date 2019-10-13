@@ -5,11 +5,23 @@
 
   <xs:element name="customers" type="customers"/>
 
-  <xs:complexType name="customers">
+    <xs:element name="idGenerator" type="idGenerator"/>
+
+    <xs:complexType name="customers">
     <xs:sequence>
+        <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="customerList" type="customer" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
+    <xs:complexType name="idGenerator">
+        <xs:sequence>
+            <xs:element name="ingredientID" type="xs:int"/>
+            <xs:element name="menuItemID" type="xs:int"/>
+            <xs:element name="orderID" type="xs:int"/>
+            <xs:element name="customerID" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
 
   <xs:complexType name="customer">
     <xs:sequence>

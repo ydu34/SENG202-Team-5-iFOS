@@ -1,7 +1,6 @@
 package seng202.group5.gui;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,17 +8,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import seng202.group5.AppEnvironment;
+import seng202.group5.gui.admin.PasswordController;
 
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -39,7 +35,7 @@ public class GeneralController {
      *
      * @param oldStage the old stage which
      */
-    public static void smoothTransition(Stage oldStage, Pane origin, Pane destination, EventHandler<ActionEvent> event) {
+    protected static void smoothTransition(Stage oldStage, Pane origin, Pane destination, EventHandler<ActionEvent> event) {
         // Creating a stack pane to transition from one screen to another
         StackPane fadePane = new StackPane();
         fadePane.setMaxHeight(Double.POSITIVE_INFINITY);
@@ -76,8 +72,8 @@ public class GeneralController {
      * @param scenePath the location of the fxml file of the new screen
      * @return the new controller for the new screen
      */
-    public GeneralController changeScreen(ActionEvent event, String scenePath) {
-        Parent sampleScene = null;
+    protected GeneralController changeScreen(ActionEvent event, String scenePath) {
+        Parent sampleScene;
         GeneralController controller = null;
         Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
@@ -86,9 +82,6 @@ public class GeneralController {
             controller = sampleLoader.getController();
             controller.setAppEnvironment(appEnvironment);
             controller.pseudoInitialize();
-
-            double prevHeight = ((Node) event.getSource()).getScene().getHeight();
-            double prevWidth = ((Node) event.getSource()).getScene().getWidth();
 
             Parent finalSampleScene = sampleScene;
             smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -> {
@@ -143,7 +136,7 @@ public class GeneralController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/password.fxml"));
             Parent root = loader.load();
 
-            passwordController controller = loader.getController();
+            PasswordController controller = loader.getController();
             controller.setSource(this);
             controller.setEvent(event);
 

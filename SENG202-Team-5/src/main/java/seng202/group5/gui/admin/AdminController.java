@@ -1,10 +1,9 @@
-package seng202.group5.gui;
+package seng202.group5.gui.admin;
 
 import com.jfoenix.controls.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +22,7 @@ import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
@@ -130,8 +130,6 @@ public class AdminController extends GeneralController {
     private Text warningText;
 
     @FXML
-    private JFXTabPane adminTabPane;
-    @FXML
     private JFXComboBox<Database.OverwriteType> dataMergeTypeMenu;
 
     private Map<String, File> fileMap;
@@ -166,13 +164,9 @@ public class AdminController extends GeneralController {
     @FXML
     private Spinner<Integer> spinner100d;
     @FXML
-    private Text promptText;
-    @FXML
     private Text oldPasswordWarning;
     @FXML
     private Text newPasswordWarning;
-    @FXML
-    private JFXButton saveButton;
     @FXML
     private JFXPasswordField oldPasswordText;
     @FXML
@@ -212,7 +206,7 @@ public class AdminController extends GeneralController {
                 if (oldValue > newValue) {
                     try {
                         finance.getTill().removeDenomination(amount, oldValue - newValue);
-                    } catch (InsufficientCashException e) {
+                    } catch (InsufficientCashException ignored) {
 
                     }
                 } else if (newValue > oldValue) {
@@ -239,11 +233,10 @@ public class AdminController extends GeneralController {
 
     /**
      * This function adds listeners to the text fields under the password setting tab pane and only allow the user to enter a
-     * a 4 digit pin. It also prevents the user form typing and special characters or alphabets.
-     * @param someTextField
+     * a 4 digit pin. It also prevents the user from typing and special characters or alphabets.
+     * @param someTextField the text field to add the listener to
      */
-
-    public void textFieldListeners(JFXPasswordField someTextField){
+    private void textFieldListeners(JFXPasswordField someTextField) {
 
         someTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d{0,4}?")) {
@@ -254,11 +247,9 @@ public class AdminController extends GeneralController {
     }
 
     /**
-     * If an order is in progress disable buttons on admin screen.
+     * If an order is in progress, disables buttons on admin screen.
      */
-    public void checkIfOrderInProgress() {
-
-        System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
+    private void checkIfOrderInProgress() {
         if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
             infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
             selectFinanceButton.setDisable(true);
@@ -272,7 +263,7 @@ public class AdminController extends GeneralController {
     }
 
 
-    public void recipeTableInitialize() {
+    private void recipeTableInitialize() {
         ObservableList<MenuItem> items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -410,7 +401,7 @@ public class AdminController extends GeneralController {
      * Gets the file that the user selects, limits the user to only select xml files
      * @return the selected file from the file chooser.
      */
-    public File getSelectedFile() {
+    private File getSelectedFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
         File selectedFile = fileChooser.showOpenDialog(null);
@@ -426,7 +417,7 @@ public class AdminController extends GeneralController {
      * @param selectedFile  The selected file that the user selects
      * @return whether or not the correct file is selected
      */
-    public boolean checkSelectedFile(String xmlFileName, File selectedFile) {
+    private boolean checkSelectedFile(String xmlFileName, File selectedFile) {
         boolean correct = false;
         if (selectedFile != null) {
             String fileName = selectedFile.getName();
@@ -442,7 +433,7 @@ public class AdminController extends GeneralController {
      * it means that all xml files are selected and ready to be imported.
      * Therefore enable the import data button for the user to click.
      */
-    public void checkFilesSelected() {
+    private void checkFilesSelected() {
         if (fileMap.size() >= 1) {
             importDataButton.setDisable(false);
         } else {
@@ -683,10 +674,8 @@ public class AdminController extends GeneralController {
     /**
      * This function checks all the fields on password settings screen and checks if they are valid and accordingly allows
      * user to update the password.
-     * @param event
      */
-
-    public void updateOldPassword(ActionEvent event) {
+    public void updateOldPassword() {
 
         if (getAppEnvironment().getDatabase().validatePassword(oldPasswordText.getText().hashCode())) {
             if (newPasswordText.getText().equals(confirmPasswordText.getText())){

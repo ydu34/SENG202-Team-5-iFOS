@@ -1,6 +1,7 @@
-package seng202.group5.testXmlFiles;
+package seng202.group5;
 
 import org.joda.money.Money;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -18,16 +20,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StockXmlTest {
-    AppEnvironment appEnvironment = new AppEnvironment(false);
-    Database database = appEnvironment.getDatabase();
-    Stock stock;
-    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
+
+    private static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
+    private AppEnvironment appEnvironment = new AppEnvironment(false);
+    private Database database = appEnvironment.getDatabase();
+    private Stock stock;
 
 
 
     @BeforeAll
     public static void createAndMarshalStockData() {
-        String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
+        String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
         AppEnvironment oldAppEnvironment = new AppEnvironment(false);
         Ingredient flour = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
@@ -122,6 +125,12 @@ class StockXmlTest {
     public void testIngredientsStockMapContainsALlQuantities() {
         Map<String, Integer> ingredientStockMap = stock.getIngredientStock();
         assertEquals(4, ingredientStockMap.size());
+    }
+
+    @AfterAll
+    public static void teardown() {
+        File file = new File(testDirectory + "/stock.xml");
+        file.delete();
     }
 
 }

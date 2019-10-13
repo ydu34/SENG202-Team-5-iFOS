@@ -221,7 +221,7 @@ public class AddPastOrderController extends OrderController {
      */
     @Override
     public void addExtraIngredientScreen(ActionEvent event) {
-        Parent sampleScene = null;
+        Parent sampleScene;
         AddExtraIngredientController controller;
         try {
             FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/addExtraIngredient.fxml"));
