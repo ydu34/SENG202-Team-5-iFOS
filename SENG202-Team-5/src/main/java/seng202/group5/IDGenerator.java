@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * A class which creates IDs for all that requires an ID and makes sure that
  * they're never the same.
+ *
  * @author Michael Morgoun
  */
 @XmlRootElement
@@ -44,6 +45,7 @@ public class IDGenerator {
 
     /**
      * Creates a new  Ingredient ID and increments the static variable by 1.
+     *
      * @return The new ID as a string.
      */
     public static String newIngredientID() {
@@ -52,6 +54,7 @@ public class IDGenerator {
 
     /**
      * Creates a new  MenuItem ID and increments the static variable by 1.
+     *
      * @return The new ID as a string.
      */
     public static String newMenuItemID() {
@@ -60,6 +63,7 @@ public class IDGenerator {
 
     /**
      * Creates a new  Order ID and increments the static variable by 1.
+     *
      * @return The new ID as a string.
      */
     public static String newOrderID() {
@@ -68,12 +72,16 @@ public class IDGenerator {
 
     /**
      * Creates a new Customer ID and increments the static variable by 1.
+     *
      * @return The new ID as a string.
      */
-    public static String newCustomerID() { return "CUST" + customerID++; }
+    public static String newCustomerID() {
+        return "CUST" + customerID++;
+    }
 
     /**
      * Returns the last ingredientID used.
+     *
      * @return an integer last ingredientID.
      */
     public static int getIngredientID() {
@@ -82,12 +90,16 @@ public class IDGenerator {
 
     /**
      * Sets the last ingredientID to the parameter.
+     *
      * @param newIngredientID An integer referring to the digit of the new ingredientID.
      */
-    public static void setIngredientID(int newIngredientID) { if (ingredientID < newIngredientID) ingredientID = newIngredientID; }
+    public static void setIngredientID(int newIngredientID) {
+        if (ingredientID < newIngredientID) ingredientID = newIngredientID;
+    }
 
     /**
      * Returns the last menuItemID used.
+     *
      * @return an integer last menuItemID.
      */
     public static int getMenuItemID() {
@@ -96,6 +108,7 @@ public class IDGenerator {
 
     /**
      * Sets the last menuItemID to the parameter.
+     *
      * @param newMenuItemID An integer referring to the digit of the new menuItemID.
      */
     public static void setMenuItemID(int newMenuItemID) {
@@ -104,6 +117,7 @@ public class IDGenerator {
 
     /**
      * Returns the last orderID used.
+     *
      * @return an integer last orderID.
      */
     public static int getOrderID() {
@@ -112,6 +126,7 @@ public class IDGenerator {
 
     /**
      * Sets the last orderID to the parameter.
+     *
      * @param newOrderID An integer referring to the digit of the new orderID.
      */
     public static void setOrderID(int newOrderID) {
@@ -120,6 +135,7 @@ public class IDGenerator {
 
     /**
      * Returns the last customerID used.
+     *
      * @return an integer last customerID.
      */
     public static int getCustomerID() {
@@ -128,6 +144,7 @@ public class IDGenerator {
 
     /**
      * Sets the last customerID to the parameter.
+     *
      * @param newCustomerID An integer referring to the digit of the new customerID.
      */
     public static void setCustomerID(int newCustomerID) {

@@ -30,6 +30,7 @@
     /*-fx-background-color: rgba(242, 239, 223, 1.0);*/
     -fx-border-color: #f9ac68;
 }
+
 :focused {
     /*-fx-background-color: -fx-table-color, -fx-box-border, -fx-control-inner-background;*/
     -fx-background-insets: -1.4, 0, 1;
@@ -37,7 +38,7 @@
     /*....*/
 }
 
-.table-view:focused .table-row-cell:selected{
+.table-view:focused .table-row-cell:selected {
     /*-fx-background-color: -fx-table-color;*/
     -fx-table-cell-border-color: -fx-table-color;
     -fx-text-fill: BLACK;
@@ -49,9 +50,9 @@
 
 .table-view .column-header,
 .table-view .column-header-background,
-/*.table-view .column-header-background .filler {*/
+    /*.table-view .column-header-background .filler {*/
     /*-fx-background-color: TRANSPARENT;*/
-/*}*/
+    /*}*/
 
 .table-view .column-header {
     -fx-border-width: 0 1 0 0;
@@ -64,11 +65,11 @@
 }
 
 /*.table-view .column-header .arrow, .table-view .column-header .sort-order-dot {*/
-    /*-fx-background-color: #6f7286;*/
+/*-fx-background-color: #6f7286;*/
 /*}*/
 
 /*.table-view .column-header:last-visible {*/
-    /*-fx-border-width: 0 0 0 0;*/
+/*-fx-border-width: 0 0 0 0;*/
 /*}*/
 
 .table-view .column-header-background {
@@ -83,13 +84,12 @@
 }
 
 /*.table-view .column-overlay {*/
-    /*-fx-background-color: -fx-table-color;*/
+/*-fx-background-color: -fx-table-color;*/
 /*}*/
 
 /*.table-view .column-resize-line, .table-view .column-drag-header {*/
-    /*-fx-background-color: -fx-table-rippler-color;*/
+/*-fx-background-color: -fx-table-rippler-color;*/
 /*}*/
-
 
 .table-row-cell > .disclosure-node > .arrow {
     /*-fx-background-color: -fx-text-fill;*/
@@ -106,8 +106,8 @@
 }
 
 /*.table-row-cell .jfx-text-field:error {*/
-    /*-jfx-focus-color: #D34336;*/
-    /*-jfx-unfocus-color: #D34336;*/
+/*-jfx-focus-color: #D34336;*/
+/*-jfx-unfocus-color: #D34336;*/
 /*}*/
 
 .table-row-cell .jfx-text-field .error-label {
@@ -121,11 +121,11 @@
 }
 
 /*.table-row-cell:grouped {*/
-    /*-fx-background-color: rgb(230, 230, 230);*/
+/*-fx-background-color: rgb(230, 230, 230);*/
 /*}*/
 
 /*.table-view .menu-item:focused {*/
-    /*-fx-background-color: -fx-table-color;*/
+/*-fx-background-color: -fx-table-color;*/
 
 /*}*/
 

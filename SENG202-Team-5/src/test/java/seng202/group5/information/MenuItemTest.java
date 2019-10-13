@@ -3,7 +3,6 @@ package seng202.group5.information;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.information.*;
 import seng202.group5.logic.Order;
 import seng202.group5.logic.OrderManager;
 import seng202.group5.logic.Stock;
@@ -15,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test for the methods defined in the  Menu Item class where
+ *
  * @author Shivin Gaba
  */
 
@@ -40,8 +40,8 @@ class MenuItemTest {
         Money cost = Money.parse("NZD 5.00");
         String uniqueId = "23";
         boolean someInMenu = true;
-        m = new MenuItem(menuName, testRecipe, cost, "1000", true);
-       // Recipe testRecipe_1 = new Recipe("Chicken burger", "Steps to chicken burger");
+        m = new MenuItem(menuName, testRecipe, cost, "1000", true, TypeEnum.MAIN);
+        // Recipe testRecipe_1 = new Recipe("Chicken burger", "Steps to chicken burger");
         HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
 
@@ -52,7 +52,8 @@ class MenuItemTest {
         testRecipe.addIngredient(cheese, 1);
     }
 
-    /**\
+    /**
+     * \
      * The below test checks if the  calculateMakingcost method works as anticipated.
      */
 
@@ -77,15 +78,15 @@ class MenuItemTest {
     void calculateFinalCost() {
         Money markupCost = Money.parse("NZD 5.00");
         Money makingCost = m.calculateMakingCost();
-        Money sellingCost = m.calculateFinalCost();
+        Money sellingCost = m.getTotalCost();
         Money finalCost = Money.parse("NZD 17");
         assertEquals(sellingCost.getAmountMajorInt(), finalCost.getAmountMajorInt());
         testRecipe.removeIngredient(chickenPatty, 1);
-        Money updatedSellingCost = m.calculateFinalCost();
+        Money updatedSellingCost = m.getTotalCost();
         Money updatedFinalCost = Money.parse("NZD 12");
         assertEquals(updatedSellingCost.getAmountMajorInt(), updatedFinalCost.getAmountMajorInt());
         testRecipe.removeIngredient(chickenPatty);
-        Money updatedSellingCost_2 = m.calculateFinalCost();
+        Money updatedSellingCost_2 = m.getTotalCost();
         Money updatedFinalCost_2 = Money.parse("NZD 7");
         assertEquals(updatedSellingCost.getAmountMajorInt(), updatedFinalCost.getAmountMajorInt());
 

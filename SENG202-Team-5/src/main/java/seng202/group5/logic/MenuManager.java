@@ -2,9 +2,9 @@ package seng202.group5.logic;
 
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
-import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -44,18 +44,6 @@ public class MenuManager {
     }
 
     /**
-     * Creates a new recipe
-     *
-     * @param ingredients contains all the ingredients IDs and their quantities required for the recipe
-     * @param recipeName  the recipe's name.
-     * @param recipeText  the recipes instructions.
-     * @return the newly made Recipe object.
-     */
-    public Recipe createRecipe(String recipeName, HashMap<Ingredient, Integer> ingredients, String recipeText) {
-        return new Recipe(recipeName, recipeText, ingredients);
-    }
-
-    /**
      * Creates a menu item and adds it to the item list
      *
      * @param name       the name of the item
@@ -66,7 +54,7 @@ public class MenuManager {
      */
     @Deprecated(since = "Uses an old MenuItem constructor, use getItemMap to insert items instead")
     public void createItem(String name, Recipe recipe, Money markupCost, String id, boolean inMenu) {
-        MenuItem newItem = new MenuItem(name, recipe, markupCost, id, inMenu);
+        MenuItem newItem = new MenuItem(name, recipe, markupCost, id, inMenu, TypeEnum.MAIN);
         itemMap.put(id, newItem);
     }
 
@@ -85,6 +73,7 @@ public class MenuManager {
 
     /**
      * Adds the MenuItem object into the itemMap.
+     *
      * @param menuItem The menu item to be added into the menu.
      */
     public void addItem(MenuItem menuItem) {
@@ -95,16 +84,13 @@ public class MenuManager {
         return itemMap;
     }
 
-    public void setItemMap(HashMap<String, MenuItem> tempItemMap) {
-        itemMap = tempItemMap;
-    }
-
     /**
      * Calculates a HashMap containing all items which exist in a given menu.
+     *
      * @return menuItemMap, a map containing all items which are in the menu.
      */
     public HashMap<String, MenuItem> getMenuItems() {
-        HashMap<String, MenuItem> menuItemMap = new HashMap<String, MenuItem>();
+        HashMap<String, MenuItem> menuItemMap = new HashMap<>();
         for (String stringKey : itemMap.keySet()) {
             MenuItem item = itemMap.get(stringKey);
             if (item.isInMenu()) {

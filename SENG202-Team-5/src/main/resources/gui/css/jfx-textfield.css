@@ -1,17 +1,14 @@
-.jfx-text-field
-{
+.jfx-text-field {
     -jfx-focus-color: #ed6b58;
     -jfx-unfocus-color: #f9ac68;
 }
 
-.text-field
-{
+.text-field {
     -fx-prompt-text-fill: rgba(58, 62, 89, 1);
-    -fx-text-fill:rgba(58, 62, 89, 1);
+    -fx-text-fill: rgba(58, 62, 89, 1);
     -fx-highlight-fill: #3399ff;
 }
 
-.text-field .input-line
-{
+.text-field .input-line {
     -fx-background-color: #f9ac68;
 }

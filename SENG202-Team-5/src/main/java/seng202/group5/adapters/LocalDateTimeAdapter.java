@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  * An adapter for jaxb to be able to marshal and unmarshal LocalDateTime objects.
+ *
  * @author Yu Duan
  */
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
@@ -19,7 +20,7 @@ public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 
     /**
      * @param v the LocalDateTime object
-     * @return  the LocalDateTime string
+     * @return the LocalDateTime string
      * @throws Exception if the marshalling fails
      */
     public String marshal(LocalDateTime v) throws Exception {

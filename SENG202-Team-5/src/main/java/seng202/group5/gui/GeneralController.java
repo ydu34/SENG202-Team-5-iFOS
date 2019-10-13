@@ -27,7 +27,9 @@ public class GeneralController {
 
     private static final double FADE_DURATION = 200; // in milliseconds
 
-    /** The property that is shared between all the controllers to access the AppEnvironment */
+    /**
+     * The property that is shared between all the controllers to access the AppEnvironment
+     */
     private AppEnvironment appEnvironment;
 
     /**
@@ -68,7 +70,8 @@ public class GeneralController {
 
     /**
      * This method is called when the screen needs to change to a different one
-     * @param event an event that caused this to happen
+     *
+     * @param event     an event that caused this to happen
      * @param scenePath the location of the fxml file of the new screen
      * @return the new controller for the new screen
      */
@@ -100,6 +103,7 @@ public class GeneralController {
 
     /**
      * This method launches the order screen when clicked on the "Order" button
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
@@ -108,6 +112,7 @@ public class GeneralController {
 
     /**
      * This method launches the invoice screen when clicked on the "Invoice" button
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void launchInvoiceScreen(javafx.event.ActionEvent actionEvent) {
@@ -116,6 +121,7 @@ public class GeneralController {
 
     /**
      * This method launches the stock screen when clicked on the "History" button
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
@@ -124,6 +130,7 @@ public class GeneralController {
 
     /**
      * This method launches the admin screen when clicked on the "Admin" button
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
@@ -153,8 +160,10 @@ public class GeneralController {
         }
 
     }
+
     /**
      * This method launches the order screen when clicked on the "Order" button
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {

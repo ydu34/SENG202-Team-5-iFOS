@@ -2,16 +2,16 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
-import seng202.group5.logic.Order;
-import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
-import seng202.group5.information.Transaction;
+import seng202.group5.logic.Order;
+import seng202.group5.logic.Stock;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class IDGeneratorTest {

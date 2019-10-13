@@ -1,4 +1,5 @@
 Feature: View Change
+
   Scenario: Order is payed for
     Given Order Costs $7.50
     And till starts with change

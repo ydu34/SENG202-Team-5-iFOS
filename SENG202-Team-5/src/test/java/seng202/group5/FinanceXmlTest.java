@@ -5,14 +5,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.AppEnvironment;
-import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
-import seng202.group5.logic.Order;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.Recipe;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
+import seng202.group5.logic.Order;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
@@ -90,6 +88,13 @@ public class FinanceXmlTest {
             System.out.println("Failed to marshal object");
         }
     }
+
+    @AfterAll
+    public static void teardown() {
+        File file = new File(testDirectory + "/finance.xml");
+        file.delete();
+    }
+
     @BeforeEach
     public void testUnmarshallFinance() {
         try {
@@ -136,11 +141,5 @@ public class FinanceXmlTest {
     public void testTransactionOrderIdIsInFinance() {
         String orderId = finance.getTransactionHistory().get("9").getOrderID();
         assertEquals("8", orderId);
-    }
-
-    @AfterAll
-    public static void teardown() {
-        File file = new File(testDirectory + "/finance.xml");
-        file.delete();
     }
 }

@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.information.DietEnum;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.information.DietEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;
@@ -102,9 +102,15 @@ public class AddStockController extends GeneralController {
             // Matches the checkboxes with that of the existent ingredient.
             for (DietEnum diet : ingredient.getDietInfo()) {
                 switch (diet) {
-                    case GLUTEN_FREE: glutenFreeCheck.setSelected(true); break;
-                    case VEGETARIAN: vegetarianCheck.setSelected(true); break;
-                    case VEGAN: veganCheck.setSelected(true); break;
+                    case GLUTEN_FREE:
+                        glutenFreeCheck.setSelected(true);
+                        break;
+                    case VEGETARIAN:
+                        vegetarianCheck.setSelected(true);
+                        break;
+                    case VEGAN:
+                        veganCheck.setSelected(true);
+                        break;
                 }
             }
 
@@ -129,6 +135,7 @@ public class AddStockController extends GeneralController {
 
     /**
      * Either creates or modifies an ingredient depending on if it's null or not.
+     *
      * @param actionEvent The button action.
      */
     @FXML
@@ -151,7 +158,7 @@ public class AddStockController extends GeneralController {
     /**
      * Modifies an existing ingredient.
      */
-    public void modifyIngredient()  throws ArithmeticException{
+    public void modifyIngredient() throws ArithmeticException {
         // Modifying the current ingredient
         String name = nameField.getText();
         String category = categoryField.getText();
@@ -188,7 +195,7 @@ public class AddStockController extends GeneralController {
      * Creates a new ingredient.
      */
     public void createIngredient() throws ArithmeticException {
-            // Getting all the values through the text fields
+        // Getting all the values through the text fields
         String name = nameField.getText();
         String category = categoryField.getText();
         Money cost = Money.parse("NZD " + costField.getText());
@@ -238,19 +245,28 @@ public class AddStockController extends GeneralController {
 
     /**
      * Sets the Stock of this screen to the stock that is currently in the system.
+     *
      * @param input The current Stock.
      */
-    public void setStock(Stock input) { stock = input; }
+    public void setStock(Stock input) {
+        stock = input;
+    }
 
     /**
      * Sets the ingredient for modifying.
+     *
      * @param ingredient1 The Ingredient to be modified.
      */
-    public void setIngredient(Ingredient ingredient1) { ingredient = ingredient1; }
+    public void setIngredient(Ingredient ingredient1) {
+        ingredient = ingredient1;
+    }
 
     /**
      * Sets the quantity field separately due to the attributes of an Ingredient not containing its own quantity.
+     *
      * @param quantity A string for the quantity.
      */
-    public void setQuantity(String quantity) { quantityField.setText(quantity); }
+    public void setQuantity(String quantity) {
+        quantityField.setText(quantity);
+    }
 }

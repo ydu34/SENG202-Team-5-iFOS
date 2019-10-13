@@ -3,57 +3,71 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.history.HistoryController">
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+          minHeight="600.0"
+          minWidth="800.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1"
+          fx:controller="seng202.group5.gui.history.HistoryController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="200.0" prefHeight="500.0" vgrow="ALWAYS" />
-        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="200.0" prefHeight="500.0" vgrow="ALWAYS"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
-        <GridPane fx:id="navGridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="60.0" snapToPixel="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+        <GridPane fx:id="navGridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                  prefHeight="60.0" snapToPixel="false" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2"
+                  GridPane.vgrow="NEVER">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice" GridPane.columnIndex="1">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock" GridPane.columnIndex="2">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" text="Admin" GridPane.columnIndex="3">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="navButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4" />
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#launchOrderScreen" prefHeight="60.0" prefWidth="160.0" text="Order">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#launchInvoiceScreen" prefHeight="60.0" prefWidth="160.0" text="Invoice"
+                        GridPane.columnIndex="1">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#launchStockScreen" prefHeight="60.0" prefWidth="160.0" text="Stock"
+                        GridPane.columnIndex="2">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button fx:id="navButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#launchPasswordScreen" prefHeight="60.0" prefWidth="160.0" text="Admin"
+                        GridPane.columnIndex="3">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button fx:id="navButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        prefHeight="60.0" prefWidth="160.0" text="History" GridPane.columnIndex="4"/>
             </children>
         </GridPane>
-        <TableView fx:id="historyTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="500.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+        <TableView fx:id="historyTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                   prefHeight="800.0" prefWidth="500.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
+                   GridPane.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="columnID" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="-1.0"
                              text="ID"/>
@@ -68,58 +82,60 @@
                              text="Refund"/>
             </columns>
             <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
             </columnResizePolicy>
         </TableView>
         <GridPane>
             <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" />
-                <ColumnConstraints hgrow="NEVER" />
-                <ColumnConstraints />
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-                <ColumnConstraints />
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints/>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                <ColumnConstraints/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" />
+                <RowConstraints maxHeight="-Infinity"/>
             </rowConstraints>
             <children>
                 <JFXDatePicker fx:id="historyStartDatePicker" onAction="#updateVisibleOrders"
                                onShowing="#setStartDateUpdater" promptText="Start Date">
                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
                 </JFXDatePicker>
                 <JFXDatePicker fx:id="historyEndDatePicker" onAction="#updateVisibleOrders"
                                onShowing="#setEndDateUpdater" promptText="End Date" GridPane.columnIndex="1">
                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
                 </JFXDatePicker>
-                <JFXTextField fx:id="historySearchBar" onKeyTyped="#updateVisibleOrders" promptText="Order ID search bar" GridPane.columnIndex="2">
+                <JFXTextField fx:id="historySearchBar" onKeyTyped="#updateVisibleOrders"
+                              promptText="Order ID search bar" GridPane.columnIndex="2">
                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="TEXT"/>
+                    </cursor>
                 </JFXTextField>
-                <JFXButton fx:id="addPastOrderButton" mnemonicParsing="false" onAction="#addPastOrder" text="Add Past Order" GridPane.columnIndex="4">
+                <JFXButton fx:id="addPastOrderButton" mnemonicParsing="false" onAction="#addPastOrder"
+                           text="Add Past Order" GridPane.columnIndex="4">
                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </GridPane.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
                 </JFXButton>
             </children>
             <GridPane.margin>
-                <Insets />
+                <Insets/>
             </GridPane.margin>
         </GridPane>
     </children>

@@ -53,7 +53,7 @@ public class Recipe {
     /**
      * A new recipe with no ingredients initially added
      *
-     * @param tempName the name of the new recipe
+     * @param tempName       the name of the new recipe
      * @param tempRecipeText the text describing the recipe steps
      */
     public Recipe(String tempName, String tempRecipeText) {
@@ -101,26 +101,10 @@ public class Recipe {
     }
 
     /**
-     * Checks if an ingredient breaks the current dietary requirements of an item.
-     * @param ingredientToBeAdded The item which is going to be added into an item.
-     * @return HashSet(DietEnum) which contains all of the broken dietary requirements when adding the item.
-     */
-    public HashSet<DietEnum> checkInconsistency(Ingredient ingredientToBeAdded) {
-        HashSet<DietEnum> notRetainedDietaryInfo = new HashSet<>();
-        for (DietEnum value : DietEnum.values()) {
-            notRetainedDietaryInfo.add(value);
-        }
-        HashSet<DietEnum> ingredientDietInfo = ingredientToBeAdded.getDietInfo();
-        notRetainedDietaryInfo.retainAll(getDietaryInformation());
-        notRetainedDietaryInfo.removeAll(ingredientDietInfo);
-        return notRetainedDietaryInfo;
-    }
-
-    /**
      * This function removes the specified ingredient from the recipe and returns the boolean accordingly.
      *
      * @param someIngredient ingredient that needs to be removed
-     * @param quantity the quantity of the ingredient to remove
+     * @param quantity       the quantity of the ingredient to remove
      * @return True if the removal of the ingredient was successful, else returns false
      */
     public boolean removeIngredient(Ingredient someIngredient, int quantity) {
@@ -162,6 +146,7 @@ public class Recipe {
 
     /**
      * Loops over the dietEnum Hashset and creates a string representing the dietary infomraiton
+     *
      * @return a string with all the dietary information
      */
     public String getDietaryInformationString() {
@@ -217,14 +202,26 @@ public class Recipe {
      *
      * @return Name of the recipe.
      **/
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Returns all the step in written in a particular recipe
      *
      * @return the text representing the recipe (i.e. steps to make something)
      **/
-    public String getRecipeText() { return recipeText; }
+    public String getRecipeText() {
+        return recipeText;
+    }
+
+    public void setRecipeText(String recipeText) {
+        this.recipeText = recipeText;
+    }
 
     public HashMap<String, Integer> getIngredientIDs() {
         return ingredientIDs;
@@ -256,14 +253,6 @@ public class Recipe {
 
     public HashSet<DietEnum> getDietaryInformation() {
         return dietaryInformation;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setRecipeText(String recipeText) {
-        this.recipeText = recipeText;
     }
 
     public void setDietaryInformation(HashSet<DietEnum> dietaryInformation) {

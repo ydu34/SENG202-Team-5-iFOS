@@ -1,6 +1,5 @@
 package seng202.group5.gui.invoice;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +12,7 @@ import seng202.group5.information.Customers;
 
 /**
  * The Controller class for the New Customer screen within the Invoice screen
+ *
  * @author Michael Morgoun
  */
 public class NewCustomerController extends GeneralController {
@@ -97,14 +97,20 @@ public class NewCustomerController extends GeneralController {
 
     /**
      * Gets the new customer created.
+     *
      * @return The newly created customer.
      */
-    public Customer getCustomer() { return customer; }
+    public Customer getCustomer() {
+        return customer;
+    }
 
     /**
      * Sets the customers.
+     *
      * @param newCustomers The customers to be set.
      */
-    public void setCustomers(Customers newCustomers) { customers = newCustomers; }
+    public void setCustomers(Customers newCustomers) {
+        customers = newCustomers;
+    }
 
 }

@@ -4,7 +4,10 @@ import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 import seng202.group5.adapters.MoneyAdapter;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,7 +50,8 @@ public class Ingredient {
      */
     private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
-    public Ingredient(){}
+    public Ingredient() {
+    }
 
     public Ingredient(String tempName, String tempCategory, Money tempPrice) {
         name = tempName;
@@ -91,6 +95,15 @@ public class Ingredient {
     }
 
     /**
+     * This method sets the name to the ingredient added to the stock
+     *
+     * @param someName name of the new ingredient
+     */
+    public void setName(String someName) {
+        name = someName;
+    }
+
+    /**
      * Returns the category of the ingredient i.e. if it is a spice, meat or bread.
      *
      * @return the category in which this ingredient is in
@@ -118,27 +131,13 @@ public class Ingredient {
     }
 
     /**
-     * This method sets the name to the ingredient added to the stock
-     *
-     * @param someName name of the new ingredient
-     */
-    public void setName(String someName) {
-        name = someName;
-    }
-
-    /**
      * Sets the dietary information about this ingredient
+     *
      * @param set A HashSet containing DietEnums representing the dietary information of this ingredient
      */
     public void setDietaryInformation(HashSet<DietEnum> set) {
         dietaryInformation = set;
     }
-
-    /**
-     * Sets the price for the ingredient.
-     * @param money A new price for the ingredient using Joda Money.
-     */
-    public void setPrice(Money money) { price = money; }
 
     /**
      * Adds dietary information about this ingredient
@@ -169,7 +168,6 @@ public class Ingredient {
         dietaryInformation.remove(newDietInfo);
     }
 
-
     /**
      * Removes dietary information about this ingredient
      *
@@ -183,18 +181,19 @@ public class Ingredient {
 
     /**
      * Loops over the dietEnum Hashset and creates a string representing the dietary infomraiton
+     *
      * @return a string with all the dietary information
      */
     public String getDietaryInformationString() {
-        String dietInfoString= "";
-        for (DietEnum dietEnum: dietaryInformation) {
-            dietInfoString += dietEnum.toString() + ", ";
+        StringBuilder dietInfoString = new StringBuilder();
+        for (DietEnum dietEnum : dietaryInformation) {
+            dietInfoString.append(dietEnum.toString()).append(", ");
         }
 
         if (dietInfoString.length() > 0) {
-            dietInfoString = dietInfoString.substring(0, dietInfoString.length() - 2);
+            dietInfoString = new StringBuilder(dietInfoString.substring(0, dietInfoString.length() - 2));
         }
-        return dietInfoString;
+        return dietInfoString.toString();
     }
 
     /**
@@ -260,5 +259,14 @@ public class Ingredient {
      */
     public Money getPrice() {
         return price;
+    }
+
+    /**
+     * Sets the price for the ingredient.
+     *
+     * @param money A new price for the ingredient using Joda Money.
+     */
+    public void setPrice(Money money) {
+        price = money;
     }
 }

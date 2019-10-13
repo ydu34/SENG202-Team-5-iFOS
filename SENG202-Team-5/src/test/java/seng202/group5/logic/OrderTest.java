@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
 
-import java.math.RoundingMode;
-import java.util.*;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,9 +29,10 @@ public class OrderTest {
         Money cost = Money.parse("NZD 125.50");
         order = new Order(orderList, cost, "ABC123");
 
-        int percentage = 50;
-        Money value = cost.multipliedBy(1 - (percentage / 100.0), RoundingMode.UP);
-        order.discount(percentage);
+        Money amount = Money.parse("NZD 20.00");
+        Money value = cost.minus(amount);
+
+        order.setDiscount(amount);
 
         assertEquals(value, order.getTotalCost());
     }
@@ -46,7 +47,7 @@ public class OrderTest {
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();
         ingredientIDs.put(ingredient.getID(), 1);
         Recipe recipe = new Recipe("Name", "Text", ingredients, ingredientIDs);
-        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true);
+        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true, TypeEnum.MAIN);
 
         HashMap<String, Ingredient> ingredientStock = new HashMap<String, Ingredient>();
         ingredientStock.put(ingredient.getID(), ingredient);
@@ -71,7 +72,7 @@ public class OrderTest {
         HashMap<String, Integer> ingredientIDs = new HashMap<String, Integer>();
         ingredientIDs.put(ingredient.getID(), 1);
         Recipe recipe = new Recipe("Name", "Text", ingredients, ingredientIDs);
-        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true);
+        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true, TypeEnum.MAIN);
 
         HashMap<String, Ingredient> ingredientStock = new HashMap<String, Ingredient>();
         ingredientStock.put(ingredient.getID(), ingredient);
@@ -120,7 +121,7 @@ public class OrderTest {
         order = new Order(stock);
 
         Recipe recipe = new Recipe("Name", "Text", ingredients, ingredientIDs);
-        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true);
+        MenuItem item = new MenuItem("SomeName", recipe, Money.parse("NZD 10.0"), "FoodID", true, TypeEnum.MAIN);
 
         HashMap<MenuItem, Integer> orderItems = new HashMap<MenuItem, Integer>();
         orderItems.put(item, 1);

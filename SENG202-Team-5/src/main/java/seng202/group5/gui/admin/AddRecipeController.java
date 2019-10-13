@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.gui.AddExtraIngredientController;
 import seng202.group5.gui.GeneralController;
-import seng202.group5.gui.admin.AdminController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
@@ -110,7 +109,7 @@ public class AddRecipeController extends GeneralController {
             }
             if (newValue.isBlank() || newValue.isEmpty()) {
                 markupCostField.setText("0");
-            } else if(newValue.matches("0[\\d]")) {
+            } else if (newValue.matches("0[\\d]")) {
                 markupCostField.setText(newValue.replace("0", ""));
             }
             computeTotalCost();
@@ -146,9 +145,10 @@ public class AddRecipeController extends GeneralController {
 
     /**
      * Saves the values in the text fields into the item.
-     * @throws NumberFormatException Thrown when the mark up price is negative
+     *
+     * @throws NumberFormatException    Thrown when the mark up price is negative
      * @throws IllegalArgumentException Thrown when the mark up price is illegal
-     * @throws Exception Thrown when the name is null or ""
+     * @throws Exception                Thrown when the name is null or ""
      */
     private void saveTextFieldValues() throws NumberFormatException, IllegalArgumentException, Exception {
         String name = nameField.getText();
@@ -168,7 +168,7 @@ public class AddRecipeController extends GeneralController {
                 item.getRecipe().setRecipeText(recipeTextArea.getText());
                 item.setItemName(name);
                 item.setMarkupCost(markupPrice);
-                item.calculateFinalCost();
+                item.getTotalCost();
                 item.setImageString(itemImageName);
             }
         } catch (NumberFormatException e) {
@@ -192,7 +192,7 @@ public class AddRecipeController extends GeneralController {
                 markupCostWarningText.setText("Invalid value");
             } else {
                 item.setMarkupCost(markupPrice);
-                totalCostText.setText(item.calculateFinalCost().toString());
+                totalCostText.setText(item.getTotalCost().toString());
             }
         } catch (NumberFormatException e) {
             markupCostWarningText.setText("Invalid value");
@@ -211,6 +211,7 @@ public class AddRecipeController extends GeneralController {
 
     /**
      * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void launchAddExtraIngredientScreen(javafx.event.ActionEvent actionEvent) {
@@ -237,7 +238,7 @@ public class AddRecipeController extends GeneralController {
         Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
         List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
         ingredientCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        quantityCol.setCellValueFactory(data ->{
+        quantityCol.setCellValueFactory(data -> {
             int quantity = recipeIngredientsMap.get(data.getValue());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
@@ -259,7 +260,7 @@ public class AddRecipeController extends GeneralController {
         recipeTextArea.setText(item.getRecipe().getRecipeText());
         ingredientCostText.setText(item.calculateMakingCost().toString());
         markupCostField.setText(item.getMarkupCost().toString().substring(4));
-        totalCostText.setText(item.calculateFinalCost().toString());
+        totalCostText.setText(item.getTotalCost().toString());
     }
 
     /**
@@ -293,7 +294,8 @@ public class AddRecipeController extends GeneralController {
         populateIngredientsTable();
     }
 
-    /** On action for button selectImageButton, opens a file chooser for the user
+    /**
+     * On action for button selectImageButton, opens a file chooser for the user
      * to select an image for the current menu item they are making.
      */
     @FXML
@@ -319,8 +321,6 @@ public class AddRecipeController extends GeneralController {
                 }
             }
         }
-
-
 
 
     }

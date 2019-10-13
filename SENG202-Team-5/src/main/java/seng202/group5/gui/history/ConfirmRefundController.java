@@ -8,11 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.AppEnvironment;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.logic.Order;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A controller for confirming if the user wants to refund an order
@@ -118,6 +119,7 @@ public class ConfirmRefundController extends GeneralController {
 
     /**
      * Closes this screen
+     *
      * @param event an event that caused this to happen
      */
     private void closeScreen(ActionEvent event) {
@@ -126,6 +128,7 @@ public class ConfirmRefundController extends GeneralController {
 
     /**
      * Sets the refund button that can be re-enabled if the refund is cancelled
+     *
      * @param button the refund button of the order
      */
     public void setButton(Button button) {

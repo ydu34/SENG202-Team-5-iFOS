@@ -4,14 +4,10 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.information.Customers;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
-import seng202.group5.information.Recipe;
+import seng202.group5.information.*;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.OrderManager;
-
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -38,9 +34,9 @@ class AppEnvironmentTest {
         cheeseBurgerRecipe = new Recipe("Cheese Burger", "PlaceholderRecipe");
         cheeseBurgerIngredients = new HashMap<>();
         cheeseBurgerIngredients.put("1", 10);
-        cheeseBurgerIngredients.put("2",5);
+        cheeseBurgerIngredients.put("2", 5);
         HashMap<Ingredient, Integer> cheeseBurgerIngredientMap = new HashMap<>();
-        cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, Money.parse("NZD 5.0"), "1", true);
+        cheeseBurger = new MenuItem("Cheese Burger", cheeseBurgerRecipe, Money.parse("NZD 5.0"), "1", true, TypeEnum.MAIN);
         cheeseBurgerRecipe.setIngredientIDs(cheeseBurgerIngredients);
 
         Ingredient cheese = new Ingredient("Cheese", "Dairy", "1", Money.parse("NZD 0.10"));
@@ -71,7 +67,7 @@ class AppEnvironmentTest {
         denomination.add(Money.parse("NZD 0.20"));
         denomination.add(Money.parse("NZD 0.10"));
 
-        for (Money value: denomination) {
+        for (Money value : denomination) {
             handler.getFinance().getTill().addDenomination(value, 10);
         }
     }
@@ -82,7 +78,7 @@ class AppEnvironmentTest {
         try {
             handler.getOrderManager().getOrder().addItem(cheeseBurger, 2);
             ArrayList<Money> paymentAmount = new ArrayList<>();
-            paymentAmount.add(cheeseBurger.calculateFinalCost().multipliedBy(2));
+            paymentAmount.add(cheeseBurger.getTotalCost().multipliedBy(2));
             paymentAmount.add(Money.parse("NZD 4.0"));
             ArrayList<Money> change = handler.confirmPayment(paymentAmount);
             for (Money x : change) changeSum = changeSum.plus(x);
@@ -98,8 +94,8 @@ class AppEnvironmentTest {
     public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
         handler.getOrderManager().getOrder().addItem(cheeseBurger, 2);
         ArrayList<Money> paymentAmount = new ArrayList<>();
-        paymentAmount.add(cheeseBurger.calculateFinalCost());
-        paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
+        paymentAmount.add(cheeseBurger.getTotalCost());
+        paymentAmount.add(cheeseBurger.getTotalCost().dividedBy(2, RoundingMode.DOWN));
         assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
     }
 

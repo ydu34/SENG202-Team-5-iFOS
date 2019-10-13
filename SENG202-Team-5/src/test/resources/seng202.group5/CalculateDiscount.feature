@@ -1,4 +1,5 @@
 Feature: Calculate Discount
+
   Scenario: Customer uses points to get a discount
     Given Order Costs $7.50
     And Customer has 10 purchase points

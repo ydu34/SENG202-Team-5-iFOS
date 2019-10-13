@@ -3,8 +3,6 @@ package seng202.group5.gui.stock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -184,42 +182,30 @@ public class StockController extends GeneralController {
         cm.getItems().add(removeItem);
 
         // Creating the Handler for MouseEvents
-        stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
-            // Shows cm if right clicked, or goes straight to modify if double clicked.
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                    cm.show(stockTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-                } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && stockTable.getSelectionModel().getSelectedItem() != null) {
-                    modifyIngredient();
-                } else {
-                    cm.hide();
-                }
+        // Shows cm if right clicked, or goes straight to modify if double clicked.
+        stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                cm.show(stockTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && stockTable.getSelectionModel().getSelectedItem() != null) {
+                modifyIngredient();
+            } else {
+                cm.hide();
             }
         });
 
         // Modifies ingredient if selected.
-        modifyItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                modifyIngredient();
-            }
-        });
+        modifyItem.setOnAction(actionEvent -> modifyIngredient());
 
         // Deletes ingredient if selected.
-        removeItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                removeIngredient();
-            }
-        });
+        removeItem.setOnAction(actionEvent -> removeIngredient());
     }
 
     /**
      * Initialises both the Add and Modify screens.
-     * @param setTitle A title that is set to "Create a new Ingredient" or "Modifing <ingredient>"
+     *
+     * @param setTitle   A title that is set to "Create a new Ingredient" or "Modifing <ingredient>"
      * @param ingredient The ingredient to be modified.
-     * @param quantity The quantity of that ingredient.
+     * @param quantity   The quantity of that ingredient.
      */
     private void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
         try {

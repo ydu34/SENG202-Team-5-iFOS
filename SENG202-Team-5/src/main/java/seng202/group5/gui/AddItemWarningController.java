@@ -2,14 +2,11 @@ package seng202.group5.gui;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.group5.information.DietEnum;
 import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class AddItemWarningController {
@@ -66,12 +63,13 @@ public class AddItemWarningController {
 
     /**
      * Creates a string by concatenating the dietary requirements which are broken.
+     *
      * @param hashSet containing broken dietary requirements to be output.
      * @return a string of concatenated dietary requirements.
      */
     public String dietaryInfoString(HashSet<DietEnum> hashSet) {
-        String dietInfoString= "";
-        for (DietEnum dietEnum: hashSet) {
+        String dietInfoString = "";
+        for (DietEnum dietEnum : hashSet) {
             dietInfoString += dietEnum.toString() + ", ";
         }
         if (dietInfoString.length() > 0) {

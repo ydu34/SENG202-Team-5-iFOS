@@ -12,6 +12,7 @@ import seng202.group5.information.CustomerSettings;
 
 /**
  * This Controller is for when the worker wants to apply a discount. A screen is opened controlled by this class.
+ *
  * @author Michael Morgoun
  */
 public class ApplyDiscountController extends GeneralController {
@@ -74,7 +75,7 @@ public class ApplyDiscountController extends GeneralController {
     public void add() {
         int points = Integer.parseInt(pointField.getText());
         if (points != customer.getPurchasePoints()) {
-            pointField.setText(String.valueOf(points+1));
+            pointField.setText(String.valueOf(points + 1));
         }
     }
 
@@ -85,7 +86,7 @@ public class ApplyDiscountController extends GeneralController {
     public void minus() {
         int points = Integer.parseInt(pointField.getText());
         if (points != 0) {
-            pointField.setText(String.valueOf(points-1));
+            pointField.setText(String.valueOf(points - 1));
         }
     }
 
@@ -118,7 +119,7 @@ public class ApplyDiscountController extends GeneralController {
             calculatedLabel.setText("Discount is more than price of Order!");
         } else {
             customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost(),
-                              Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText())));
+                    Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText())));
 
             // Set the moneySaved
             moneySaved = Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));
@@ -131,6 +132,7 @@ public class ApplyDiscountController extends GeneralController {
 
     /**
      * Sets the customer.
+     *
      * @param newCustomer The new customer.
      */
     public void setCustomer(Customer newCustomer) {
@@ -139,25 +141,37 @@ public class ApplyDiscountController extends GeneralController {
 
     /**
      * Sets the customerSettings.
+     *
      * @param newCustomerSettings The new customerSettings.
      */
-    public void setCustomerSettings(CustomerSettings newCustomerSettings) { customerSettings = newCustomerSettings; }
+    public void setCustomerSettings(CustomerSettings newCustomerSettings) {
+        customerSettings = newCustomerSettings;
+    }
 
     /**
      * Sets the max price of the order to stop the discount from going into the negatives.
+     *
      * @param tempMaxPrice The max price of the order
      */
-    public void setMaxPrice(Money tempMaxPrice) { maxPrice = tempMaxPrice; }
+    public void setMaxPrice(Money tempMaxPrice) {
+        maxPrice = tempMaxPrice;
+    }
 
     /**
      * Returns the money saved from the discount.
+     *
      * @return The money saved.
      */
-    public Money getMoneySaved() { return moneySaved; }
+    public Money getMoneySaved() {
+        return moneySaved;
+    }
 
     /**
      * Gets the points used in the discount.
+     *
      * @return The amount of points used.
      */
-    public int getPoints() { return Integer.parseInt(pointField.getText()); }
+    public int getPoints() {
+        return Integer.parseInt(pointField.getText());
+    }
 }

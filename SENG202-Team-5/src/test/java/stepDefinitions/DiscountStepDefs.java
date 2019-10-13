@@ -1,12 +1,14 @@
 package stepDefinitions;
 
-import org.joda.money.Money;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.joda.money.Money;
 import seng202.group5.information.*;
-import seng202.group5.logic.*;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.OrderManager;
+import seng202.group5.logic.Stock;
 
 import java.util.HashMap;
 
@@ -51,12 +53,12 @@ public class DiscountStepDefs {
         HashMap<Ingredient, Integer> ingredientMap = new HashMap<>();
         ingredientMap.put(ingredient, 1);
 
-        itemRecipe =  new Recipe("recipe", "recipe", ingredientMap);
+        itemRecipe = new Recipe("recipe", "recipe", ingredientMap);
         MenuItem item1 = new MenuItem("burger", itemRecipe, parse("NZD 0.00"), true, MAIN);
         boolean ans = manager.getOrder().addItem(item1, 1);
 
         Money result = customer.discount(int1, parse("NZD " + dub1), Money.parse("NZD " + 0.01 * customerSettings.getPointValue()));
-        manager.getOrder().applyDiscount(result);
+        manager.getOrder().setDiscount(result);
     }
 
     @Then("Order now Costs ${double}")

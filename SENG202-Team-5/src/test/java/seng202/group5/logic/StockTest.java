@@ -3,12 +3,11 @@ package seng202.group5.logic;
 import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
 
-import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class StockTest {

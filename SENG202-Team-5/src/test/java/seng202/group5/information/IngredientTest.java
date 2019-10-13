@@ -41,7 +41,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void testSetGetId(){
+    public void testSetGetId() {
         Ingredient ingredient = new Ingredient("ing1", "meat", "TId", Money.parse("NZD 0.10"));
         assertEquals(ingredient.getId(), "TId");
         ingredient.setId("TId2");
@@ -49,7 +49,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void testSetGetCategory(){
+    public void testSetGetCategory() {
         Ingredient ingredient = new Ingredient("ing1", "meat", "TId", Money.parse("NZD 0.10"));
         assertEquals(ingredient.getCategory(), "meat");
         ingredient.setCategory("Vege");
@@ -57,7 +57,7 @@ public class IngredientTest {
     }
 
     @Test
-    public void testSetGetPrice(){
+    public void testSetGetPrice() {
         Ingredient ingredient = new Ingredient("ing1", "meat", "TId", Money.parse("NZD 0.10"));
         assertEquals(ingredient.getPrice(), Money.parse("NZD 0.10"));
         ingredient.setPrice(Money.parse("NZD 1000"));

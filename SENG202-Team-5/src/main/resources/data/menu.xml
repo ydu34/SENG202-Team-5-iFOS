@@ -7,16 +7,17 @@
                 <itemName>Chicken Burger</itemName>
                 <recipe>
                     <name>Chicken Burger</name>
-                    <recipeText>1. Deep Fry chicken patty 
-2. Add cheese on top of patty
-3. Fry buns
-4. Fry onions
-5. Get one bun
-6. Place chicken patty on bun
-7. Put tomato sauce
-8. Put cheese
-9. Put onions
-10. Put other bun on top</recipeText>
+                    <recipeText>1. Deep Fry chicken patty
+                        2. Add cheese on top of patty
+                        3. Fry buns
+                        4. Fry onions
+                        5. Get one bun
+                        6. Place chicken patty on bun
+                        7. Put tomato sauce
+                        8. Put cheese
+                        9. Put onions
+                        10. Put other bun on top
+                    </recipeText>
                     <ingredientIDs>
                         <entry>
                             <key>1</key>
@@ -122,15 +123,16 @@
                 <itemName>Vegetarian Burger</itemName>
                 <recipe>
                     <name>Vegetarian Burger</name>
-                    <recipeText>1. Fry vegetarian patty 
-3. Fry buns
-4. Fry onions
-5. Get one bun
-6. Place vegeatarian patty on bun
-7. Put tomato sauce
-8. Put lettuce slice 
-9. Put onions
-10. Put other bun on top</recipeText>
+                    <recipeText>1. Fry vegetarian patty
+                        3. Fry buns
+                        4. Fry onions
+                        5. Get one bun
+                        6. Place vegeatarian patty on bun
+                        7. Put tomato sauce
+                        8. Put lettuce slice
+                        9. Put onions
+                        10. Put other bun on top
+                    </recipeText>
                     <ingredientIDs>
                         <entry>
                             <key>11</key>
@@ -204,10 +206,10 @@
         <entry>
             <key>32</key>
             <value>
-                <itemName>Medium Fries </itemName>
+                <itemName>Medium Fries</itemName>
                 <recipe>
-                    <name>Medium Fries </name>
-                    <recipeText>1. Deep fry fries. </recipeText>
+                    <name>Medium Fries</name>
+                    <recipeText>1. Deep fry fries.</recipeText>
                     <ingredientIDs>
                         <entry>
                             <key>4</key>

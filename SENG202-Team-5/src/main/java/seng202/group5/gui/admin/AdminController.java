@@ -1,6 +1,9 @@
 package seng202.group5.gui.admin;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +26,6 @@ import org.joda.money.Money;
 import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.gui.GeneralController;
-import seng202.group5.gui.invoice.PaymentSuccessController;
 import seng202.group5.information.CustomerSettings;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
@@ -275,6 +277,7 @@ public class AdminController extends GeneralController {
     /**
      * This function adds listeners to the text fields under the password setting tab pane and only allow the user to enter a
      * a 4 digit pin. It also prevents the user from typing and special characters or alphabets.
+     *
      * @param someTextField the text field to add the listener to
      */
     private void textFieldListeners(JFXPasswordField someTextField) {
@@ -447,6 +450,7 @@ public class AdminController extends GeneralController {
 
     /**
      * Gets the file that the user selects, limits the user to only select xml files
+     *
      * @return the selected file from the file chooser.
      */
     private File getSelectedFile() {
@@ -461,8 +465,9 @@ public class AdminController extends GeneralController {
     /**
      * Compares the xml file name with the selected file name to see if the correct file
      * is selected.
-     * @param xmlFileName The name of the xml file with .xml
-     * @param selectedFile  The selected file that the user selects
+     *
+     * @param xmlFileName  The name of the xml file with .xml
+     * @param selectedFile The selected file that the user selects
      * @return whether or not the correct file is selected
      */
     private boolean checkSelectedFile(String xmlFileName, File selectedFile) {
@@ -731,6 +736,7 @@ public class AdminController extends GeneralController {
 
     /**
      * Sets the finance.
+     *
      * @param newFinance the new finance to set.
      */
     public void setFinance(Finance newFinance) {
@@ -744,26 +750,23 @@ public class AdminController extends GeneralController {
     public void updateOldPassword() {
 
         if (getAppEnvironment().getDatabase().validatePassword(oldPasswordText.getText().hashCode())) {
-            if (newPasswordText.getText().equals(confirmPasswordText.getText())){
-                if(newPasswordText.getText().length() == 4 && confirmPasswordText.getText().length() == 4){
+            if (newPasswordText.getText().equals(confirmPasswordText.getText())) {
+                if (newPasswordText.getText().length() == 4 && confirmPasswordText.getText().length() == 4) {
                     oldPasswordWarning.setText("");
                     newPasswordWarning.setFill(Color.GREEN);
                     newPasswordWarning.setText("Password updated!!");
                     getAppEnvironment().getDatabase().setPasswordHash(newPasswordText.getText().hashCode());
-                }
-                else if (newPasswordText.getText().length() < 4 || confirmPasswordText.getText().length() < 4){
+                } else if (newPasswordText.getText().length() < 4 || confirmPasswordText.getText().length() < 4) {
                     newPasswordWarning.setFill(Color.RED);
                     newPasswordWarning.setText("Password has to be 4 digit long");
                     oldPasswordWarning.setText("");
                 }
-                }
-            else{
+            } else {
                 newPasswordWarning.setFill(Color.RED);
                 newPasswordWarning.setText("The new password and confirm password does not match");
                 oldPasswordWarning.setText("");
             }
-        }
-        else{
+        } else {
             oldPasswordWarning.setFill(Color.RED);
             oldPasswordWarning.setText("Password does not match the old password");
 
@@ -772,6 +775,7 @@ public class AdminController extends GeneralController {
 
     /**
      * The template to initialise all the Settings TextFields.
+     *
      * @param field the TextField to add a listener to.
      */
     private void initialiseSettingsTextFields(TextField field) {

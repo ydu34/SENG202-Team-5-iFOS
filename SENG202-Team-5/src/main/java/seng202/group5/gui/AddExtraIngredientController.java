@@ -18,11 +18,15 @@ import org.joda.money.Money;
 import seng202.group5.gui.admin.AddRecipeController;
 import seng202.group5.gui.history.AddPastOrderController;
 import seng202.group5.information.DietEnum;
-import seng202.group5.logic.Order;
-import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Handles adding and removing ingredients and items from the selected item it is passed.
@@ -53,7 +57,7 @@ public class AddExtraIngredientController extends GeneralController {
     private TableColumn<Ingredient, String> columnIngredientName = new TableColumn<>("ingredientName");
 
     @FXML
-    private TableColumn<Ingredient, String> columnQuantity =  new TableColumn<>("quantity");
+    private TableColumn<Ingredient, String> columnQuantity = new TableColumn<>("quantity");
 
     @FXML
     private TableColumn<Ingredient, String> columnCategory = new TableColumn<>("category");
@@ -98,11 +102,11 @@ public class AddExtraIngredientController extends GeneralController {
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         columnWarning.setCellValueFactory(data -> {
-                    if (data.getValue().getDietInfo().size() == 0) {
-                        return new SimpleStringProperty((""));
-                    } else {
-                        return new SimpleStringProperty((data.getValue().getDietaryInformationString()));
-                    }
+            if (data.getValue().getDietInfo().size() == 0) {
+                return new SimpleStringProperty((""));
+            } else {
+                return new SimpleStringProperty((data.getValue().getDietaryInformationString()));
+            }
         });
         columnQuantity.setCellValueFactory(data -> {
             int quantity = updatedStock.getIngredientStock().get(data.getValue().getID());
@@ -151,13 +155,13 @@ public class AddExtraIngredientController extends GeneralController {
                      * removes the ingredient from the map.
                      */
                     spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                            HashMap<Ingredient,Integer> ingredientAmountMap =
-                                    selectedItem.getRecipe().getIngredientsAmount();
-                            if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
-                                ingredientAmountMap.remove(ingredient);
-                            } else if (newValue != 0) {
-                                selectedItem.getRecipe().addIngredient(ingredient, newValue - oldValue);
-                            }
+                        HashMap<Ingredient, Integer> ingredientAmountMap =
+                                selectedItem.getRecipe().getIngredientsAmount();
+                        if ((newValue == 0) && (ingredientAmountMap.containsKey(ingredient))) {
+                            ingredientAmountMap.remove(ingredient);
+                        } else if (newValue != 0) {
+                            selectedItem.getRecipe().addIngredient(ingredient, newValue - oldValue);
+                        }
                     });
                     setGraphic(spinner);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -192,6 +196,7 @@ public class AddExtraIngredientController extends GeneralController {
     /**
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
      * Also updates the name of the item if it's ingredients are different to the unedited version.
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void updateItemIngredients(ActionEvent actionEvent) {
@@ -265,7 +270,7 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     /**
-     *Sets updatedStock to a copy of the current stock. Calculates the updated stock values taking into account
+     * Sets updatedStock to a copy of the current stock. Calculates the updated stock values taking into account
      * the items that currently exist in the order.
      */
     public void updateStock() {
@@ -276,7 +281,7 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     /**
-     *Sets updatedStock to a copy of the current stock. Set's all quantities to 9999 temporarily.
+     * Sets updatedStock to a copy of the current stock. Set's all quantities to 9999 temporarily.
      */
     public void updateStockRecipeMode() {
         updatedStock = getAppEnvironment().getStock().clone();
@@ -300,6 +305,7 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Returns to the previous screen, returning the original item as the selected item.
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void revertScreen(javafx.event.ActionEvent actionEvent) {
@@ -325,6 +331,7 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Sets the MenuItem.
+     *
      * @param newItem The MenuItem being modified.
      */
     public void setMenuItem(MenuItem newItem) {
@@ -334,15 +341,8 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     /**
-     * Sets the currentOrder.
-     * @param tempOrder The order being modifed.
-     */
-    public void setCurrentOrder(Order tempOrder) {
-        currentOrder = tempOrder;
-    }
-
-    /**
      * Sets the openMode.
+     *
      * @param tempOpenMode the new openMode.
      */
     public void setOpenMode(String tempOpenMode) {
@@ -351,6 +351,7 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Gets the original item, before modification.
+     *
      * @return The original MenuItem.
      */
     private MenuItem getOriginalItem() {
@@ -359,6 +360,7 @@ public class AddExtraIngredientController extends GeneralController {
 
     /**
      * Gets the current order.
+     *
      * @return The currentOrder.
      */
     protected Order getCurrentOrder() {
@@ -366,7 +368,17 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     /**
+     * Sets the currentOrder.
+     *
+     * @param tempOrder The order being modifed.
+     */
+    public void setCurrentOrder(Order tempOrder) {
+        currentOrder = tempOrder;
+    }
+
+    /**
      * Sets the isConfirmed boolean.
+     *
      * @param tempIsConfirmed the new boolean isConfirmed.
      */
     public void setIsConfirmed(boolean tempIsConfirmed) {

@@ -1,16 +1,18 @@
 package seng202.group5.logic;
 
 import org.joda.money.Money;
-import org.junit.jupiter.api.*;
-import seng202.group5.logic.MenuManager;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
-
-import static org.junit.jupiter.api.Assertions.*;
+import seng202.group5.information.TypeEnum;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MenuManagerTest {
     private Map<String, MenuItem> itemList = new HashMap<String, MenuItem>();
@@ -23,40 +25,40 @@ public class MenuManagerTest {
     private Money cost;
 
 
-
     @BeforeEach
     public void init() {
         menuManager = new MenuManager();
         ingredients.put(bun, 2);
         name = "Cheese Burger";
         cost = Money.parse("NZD 11.50");
-        burger = menuManager.createRecipe("Burger", ingredients, burgerRecipeText);
+        burger = new Recipe("Burger", burgerRecipeText, ingredients);
     }
+
     @Test
     public void testCreateMenuManagerWithExistingMenuItems() {
         MenuItem item = new MenuItem("Hamburger", burger, cost,
-                "burg124", true);
+                "burg124", true, TypeEnum.MAIN);
         HashMap<String, MenuItem> itemListToBeAdded = new HashMap<String, MenuItem>();
         itemListToBeAdded.put("1", item);
         MenuManager newMenuManager = new MenuManager(itemListToBeAdded);
-        assertTrue(newMenuManager.getItemMap().size() == 1);
+        assertEquals(1, newMenuManager.getItemMap().size());
     }
 
     @Test
     public void testCreateRecipeReturnsRecipe() {
-        assertTrue(burger instanceof Recipe);
+        assertNotNull(burger);
     }
 
     @Test
     public void testCreateItemAddtoMenu() {
         menuManager.createItem(name, burger, cost, "burg123", true);
-        assertTrue(menuManager.getMenuItems().size() == 1);
+        assertEquals(1, menuManager.getMenuItems().size());
     }
 
     @Test
     public void testCreateItemWithoutAddingtoMenu() {
         menuManager.createItem(name, burger, cost, "burg123", false);
-        assertTrue(menuManager.getItemMap().size() == 1);
+        assertEquals(1, menuManager.getItemMap().size());
         //assertTrue(menuManager.getMenuItems().size() == 0);
     }
 
@@ -64,8 +66,8 @@ public class MenuManagerTest {
     public void testRemoveItemWithItemInMenu() {
         String testID = "burg123";
         menuManager.createItem(name, burger, cost, "burg123", false);
-        assertTrue(menuManager.getItemMap().size() == 1);
+        assertEquals(1, menuManager.getItemMap().size());
         menuManager.removeItem(testID);
-        assertTrue(menuManager.getItemMap().size() == 0);
+        assertEquals(0, menuManager.getItemMap().size());
     }
 }

@@ -1,71 +1,71 @@
 <?xml version="1.0" standalone="yes"?>
-<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
 
-  <xs:element name="idGenerator" type="idGenerator"/>
+    <xs:element name="idGenerator" type="idGenerator"/>
 
-  <xs:element name="ingredient" type="ingredient"/>
+    <xs:element name="ingredient" type="ingredient"/>
 
-  <xs:element name="stock" type="stock"/>
+    <xs:element name="stock" type="stock"/>
 
-  <xs:complexType name="stock">
-    <xs:sequence>
-      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
-      <xs:element name="ingredients">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="key" minOccurs="0" type="xs:string"/>
-                  <xs:element name="value" minOccurs="0" type="ingredient"/>
-                </xs:sequence>
-              </xs:complexType>
+    <xs:complexType name="stock">
+        <xs:sequence>
+            <xs:element name="generator" type="idGenerator" minOccurs="0"/>
+            <xs:element name="ingredients">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="key" minOccurs="0" type="xs:string"/>
+                                    <xs:element name="value" minOccurs="0" type="ingredient"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ingredientStock">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="key" minOccurs="0" type="xs:string"/>
-                  <xs:element name="value" minOccurs="0" type="xs:int"/>
-                </xs:sequence>
-              </xs:complexType>
+            <xs:element name="ingredientStock">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="key" minOccurs="0" type="xs:string"/>
+                                    <xs:element name="value" minOccurs="0" type="xs:int"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="idGenerator">
-    <xs:sequence>
-      <xs:element name="ingredientID" type="xs:int"/>
-      <xs:element name="menuItemID" type="xs:int"/>
-      <xs:element name="orderID" type="xs:int"/>
-      <xs:element name="customerID" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="idGenerator">
+        <xs:sequence>
+            <xs:element name="ingredientID" type="xs:int"/>
+            <xs:element name="menuItemID" type="xs:int"/>
+            <xs:element name="orderID" type="xs:int"/>
+            <xs:element name="customerID" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="ingredient">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="category" type="xs:string" minOccurs="0"/>
-      <xs:element name="price" type="xs:string" minOccurs="0"/>
-      <xs:element name="dietaryInformation" type="dietEnum" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id" type="xs:string"/>
-  </xs:complexType>
+    <xs:complexType name="ingredient">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="category" type="xs:string" minOccurs="0"/>
+            <xs:element name="price" type="xs:string" minOccurs="0"/>
+            <xs:element name="dietaryInformation" type="dietEnum" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
 
-  <xs:simpleType name="dietEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="GLUTEN_FREE"/>
-      <xs:enumeration value="VEGAN"/>
-      <xs:enumeration value="VEGETARIAN"/>
-    </xs:restriction>
-  </xs:simpleType>
+    <xs:simpleType name="dietEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GLUTEN_FREE"/>
+            <xs:enumeration value="VEGAN"/>
+            <xs:enumeration value="VEGETARIAN"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
 

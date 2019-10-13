@@ -20,8 +20,8 @@ public class OrderManager {
     /**
      * Creates a new OrderManager with the given order
      *
-     * @param tempOrder   The order to create the manager with
-     * @param tempStock   The stock to create the manager with
+     * @param tempOrder The order to create the manager with
+     * @param tempStock The stock to create the manager with
      */
     public OrderManager(Order tempOrder, Stock tempStock) {
         currentOrder = tempOrder;
@@ -31,7 +31,7 @@ public class OrderManager {
     /**
      * Creates a new OrderManager
      *
-     * @param tempStock   The stock to create the manager with
+     * @param tempStock The stock to create the manager with
      */
     public OrderManager(Stock tempStock) {
         currentStock = tempStock;

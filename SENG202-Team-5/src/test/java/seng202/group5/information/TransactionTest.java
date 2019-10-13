@@ -1,16 +1,14 @@
 package seng202.group5.information;
 
 import org.joda.money.Money;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.logic.Order;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TransactionTest {
@@ -26,24 +24,24 @@ public class TransactionTest {
     }
 
     @Test
-    public void testGetDate(){
+    public void testGetDate() {
         assertEquals(testDateTime, testTransaction.getDateTime());
 
     }
 
     @Test
-    public void testGetChange(){
+    public void testGetChange() {
         assertEquals(Money.parse("NZD 20.00"), testTransaction.getChange());
     }
 
     @Test
-    public void testGetTotalPrice(){
+    public void testGetTotalPrice() {
         assertEquals(Money.parse("NZD 30.00"), testTransaction.getTotalPrice());
 
     }
 
     @Test
-    public void testGetAndSetRefunded(){
+    public void testGetAndSetRefunded() {
         assertFalse(testTransaction.isRefunded());
         testTransaction.refund();
         assertTrue(testTransaction.isRefunded());
