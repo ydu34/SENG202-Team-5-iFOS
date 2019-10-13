@@ -3,5 +3,6 @@
     <saveFileLocation></saveFileLocation>
     <autosaveEnabled>false</autosaveEnabled>
     <autoloadEnabled>true</autoloadEnabled>
+    <passwordHash>1508416</passwordHash>
     <overwriteSetting>MERGE_PREFER_NEW</overwriteSetting>
 </database>

@@ -8,6 +8,7 @@
       <xs:element name="saveFileLocation" type="xs:string" minOccurs="0"/>
       <xs:element name="autosaveEnabled" type="xs:boolean"/>
       <xs:element name="autoloadEnabled" type="xs:boolean"/>
+      <xs:element name="passwordHash" type="xs:int"/>
       <xs:element name="overwriteSetting" type="overwriteType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>

@@ -7,6 +7,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.util.concurrent.Callable;
 
 /**
  * A controller for managing the password feature in the application
@@ -17,73 +18,65 @@ import java.awt.*;
 public class passwordController extends GeneralController {
 
     @FXML
-    JFXButton cancelButton;
+    private JFXButton cancelButton;
 
     @FXML
-    JFXButton numberOne;
+    private JFXButton numberOne;
 
     @FXML
-    JFXButton numberTwo;
+    private JFXButton numberTwo;
 
     @FXML
-    JFXButton numberThree;
+    private JFXButton numberThree;
     @FXML
-    JFXButton numberFour;
+    private JFXButton numberFour;
     @FXML
-    JFXButton numberFive;
-
-    @FXML
-    JFXButton numberSix;
+    private JFXButton numberFive;
 
     @FXML
-    JFXButton numberSeven;
+    private JFXButton numberSix;
 
     @FXML
-    JFXButton numberEight;
+    private JFXButton numberSeven;
 
     @FXML
-    JFXButton numberNine;
+    private JFXButton numberEight;
 
     @FXML
-    JFXButton numberZero;
+    private JFXButton numberNine;
 
     @FXML
-    JFXButton confirmButton;
+    private JFXButton numberZero;
 
     @FXML
-    Text warningText;
+    private JFXButton confirmButton;
 
     @FXML
-    Text passwordInput1;
+    private Text warningText;
 
     @FXML
-    Text passwordInput2;
+    private Text passwordInput1;
 
     @FXML
-    Text passwordInput3;
+    private Text passwordInput2;
 
     @FXML
-    Text passwordInput4;
+    private Text passwordInput3;
 
     @FXML
-    JFXButton clearButton;
+    private Text passwordInput4;
 
 
+    private GeneralController source;
+    private ActionEvent origin;
 
 
-    GeneralController source;
-    ActionEvent origin;
-
-
-    /**
-     * Default password that can be used to access the admin screen at the beginning of of the day
-     */
-    private int password;
+    private IntArgReturnsBool passwordChecker;
 
     /**
      * The string used to check the validity of the password
      */
-    String input="";
+    private String input = "";
 
     /**
      * This function closes the password pop up screen when clicked on cancel
@@ -249,16 +242,16 @@ public class passwordController extends GeneralController {
 
 
     public void checkPassword(ActionEvent event){
-        if(input.hashCode() == password){
+        if (passwordChecker.check(input.hashCode())) {
             source.launchAdminScreen(origin);
             closeScreen(event);
         }
 
-        if(input.length() == 4){
+        if (input.length() == 4) {
             warningText.setText("Incorrect Password");
-
+            clearPassword();
         }
-        if(input.length() != 4){
+        if (input.length() != 4) {
             warningText.setText("Password must be of length 4");
         }
     }
@@ -299,8 +292,12 @@ public class passwordController extends GeneralController {
         origin = event;
     }
 
-    public void setPassword(int newPassword) {
-        password = newPassword;
+    public void setPasswordChecker(IntArgReturnsBool checker) {
+        passwordChecker = checker;
+    }
+
+    public interface IntArgReturnsBool {
+        public boolean check(int passwordHash);
     }
 
 

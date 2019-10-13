@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -36,7 +35,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -670,15 +668,14 @@ public class AdminController extends GeneralController {
      */
 
     public void updateOldPassword(ActionEvent event) {
-        int oldPassword = getAppEnvironment().getPassword();
 
-        if (oldPassword == oldPasswordText.getText().hashCode()) {
+        if (getAppEnvironment().getDatabase().validatePassword(oldPasswordText.getText().hashCode())) {
             if (newPasswordText.getText().equals(confirmPasswordText.getText())){
                 if(newPasswordText.getText().length() == 4 && confirmPasswordText.getText().length() == 4){
                     oldPasswordWarning.setText("");
                     newPasswordWarning.setFill(Color.GREEN);
                     newPasswordWarning.setText("Password updated!!");
-                    getAppEnvironment().setPassword(newPasswordText.getText().hashCode());
+                    getAppEnvironment().getDatabase().setPasswordHash(newPasswordText.getText().hashCode());
                 }
                 else if (newPasswordText.getText().length() < 4 || confirmPasswordText.getText().length() < 4){
                     newPasswordWarning.setFill(Color.RED);

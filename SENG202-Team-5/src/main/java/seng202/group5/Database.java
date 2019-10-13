@@ -43,6 +43,12 @@ public class Database {
     private boolean autoloadEnabled;
 
     /**
+     * Default passwordHash when the app is launched for the first time.
+     * The detail about this passwordHash would also be mentioned in the user manual as well.
+     */
+    private int passwordHash = "1111".hashCode();
+
+    /**
      * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
      * HashMap containing the ingredient and quantity.
      *
@@ -212,6 +218,7 @@ public class Database {
             saveFileLocation = tempDatabase.getSaveFileLocation();
             autoloadEnabled = tempDatabase.isAutoloadEnabled();
             autosaveEnabled = tempDatabase.isAutosaveEnabled();
+            passwordHash = tempDatabase.getPassword();
             overwriteSetting = tempDatabase.getOverwriteSetting();
             if (autoloadEnabled) {
                 String location = getLocation();
@@ -227,6 +234,7 @@ public class Database {
             autosaveEnabled = false;
             autoloadEnabled = true;
             overwriteSetting = OverwriteType.MERGE_PREFER_NEW;
+            passwordHash = "1111".hashCode();
             try {
                 objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
             } catch (JAXBException e1) {
@@ -501,5 +509,21 @@ public class Database {
         this.appEnvironment = appEnvironment;
     }
 
+    private int getPassword() {
+        return passwordHash;
+    }
+
+    public boolean validatePassword(int providedHash) {
+        return (passwordHash == providedHash);
+    }
+
+    /**
+     * Sets the stored hashcode of the password to the specified hashcode
+     *
+     * @param newPasswordHash the new password hash
+     */
+    public void setPasswordHash(int newPasswordHash) {
+        passwordHash = newPasswordHash;
+    }
 
 }
