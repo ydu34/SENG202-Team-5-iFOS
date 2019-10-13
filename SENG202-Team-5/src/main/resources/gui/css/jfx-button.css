@@ -12,11 +12,6 @@
     -fx-background-insets: 2;
 }
 
-.button:disabled {
-    -fx-opacity: 1;
-    -fx-background-color: #fbc99d;
-}
-
 .button:hover {
     -fx-background-color: #f68523;
 }
