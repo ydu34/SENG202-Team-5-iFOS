@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.AppEnvironment;
+import seng202.group5.gui.GeneralController;
 import seng202.group5.logic.Order;
 
 import java.util.*;
@@ -18,7 +19,7 @@ import java.util.*;
  *
  * @author Daniel Harris
  */
-public class ConfirmRefundController {
+public class ConfirmRefundController extends GeneralController {
 
     /**
      * A button to confirm the refund
@@ -43,7 +44,6 @@ public class ConfirmRefundController {
      * The refund button of the order
      */
     private Button button;
-    private AppEnvironment appEnvironment;
 
     private boolean isRefunded = false;
 
@@ -70,7 +70,7 @@ public class ConfirmRefundController {
     @FXML
     public void confirmRefund() {
         // Showing what coins to return to the customer
-        ArrayList<Money> refundCoins = appEnvironment.getFinance().refund(order.getId());
+        ArrayList<Money> refundCoins = getAppEnvironment().getFinance().refund(order.getId());
         StringBuilder builder = new StringBuilder("Return the following cash:\n");
         Money moneySum = Money.parse("NZD 0.00");
         HashMap<Money, Integer> moneyCounts = new HashMap<>();
@@ -130,10 +130,6 @@ public class ConfirmRefundController {
      */
     public void setButton(Button button) {
         this.button = button;
-    }
-
-    public void setAppEnvironment(AppEnvironment appEnvironment) {
-        this.appEnvironment = appEnvironment;
     }
 
 }

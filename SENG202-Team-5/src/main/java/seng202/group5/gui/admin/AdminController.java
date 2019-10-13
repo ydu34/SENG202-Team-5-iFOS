@@ -176,10 +176,6 @@ public class AdminController extends GeneralController {
 
     private ArrayList<Spinner<Integer>> spinnerList;
 
-    public AdminController(Text warningText) {
-        this.warningText = warningText;
-    }
-
     /**
      * An initializer for this controller
      */
