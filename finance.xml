@@ -3,9 +3,9 @@
     <generator>
         <ingredientID>12</ingredientID>
         <menuItemID>9</menuItemID>
-        <orderID>3</orderID>
-        <transactionID>10</transactionID>
-        <customerID>10</customerID>
+        <orderID>4</orderID>
+        <transactionID>0</transactionID>
+        <customerID>2</customerID>
     </generator>
     <transactionHistory>
         <entry>
@@ -20,26 +20,26 @@
                     <orderItems>
                         <entry>
                             <key>
-                                <itemName>Medium Fries</itemName>
-                                <recipe>
-                                    <name>Medium Fries</name>
-                                    <recipeText>1. Deep fry fries.</recipeText>
-                                    <ingredientIDs>
-                                        <entry>
-                                            <key>4</key>
-                                            <value>2</value>
-                                        </entry>
-                                    </ingredientIDs>
-                                    <dietaryInformation>VEGAN</dietaryInformation>
-                                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                                </recipe>
-                                <markupCost>NZD 3.00</markupCost>
-                                <id>32</id>
-                                <inMenu>true</inMenu>
-                                <itemType>SIDE</itemType>
-                                <edited>false</edited>
-                                <totalCost>NZD 3.20</totalCost>
+<itemName>Coke Can (330mL)</itemName>
+<recipe>
+    <name>Coke Can (330mL)</name>
+    <recipeText>No recipe required</recipeText>
+    <ingredientIDs>
+        <entry>
+            <key>8</key>
+            <value>1</value>
+        </entry>
+    </ingredientIDs>
+    <dietaryInformation>VEGETARIAN</dietaryInformation>
+    <dietaryInformation>VEGAN</dietaryInformation>
+    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+</recipe>
+<markupCost>NZD 1.40</markupCost>
+<id>15</id>
+<inMenu>true</inMenu>
+<itemType>BEVERAGE</itemType>
+<edited>false</edited>
+<totalCost>NZD 2.00</totalCost>
                             </key>
                             <value>1</value>
                         </entry>
@@ -93,26 +93,26 @@
                         </entry>
                         <entry>
                             <key>
-<itemName>Coke Can (330mL)</itemName>
+<itemName>Medium Fries</itemName>
 <recipe>
-    <name>Coke Can (330mL)</name>
-    <recipeText>No recipe required</recipeText>
+    <name>Medium Fries</name>
+    <recipeText>1. Deep fry fries.</recipeText>
     <ingredientIDs>
         <entry>
-            <key>8</key>
-            <value>1</value>
+            <key>4</key>
+            <value>2</value>
         </entry>
     </ingredientIDs>
+    <dietaryInformation>VEGETARIAN</dietaryInformation>
     <dietaryInformation>VEGAN</dietaryInformation>
     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-    <dietaryInformation>VEGETARIAN</dietaryInformation>
 </recipe>
-<markupCost>NZD 1.40</markupCost>
-<id>15</id>
+<markupCost>NZD 3.00</markupCost>
+<id>32</id>
 <inMenu>true</inMenu>
-<itemType>BEVERAGE</itemType>
+<itemType>SIDE</itemType>
 <edited>false</edited>
-<totalCost>NZD 2.00</totalCost>
+<totalCost>NZD 3.20</totalCost>
                             </key>
                             <value>1</value>
                         </entry>
@@ -125,16 +125,16 @@
     </transactionHistory>
     <till>
         <denominations>
-            <entries key="NZD 0.10">1000</entries>
-            <entries key="NZD 10.00">1000</entries>
-            <entries key="NZD 2.00">1000</entries>
-            <entries key="NZD 50.00">1000</entries>
-            <entries key="NZD 100.00">1000</entries>
-            <entries key="NZD 5.00">1000</entries>
-            <entries key="NZD 1.00">1000</entries>
-            <entries key="NZD 0.20">1000</entries>
-            <entries key="NZD 0.50">1000</entries>
-            <entries key="NZD 20.00">1000</entries>
+            <entries key="NZD 0.10">2000</entries>
+            <entries key="NZD 10.00">2000</entries>
+            <entries key="NZD 2.00">2000</entries>
+            <entries key="NZD 50.00">2000</entries>
+            <entries key="NZD 100.00">2000</entries>
+            <entries key="NZD 5.00">2000</entries>
+            <entries key="NZD 1.00">2000</entries>
+            <entries key="NZD 0.20">2000</entries>
+            <entries key="NZD 0.50">2000</entries>
+            <entries key="NZD 20.00">2000</entries>
         </denominations>
     </till>
 </finance>

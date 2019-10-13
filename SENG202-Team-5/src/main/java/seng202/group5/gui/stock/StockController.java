@@ -67,12 +67,13 @@ public class StockController extends GeneralController {
         super.pseudoInitialize();
         // Listener for the ingredientSearchField to only accept numbers
         ingredientSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("([\\-':]*\\w*)*")) {
+            if (!newValue.matches("([\\-': ]*\\w*)*")) {
                 ingredientSearchField.setText(oldValue);
             }
             updateVisibleIngredients();
         });
 
+        // Clearing tables and labels
         stockTable.getItems().clear();
         warningLabel.setText("");
         addButton.setDisable(false);
@@ -113,7 +114,7 @@ public class StockController extends GeneralController {
         }
     }
 
-    public void updateVisibleIngredients() {
+    private void updateVisibleIngredients() {
         stockTable.getItems().clear();
 
         Collection<Ingredient> ingredientIDs = getAppEnvironment().getStock().getIngredients().values();
@@ -126,7 +127,7 @@ public class StockController extends GeneralController {
         }
     }
 
-    public void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
+    private void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addStock.fxml"));
             Parent root = loader.load();
@@ -154,18 +155,19 @@ public class StockController extends GeneralController {
     }
 
     /**
-     * Opens the add ingredient to stock screen
-     *
-     * @param event an event that caused this to happen
+     * Opens the add ingredient to stock screen.
      */
     @FXML
-    public void addIngredient(ActionEvent event) {
+    public void addIngredient() {
         String quantity = "";
         initialiseScreen("New Ingredient", null, quantity);
     }
 
+    /**
+     * Opens the modify ingredient screen.
+     */
     @FXML
-    public void modifyIngredient(ActionEvent event) {
+    public void modifyIngredient() {
         Ingredient currentSelected = stockTable.getSelectionModel().getSelectedItem();
 
         try {
@@ -176,8 +178,12 @@ public class StockController extends GeneralController {
         }
     }
 
+    /**
+     * Opens a prompt asking if the selected item will be deleted or not.
+     * If no item is selected, a warning label is shown.
+     */
     @FXML
-    public void removeIngredient(ActionEvent event) {
+    public void removeIngredient() {
         try {
             Ingredient item = stockTable.getSelectionModel().getSelectedItem();
 

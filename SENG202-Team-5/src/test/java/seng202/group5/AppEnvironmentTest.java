@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.Customers;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
@@ -148,6 +149,13 @@ class AppEnvironmentTest {
         IDGenerator idGenerator = new IDGenerator();
         handler.setIdGenerator(idGenerator);
         assertEquals(idGenerator, handler.getIdGenerator());
+    }
+
+    @Test
+    void testSetGetCustomers() {
+        Customers customers = new Customers();
+        handler.setCustomers(customers);
+        assertEquals(customers, handler.getCustomers());
     }
 
 }

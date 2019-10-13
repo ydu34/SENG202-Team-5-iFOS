@@ -2,10 +2,7 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import org.xml.sax.SAXException;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
-import seng202.group5.information.Recipe;
-import seng202.group5.information.Transaction;
+import seng202.group5.information.*;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.Stock;
@@ -23,6 +20,8 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,9 +70,18 @@ public class Database {
     private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
 
     public static void main(String[] args) {
-        /*Database thing = new Database();
-        thing.loadAppData();*/
-        System.out.println("1111".hashCode());
+        Database thing = new Database();
+        AppEnvironment other = new AppEnvironment(false);
+        thing.saveFileLocation = "";
+        thing.autosaveEnabled = false;
+        thing.autoloadEnabled = true;
+        thing.overwriteSetting = OverwriteType.MERGE_PREFER_NEW;
+        thing.setAppEnvironment(other);
+        try {
+            thing.customersXmlToObject(thing.getDefaultLocation());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Database() {
@@ -217,7 +225,8 @@ public class Database {
                 File stockFile = new File(location + "/stock.xml");
                 File menuFile = new File(location + "/menu.xml");
                 File financeFile = new File(location + "/finance.xml");
-                importData(Map.of("stock.xml", stockFile, "menu.xml", menuFile, "finance.xml", financeFile));
+                File customersFile = new File(location + "/customers.xml");
+                importData(Map.of("stock.xml", stockFile, "menu.xml", menuFile, "finance.xml", financeFile, "customers.xml", customersFile));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -310,6 +319,47 @@ public class Database {
     }
 
     /**
+     * Gets the customers.xml from fileDirectory and unmarshalls it to an object.
+     * The original customers from the appEnvironment are not modified by this function.
+     *
+     * @param fileDirectory The directory of the customers.xml
+     * @throws Exception throws exception if customers.xml is invalid
+     */
+    public void customersXmlToObject(String fileDirectory) throws Exception {
+        try {
+            Customers tempCustomers = (Customers) xmlToObject(Customers.class, "customers.xml", "customers.xsd", fileDirectory);
+            ArrayList<String> tempCustomerIDs = new ArrayList<>();
+            tempCustomers.getCustomerList().forEach(customer -> tempCustomerIDs.add(customer.getID()));
+            switch (overwriteSetting) {
+                case OVERWRITE_ALL:
+                    break;
+                case MERGE_PREFER_NEW:
+                    for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {
+                        if (tempCustomerIDs.contains(entry.getID())) {
+                            tempCustomers.getCustomerList().forEach(customer -> {
+                                if (customer.getID().equals(entry.getID())) { tempCustomers.getCustomerList().remove(customer); }
+                            });
+                            tempCustomers.add(entry);
+                        }
+                    }
+                    break;
+                case MERGE_PREFER_OLD:
+                    for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {
+                        if (!tempCustomerIDs.contains(entry.getID())) {
+                            tempCustomers.add(entry);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            appEnvironment.setCustomers(tempCustomers);
+        } catch (JAXBException | SAXException e) {
+            throw new Exception("customers.xml file is invalid");
+        }
+    }
+
+    /**
      * Converts all relevant stored data in the system to xml files
      *
      * @param fileDirectory The destination directory for the xml files
@@ -320,6 +370,7 @@ public class Database {
             objectToXml(Stock.class, appEnvironment.getStock(), "stock.xml", fileDirectory);
             objectToXml(Finance.class, appEnvironment.getFinance(), "finance.xml", fileDirectory);
             objectToXml(MenuManager.class, appEnvironment.getMenuManager(), "menu.xml", fileDirectory);
+            objectToXml(Customers.class, appEnvironment.getCustomers(), "customers.xml", fileDirectory);
         } catch (JAXBException e) {
             throw new Exception(e.getMessage());
         }
@@ -336,15 +387,18 @@ public class Database {
         Stock oldStock = appEnvironment.getStock();
         MenuManager oldMenu = appEnvironment.getMenuManager();
         Finance oldFinance = appEnvironment.getFinance();
+        Customers oldCustomers = appEnvironment.getCustomers();
         try {
             if (fileMap.containsKey("stock.xml")) stockXmlToObject(fileMap.get("stock.xml").getParent());
             if (fileMap.containsKey("menu.xml")) menuXmlToObject(fileMap.get("menu.xml").getParent());
             if (fileMap.containsKey("finance.xml")) financeXmlToObject(fileMap.get("finance.xml").getParent());
+            if (fileMap.containsKey("customers.xml")) customersXmlToObject(fileMap.get("customers.xml").getParent());
             checkDataIntegrity();
         } catch (Exception e) {
             appEnvironment.setStock(oldStock);
             appEnvironment.setMenuManager(oldMenu);
             appEnvironment.setFinance(oldFinance);
+            appEnvironment.setCustomers(oldCustomers);
             throw new Exception(e.getMessage());
         }
     }

@@ -5,6 +5,7 @@ import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
+import seng202.group5.information.Customer;
 import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -49,6 +50,17 @@ public class Order {
      **/
     private String id = IDGenerator.newOrderID();
 
+    /**
+     * If it exists, the current Customer of the order
+     */
+    @XmlTransient
+    private Customer currentCustomer;
+
+    /**
+     * The discount if it exists, for the order.
+     */
+    @XmlTransient
+    private Money discount = Money.parse("NZD 0");
 
     /**
      * The Stock to update when creating this order
@@ -295,7 +307,7 @@ public class Order {
      * @return the totalCost of the order.
      */
     public Money getTotalCost() {
-        return totalCost;
+        return totalCost.minus(discount);
     }
 
     /**
@@ -307,7 +319,35 @@ public class Order {
         return temporaryStock;
     }
 
+    /**
+     * Returns the discount.
+     * @return A money type discount.
+     */
+    public Money getDiscount() { return discount; }
+
+    /**
+     * Sets the id of the order. Not necessary since it creates a new ID when initialised.
+     * @param id A string ID
+     */
     public void setId(String id) {
         this.id = id;
     }
+
+    /**
+     * Gets the current customer of the order if they exist.
+     * @return the current customer.
+     */
+    public Customer getCurrentCustomer() { return currentCustomer; }
+
+    /**
+     * Sets the current customer.
+     * @param customer The new customer of the order.
+     */
+    public void setCurrentCustomer(Customer customer) { currentCustomer = customer; }
+
+    /**
+     * Sets the discount for the order.
+     * @param tempMoney The money saved.
+     */
+    public void setDiscount(Money tempMoney) { discount = tempMoney; }
 }

@@ -70,6 +70,10 @@ public class AppEnvironment {
         try {
             if (finance.enoughMoney(denominations, orderManager.getOrder())) {
                 Order order = orderManager.getOrder();
+
+                if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
+                    order.getCurrentCustomer().purchasePoints(order.getTotalCost());
+                }
                 setStock(order.getStock().clone());
                 orderManager.setStock(stock);
                 orderManager.newOrder();
@@ -99,6 +103,8 @@ public class AppEnvironment {
         return finance;
     }
 
+    public Customers getCustomers() { return customers; }
+
     public MenuManager getMenuManager() {
         return menuManager;
     }
@@ -118,6 +124,8 @@ public class AppEnvironment {
     public void setMenuManager(MenuManager menuManager) {
         this.menuManager = menuManager;
     }
+
+    public void setCustomers(Customers newCustomers) { customers = newCustomers; }
 
     public IDGenerator getIdGenerator() {
         return idGenerator;

@@ -323,8 +323,13 @@ public class AdminController extends GeneralController {
             if (transaction.getDateTime().toLocalDate().isAfter(maxDate))
                 maxDate = transaction.getDateTime().toLocalDate();
         }
-        startDate.setValue(minDate);
-        endDate.setValue(maxDate);
+        if (!minDate.isAfter(maxDate)) {
+            startDate.setValue(minDate);
+            endDate.setValue(maxDate);
+        } else {
+            startDate.setValue(LocalDate.now());
+            endDate.setValue(LocalDate.now());
+        }
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {

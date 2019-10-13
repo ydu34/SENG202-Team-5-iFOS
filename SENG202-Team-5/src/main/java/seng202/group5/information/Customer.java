@@ -3,6 +3,11 @@ package seng202.group5.information;
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import static org.joda.money.Money.parse;
 
 /**
@@ -10,10 +15,11 @@ import static org.joda.money.Money.parse;
  * amount of loyalty points that can purchase food with.
  * @author Michael Morgoun, James Kwok
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Customer {
 
-    private IDGenerator generator = new IDGenerator();
-    private String customerID = generator.newCustomerID();
+    private String customerID = IDGenerator.newCustomerID();
 
     private String name;
 
@@ -21,16 +27,15 @@ public class Customer {
 
     private int purchasePoints = 10;
 
-    public Customer() {}
+    @XmlTransient
+    private int ratio = 10;
 
-    public Customer(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
+    @XmlTransient
+    private Money pointValue = Money.parse("NZD 0.50");
 
     /**
      *Calculates and adds purchase points to a customers account when they have spent money.
-     * Default Rate: NZD $10 = 1 Point = $0.50 discount
+     * Default Rate: NZD $10 gives 1 Point = $0.50 discount
      * @param spentMoney The total amount of money spent on an order, disregarding discounts.
      */
     public void purchasePoints(Money spentMoney) {
@@ -38,7 +43,7 @@ public class Customer {
         if (roundedMoney <= 0) {
             roundedMoney = 0;
         }
-        addPurchasePoints(roundedMoney / 10);
+        addPurchasePoints(roundedMoney / ratio);
     }
 
     /**
@@ -58,7 +63,7 @@ public class Customer {
         if (usedPoints > maxPoints) {
             usedPoints = maxPoints;
         }
-        discountMoney = (parse("NZD 0.50").multipliedBy(usedPoints));
+        discountMoney = (pointValue.multipliedBy(usedPoints));
         addPurchasePoints(-usedPoints);
         return discountMoney;
     }
@@ -71,6 +76,10 @@ public class Customer {
     public void setPhoneNumber(String newPhoneNumber) {
         phoneNumber = newPhoneNumber;
     }
+
+    public void setRatio(int tempRatio) { ratio = tempRatio; }
+
+    public void setPointValue(Money tempPointValue) { pointValue = tempPointValue; }
 
     public void setPurchasePoints(int tempPurchasePoints) {
         purchasePoints = tempPurchasePoints;
@@ -87,6 +96,10 @@ public class Customer {
     public int getPurchasePoints() {
         return purchasePoints;
     }
+
+    public int getRatio() { return ratio; }
+
+    public Money getPointValue() { return pointValue; }
 
     public String getID() { return customerID; }
 
