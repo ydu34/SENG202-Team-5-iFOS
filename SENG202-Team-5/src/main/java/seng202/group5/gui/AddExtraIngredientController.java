@@ -128,7 +128,7 @@ public class AddExtraIngredientController extends GeneralController {
                 if (empty) {
                     setText(null);
                 } else {
-                    int maxAmount = getAppEnvironment().getMaxIngredientAmount();
+                    int maxAmount = getAppEnvironment().getSettings().getMaxIngredientAmount();
                     Ingredient ingredient = getTableView().getItems().get(getIndex());
                     HashMap<Ingredient, Integer> ingredientAmounts = selectedItem.getRecipe().getIngredientsAmount();
                     int index = getIndex();

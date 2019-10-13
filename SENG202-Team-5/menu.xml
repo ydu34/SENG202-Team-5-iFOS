@@ -4,10 +4,60 @@
         <ingredientID>12</ingredientID>
         <menuItemID>9</menuItemID>
         <orderID>3</orderID>
-        <transactionID>10</transactionID>
-        <customerID>10</customerID>
+        <transactionID>0</transactionID>
+        <customerID>2</customerID>
     </generator>
     <itemMap>
+        <entry>
+            <key>ITEM32</key>
+            <value>
+                <itemName>Medium Fries </itemName>
+                <recipe>
+                    <name>Medium Fries </name>
+                    <recipeText>1. Deep fry fries. </recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>INGR4</key>
+                            <value>2</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 3.00</markupCost>
+                <id>ITEM32</id>
+                <inMenu>true</inMenu>
+                <itemType>SIDE</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 3.20</totalCost>
+            </value>
+        </entry>
+        <entry>
+            <key>ITEM15</key>
+            <value>
+                <itemName>Coke Can (330mL)</itemName>
+                <recipe>
+                    <name>Coke Can (330mL)</name>
+                    <recipeText>No recipe required</recipeText>
+                    <ingredientIDs>
+                        <entry>
+                            <key>INGR8</key>
+                            <value>1</value>
+                        </entry>
+                    </ingredientIDs>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>VEGAN</dietaryInformation>
+                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+                </recipe>
+                <markupCost>NZD 1.40</markupCost>
+                <id>ITEM15</id>
+                <inMenu>true</inMenu>
+                <itemType>BEVERAGE</itemType>
+                <edited>false</edited>
+                <totalCost>NZD 2.00</totalCost>
+            </value>
+        </entry>
         <entry>
             <key>ITEM12</key>
             <value>
@@ -30,11 +80,11 @@
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>INGR2</key>
+                            <key>INGR3</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>INGR3</key>
+                            <key>INGR2</key>
                             <value>1</value>
                         </entry>
                         <entry>
@@ -56,24 +106,24 @@
             </value>
         </entry>
         <entry>
-            <key>ITEM15</key>
+            <key>ITEM18</key>
             <value>
-                <itemName>Coke Can (330mL)</itemName>
+                <itemName>Sprite Can (330mL)</itemName>
                 <recipe>
-                    <name>Coke Can (330mL)</name>
+                    <name>Sprite Can (330mL)</name>
                     <recipeText>No recipe required</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>INGR8</key>
+                            <key>INGR9</key>
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>ITEM15</id>
+                <id>ITEM18</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -93,9 +143,9 @@
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
+                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                     <dietaryInformation>VEGAN</dietaryInformation>
                     <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
                 <id>ITEM38</id>
@@ -122,10 +172,6 @@
 10. Put other bun on top</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>INGR11</key>
-                            <value>1</value>
-                        </entry>
-                        <entry>
                             <key>INGR1</key>
                             <value>1</value>
                         </entry>
@@ -134,16 +180,20 @@
                             <value>1</value>
                         </entry>
                         <entry>
+                            <key>INGR5</key>
+                            <value>2</value>
+                        </entry>
+                        <entry>
                             <key>INGR25</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>INGR5</key>
-                            <value>2</value>
+                            <key>INGR11</key>
+                            <value>1</value>
                         </entry>
                     </ingredientIDs>
-                    <dietaryInformation>VEGAN</dietaryInformation>
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
+                    <dietaryInformation>VEGAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 4.00</markupCost>
                 <id>ITEM28</id>
@@ -151,56 +201,6 @@
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
                 <totalCost>NZD 6.10</totalCost>
-            </value>
-        </entry>
-        <entry>
-            <key>ITEM18</key>
-            <value>
-                <itemName>Sprite Can (330mL)</itemName>
-                <recipe>
-                    <name>Sprite Can (330mL)</name>
-                    <recipeText>No recipe required</recipeText>
-                    <ingredientIDs>
-                        <entry>
-                            <key>INGR9</key>
-                            <value>1</value>
-                        </entry>
-                    </ingredientIDs>
-                    <dietaryInformation>VEGAN</dietaryInformation>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                </recipe>
-                <markupCost>NZD 1.40</markupCost>
-                <id>ITEM18</id>
-                <inMenu>true</inMenu>
-                <itemType>BEVERAGE</itemType>
-                <edited>false</edited>
-                <totalCost>NZD 2.00</totalCost>
-            </value>
-        </entry>
-        <entry>
-            <key>ITEM32</key>
-            <value>
-                <itemName>Medium Fries </itemName>
-                <recipe>
-                    <name>Medium Fries </name>
-                    <recipeText>1. Deep fry fries. </recipeText>
-                    <ingredientIDs>
-                        <entry>
-                            <key>INGR4</key>
-                            <value>2</value>
-                        </entry>
-                    </ingredientIDs>
-                    <dietaryInformation>VEGAN</dietaryInformation>
-                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                </recipe>
-                <markupCost>NZD 3.00</markupCost>
-                <id>ITEM32</id>
-                <inMenu>true</inMenu>
-                <itemType>SIDE</itemType>
-                <edited>false</edited>
-                <totalCost>NZD 3.20</totalCost>
             </value>
         </entry>
     </itemMap>

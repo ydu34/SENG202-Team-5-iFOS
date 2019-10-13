@@ -346,12 +346,13 @@ public class InvoiceController extends GeneralController {
 
                 // Set the discount
                 Money moneySaved = controller.getMoneySaved();
-                currentOrder.setDiscount(moneySaved);
-
-                customerPoints = controller.getPoints();
-                discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
-                remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
-                pseudoInitialize();
+                if (moneySaved != null) {
+                    currentOrder.setDiscount(moneySaved);
+                    customerPoints = controller.getPoints();
+                    discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
+                    remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+                    pseudoInitialize();
+                }
             } catch (IOException e) {}
         }
     }

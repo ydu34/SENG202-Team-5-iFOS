@@ -18,10 +18,10 @@ public class AppEnvironment {
     private Stock stock;
     private MenuManager menuManager;
     private Customers customers;
+    private Settings settings;
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
-    private int maxIngredientAmount = 50;
 
     /**
      * The constructor for AppEnvironment
@@ -32,6 +32,7 @@ public class AppEnvironment {
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
         customers = new Customers();
+        settings = new Settings();
         idGenerator = new IDGenerator();
 
         imagesFolderPath = "";
@@ -107,6 +108,8 @@ public class AppEnvironment {
 
     public Customers getCustomers() { return customers; }
 
+    public Settings getSettings() { return settings; }
+
     public MenuManager getMenuManager() {
         return menuManager;
     }
@@ -129,6 +132,8 @@ public class AppEnvironment {
 
     public void setCustomers(Customers newCustomers) { customers = newCustomers; }
 
+    public void setSettings(Settings settings) { this.settings = settings; }
+
     public IDGenerator getIdGenerator() {
         return idGenerator;
     }
@@ -147,12 +152,5 @@ public class AppEnvironment {
 
     public void setImagesFolderPath(String imagesFolderPath) {
         this.imagesFolderPath = imagesFolderPath;
-    }
-
-    public int getMaxIngredientAmount() {
-        return maxIngredientAmount;
-    }
-    public void setMaxIngredientAmount(int tempMaxIngredientAmount) {
-        maxIngredientAmount = tempMaxIngredientAmount;
     }
 }

@@ -5,6 +5,7 @@ import org.xml.sax.SAXException;
 import seng202.group5.information.*;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Settings;
 import seng202.group5.logic.Stock;
 
 import javax.xml.XMLConstants;
@@ -312,7 +313,6 @@ public class Database {
     public void customersXmlToObject(String fileDirectory) throws Exception {
         try {
             Customers tempCustomers = (Customers) xmlToObject(Customers.class, "customers.xml", "customers.xsd", fileDirectory);
-            CustomerSettings tempSettings = tempCustomers.getCustomerSettings();
             ArrayList<String> tempCustomerIDs = new ArrayList<>();
             tempCustomers.getCustomerList().forEach(customer -> tempCustomerIDs.add(customer.getID()));
             switch (overwriteSetting) {
@@ -325,7 +325,6 @@ public class Database {
                             tempCustomers.add(entry);
                         }
                     }
-                    appEnvironment.getCustomers().setCustomerSettings(tempSettings);
                     break;
                 case MERGE_PREFER_OLD:
                     for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {
@@ -344,6 +343,33 @@ public class Database {
     }
 
     /**
+     * Gets the settings.xml from fileDirectory and unmarshalls it to an object.
+     * The original settings from the appEnvironment are not modified by this function.
+     *
+     * @param fileDirectory The directory of the customers.xml
+     * @throws Exception throws exception if customers.xml is invalid
+     */
+    public void settingsXmlToObject(String fileDirectory) throws Exception {
+        try {
+            Settings tempSettings = (Settings) xmlToObject(Settings.class, "settings.xml", "settings.xsd", fileDirectory);
+            switch (overwriteSetting) {
+                case OVERWRITE_ALL:
+                    break;
+                case MERGE_PREFER_NEW:
+                    break;
+                case MERGE_PREFER_OLD:
+
+                    break;
+                default:
+                    break;
+            }
+            appEnvironment.setSettings(tempSettings);
+        } catch (JAXBException | SAXException e) {
+            throw new Exception("settings.xml file is invalid");
+        }
+    }
+
+    /**
      * Converts all relevant stored data in the system to xml files
      *
      * @param fileDirectory The destination directory for the xml files
@@ -355,6 +381,7 @@ public class Database {
             objectToXml(Finance.class, appEnvironment.getFinance(), "finance.xml", fileDirectory);
             objectToXml(MenuManager.class, appEnvironment.getMenuManager(), "menu.xml", fileDirectory);
             objectToXml(Customers.class, appEnvironment.getCustomers(), "customers.xml", fileDirectory);
+            objectToXml(Settings.class, appEnvironment.getSettings(), "settings.xml", fileDirectory);
         } catch (JAXBException e) {
             throw new Exception(e.getMessage());
         }
@@ -372,6 +399,7 @@ public class Database {
         MenuManager oldMenu = appEnvironment.getMenuManager();
         Finance oldFinance = appEnvironment.getFinance();
         Customers oldCustomers = appEnvironment.getCustomers();
+        Settings oldSettings = appEnvironment.getSettings();
         try {
             if (fileMap.containsKey("stock.xml")) stockXmlToObject(fileMap.get("stock.xml").getParent());
             if (fileMap.containsKey("menu.xml")) menuXmlToObject(fileMap.get("menu.xml").getParent());
@@ -379,12 +407,14 @@ public class Database {
             if (fileMap.containsKey("customers.xml")) {
                 customersXmlToObject(fileMap.get("customers.xml").getParent());
             }
+            if (fileMap.containsKey("settings.xml")) { settingsXmlToObject(fileMap.get("settings.xml").getParent()); }
             checkDataIntegrity();
         } catch (Exception e) {
             appEnvironment.setStock(oldStock);
             appEnvironment.setMenuManager(oldMenu);
             appEnvironment.setFinance(oldFinance);
             appEnvironment.setCustomers(oldCustomers);
+            appEnvironment.setSettings(oldSettings);
             e.printStackTrace();
             throw new Exception(e.getMessage());
         }

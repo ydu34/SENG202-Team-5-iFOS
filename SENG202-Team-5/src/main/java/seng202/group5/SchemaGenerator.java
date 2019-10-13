@@ -3,6 +3,7 @@ package seng202.group5;
 import seng202.group5.information.Customers;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Settings;
 import seng202.group5.logic.Stock;
 
 import javax.xml.bind.JAXBContext;
@@ -14,6 +15,9 @@ import java.io.FileWriter;
  *      finance.xsd
  *      menu.xsd
  *      stock.xsd
+ *      customers.xsd
+ *      settings.xsd
+ *      metadata.xsd
  *
  * @author Yu Duan
  */
@@ -42,7 +46,7 @@ public class SchemaGenerator {
      */
     public void writeSchemaToFile(Class c, String schemaFileName) {
         try {
-            FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/src/main/resources/schema" + "/" + schemaFileName);
+            FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema" + "/" + schemaFileName);
 
             stockSchema.write(generateSchema(c));
             stockSchema.close();
@@ -58,6 +62,7 @@ public class SchemaGenerator {
      *      menu.xsd
      *      stock.xsd
      *      customers.xsd
+     *      settings.xsd
      *      metadata.xsd
      */
     public void generateAllSchemas() {
@@ -66,6 +71,7 @@ public class SchemaGenerator {
         writeSchemaToFile(MenuManager.class, "menu.xsd");
         writeSchemaToFile(Finance.class, "finance.xsd");
         writeSchemaToFile(Customers.class, "customers.xsd");
+        writeSchemaToFile(Settings.class, "settings.xsd");
         writeSchemaToFile(Database.class, "metadata.xsd");
     }
 

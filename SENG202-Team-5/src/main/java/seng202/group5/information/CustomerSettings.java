@@ -1,7 +1,5 @@
 package seng202.group5.information;
 
-import org.joda.money.Money;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
