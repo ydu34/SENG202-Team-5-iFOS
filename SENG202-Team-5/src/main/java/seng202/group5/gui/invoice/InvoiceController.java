@@ -135,6 +135,7 @@ public class InvoiceController extends GeneralController {
 
         // Disabling payCashButton
         payCashButton.setDisable(true);
+        payCashButton.setTextFill(Color.GREY);
         // Settings all labels to default
         currentlyPayedLabel.setText("$0.00");
         warningLabel.setText("");
@@ -343,6 +344,7 @@ public class InvoiceController extends GeneralController {
         total = Money.parse("NZD 0");
         currentPayment = new HashMap<>();
         paymentArray = new ArrayList<>();
+        totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
 
         // Clear money labels
         currentlyPayedLabel.setText("$0.00");
@@ -351,6 +353,7 @@ public class InvoiceController extends GeneralController {
 
         // Disable the pay button
         payCashButton.setDisable(true);
+        payCashButton.setTextFill(Color.GREY);
     }
 
     /**
@@ -388,7 +391,7 @@ public class InvoiceController extends GeneralController {
             total = total.plus(money);
 
             // Minus the money from the visual total
-            totalCostLabel.setText("$" + Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("[^\\d.]", ""));
+            totalCostLabel.setText("$" + Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("NZD", ""));
 
             // Adding money to a HashSet containing it's quantity
             if (currentPayment.containsKey(money)) {
@@ -398,8 +401,12 @@ public class InvoiceController extends GeneralController {
             }
 
             // Disable pay button when there isn't enough money payed yet
-            if (total.isGreaterThan(currentOrder.getTotalCost()) || total.isEqual(currentOrder.getTotalCost())) {
+            if (!total.isGreaterThan(currentOrder.getTotalCost()) || !total.isEqual(currentOrder.getTotalCost())) {
+                payCashButton.setDisable(true);
+                payCashButton.setTextFill(Color.GREY);
+            } else {
                 payCashButton.setDisable(false);
+                payCashButton.setTextFill(Color.GREEN);
             }
 
             // Adding the money to the array that will be passed into the AppEnvironment
@@ -433,6 +440,7 @@ public class InvoiceController extends GeneralController {
     private void cancelOrder() {
         try {
             clearPayment();
+            totalCostLabel.setText("$0.00");
 
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
@@ -441,7 +449,7 @@ public class InvoiceController extends GeneralController {
             // Clear customer labels
             discountLabel.setText("$0.00");
             customerPoints = 0;
-            currentCustomer = null;
+            currentOrder.setCurrentCustomer(null);
             customerNameLabel.setText("");
             customerPointsLabel.setText("");
 
@@ -452,7 +460,7 @@ public class InvoiceController extends GeneralController {
 
         }
         // Refresh currentOrderTable
-        pseudoInitialize();
+        currentOrderTable();
     }
 
     /**
