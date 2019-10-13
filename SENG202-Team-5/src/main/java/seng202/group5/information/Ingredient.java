@@ -47,7 +47,7 @@ public class Ingredient {
      */
     private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
-    Ingredient(){}
+    public Ingredient(){}
 
     public Ingredient(String tempName, String tempCategory, Money tempPrice) {
         name = tempName;
