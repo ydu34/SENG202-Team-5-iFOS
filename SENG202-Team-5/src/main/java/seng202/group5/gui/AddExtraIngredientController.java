@@ -23,8 +23,6 @@ import seng202.group5.logic.Order;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
-
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -56,9 +54,6 @@ public class AddExtraIngredientController extends GeneralController {
     private TableView<Ingredient> ingredientsTable;
 
     @FXML
-    private TableColumn<Ingredient, String> columnID = new TableColumn<>("ID");
-
-    @FXML
     private TableColumn<Ingredient, String> columnIngredientName = new TableColumn<>("ingredientName");
 
     @FXML
@@ -85,8 +80,6 @@ public class AddExtraIngredientController extends GeneralController {
     private ObservableList<Ingredient> itemIngredients;
 
     private MenuItem oldItemRef;
-
-    int numberOfItems;
 
     /**
      * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
@@ -200,7 +193,6 @@ public class AddExtraIngredientController extends GeneralController {
         }
     }
 
-
     /**
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
      * Also updates the name of the item if it's ingredients are different to the unedited version.
@@ -304,15 +296,6 @@ public class AddExtraIngredientController extends GeneralController {
         }
     }
 
-    public void setMenuItem(MenuItem newItem) {
-        oldItemRef = newItem;
-        oldItem = newItem.clone();
-        selectedItem = newItem.clone();
-    }
-    public void setCurrentOrder(Order tempOrder) {
-        currentOrder = tempOrder;
-    }
-
     /**
      * Returns to the previous screen, returning the original item as the selected item.
      * @param actionEvent an event that caused this to happen
@@ -338,12 +321,20 @@ public class AddExtraIngredientController extends GeneralController {
         }
     }
 
-    public void setOpenMode(String tempOpenMode) {
-        openMode = tempOpenMode;
+
+
+    public void setMenuItem(MenuItem newItem) {
+        oldItemRef = newItem;
+        oldItem = newItem.clone();
+        selectedItem = newItem.clone();
     }
 
-    protected MenuItem getSelectedItem(){
-        return selectedItem;
+    public void setCurrentOrder(Order tempOrder) {
+        currentOrder = tempOrder;
+    }
+
+    public void setOpenMode(String tempOpenMode) {
+        openMode = tempOpenMode;
     }
 
     private MenuItem getOriginalItem() {
