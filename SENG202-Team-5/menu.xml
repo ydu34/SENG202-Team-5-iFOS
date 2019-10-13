@@ -48,7 +48,7 @@
                     </ingredientIDs>
                 </recipe>
                 <markupCost>NZD 4.30</markupCost>
-                <id>12</id>
+                <id>ITEM12</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
@@ -73,7 +73,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>15</id>
+                <id>ITEM15</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -98,7 +98,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>38</id>
+                <id>ITEM38</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -146,7 +146,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 4.00</markupCost>
-                <id>28</id>
+                <id>ITEM28</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
@@ -171,7 +171,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>18</id>
+                <id>ITEM18</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -196,7 +196,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 3.00</markupCost>
-                <id>32</id>
+                <id>ITEM32</id>
                 <inMenu>true</inMenu>
                 <itemType>SIDE</itemType>
                 <edited>false</edited>
