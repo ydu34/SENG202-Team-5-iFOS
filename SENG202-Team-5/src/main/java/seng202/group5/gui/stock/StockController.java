@@ -179,9 +179,9 @@ public class StockController extends GeneralController {
         // Creating the ContextMenu and MenuItems
         ContextMenu cm = new ContextMenu();
         MenuItem modifyItem = new MenuItem("Modify");
-        MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem removeItem = new MenuItem("Remove");
         cm.getItems().add(modifyItem);
-        cm.getItems().add(deleteItem);
+        cm.getItems().add(removeItem);
 
         // Creating the Handler for MouseEvents
         stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
@@ -207,7 +207,7 @@ public class StockController extends GeneralController {
         });
 
         // Deletes ingredient if selected.
-        deleteItem.setOnAction(new EventHandler<ActionEvent>() {
+        removeItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 removeIngredient();
