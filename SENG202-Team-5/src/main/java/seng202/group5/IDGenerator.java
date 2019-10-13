@@ -134,22 +134,38 @@ public class IDGenerator {
     }
 
     public static void setIngredientID(int newIngredientID) {
-        ingredientID = newIngredientID;
+        if (ingredientID < newIngredientID) ingredientID = newIngredientID;
     }
 
-    public static int getMenuItemID() { return menuItemID; }
+    public static int getMenuItemID() {
+        return menuItemID;
+    }
 
-    public static void setMenuItemID(int newMenuItemID) { menuItemID = newMenuItemID; }
+    public static void setMenuItemID(int newMenuItemID) {
+        if (menuItemID < newMenuItemID) menuItemID = newMenuItemID;
+    }
 
-    public static int getOrderID() { return orderID; }
+    public static int getOrderID() {
+        return orderID;
+    }
 
-    public static void setOrderID(int newOrderID) { orderID = newOrderID; }
+    public static void setOrderID(int newOrderID) {
+        if (orderID < newOrderID) orderID = newOrderID;
+    }
 
-    public static int getTransactionID() { return transactionID; }
+    public static int getTransactionID() {
+        return transactionID;
+    }
 
-    public static void setTransactionID(int newTransactionID) { transactionID = newTransactionID; }
+    public static void setTransactionID(int newTransactionID) {
+        if (transactionID < newTransactionID) transactionID = newTransactionID;
+    }
 
-    public static int getCustomerID() { return customerID; }
+    public static int getCustomerID() {
+        return customerID;
+    }
 
-    public static void setCustomerID(int newCustomerID) { customerID = newCustomerID; }
+    public static void setCustomerID(int newCustomerID) {
+        if (customerID < newCustomerID) customerID = newCustomerID;
+    }
 }

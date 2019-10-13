@@ -17,7 +17,7 @@
 
   <xs:complexType name="finance">
     <xs:sequence>
-        <xs:element name="generator" type="idGenerator" minOccurs="0"/>
+      <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="transactionHistory">
         <xs:complexType>
           <xs:sequence>
@@ -36,17 +36,17 @@
     </xs:sequence>
   </xs:complexType>
 
-    <xs:complexType name="idGenerator">
-        <xs:sequence>
-            <xs:element name="ingredientID" type="xs:int"/>
-            <xs:element name="menuItemID" type="xs:int"/>
-            <xs:element name="orderID" type="xs:int"/>
-            <xs:element name="transactionID" type="xs:int"/>
-            <xs:element name="customerID" type="xs:int"/>
-        </xs:sequence>
-    </xs:complexType>
+  <xs:complexType name="idGenerator">
+    <xs:sequence>
+      <xs:element name="ingredientID" type="xs:int"/>
+      <xs:element name="menuItemID" type="xs:int"/>
+      <xs:element name="orderID" type="xs:int"/>
+      <xs:element name="transactionID" type="xs:int"/>
+      <xs:element name="customerID" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
 
-    <xs:complexType name="transaction">
+  <xs:complexType name="transaction">
     <xs:sequence>
       <xs:element name="datetime" type="xs:string" minOccurs="0"/>
       <xs:element name="change" type="xs:string" minOccurs="0"/>

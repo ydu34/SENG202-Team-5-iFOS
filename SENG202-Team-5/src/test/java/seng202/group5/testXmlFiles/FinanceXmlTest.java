@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FinanceXmlTest {
 
-    AppEnvironment appEnvironment = new AppEnvironment(false);
+    static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
+    static AppEnvironment appEnvironment = new AppEnvironment(false);
     Database database = appEnvironment.getDatabase();
     Finance finance;
-    String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
 
     @BeforeAll
     public static void createAndMarshalFinanceData() {
@@ -80,6 +80,8 @@ public class FinanceXmlTest {
         transaction.setTransactionID("9");
         oldAppEnvironment.getFinance().getTransactionHistory().put(transaction.getTransactionID(), transaction);
 
+        appEnvironment.setStock(oldAppEnvironment.getStock());
+
         try {
             oldAppEnvironment.getDatabase().objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
         } catch (JAXBException e) {
@@ -92,7 +94,8 @@ public class FinanceXmlTest {
             database.financeXmlToObject(testDirectory);
             finance = appEnvironment.getFinance();
             assertEquals(1, finance.getTransactionHistory().size());
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -2,6 +2,7 @@ package seng202.group5.gui;
 
 import com.sun.glass.ui.Screen;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,8 +36,17 @@ public class GuiManager extends Application {
         FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource("/gui/order.fxml"));
         Parent root = sampleLoader.load();
         GeneralController controller = sampleLoader.getController();
-        controller.setAppEnvironment(createAppEnvironment());
+        AppEnvironment appEnvironment = createAppEnvironment();
+        controller.setAppEnvironment(appEnvironment);
         controller.pseudoInitialize();
+        primaryStage.setOnHiding(event -> Platform.runLater(() -> {
+            try {
+                appEnvironment.getDatabase().autosave();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.exit(0);
+        }));
         int height = Screen.getMainScreen().getHeight();
         int width = Screen.getMainScreen().getWidth();
         primaryStage.setScene(new Scene(root, width, height));

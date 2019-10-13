@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuXmlTest {
     static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5/testXmlFiles";
-    AppEnvironment appEnvironment = new AppEnvironment(false);
+    static AppEnvironment appEnvironment = new AppEnvironment(false);
     Database database = appEnvironment.getDatabase();
     MenuManager menuManager;
 
@@ -67,6 +67,9 @@ public class MenuXmlTest {
 
         oldAppEnvironment.getMenuManager().createItem("Chicken Burger", testRecipe, Money.parse("NZD 5"), "1220", true);
         oldAppEnvironment.getMenuManager().createItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), "1222", true);
+
+        appEnvironment.setStock(oldAppEnvironment.getStock());
+
         try {
             oldAppEnvironment.getDatabase().objectToXml(MenuManager.class, oldAppEnvironment.getMenuManager(), "menu.xml", testDirectory);
         } catch (JAXBException e) {
