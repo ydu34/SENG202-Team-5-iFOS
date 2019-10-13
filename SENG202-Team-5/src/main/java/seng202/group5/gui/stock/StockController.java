@@ -32,19 +32,15 @@ public class StockController extends GeneralController {
     private TableView<Ingredient> stockTable;
 
     @FXML
-    private TableColumn<Ingredient, String> rowID;
-
+    TableColumn<Ingredient, String> columnCost;
     @FXML
-    private TableColumn<Ingredient, String> rowIngredient;
-
+    private TableColumn<Ingredient, String> columnID;
     @FXML
-    private TableColumn<Ingredient, String> rowQuantity;
-
+    private TableColumn<Ingredient, String> columnIngredient;
     @FXML
-    private TableColumn<Ingredient, String> rowCategory;
-
+    private TableColumn<Ingredient, String> columnQuantity;
     @FXML
-    TableColumn<Ingredient, String> rowCost;
+    private TableColumn<Ingredient, String> columnCategory;
 
     @FXML
     private Button addButton;
@@ -90,17 +86,19 @@ public class StockController extends GeneralController {
 
         quantities = getAppEnvironment().getStock().getIngredientStock();
 
-        rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        rowIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
-        rowCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-        rowCost.setCellValueFactory(new PropertyValueFactory<>("price"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        columnIngredient.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        columnCost.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        rowQuantity.setCellValueFactory(data -> {
+        columnQuantity.setCellValueFactory(data -> {
             int quantity = quantities.get(data.getValue().getID());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
 
         stockTable.setItems(ingredients);
+        stockTable.getSortOrder().add(columnID);
+        stockTable.sort();
 
         try {
             ///getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());

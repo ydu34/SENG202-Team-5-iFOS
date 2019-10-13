@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -47,10 +48,6 @@ import java.util.Map;
  * @author Yu Duan, Shivin Gaba, Daniel Harris
  */
 public class AdminController extends GeneralController {
-
-    public static String[] OverwriteTypeNames = {"Overwrite",// Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)
-            "Merge and replace with imported data",// Merge existing data with imported data and replace conflicting data with imported data
-            "Merge and keep data in application"};// Merge imported data with existing data and keep existing data when conflicts occurs
 
     @FXML
     private DatePicker startDate;
@@ -129,7 +126,7 @@ public class AdminController extends GeneralController {
     @FXML
     private JFXTabPane adminTabPane;
     @FXML
-    private MenuButton dataMergeTypeMenu;
+    private JFXComboBox<Database.OverwriteType> dataMergeTypeMenu;
 
     private Map<String, File> fileMap;
 
@@ -192,15 +189,15 @@ public class AdminController extends GeneralController {
         recipeTableInitialize();
         fileMap = new HashMap<>();
 
+        textFieldListeners(oldPasswordText);
+        textFieldListeners(newPasswordText);
+        textFieldListeners(confirmPasswordText);
+
         // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
                 spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
                 spinner20d, spinner50d, spinner100d));
         updateTillSpinners();
-
-        textFieldListeners(oldPasswordText);
-        textFieldListeners(newPasswordText);
-        textFieldListeners(confirmPasswordText);
 
         for (Spinner<Integer> spinner : spinnerList) {
             spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
@@ -219,17 +216,8 @@ public class AdminController extends GeneralController {
         }
 
         // Setting the text for the overwrite setting of the database
-        switch (getAppEnvironment().getDatabase().getOverwriteSetting()) {
-            case OVERWRITE_ALL:
-                dataMergeTypeMenu.setText(OverwriteTypeNames[0]);
-                break;
-            case MERGE_PREFER_NEW:
-                dataMergeTypeMenu.setText(OverwriteTypeNames[1]);
-                break;
-            case MERGE_PREFER_OLD:
-                dataMergeTypeMenu.setText(OverwriteTypeNames[2]);
-                break;
-        }
+        dataMergeTypeMenu.setItems(FXCollections.observableArrayList(Database.OverwriteType.values()));
+        dataMergeTypeMenu.setValue(getAppEnvironment().getDatabase().getOverwriteSetting());
 
         // Setting initial values for autosaving/loading elements
         autosaveCheckbox.setSelected(getAppEnvironment().getDatabase().isAutosaveEnabled());
@@ -292,10 +280,8 @@ public class AdminController extends GeneralController {
         sellingPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
         itemTable.getItems().clear();
         itemTable.setItems(items);
-    }
-
-    public void selectTime(javafx.event.ActionEvent actionEvent) {
-        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+        itemTable.getSortOrder().add(nameCol);
+        itemTable.sort();
     }
 
     /**
@@ -634,7 +620,6 @@ public class AdminController extends GeneralController {
      */
     public void updateAutosave() {
         getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());
-        dataMergeTypeMenu.setText("Overwrite");
     }
 
     /**
@@ -647,25 +632,8 @@ public class AdminController extends GeneralController {
     /**
      * Sets the overwrite setting of the database
      */
-    public void overwriteTypeOverwriteAll() {
-        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.OVERWRITE_ALL);
-        dataMergeTypeMenu.setText(OverwriteTypeNames[0]);
-    }
-
-    /**
-     * Sets the overwrite setting of the database
-     */
-    public void overwriteTypeMergePreferNew() {
-        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.MERGE_PREFER_NEW);
-        dataMergeTypeMenu.setText(OverwriteTypeNames[1]);
-    }
-
-    /**
-     * Sets the overwrite setting of the database
-     */
-    public void overwriteTypeMergePreferOld() {
-        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.MERGE_PREFER_OLD);
-        dataMergeTypeMenu.setText(OverwriteTypeNames[2]);
+    public void setOverwriteType() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(dataMergeTypeMenu.getValue());
     }
 
     /**

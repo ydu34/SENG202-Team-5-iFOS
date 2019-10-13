@@ -65,9 +65,6 @@ public class AddRecipeController extends GeneralController {
     private Text ingredientCostText;
 
     @FXML
-    private Button computeTotalCostButton;
-
-    @FXML
     private Text totalCostText;
 
     @FXML
@@ -154,7 +151,7 @@ public class AddRecipeController extends GeneralController {
         try {
             Double.parseDouble(markupCostField.getText());
             Money markupPrice = Money.parse("NZD " + markupPriceStr);
-            if (name == null | name.equals("")) {
+            if (name == null || name.equals("")) {
                 throw new Exception();
             } else {
                 item.getRecipe().setName(name);
@@ -243,14 +240,13 @@ public class AddRecipeController extends GeneralController {
             return new SimpleStringProperty(Integer.toString(quantity));
         });
         ingredientCostCol.setCellValueFactory(data -> {
-                                             int quantity = recipeIngredientsMap.get(data.getValue());
-                                             Money totalPrice = data.getValue().getPrice().multipliedBy(quantity);
-                                             return new SimpleStringProperty(totalPrice.toString());
-                                         }
-        );
-
+            int quantity = recipeIngredientsMap.get(data.getValue());
+            Money totalPrice = data.getValue().getPrice().multipliedBy(quantity);
+            return new SimpleStringProperty(totalPrice.toString());
+        });
         ingredientsTable.setItems(FXCollections.observableArrayList(recipeIngredients));
-
+        ingredientsTable.getSortOrder().add(ingredientCol);
+        ingredientsTable.sort();
     }
 
     /**

@@ -1,26 +1,18 @@
 package seng202.group5.gui.history;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.skins.JFXDatePickerContent;
-import com.jfoenix.skins.JFXDatePickerSkin;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
-import org.joda.money.Money;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Transaction;
@@ -32,7 +24,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -64,22 +55,22 @@ public class HistoryController extends GeneralController {
 
     // These are the rows of the history table
     @FXML
-    private TableColumn<Transaction, String> rowID;
+    private TableColumn<Transaction, String> columnID;
 
     @FXML
-    private TableColumn<Transaction, String> rowDate;
+    private TableColumn<Transaction, String> columnDate;
 
     @FXML
-    private TableColumn<Transaction, String> rowTime;
+    private TableColumn<Transaction, String> columnTime;
 
     @FXML
-    private TableColumn<Transaction, String> rowOrder;
+    private TableColumn<Transaction, String> columnOrder;
 
     @FXML
-    private TableColumn<Transaction, String> rowCost;
+    private TableColumn<Transaction, String> columnCost;
 
     @FXML
-    private TableColumn<Transaction, JFXButton> rowAction;
+    private TableColumn<Transaction, JFXButton> columnAction;
 
     @FXML
     private JFXButton addPastOrderButton;
@@ -99,28 +90,28 @@ public class HistoryController extends GeneralController {
 
 
         // Setting the factories for creating values to display for each order
-        rowID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
 
-        rowDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+        columnDate.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getDateTime().toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));
 
-        rowTime.setCellValueFactory(cellData -> {
+        columnTime.setCellValueFactory(cellData -> {
             LocalTime time = cellData.getValue().getDateTime().toLocalTime();
             time = time.minusSeconds(time.getSecond());
             time = time.minusNanos(time.getNano());
             return new ReadOnlyStringWrapper(time.toString());
         });
 
-        rowOrder.setCellValueFactory(cellData -> {
+        columnOrder.setCellValueFactory(cellData -> {
             String output = cellData.getValue().getOrder().printReceipt();
             output = output.replace("\n", ", ");
             return new ReadOnlyStringWrapper(output);
         });
 
-        rowCost.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+        columnCost.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 
         // The factory for this is quite complicated since it uses a button instead
-        rowAction.setCellValueFactory(param -> {
+        columnAction.setCellValueFactory(param -> {
             JFXButton refundButton = new JFXButton("Refund");
             Order order = param.getValue().getOrder();
             // Disable the button if the order cannot be refunded
@@ -144,6 +135,8 @@ public class HistoryController extends GeneralController {
         }
 
         historyTable.getItems().addAll(getAppEnvironment().getFinance().getTransactionHistory().values());
+        historyTable.getSortOrder().add(columnID);
+        historyTable.sort();
     }
 
     /**

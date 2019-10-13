@@ -8,5 +8,19 @@ package seng202.group5.information;
 public enum TypeEnum {
     MAIN,
     SIDE,
-    BEVERAGE
+    BEVERAGE;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case MAIN:
+                return "Main";
+            case SIDE:
+                return "Side";
+            case BEVERAGE:
+                return "Beverage";
+            default:
+                return "";
+        }
+    }
 }

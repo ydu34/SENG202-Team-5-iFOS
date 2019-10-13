@@ -416,7 +416,20 @@ public class Database {
     public enum OverwriteType {
         OVERWRITE_ALL,
         MERGE_PREFER_NEW,
-        MERGE_PREFER_OLD
+        MERGE_PREFER_OLD;
+
+        public String toString() {
+            switch (this) {
+                case OVERWRITE_ALL:
+                    return "Overwrite: Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)";
+                case MERGE_PREFER_NEW:
+                    return "Merge and replace with imported data: Merge existing data with imported data and replace conflicting data with imported data";
+                case MERGE_PREFER_OLD:
+                    return "Merge and keep data in application: Merge imported data with existing data and keep existing data when conflicts occurs";
+                default:
+                    return "";
+            }
+        }
     }
 
     /**
