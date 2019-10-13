@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,42 +21,81 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * A controller for managing the stock screen
+ * A controller for managing the stock screen.
  *
  * @author Shivin Gaba, Michael Morgoun
  */
 public class StockController extends GeneralController {
 
-
+    /**
+     * The TableView for the visualisation of stock.
+     */
     @FXML
     private TableView<Ingredient> stockTable;
 
+    /**
+     * The column for item cost.
+     */
     @FXML
-    TableColumn<Ingredient, String> columnCost;
+    private TableColumn<Ingredient, String> columnCost;
+
+    /**
+     * The column for item ID.
+     */
     @FXML
     private TableColumn<Ingredient, String> columnID;
+
+    /**
+     * The column for item name.
+     */
     @FXML
     private TableColumn<Ingredient, String> columnIngredient;
+
+    /**
+     * The column for item quantity.
+     */
     @FXML
     private TableColumn<Ingredient, Integer> columnQuantity;
+
+    /**
+     * The column for item category.
+     */
     @FXML
     private TableColumn<Ingredient, String> columnCategory;
 
+    /**
+     * The button for adding new stock.
+     */
     @FXML
     private Button addButton;
 
+    /**
+     * The button for modifying existing stock.
+     */
     @FXML
     private Button modifyButton;
 
+    /**
+     * The button for removing stock.
+     */
     @FXML
     private Button removeButton;
 
+    /**
+     * The text field for searching the stock.
+     */
     @FXML
     private TextField ingredientSearchField;
 
+    /**
+     * A warning label in case the stock can't be modified.
+     */
     @FXML
     private Text warningLabel;
 
+    /**
+     * A HashMap for the quantities of ingredients.
+     */
     private HashMap<String, Integer> quantities;
 
     /**
@@ -81,7 +119,7 @@ public class StockController extends GeneralController {
         modifyButton.setDisable(false);
         removeButton.setDisable(false);
 
-
+        // Initialising the TableView
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
                 getAppEnvironment().getStock().getIngredients().values());
 
@@ -101,6 +139,7 @@ public class StockController extends GeneralController {
         stockTable.getSortOrder().add(columnID);
         stockTable.sort();
 
+        // If the order is in progress, the stock can't be modified
         if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
             warningLabel.setFill(Color.RED);
             warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
@@ -110,6 +149,9 @@ public class StockController extends GeneralController {
         }
     }
 
+    /**
+     * Updates the visible ingredients, removing those that aren't matched in the search field.
+     */
     private void updateVisibleIngredients() {
         stockTable.getItems().clear();
 
@@ -123,6 +165,12 @@ public class StockController extends GeneralController {
         }
     }
 
+    /**
+     * Initialises both the Add and Modify screens.
+     * @param setTitle A title that is set to "Create a new Ingredient" or "Modifing <ingredient>"
+     * @param ingredient The ingredient to be modified.
+     * @param quantity The quantity of that ingredient.
+     */
     private void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addStock.fxml"));
@@ -206,5 +254,4 @@ public class StockController extends GeneralController {
             warningLabel.setText("Please select an item to remove.");
         }
     }
-
 }
