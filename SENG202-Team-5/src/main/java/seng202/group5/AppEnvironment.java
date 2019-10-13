@@ -3,6 +3,7 @@ package seng202.group5;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
+import seng202.group5.information.CustomerSettings;
 import seng202.group5.information.Customers;
 import seng202.group5.logic.*;
 
@@ -22,6 +23,8 @@ public class AppEnvironment {
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
+    private CustomerSettings customerSettings;
+    private int maxIngredientAmount = 50;
 
     /**
      * The constructor for AppEnvironment
@@ -46,6 +49,7 @@ public class AppEnvironment {
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
         idGenerator = new IDGenerator();
+        customerSettings = new CustomerSettings();
         database = new Database();
         database.setAppEnvironment(this);
         if (autoload) {
@@ -147,4 +151,14 @@ public class AppEnvironment {
         this.imagesFolderPath = imagesFolderPath;
     }
 
+    public int getMaxIngredientAmount() {
+        return maxIngredientAmount;
+    }
+    public void setMaxIngredientAmount(int tempMaxIngredientAmount) {
+        maxIngredientAmount = tempMaxIngredientAmount;
+    }
+
+    public CustomerSettings getCustomerSettings() {
+        return customerSettings;
+    }
 }

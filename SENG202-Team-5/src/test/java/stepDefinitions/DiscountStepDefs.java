@@ -11,10 +11,8 @@ import org.junit.Ignore;
 import org.junit.jupiter.api.Disabled;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.information.Customer;
-import seng202.group5.information.Ingredient;
+import seng202.group5.information.*;
 import seng202.group5.information.MenuItem;
-import seng202.group5.information.Recipe;
 import seng202.group5.logic.*;
 
 import java.awt.*;
@@ -35,6 +33,7 @@ public class DiscountStepDefs {
     private Recipe itemRecipe;
     private MenuManager menuManager;
     private Ingredient ingredient;
+    private CustomerSettings customerSettings;
 
     @Before
     public void Before() {
@@ -43,7 +42,10 @@ public class DiscountStepDefs {
         stock.addNewIngredient(ingredient, 2000);
         manager = new OrderManager(stock);
         manager.newOrder();
-        customer = new Customer();
+        customerSettings = new CustomerSettings();
+        customerSettings.setRatio(10);
+        customerSettings.setInitialPurchasePoints(1);
+        customer = new Customer(customerSettings);
     }
 
 

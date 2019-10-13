@@ -13,6 +13,7 @@ import static org.joda.money.Money.parse;
 
 class CustomerTest {
 
+    CustomerSettings customerSettings;
     Customer customer;
     Money noCash = parse("NZD 0.00");
     Money smallCash = parse("NZD 1.00");
@@ -21,7 +22,10 @@ class CustomerTest {
 
     @BeforeEach
     public void init() {
-        customer = new Customer();
+        customerSettings = new CustomerSettings();
+        customerSettings.setRatio(10);
+        customerSettings.setInitialPurchasePoints(1);
+        customer = new Customer(customerSettings);
         customer.setPurchasePoints(10);
 
     }

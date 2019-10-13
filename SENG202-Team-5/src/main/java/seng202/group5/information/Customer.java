@@ -19,19 +19,23 @@ import static org.joda.money.Money.parse;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Customer {
 
+    private CustomerSettings currentSettings;
+
     private String customerID = IDGenerator.newCustomerID();
 
     private String name;
 
     private String phoneNumber;
 
-    private int purchasePoints = 10;
-
-    @XmlTransient
-    private int ratio = 10;
+    private int purchasePoints;
 
     @XmlTransient
     private Money pointValue = Money.parse("NZD 0.50");
+
+    public Customer(CustomerSettings tempCustomerSettings)  {
+        currentSettings = tempCustomerSettings;
+        purchasePoints = currentSettings.getInitialPurchasePoints();
+    }
 
     /**
      *Calculates and adds purchase points to a customers account when they have spent money.
@@ -43,7 +47,7 @@ public class Customer {
         if (roundedMoney <= 0) {
             roundedMoney = 0;
         }
-        addPurchasePoints(roundedMoney / ratio);
+        addPurchasePoints(roundedMoney / currentSettings.getRatio());
     }
 
     /**
@@ -77,8 +81,6 @@ public class Customer {
         phoneNumber = newPhoneNumber;
     }
 
-    public void setRatio(int tempRatio) { ratio = tempRatio; }
-
     public void setPointValue(Money tempPointValue) { pointValue = tempPointValue; }
 
     public void setPurchasePoints(int tempPurchasePoints) {
@@ -96,8 +98,6 @@ public class Customer {
     public int getPurchasePoints() {
         return purchasePoints;
     }
-
-    public int getRatio() { return ratio; }
 
     public Money getPointValue() { return pointValue; }
 
