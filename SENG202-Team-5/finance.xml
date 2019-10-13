@@ -9,12 +9,12 @@
     </generator>
     <transactionHistory>
         <entry>
-            <key>TRAN0</key>
+            <key>ORDR0</key>
             <value>
                 <datetime>2019-09-24T12:18:27.589159</datetime>
                 <change>NZD 0.00</change>
                 <totalPrice>NZD 11.50</totalPrice>
-                <transactionID>TRAN0</transactionID>
+                <transactionID>ORDR0</transactionID>
                 <refunded>false</refunded>
                 <order>
                     <orderItems>
