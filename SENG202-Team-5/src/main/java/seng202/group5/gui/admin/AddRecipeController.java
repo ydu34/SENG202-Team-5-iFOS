@@ -105,7 +105,7 @@ public class AddRecipeController extends GeneralController {
         super.pseudoInitialize();
         // Listener for the markup cost text field, stops the use of letters
         markupCostField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,2})?")) {
                 markupCostField.setText(oldValue);
             }
             if (newValue.isBlank() || newValue.isEmpty()) {
