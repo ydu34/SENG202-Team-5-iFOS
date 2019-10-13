@@ -27,9 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-          minHeight="600.0" minWidth="800.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@css/ifos-theme.css"
-          xmlns="http://javafx.com/javafx/11.0.1" fx:controller="seng202.group5.gui.admin.AdminController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.admin.AdminController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="800.0" />
     </columnConstraints>
@@ -303,7 +301,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To import the data you have previously exported, you must select all data one by one. You must locate and select stock.xml, menu.xml and finance.xml. Then you must press the Import Data button for the data to be imported to the system." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -375,7 +373,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                     </children>
@@ -392,8 +390,8 @@
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                                        <RowConstraints vgrow="SOMETIMES"/>
-                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Images Folder " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -401,7 +399,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select the folder where you store images for the menu items" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -409,24 +407,19 @@
                                                 <Font size="18.0" />
                                             </font>
                                         </Text>
-                                        <HBox alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                                              GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                        <HBox alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                                             <children>
-                                                <JFXTextField fx:id="imageLocation" alignment="CENTER" editable="false"
-                                                              promptText="Default - Stored in program folder"
-                                                              HBox.hgrow="ALWAYS">
+                                                <JFXTextField fx:id="imageLocation" alignment="CENTER" editable="false" promptText="Default - Stored in program folder" HBox.hgrow="ALWAYS">
                                                     <HBox.margin>
-                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </HBox.margin>
                                                 </JFXTextField>
-                                                <JFXButton fx:id="selectImagesFolderButton" alignment="CENTER"
-                                                           contentDisplay="CENTER" mnemonicParsing="false"
-                                                           onAction="#selectImagesFolder" text="Select Images Folder">
+                                                <JFXButton fx:id="selectImagesFolderButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectImagesFolder" text="Select Images Folder">
                                                     <cursor>
-                                                        <Cursor fx:constant="HAND"/>
+                                                        <Cursor fx:constant="HAND" />
                                                     </cursor>
                                                     <HBox.margin>
-                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </HBox.margin>
                                                 </JFXButton>
                                             </children>
@@ -438,11 +431,10 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0"
-                                                        vgrow="ALWAYS"/>
-                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS"/>
-                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
+                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="ALWAYS" />
+                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+                                        <RowConstraints vgrow="ALWAYS" />
                                     </rowConstraints>
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -450,7 +442,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                         <JFXButton fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="40.0" prefWidth="200.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -466,18 +458,15 @@
                                                 <Font size="18.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
-                                        <Text fx:id="exportNotificationText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              textAlignment="CENTER" wrappingWidth="794.13671875"
-                                              GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                              GridPane.valignment="CENTER">
+                                        <Text fx:id="exportNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                             <font>
-                                                <Font size="26.0"/>
+                                                <Font size="26.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                     </children>
@@ -493,9 +482,9 @@
                     <content>
                         <BorderPane>
                             <center>
-                                <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+                                <GridPane alignment="CENTER" prefHeight="880.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
                                     <children>
-                                        <Spinner fx:id="spinner10c" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                        <Spinner fx:id="spinner10c" prefHeight="50.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -503,12 +492,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="10c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="0">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="73.0" prefWidth="132.0" text="10c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner20c" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <Spinner fx:id="spinner20c" prefHeight="68.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -516,12 +508,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="20c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="144.0" prefWidth="132.0" text="20c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner50c" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Spinner fx:id="spinner50c" prefHeight="39.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -529,12 +524,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="50c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="161.0" prefWidth="132.0" text="50c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner1d" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <Spinner fx:id="spinner1d" prefHeight="55.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -542,12 +540,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$1" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="138.0" prefWidth="132.0" text="\$1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner2d" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Spinner fx:id="spinner2d" prefHeight="60.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -555,12 +556,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$2" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="104.0" prefWidth="132.0" text="\$2" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner5d" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                        <Spinner fx:id="spinner5d" prefHeight="43.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -568,12 +572,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$5" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="96.0" prefWidth="132.0" text="\$5" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="8">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner10d" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                        <Spinner fx:id="spinner10d" prefHeight="40.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="9">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -581,12 +588,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$10" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="84.0" prefWidth="132.0" text="\$10" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="9">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner20d" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                        <Spinner fx:id="spinner20d" prefHeight="36.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="10">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -594,12 +604,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$20" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="132.0" text="\$20" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="10">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner50d" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                        <Spinner fx:id="spinner50d" prefHeight="36.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="11">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -607,12 +620,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$50" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="8">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="132.0" text="\$50" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="11">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner100d" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                        <Spinner fx:id="spinner100d" prefHeight="37.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="12">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -620,12 +636,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$100" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="9">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="52.0" prefWidth="132.0" text="\$100" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="12">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <JFXButton maxWidth="1.7976931348623157E308" onAction="#resetTill" text="Reset Till" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
+                                        <JFXButton maxWidth="1.7976931348623157E308" onAction="#resetTill" prefHeight="73.0" prefWidth="332.0" text="Reset Till" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -635,21 +654,28 @@
                                         </JFXButton>
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                              <ColumnConstraints maxWidth="92.0" minWidth="8.0" prefWidth="8.0" />
+                                        <ColumnConstraints maxWidth="142.0" minWidth="-Infinity" prefWidth="142.0" />
                                         <ColumnConstraints />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
+                              <RowConstraints maxHeight="46.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="46.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="46.0" minHeight="0.0" prefHeight="29.0" />
+                                        <RowConstraints maxHeight="62.0" minHeight="34.0" prefHeight="47.0" />
+                                        <RowConstraints maxHeight="61.0" minHeight="26.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="60.0" minHeight="33.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="51.0" minHeight="42.0" prefHeight="50.0" />
+                                        <RowConstraints maxHeight="54.0" minHeight="39.0" prefHeight="45.0" />
+                                        <RowConstraints maxHeight="49.0" minHeight="31.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="69.0" minHeight="27.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="72.0" minHeight="36.0" prefHeight="45.0" />
+                                        <RowConstraints maxHeight="75.0" minHeight="37.0" prefHeight="44.0" />
+                                        <RowConstraints maxHeight="86.0" minHeight="36.0" prefHeight="43.0" />
+                                        <RowConstraints maxHeight="105.0" minHeight="0.0" prefHeight="85.0" />
+                              <RowConstraints maxHeight="70.0" minHeight="0.0" prefHeight="9.0" />
+                              <RowConstraints maxHeight="43.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="29.0" minHeight="0.0" prefHeight="0.0" />
                                     </rowConstraints>
                                 </GridPane>
                             </center>
