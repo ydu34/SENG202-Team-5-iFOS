@@ -48,13 +48,13 @@ public class InvoiceController extends GeneralController {
     private TableColumn<MenuItem,String> itemPriceCol;
 
     @FXML
-    private Label totalCostLabel;
+    private Label remainingCostLabel;
 
     @FXML
     private Label discountLabel;
 
     @FXML
-    private Label currentlyPayedLabel;
+    private Label totalPayedLabel;
 
     @FXML
     private Label warningLabel;
@@ -113,8 +113,8 @@ public class InvoiceController extends GeneralController {
 
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
-        totalCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
-        currentlyPayedLabel.setText("$" + currentOrder.getDiscount().toString().replaceAll("[^\\d.]", ""));
+        remainingCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
+        totalPayedLabel.setText("$" + currentOrder.getDiscount().plus(currentOrder.getTotalCost()).toString().replaceAll("[^\\d.]", ""));
         currentOrderTable();
 
         // Creates a new listener for the removeItem button
@@ -135,7 +135,7 @@ public class InvoiceController extends GeneralController {
         }
 
         // Disabling payCashButton
-        if (currentOrder.getTotalCost().isPositive()) {
+        if (currentOrder.getTotalCost().isPositive() || currentOrder.getOrderItems().isEmpty()) {
             payCashButton.setDisable(true);
             payCashButton.setTextFill(Color.GREY);
         } else {
@@ -277,7 +277,7 @@ public class InvoiceController extends GeneralController {
 
                 customerPoints = controller.getPoints();
                 discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
-                totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+                remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
                 pseudoInitialize();
             } catch (IOException e) {}
         }
@@ -354,10 +354,10 @@ public class InvoiceController extends GeneralController {
         totalPayed = Money.parse("NZD 0");
         currentPayment = new HashMap<>();
         paymentArray = new ArrayList<>();
-        totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+        remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
 
         // Clear money labels
-        currentlyPayedLabel.setText("$0.00");
+        totalPayedLabel.setText("$0.00");
         denomDollarLabel.setText("");
         denomCentLabel.setText("");
 
@@ -401,7 +401,7 @@ public class InvoiceController extends GeneralController {
             totalPayed = totalPayed.plus(money);
 
             // Minus the money from the visual total
-            totalCostLabel.setText("$" + Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("NZD", ""));
+            remainingCostLabel.setText("$" + Money.parse("NZD " + remainingCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("NZD ", ""));
 
             // Adding money to a HashSet containing it's quantity
             if (currentPayment.containsKey(money)) {
@@ -414,7 +414,7 @@ public class InvoiceController extends GeneralController {
             paymentArray.add(money);
 
             // Disable pay button when there isn't enough money payed yet
-            if (Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).isPositive()) {
+            if (Money.parse("NZD " + remainingCostLabel.getText().replace("$", "")).isPositive()) {
                 payCashButton.setDisable(true);
                 payCashButton.setTextFill(Color.GREY);
             } else {
@@ -439,7 +439,7 @@ public class InvoiceController extends GeneralController {
             // Setting the labels to the strings.
             denomCentLabel.setText(tempCent.toString());
             denomDollarLabel.setText(tempDollar.toString());
-            currentlyPayedLabel.setText("$" + totalPayed.toString().replaceAll("[^\\d.]", ""));
+            totalPayedLabel.setText("$" + totalPayed.toString().replaceAll("[^\\d.]", ""));
         }
     }
 
@@ -450,7 +450,7 @@ public class InvoiceController extends GeneralController {
     private void cancelOrder() {
         try {
             clearPayment();
-            totalCostLabel.setText("$0.00");
+            remainingCostLabel.setText("$0.00");
 
             currentOrder = getAppEnvironment().getOrderManager().getOrder();
             currentOrder.resetStock(getAppEnvironment().getStock());
