@@ -1,6 +1,6 @@
 package seng202.group5.gui.stock;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,7 +38,7 @@ public class StockController extends GeneralController {
     @FXML
     private TableColumn<Ingredient, String> columnIngredient;
     @FXML
-    private TableColumn<Ingredient, String> columnQuantity;
+    private TableColumn<Ingredient, Integer> columnQuantity;
     @FXML
     private TableColumn<Ingredient, String> columnCategory;
 
@@ -92,7 +92,7 @@ public class StockController extends GeneralController {
 
         columnQuantity.setCellValueFactory(data -> {
             int quantity = quantities.get(data.getValue().getID());
-            return new SimpleStringProperty(Integer.toString(quantity));
+            return new SimpleIntegerProperty(quantity).asObject();
         });
 
         stockTable.setItems(ingredients);
