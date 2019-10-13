@@ -78,6 +78,12 @@ public class AdminController extends GeneralController {
     private Text fileNotificationText;
 
     @FXML
+    private Text exportNotificationText;
+
+    @FXML
+    private JFXTextField imageLocation;
+
+    @FXML
     private Text stockWarningText;
 
     @FXML
@@ -221,6 +227,9 @@ public class AdminController extends GeneralController {
         autosaveCheckbox.setSelected(getAppEnvironment().getDatabase().isAutosaveEnabled());
         autoloadCheckbox.setSelected(getAppEnvironment().getDatabase().isAutoloadEnabled());
         autoLocation.setText(getAppEnvironment().getDatabase().getSaveFileLocation());
+
+        if (!getAppEnvironment().getImagesFolderPath().equals(""))
+            imageLocation.setText(getAppEnvironment().getImagesFolderPath());
 
         // Disables buttons if an order is in progress
         checkIfOrderInProgress();
@@ -580,9 +589,9 @@ public class AdminController extends GeneralController {
         if (selectedDirectory != null) {
             try {
                 getAppEnvironment().getDatabase().allObjectsToXml(selectedDirectory.getPath());
-                fileNotificationText.setText("All files successfully exported!");
+                exportNotificationText.setText("All files successfully exported!");
             } catch (Exception e) {
-                fileNotificationText.setText("Files failed to export, please try again.");
+                exportNotificationText.setText("Files failed to export, please try again.");
             }
         }
 
@@ -600,7 +609,7 @@ public class AdminController extends GeneralController {
         if (selectedDirectory != null) {
             String imageFolderPath = selectedDirectory.getPath();
             getAppEnvironment().setImagesFolderPath(imageFolderPath);
-            fileNotificationText.setText("Images Folder selected");
+            imageLocation.setText(imageFolderPath);
         }
     }
 
