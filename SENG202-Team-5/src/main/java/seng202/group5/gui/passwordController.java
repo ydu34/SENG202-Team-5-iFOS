@@ -305,7 +305,7 @@ public class passwordController extends GeneralController {
     }
 
     public interface IntArgReturnsBool {
-        public boolean check(int passwordHash);
+        boolean check(int passwordHash);
     }
 
 

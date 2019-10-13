@@ -11,7 +11,6 @@ import seng202.group5.logic.*;
 import java.util.HashMap;
 
 import static org.joda.money.Money.parse;
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seng202.group5.information.TypeEnum.MAIN;
 
