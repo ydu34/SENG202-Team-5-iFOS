@@ -320,9 +320,7 @@ public class Database {
                 case MERGE_PREFER_NEW:
                     for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {
                         if (tempCustomerIDs.contains(entry.getID())) {
-                            tempCustomers.getCustomerList().forEach(customer -> {
-                                if (customer.getID().equals(entry.getID())) { tempCustomers.getCustomerList().remove(customer); }
-                            });
+                            tempCustomers.getCustomerList().removeIf(customer -> customer.getID().equals(entry.getID()));
                             tempCustomers.add(entry);
                         }
                     }
@@ -376,13 +374,16 @@ public class Database {
             if (fileMap.containsKey("stock.xml")) stockXmlToObject(fileMap.get("stock.xml").getParent());
             if (fileMap.containsKey("menu.xml")) menuXmlToObject(fileMap.get("menu.xml").getParent());
             if (fileMap.containsKey("finance.xml")) financeXmlToObject(fileMap.get("finance.xml").getParent());
-            if (fileMap.containsKey("customers.xml")) customersXmlToObject(fileMap.get("customers.xml").getParent());
+            if (fileMap.containsKey("customers.xml")) {
+                customersXmlToObject(fileMap.get("customers.xml").getParent());
+            }
             checkDataIntegrity();
         } catch (Exception e) {
             appEnvironment.setStock(oldStock);
             appEnvironment.setMenuManager(oldMenu);
             appEnvironment.setFinance(oldFinance);
             appEnvironment.setCustomers(oldCustomers);
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         }
     }
@@ -412,6 +413,7 @@ public class Database {
                 }
             }
         }
+
     }
 
     @XmlTransient

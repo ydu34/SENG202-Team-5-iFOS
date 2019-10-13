@@ -69,6 +69,9 @@ public class AdminController extends GeneralController {
     private Button selectFinanceButton;
 
     @FXML
+    private Button selectCustomersButton;
+
+    @FXML
     private Button importDataButton;
 
     @FXML
@@ -90,7 +93,7 @@ public class AdminController extends GeneralController {
     private Text menuWarningText;
 
     @FXML
-    private Text historyWarningText;
+    private Text customersWarningText;
 
     @FXML
     private Text financeWarningText;
@@ -498,6 +501,17 @@ public class AdminController extends GeneralController {
         }
     }
 
+    public void selectCustomers() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("customers.xml", selectedFile)) {
+            fileMap.put("customers.xml", selectedFile);
+            customersWarningText.setText("customers.xml selected");
+            checkFilesSelected();
+        } else {
+            customersWarningText.setText("invalid file selected");
+        }
+    }
+
     /**
      * Gets all the xml files in the hashmap and unmarshal the xml files to objects.
      * If the files are corrupted or invalid, the user is notified.
@@ -508,6 +522,7 @@ public class AdminController extends GeneralController {
             finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
+            recipeTableInitialize();
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
         }
