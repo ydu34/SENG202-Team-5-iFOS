@@ -18,4 +18,9 @@
         <phoneNumber>133742069</phoneNumber>
         <purchasePoints>10</purchasePoints>
     </customerList>
+    <customerSettings>
+        <initialPurchasePoints>1</initialPurchasePoints>
+        <ratio>10</ratio>
+        <pointValue>50</pointValue>
+    </customerSettings>
 </customers>

@@ -27,18 +27,16 @@ public class Customer {
 
     private int purchasePoints = 1;
 
-    @XmlTransient
-    private int ratio = 10;
+    public Customer()  {
 
-    @XmlTransient
-    private Money pointValue = Money.parse("NZD 0.50");
+    }
 
     /**
      *Calculates and adds purchase points to a customers account when they have spent money.
      * Default Rate: NZD $10 gives 1 Point = $0.50 discount
      * @param spentMoney The total amount of money spent on an order, disregarding discounts.
      */
-    public void purchasePoints(Money spentMoney) {
+    public void purchasePoints(Money spentMoney, int ratio) {
         int roundedMoney = spentMoney.getAmountMajorInt();
         if (roundedMoney <= 0) {
             roundedMoney = 0;
@@ -53,7 +51,7 @@ public class Customer {
      * @param currentOrderPrice The price of the customers order.
      * @return discountMoney The amount of money to be removed from the order.
      */
-    public Money discount(int usedPoints, Money currentOrderPrice) {
+    public Money discount(int usedPoints, Money currentOrderPrice, Money pointValue) {
         Money discountMoney;
         int maxPoints = (int) Math.ceil(currentOrderPrice.getAmountMinorInt() / 50);
 
@@ -77,10 +75,6 @@ public class Customer {
         phoneNumber = newPhoneNumber;
     }
 
-    public void setRatio(int tempRatio) { ratio = tempRatio; }
-
-    public void setPointValue(Money tempPointValue) { pointValue = tempPointValue; }
-
     public void setPurchasePoints(int tempPurchasePoints) {
         purchasePoints = tempPurchasePoints;
     }
@@ -96,10 +90,6 @@ public class Customer {
     public int getPurchasePoints() {
         return purchasePoints;
     }
-
-    public int getRatio() { return ratio; }
-
-    public Money getPointValue() { return pointValue; }
 
     public String getID() { return customerID; }
 

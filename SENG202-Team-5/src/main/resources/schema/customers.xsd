@@ -3,6 +3,8 @@
 
   <xs:element name="customer" type="customer"/>
 
+  <xs:element name="customerSettings" type="customerSettings"/>
+
   <xs:element name="customers" type="customers"/>
 
     <xs:element name="idGenerator" type="idGenerator"/>
@@ -11,6 +13,7 @@
     <xs:sequence>
         <xs:element name="generator" type="idGenerator" minOccurs="0"/>
       <xs:element name="customerList" type="customer" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="customerSettings" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -29,6 +32,14 @@
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
       <xs:element name="purchasePoints" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="customerSettings">
+    <xs:sequence>
+      <xs:element name="initialPurchasePoints" type="xs:int"/>
+      <xs:element name="ratio" type="xs:int"/>
+      <xs:element name="pointValue" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

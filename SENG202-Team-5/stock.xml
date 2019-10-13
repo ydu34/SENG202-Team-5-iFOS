@@ -8,14 +8,36 @@
     </generator>
     <ingredients>
         <entry>
-            <key>INGR11</key>
-            <value id="INGR11">
-                <name>Vegetarian Patty</name>
-                <category>patty</category>
-                <price>NZD 0.90</price>
+            <key>INGR9</key>
+            <value id="INGR9">
+                <name>Sprite Can (330mL)</name>
+                <category>drink</category>
+                <price>NZD 0.60</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>INGR8</key>
+            <value id="INGR8">
+                <name>Coke Can (330mL)</name>
+                <category>drink</category>
+                <price>NZD 0.60</price>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>INGR10</key>
+            <value id="INGR10">
+                <name>Fruit Drink Tropical (250mL)</name>
+                <category>drink</category>
+                <price>NZD 0.80</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -24,9 +46,20 @@
                 <name>Onion (~200grams)</name>
                 <category>vegetable</category>
                 <price>NZD 0.30</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
+            <key>INGR3</key>
+            <value id="INGR3">
+                <name>Tomato Sauce (~10grams)</name>
+                <category>Sauce</category>
+                <price>NZD 0.20</price>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -39,25 +72,24 @@
             </value>
         </entry>
         <entry>
+            <key>INGR5</key>
+            <value id="INGR5">
+                <name>Burger Bun</name>
+                <category>bread</category>
+                <price>NZD 0.30</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>VEGAN</dietaryInformation>
+            </value>
+        </entry>
+        <entry>
             <key>INGR25</key>
             <value id="INGR25">
                 <name>Lettuce Piece</name>
                 <category>vegetable</category>
                 <price>NZD 0.10</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
-            </value>
-        </entry>
-        <entry>
-            <key>INGR3</key>
-            <value id="INGR3">
-                <name>Tomato Sauce (~10grams)</name>
-                <category>Sauce</category>
-                <price>NZD 0.20</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -66,30 +98,20 @@
                 <name>Potato (~200grams)</name>
                 <category>vegetable</category>
                 <price>NZD 0.10</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
         <entry>
-            <key>INGR5</key>
-            <value id="INGR5">
-                <name>Burger Bun</name>
-                <category>bread</category>
-                <price>NZD 0.30</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
+            <key>INGR11</key>
+            <value id="INGR11">
+                <name>Vegetarian Patty</name>
+                <category>patty</category>
+                <price>NZD 0.90</price>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
-            </value>
-        </entry>
-        <entry>
-            <key>INGR6</key>
-            <value id="INGR6">
-                <name>Gluten Free Burger Bun</name>
-                <category>bread</category>
-                <price>NZD 0.40</price>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
         <entry>
@@ -98,92 +120,70 @@
                 <name>Cheese Slice</name>
                 <category>dairy</category>
                 <price>NZD 0.30</price>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
                 <dietaryInformation>VEGETARIAN</dietaryInformation>
+                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
             </value>
         </entry>
         <entry>
-            <key>INGR8</key>
-            <value id="INGR8">
-                <name>Coke Can (330mL)</name>
-                <category>drink</category>
-                <price>NZD 0.60</price>
+            <key>INGR6</key>
+            <value id="INGR6">
+                <name>Gluten Free Burger Bun</name>
+                <category>bread</category>
+                <price>NZD 0.40</price>
+                <dietaryInformation>VEGETARIAN</dietaryInformation>
                 <dietaryInformation>VEGAN</dietaryInformation>
                 <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
-            </value>
-        </entry>
-        <entry>
-            <key>INGR9</key>
-            <value id="INGR9">
-                <name>Sprite Can (330mL)</name>
-                <category>drink</category>
-                <price>NZD 0.60</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
-            </value>
-        </entry>
-        <entry>
-            <key>INGR10</key>
-            <value id="INGR10">
-                <name>Fruit Drink Tropical (250mL)</name>
-                <category>drink</category>
-                <price>NZD 0.80</price>
-                <dietaryInformation>VEGAN</dietaryInformation>
-                <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                <dietaryInformation>VEGETARIAN</dietaryInformation>
             </value>
         </entry>
     </ingredients>
     <ingredientStock>
         <entry>
-            <key>INGR11</key>
-            <value>20</value>
-        </entry>
-        <entry>
-            <key>INGR1</key>
-            <value>49</value>
-        </entry>
-        <entry>
-            <key>INGR2</key>
-            <value>49</value>
-        </entry>
-        <entry>
-            <key>INGR25</key>
-            <value>60</value>
-        </entry>
-        <entry>
-            <key>INGR3</key>
-            <value>9998</value>
-        </entry>
-        <entry>
-            <key>INGR4</key>
-            <value>98</value>
-        </entry>
-        <entry>
-            <key>INGR5</key>
-            <value>58</value>
-        </entry>
-        <entry>
-            <key>INGR6</key>
-            <value>60</value>
-        </entry>
-        <entry>
-            <key>INGR7</key>
-            <value>99</value>
+            <key>INGR9</key>
+            <value>40</value>
         </entry>
         <entry>
             <key>INGR8</key>
             <value>39</value>
         </entry>
         <entry>
-            <key>INGR9</key>
-            <value>40</value>
-        </entry>
-        <entry>
             <key>INGR10</key>
             <value>30</value>
+        </entry>
+        <entry>
+            <key>INGR1</key>
+            <value>49</value>
+        </entry>
+        <entry>
+            <key>INGR3</key>
+            <value>9998</value>
+        </entry>
+        <entry>
+            <key>INGR2</key>
+            <value>49</value>
+        </entry>
+        <entry>
+            <key>INGR5</key>
+            <value>58</value>
+        </entry>
+        <entry>
+            <key>INGR25</key>
+            <value>60</value>
+        </entry>
+        <entry>
+            <key>INGR4</key>
+            <value>98</value>
+        </entry>
+        <entry>
+            <key>INGR11</key>
+            <value>20</value>
+        </entry>
+        <entry>
+            <key>INGR7</key>
+            <value>99</value>
+        </entry>
+        <entry>
+            <key>INGR6</key>
+            <value>60</value>
         </entry>
     </ingredientStock>
 </stock>

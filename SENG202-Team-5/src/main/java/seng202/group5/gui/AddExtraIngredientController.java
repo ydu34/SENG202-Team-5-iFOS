@@ -31,8 +31,6 @@ import java.util.*;
  */
 public class AddExtraIngredientController extends GeneralController {
 
-    private static final int MAX_INGREDIENT_AMOUNT = 50;
-
     @FXML
     private String openMode;
 
@@ -131,7 +129,7 @@ public class AddExtraIngredientController extends GeneralController {
                 if (empty) {
                     setText(null);
                 } else {
-                    int maxAmount = MAX_INGREDIENT_AMOUNT;
+                    int maxAmount = getAppEnvironment().getSettings().getMaxIngredientAmount();
                     Ingredient ingredient = getTableView().getItems().get(getIndex());
                     HashMap<Ingredient, Integer> ingredientAmounts = selectedItem.getRecipe().getIngredientsAmount();
                     int index = getIndex();

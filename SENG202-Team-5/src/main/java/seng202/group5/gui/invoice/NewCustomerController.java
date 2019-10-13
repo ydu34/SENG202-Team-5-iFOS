@@ -86,6 +86,7 @@ public class NewCustomerController extends GeneralController {
             customer = new Customer();
             customer.setName(nameField.getText());
             customer.setPhoneNumber(phoneNumberField.getText());
+            customer.setPurchasePoints(customers.getCustomerSettings().getInitialPurchasePoints());
             customers.add(customer);
 
             // Close the current window

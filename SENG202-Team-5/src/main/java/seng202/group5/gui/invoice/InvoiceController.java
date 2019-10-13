@@ -19,6 +19,7 @@ import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
+import seng202.group5.information.CustomerSettings;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Order;
 
@@ -152,6 +153,8 @@ public class InvoiceController extends GeneralController {
      */
     private Map<MenuItem, Integer> orderItemsMap;
 
+    private CustomerSettings customerSettings;
+
     /**
      * The current customer of the order. Can be null.
      */
@@ -173,6 +176,8 @@ public class InvoiceController extends GeneralController {
         currentOrder = getAppEnvironment().getOrderManager().getOrder();
         currentCustomer = currentOrder.getCurrentCustomer();
         removeItem.setDisable(true);
+
+        customerSettings = getAppEnvironment().getCustomers().getCustomerSettings();
 
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
@@ -333,6 +338,7 @@ public class InvoiceController extends GeneralController {
 
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.setCustomer(currentCustomer);
+                controller.setCustomerSettings(customerSettings);
                 controller.setMaxPrice(currentOrder.getTotalCost().minus(totalPayed));
                 controller.pseudoInitialize();
 
@@ -340,12 +346,13 @@ public class InvoiceController extends GeneralController {
 
                 // Set the discount
                 Money moneySaved = controller.getMoneySaved();
-                currentOrder.setDiscount(moneySaved);
-
-                customerPoints = controller.getPoints();
-                discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
-                remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
-                pseudoInitialize();
+                if (moneySaved != null) {
+                    currentOrder.setDiscount(moneySaved);
+                    customerPoints = controller.getPoints();
+                    discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
+                    remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+                    pseudoInitialize();
+                }
             } catch (IOException e) {}
         }
     }

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.gui.AddExtraIngredientController;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.gui.admin.AdminController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;

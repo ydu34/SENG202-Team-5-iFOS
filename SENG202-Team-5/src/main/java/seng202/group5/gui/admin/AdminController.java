@@ -23,6 +23,8 @@ import org.joda.money.Money;
 import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.gui.GeneralController;
+import seng202.group5.gui.invoice.PaymentSuccessController;
+import seng202.group5.information.CustomerSettings;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
@@ -71,10 +73,10 @@ public class AdminController extends GeneralController {
     private Button selectCustomersButton;
 
     @FXML
-    private Button importDataButton;
+    private Button selectSettingsButton;
 
     @FXML
-    private Button selectImagesFolderButton;
+    private Button importDataButton;
 
     @FXML
     private Text fileNotificationText;
@@ -177,7 +179,43 @@ public class AdminController extends GeneralController {
     private ArrayList<Spinner<Integer>> spinnerList;
 
     /**
-     * An initializer for this controller
+     * The text field for changing the initial purchase points.
+     */
+    @FXML
+    private TextField initialPointsField;
+
+    /**
+     * The text field for changing the ratio.
+     */
+    @FXML
+    private TextField ratioField;
+
+    /**
+     * The text field for changing the value of points.
+     */
+    @FXML
+    private TextField pointValueField;
+
+    /**
+     * The text field for changing the max ingredients in addExtraIngredient.
+     */
+    @FXML
+    private TextField maxIngredientField;
+
+    /**
+     * The label on the settings screen which shows success when values are saved.
+     */
+    @FXML
+    private Label successLabel;
+
+    /**
+     * The button for saving the values of the settings screen.
+     */
+    @FXML
+    private Button saveValuesButton;
+
+    /**
+     * An initializer for this controller.
      */
     @Override
     public void pseudoInitialize() {
@@ -192,6 +230,9 @@ public class AdminController extends GeneralController {
         textFieldListeners(oldPasswordText);
         textFieldListeners(newPasswordText);
         textFieldListeners(confirmPasswordText);
+
+        // Initialise the settings
+        initialiseSettings();
 
         // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
@@ -255,10 +296,17 @@ public class AdminController extends GeneralController {
             selectFinanceButton.setDisable(true);
             selectMenuButton.setDisable(true);
             selectStockButton.setDisable(true);
+            selectCustomersButton.setDisable(true);
             exportDataButton.setDisable(true);
             addButton.setDisable(true);
             modifyButton.setDisable(true);
             deleteButton.setDisable(true);
+            selectSettingsButton.setDisable(true);
+
+            // For the Settings screen
+            saveValuesButton.setDisable(true);
+            successLabel.setText("Order in Progress!");
+            successLabel.setTextFill(Color.RED);
         }
     }
 
@@ -429,7 +477,7 @@ public class AdminController extends GeneralController {
     }
 
     /**
-     * Checks if the number of files selected by the user is three, if it is
+     * Checks if the number of files selected by the user is 5, if it is
      * it means that all xml files are selected and ready to be imported.
      * Therefore enable the import data button for the user to click.
      */
@@ -469,7 +517,21 @@ public class AdminController extends GeneralController {
         } else {
             menuWarningText.setText("Invalid file selected");
         }
+    }
 
+    /**
+     * Action for the select settings button to add the selected file to the list of files
+     * if it is settings.xml otherwise tell the user it is invalid.
+     */
+    public void selectSettings() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("settings.xml", selectedFile)) {
+            fileMap.put("settings.xml", selectedFile);
+            selectSettingsButton.setText("Selected Settings!");
+            checkFilesSelected();
+        } else {
+            selectSettingsButton.setText("Invalid settings.xml!");
+        }
     }
 
     /**
@@ -509,6 +571,7 @@ public class AdminController extends GeneralController {
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
             recipeTableInitialize();
+            initialiseSettings();
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
         }
@@ -666,7 +729,10 @@ public class AdminController extends GeneralController {
         }
     }
 
-
+    /**
+     * Sets the finance.
+     * @param newFinance the new finance to set.
+     */
     public void setFinance(Finance newFinance) {
         finance = newFinance;
     }
@@ -703,6 +769,72 @@ public class AdminController extends GeneralController {
 
         }
     }
+
+    /**
+     * The template to initialise all the Settings TextFields.
+     * @param field the TextField to add a listener to.
+     */
+    private void initialiseSettingsTextFields(TextField field) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                field.setText(oldValue);
+            }
+            if (newValue.isBlank() || newValue.isEmpty()) {
+                field.setText("0");
+            } else if (newValue.matches("0[\\d]")) {
+                field.setText(newValue.replace("0", ""));
+            }
+            successLabel.setText("");
+        });
+    }
+
+    /**
+     * Initialises the Settings tab.
+     */
+    private void initialiseSettings() {
+        // Initialise all the settings text fields
+        initialiseSettingsTextFields(initialPointsField);
+        initialiseSettingsTextFields(ratioField);
+        initialiseSettingsTextFields(pointValueField);
+        initialiseSettingsTextFields(maxIngredientField);
+
+        // Initialise Loyalty System fields
+        CustomerSettings settings = getAppEnvironment().getCustomers().getCustomerSettings();
+        initialPointsField.setText(String.valueOf(settings.getInitialPurchasePoints()));
+        ratioField.setText(String.valueOf(settings.getRatio()));
+        pointValueField.setText(String.valueOf(settings.getPointValue()));
+
+        // Initialise Max Ingredient field
+        maxIngredientField.setText(String.valueOf(getAppEnvironment().getSettings().getMaxIngredientAmount()));
+    }
+
+    /**
+     * Saves the changes to the loyalty system.
+     */
+    @FXML
+    public void saveSettings() {
+        if (Integer.parseInt(maxIngredientField.getText()) < 5) {
+            successLabel.setText("At least 5 Ingredients!");
+            successLabel.setTextFill(Color.RED);
+        } else {
+            // Saving Max % of Ingredients
+            getAppEnvironment().getSettings().setMaxIngredientAmount(Integer.parseInt(maxIngredientField.getText()));
+
+            // Saving Loyalty System fields
+            int newInitialPurchasePoints = Integer.parseInt(initialPointsField.getText());
+            int newRatio = Integer.parseInt(ratioField.getText());
+            int newPointValue = Integer.parseInt(pointValueField.getText());
+
+            CustomerSettings settings = getAppEnvironment().getCustomers().getCustomerSettings();
+            settings.setInitialPurchasePoints(newInitialPurchasePoints);
+            settings.setRatio(newRatio);
+            settings.setPointValue(newPointValue);
+
+            successLabel.setText("Values Saved!");
+            successLabel.setTextFill(Color.GREEN);
+        }
+    }
+
 }
 
 

@@ -144,7 +144,7 @@ public class GeneralController {
 
             Stage stage = new Stage();
             stage.setTitle("Enter the password");
-            stage.setScene(new Scene(root, 601, 432));
+            stage.setScene(new Scene(root, 555, 432));
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.showAndWait();

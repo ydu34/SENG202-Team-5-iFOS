@@ -18,6 +18,7 @@ public class AppEnvironment {
     private Stock stock;
     private MenuManager menuManager;
     private Customers customers;
+    private Settings settings;
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
@@ -31,6 +32,7 @@ public class AppEnvironment {
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
         customers = new Customers();
+        settings = new Settings();
         idGenerator = new IDGenerator();
 
         imagesFolderPath = "";
@@ -70,11 +72,17 @@ public class AppEnvironment {
             Order order = orderManager.getOrder();
 
             if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-                order.getCurrentCustomer().purchasePoints(order.getTotalCost());
+                order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
             }
             setStock(order.getStock().clone());
             orderManager.setStock(stock);
             orderManager.newOrder();
+                if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
+                    order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
+                }
+                setStock(order.getStock().clone());
+                orderManager.setStock(stock);
+                orderManager.newOrder();
 
             change = finance.pay(denominations, LocalDateTime.now(), order);
         } else {
@@ -100,6 +108,8 @@ public class AppEnvironment {
 
     public Customers getCustomers() { return customers; }
 
+    public Settings getSettings() { return settings; }
+
     public MenuManager getMenuManager() {
         return menuManager;
     }
@@ -122,6 +132,8 @@ public class AppEnvironment {
 
     public void setCustomers(Customers newCustomers) { customers = newCustomers; }
 
+    public void setSettings(Settings settings) { this.settings = settings; }
+
     public IDGenerator getIdGenerator() {
         return idGenerator;
     }
@@ -141,5 +153,4 @@ public class AppEnvironment {
     public void setImagesFolderPath(String imagesFolderPath) {
         this.imagesFolderPath = imagesFolderPath;
     }
-
 }

@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
+import seng202.group5.information.CustomerSettings;
 
 /**
  * This Controller is for when the worker wants to apply a discount. A screen is opened controlled by this class.
@@ -47,6 +48,8 @@ public class ApplyDiscountController extends GeneralController {
      * The current customer of the order.
      */
     private Customer customer;
+
+    private CustomerSettings customerSettings;
 
     /**
      * Initialises the screen by showing all relevant information.
@@ -98,7 +101,7 @@ public class ApplyDiscountController extends GeneralController {
      * Calculates how much money you're saving by using however many points are selected.
      */
     public void calculateSavings() {
-        Money tempMoneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
+        Money tempMoneySaved = Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));
         String savedString = tempMoneySaved.toString().replaceAll("[^\\d.]", "");
         calculatedLabel.setText("You save $" + savedString + " by using " + pointField.getText() + " points");
     }
@@ -109,15 +112,16 @@ public class ApplyDiscountController extends GeneralController {
      */
     @FXML
     public void apply() {
-        Money tempMoneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
+        Money tempMoneySaved = Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));
         if (tempMoneySaved.isGreaterThan(maxPrice)) {
             calculatedLabel.setTextFill(Color.RED);
             calculatedLabel.setText("Discount is more than price of Order!");
         } else {
-            customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost());
+            customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost(),
+                              Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText())));
 
             // Set the moneySaved
-            moneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
+            moneySaved = Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));
 
             // Close the window
             Stage stage = (Stage) calculatedLabel.getScene().getWindow();
@@ -132,6 +136,12 @@ public class ApplyDiscountController extends GeneralController {
     public void setCustomer(Customer newCustomer) {
         customer = newCustomer;
     }
+
+    /**
+     * Sets the customerSettings.
+     * @param newCustomerSettings The new customerSettings.
+     */
+    public void setCustomerSettings(CustomerSettings newCustomerSettings) { customerSettings = newCustomerSettings; }
 
     /**
      * Sets the max price of the order to stop the discount from going into the negatives.

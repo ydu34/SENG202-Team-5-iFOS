@@ -315,6 +315,11 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXButton>
+                              <JFXButton fx:id="selectSettingsButton" mnemonicParsing="false" onAction="#selectSettings" prefHeight="40.0" prefWidth="220.0" text="Select settings.xml" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
                                     </children>
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -689,7 +694,7 @@
                         </BorderPane>
                     </content>
                 </Tab>
-                <Tab text="Password Settings">
+                <Tab text="Settings">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -711,16 +716,16 @@
                                         </Label>
                                     </children>
                                 </GridPane>
-                                <GridPane layoutX="-2.0" layoutY="65.0" prefHeight="816.0" prefWidth="1045.0">
+                                <GridPane layoutX="-2.0" layoutY="115.0" prefHeight="816.0" prefWidth="1045.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="273.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="691.0" minWidth="10.0" prefWidth="527.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="691.0" minWidth="10.0" prefWidth="527.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="158.0" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="396.0" minHeight="0.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="171.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="396.0" minHeight="0.0" prefHeight="212.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Label prefHeight="16.0" prefWidth="212.0" text="Old Password ">
@@ -747,16 +752,6 @@
                                                 <Font size="22.0" />
                                             </font>
                                         </Label>
-                                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="86.0" minHeight="2.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                            </GridPane>
                                         <GridPane GridPane.columnIndex="1">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="172.0" />
@@ -773,7 +768,7 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Text>
-                                                <JFXPasswordField fx:id="oldPasswordText" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
+                                                <JFXPasswordField fx:id="oldPasswordText" alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
                                             </children>
                                         </GridPane>
                                         <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -787,7 +782,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <JFXPasswordField fx:id="newPasswordText" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
+                                                <JFXPasswordField fx:id="newPasswordText" alignment="CENTER" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
                                                 <Text fx:id="promptText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="196.7294921875" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                             <Text fx:id="newPasswordWarning" fill="#1afc2c" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="362.7294921875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
@@ -806,20 +801,10 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <JFXPasswordField fx:id="confirmPasswordText" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
+                                                <JFXPasswordField fx:id="confirmPasswordText" alignment="CENTER" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
                                             </children>
                                         </GridPane>
-                                    </children></GridPane>
-                        <GridPane layoutX="1539.0" layoutY="838.0" prefHeight="148.0" prefWidth="377.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <JFXButton fx:id="saveButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#updateOldPassword" prefHeight="63.0" prefWidth="387.0" text="Confirm &amp; Save" GridPane.halignment="RIGHT">
+                              <JFXButton fx:id="saveButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#updateOldPassword" prefHeight="73.0" prefWidth="249.0" text="Save New Password" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
@@ -827,17 +812,87 @@
                                     <Font size="18.0" />
                                  </font>
                               </JFXButton>
-                           </children>
-                        </GridPane>
-                        <GridPane layoutX="1340.0" layoutY="255.0" prefHeight="226.0" prefWidth="270.0">
+                                    </children></GridPane>
+                        <GridPane layoutX="838.0" layoutY="8.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="696.0" prefWidth="796.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="682.0" minWidth="10.0" prefWidth="344.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="804.0" minWidth="10.0" prefWidth="181.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="804.0" minWidth="10.0" prefWidth="272.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="172.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
-                                </GridPane>
+                           <children>
+                              <Label prefHeight="61.0" prefWidth="373.0" text="Loyalty System" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </Label>
+                              <Label maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="212.0" text="Initial Purchase Points:" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="212.0" text="Ratio (Dollars):" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="212.0" text="Point Value (Cents):" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="initialPointsField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="ratioField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="pointValueField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label fx:id="successLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="212.0" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="61.0" prefWidth="373.0" text="Miscellaneous" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </Label>
+                              <JFXTextField fx:id="maxIngredientField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXButton fx:id="saveValuesButton" onAction="#saveSettings" prefHeight="67.0" prefWidth="161.0" text="Save Values" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                              <Label maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="212.0" text="Max # of Extra Ingredients:" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </GridPane>
                             </children>
                         </AnchorPane>
                     </content>
