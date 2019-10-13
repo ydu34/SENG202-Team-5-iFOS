@@ -2,8 +2,6 @@ package seng202.group5.gui.invoice;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +16,7 @@ import java.util.Collection;
 
 /**
  * The Controller for the Existing Member screen off of the invoice screen.
+ *
  * @author Michael Morgoun
  */
 public class ExistingCustomerController extends GeneralController {
@@ -116,27 +115,21 @@ public class ExistingCustomerController extends GeneralController {
         MenuItem deleteMenuItem = new MenuItem("Delete Member");
         deleteMenu.getItems().add(deleteMenuItem);
 
-        customerTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
-            // Mouse Listeners for a double click, a right click and nothing
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                    deleteMenu.show(customerTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-                } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && customerTable.getSelectionModel().getSelectedItem() != null) {
-                    selectCustomer();
-                } else {
-                    deleteMenu.hide();
-                }
+        // Mouse Listeners for a double click, a right click and nothing
+        customerTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                deleteMenu.show(customerTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && customerTable.getSelectionModel().getSelectedItem() != null) {
+                selectCustomer();
+            } else {
+                deleteMenu.hide();
             }
         });
 
         // Updates the visible customers if a member was deleted
-        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                customers.getCustomerList().remove(customerTable.getSelectionModel().getSelectedItem());
-                updateVisibleCustomers();
-            }
+        deleteMenuItem.setOnAction(actionEvent -> {
+            customers.getCustomerList().remove(customerTable.getSelectionModel().getSelectedItem());
+            updateVisibleCustomers();
         });
     }
 
@@ -170,8 +163,8 @@ public class ExistingCustomerController extends GeneralController {
         // Match the fields with customers
         for (Customer customer : customersList) {
             if (customer.getName().toLowerCase().matches(".*" + searchName + ".*") &&
-            customer.getPhoneNumber().matches(".*" + searchPhone + ".*") &&
-            customer.getID().toLowerCase().matches(".*" + searchID + ".*")) {
+                    customer.getPhoneNumber().matches(".*" + searchPhone + ".*") &&
+                    customer.getID().toLowerCase().matches(".*" + searchID + ".*")) {
                 customerTable.getItems().add(customer);
             }
         }
@@ -188,7 +181,10 @@ public class ExistingCustomerController extends GeneralController {
 
     /**
      * Sets the customers.
+     *
      * @param newCustomers The new customers to be set.
      */
-    public void setCustomers(Customers newCustomers) { customers = newCustomers; }
+    public void setCustomers(Customers newCustomers) {
+        customers = newCustomers;
+    }
 }

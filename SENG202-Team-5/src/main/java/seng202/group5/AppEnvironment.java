@@ -67,27 +67,23 @@ public class AppEnvironment {
      *                                   to pay for the order
      */
     public ArrayList<Money> confirmPayment(ArrayList<Money> denominations) throws InsufficientCashException {
-        ArrayList<Money> change = new ArrayList<>();
-        if (finance.enoughMoney(denominations, orderManager.getOrder())) {
-            Order order = orderManager.getOrder();
+        ArrayList<Money> change;
+        Order order = orderManager.getOrder();
 
-            if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-                order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
-            }
-            setStock(order.getStock().clone());
-            orderManager.setStock(stock);
-            orderManager.newOrder();
-                if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-                    order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
-                }
-                setStock(order.getStock().clone());
-                orderManager.setStock(stock);
-                orderManager.newOrder();
-
-            change = finance.pay(denominations, LocalDateTime.now(), order);
-        } else {
-            throw new InsufficientCashException();
+        if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
+            order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
         }
+        setStock(order.getStock().clone());
+        orderManager.setStock(stock);
+        orderManager.newOrder();
+        if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
+            order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
+        }
+        setStock(order.getStock().clone());
+        orderManager.setStock(stock);
+        orderManager.newOrder();
+
+        change = finance.pay(denominations, LocalDateTime.now(), order);
 
         return change;
     }
@@ -106,12 +102,32 @@ public class AppEnvironment {
         return finance;
     }
 
-    public Customers getCustomers() { return customers; }
+    public void setFinance(Finance finance) {
+        this.finance = finance;
+    }
 
-    public Settings getSettings() { return settings; }
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers newCustomers) {
+        customers = newCustomers;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
 
     public MenuManager getMenuManager() {
         return menuManager;
+    }
+
+    public void setMenuManager(MenuManager menuManager) {
+        this.menuManager = menuManager;
     }
 
     public OrderManager getOrderManager() {
@@ -121,18 +137,6 @@ public class AppEnvironment {
     public void setOrderManager(OrderManager tempManager) {
         orderManager = tempManager;
     }
-
-    public void setFinance(Finance finance) {
-        this.finance = finance;
-    }
-
-    public void setMenuManager(MenuManager menuManager) {
-        this.menuManager = menuManager;
-    }
-
-    public void setCustomers(Customers newCustomers) { customers = newCustomers; }
-
-    public void setSettings(Settings settings) { this.settings = settings; }
 
     public IDGenerator getIdGenerator() {
         return idGenerator;

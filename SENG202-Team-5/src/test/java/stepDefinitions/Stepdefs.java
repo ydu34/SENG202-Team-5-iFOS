@@ -8,13 +8,12 @@ import cucumber.api.java.en.When;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.jupiter.api.Disabled;
-import seng202.group5.logic.Order;
-import seng202.group5.logic.MenuManager;
-import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
-
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Order;
+import seng202.group5.logic.Stock;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -35,16 +34,15 @@ public class Stepdefs {
     private boolean error;
 
 
-
     @Before
     public void Before() {
         manager = new MenuManager();
         burgerCost = Money.zero(CurrencyUnit.of("NZD"));
-        burgerRecipe = manager.createRecipe("burgerRecipe", new HashMap<>(), "Text");
+        burgerRecipe = new Recipe("burgerRecipe", "Text", new HashMap<>());
         stock = new Stock();
         stock.addNewIngredient(buns);
         error = false;
-        manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
+        manager.createItem("Burger", burgerRecipe, burgerCost, "testId", true);
         burger = manager.getItemMap().get("testId");
     }
 
@@ -102,7 +100,7 @@ public class Stepdefs {
     @When("Chips are added to order")
     public void chipsAreAddedToOrder() {
 
-        Recipe chipRecipe = manager.createRecipe("chipRecipe", new HashMap<>(), "Text");
+        Recipe chipRecipe = new Recipe("chipRecipe", "Text", new HashMap<>());
         manager.createItem("chip", chipRecipe, chipCost, "chipId", true);
         chip = manager.getItemMap().get("chipId");
         order.addItem(chip, 1);
@@ -133,7 +131,7 @@ public class Stepdefs {
     public void aBurgerContainsBuns() {
         burgerRecipe.addIngredient(buns, 1);
         manager.removeItem("testId");
-        manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
+        manager.createItem("Burger", burgerRecipe, burgerCost, "testId", true);
         burger = manager.getItemMap().get("testId");
 
     }
@@ -186,6 +184,7 @@ public class Stepdefs {
     public void newOrderIsCreated() {
         order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01", stock);
     }
+
     @Then("Order is empty")
     public void orderIsEmpty() {
         assertTrue(order.getOrderItems().isEmpty());
@@ -193,7 +192,7 @@ public class Stepdefs {
 
     @When("A new recipe is created")
     public void aNewRecipeIsCreated() {
-        burgerRecipe = manager.createRecipe("recipe", new HashMap<>(), "Text");
+        burgerRecipe = new Recipe("recipe", "Text", new HashMap<>());
     }
 
     @Given("There is a menu")
@@ -204,7 +203,7 @@ public class Stepdefs {
 
     @And("A new item is created for that recipe")
     public void aNewItemIsCreatedForThatRecipe() {
-        manager.createItem("recipeTest", burgerRecipe, Money.parse("NZD 0.00"),"recipeTestId", true);
+        manager.createItem("recipeTest", burgerRecipe, Money.parse("NZD 0.00"), "recipeTestId", true);
 
     }
 

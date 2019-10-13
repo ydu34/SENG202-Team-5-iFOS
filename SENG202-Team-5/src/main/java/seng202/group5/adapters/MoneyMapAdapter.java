@@ -9,14 +9,14 @@ import java.util.List;
 /**
  * A class created so that Jaxb can deal with Money Objects
  */
-public final class MoneyMapAdapter extends XmlAdapter<AdaptedMoneyMap, HashMap<Money, Integer>>{
+public final class MoneyMapAdapter extends XmlAdapter<AdaptedMoneyMap, HashMap<Money, Integer>> {
 
     /**
      * @param v Takes in an AdaptedMoneyMap that contains a list of AdaptedMoneyEntry
      * @return HashMap containing money objects and the quantity of each money
      */
     @Override
-    public HashMap<Money, Integer> unmarshal(AdaptedMoneyMap v){
+    public HashMap<Money, Integer> unmarshal(AdaptedMoneyMap v) {
         List<AdaptedMoneyEntry> adaptedEntries = v.entries;
         HashMap<Money, Integer> map = new HashMap<Money, Integer>(adaptedEntries.size());
         for (AdaptedMoneyEntry adaptedMoneyEntry : adaptedEntries) {
@@ -30,9 +30,9 @@ public final class MoneyMapAdapter extends XmlAdapter<AdaptedMoneyMap, HashMap<M
      * @return AdaptedMoneyMap that contains a list of AdaptedMoneyEntry
      */
     @Override
-    public AdaptedMoneyMap marshal(HashMap<Money, Integer> v){
+    public AdaptedMoneyMap marshal(HashMap<Money, Integer> v) {
         AdaptedMoneyMap adaptedMoneyMap = new AdaptedMoneyMap();
-        for(HashMap.Entry<Money, Integer> entry : v.entrySet()) {
+        for (HashMap.Entry<Money, Integer> entry : v.entrySet()) {
             AdaptedMoneyEntry adaptedMoneyEntry = new AdaptedMoneyEntry();
             adaptedMoneyEntry.key = entry.getKey().toString();
             adaptedMoneyEntry.value = entry.getValue();

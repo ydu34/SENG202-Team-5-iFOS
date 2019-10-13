@@ -1,6 +1,7 @@
 package seng202.group5.gui;
 
 //import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.beans.property.SimpleStringProperty;
@@ -113,7 +114,7 @@ public class OrderController extends GeneralController {
     private Button removeItemButton;
 
     @FXML
-    private TableColumn<MenuItem,String> itemPriceCol;
+    private TableColumn<MenuItem, String> itemPriceCol;
     private SortType sortingType = SortType.NAME;
 
     @Override
@@ -151,6 +152,7 @@ public class OrderController extends GeneralController {
 
     /**
      * This function sorts the menu item by its price
+     *
      * @param event an event that caused this to happen
      */
 
@@ -159,24 +161,9 @@ public class OrderController extends GeneralController {
         filterItems();
     }
 
-    private enum SortType {
-        NAME,
-        PRICE;
-
-        public String toString() {
-            switch (this) {
-                case NAME:
-                    return "Name";
-                case PRICE:
-                    return "Price";
-                default:
-                    return "";
-            }
-        }
-    }
-
     /**
      * Adds all the menu items in the menu to the tile pane
+     *
      * @param items the items to add to the pane
      */
     public void populateTilePane(Collection<MenuItem> items) {
@@ -190,7 +177,7 @@ public class OrderController extends GeneralController {
             if (sortingType == SortType.NAME) {
                 sortedItems.sort(Comparator.comparing(MenuItem::getItemName));
             } else if (sortingType == SortType.PRICE) {
-                sortedItems.sort(Comparator.comparing(MenuItem::calculateFinalCost));
+                sortedItems.sort(Comparator.comparing(MenuItem::getTotalCost));
             }
 
             for (MenuItem item : sortedItems) {
@@ -283,7 +270,7 @@ public class OrderController extends GeneralController {
         try {
 
             itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return itemImage;
@@ -340,7 +327,7 @@ public class OrderController extends GeneralController {
         Map<Ingredient, Integer> recipeIngredientsMap = currentRecipe.getIngredientsAmount();
         List<Ingredient> recipeIngredients = new ArrayList<>(recipeIngredientsMap.keySet());
         ingredientNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ingredientQuantityCol.setCellValueFactory(data ->{
+        ingredientQuantityCol.setCellValueFactory(data -> {
             int quantity = recipeIngredientsMap.get(data.getValue());
             return new SimpleStringProperty(Integer.toString(quantity));
         });
@@ -374,14 +361,14 @@ public class OrderController extends GeneralController {
     @FXML
     private void cancelCurrentOrder() {
         currentOrder = getAppEnvironment().getOrderManager().getOrder();
-        currentOrder.resetStock(getAppEnvironment().getStock());
+        currentOrder.setStock(getAppEnvironment().getStock());
         currentOrder.clearItemsInOrder();
         pseudoInitialize();
     }
 
-
     /**
      * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
+     *
      * @param actionEvent an event that caused this to happen
      */
     public void addExtraIngredientScreen(ActionEvent actionEvent) {
@@ -414,6 +401,21 @@ public class OrderController extends GeneralController {
         return item;
     }
 
+    private enum SortType {
+        NAME,
+        PRICE;
+
+        public String toString() {
+            switch (this) {
+                case NAME:
+                    return "Name";
+                case PRICE:
+                    return "Price";
+                default:
+                    return "";
+            }
+        }
+    }
 
 
 }

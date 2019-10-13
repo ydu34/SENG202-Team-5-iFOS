@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
 
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 public class OrderManagerTest {
 
@@ -19,15 +21,15 @@ public class OrderManagerTest {
     private MenuItem testItem = new MenuItem(
             "Burger Item",
             new Recipe("Burger",
-                       "Add items to burger",
-                       new HashMap<>() {{
-                           put(bun, 2);
-                           put(patty, 1);
-                       }}),
+                    "Add items to burger",
+                    new HashMap<>() {{
+                        put(bun, 2);
+                        put(patty, 1);
+                    }}),
             Money.parse("NZD 5.80"),
             "14328",
-            true
-    );
+            true,
+            TypeEnum.MAIN);
 
     @BeforeEach
     public void init() {

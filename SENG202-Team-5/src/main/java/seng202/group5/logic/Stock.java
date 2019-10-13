@@ -3,7 +3,10 @@ package seng202.group5.logic;
 import seng202.group5.IDGenerator;
 import seng202.group5.information.Ingredient;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 
 
@@ -62,6 +65,7 @@ public class Stock {
 
     /**
      * Removes an ingredient with the same ID.
+     *
      * @param id The ID of the ingredient you want to remove.
      */
     public void removeIngredient(String id) {
@@ -129,6 +133,7 @@ public class Stock {
 
     /**
      * Returns the ingredients with their respective IDs.
+     *
      * @return A HashMap of current ingredients.
      */
     public HashMap<String, Ingredient> getIngredients() {
@@ -137,6 +142,7 @@ public class Stock {
 
     /**
      * Gets an ingredient from an ID.
+     *
      * @param id the ID of the ingredient.
      * @return The ingredient with the same ID.
      */

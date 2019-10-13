@@ -7,9 +7,12 @@ import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.information.Transaction;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class FinanceTest {
@@ -35,7 +38,7 @@ public class FinanceTest {
         denomination.add(Money.parse("NZD 0.20"));
         denomination.add(Money.parse("NZD 0.10"));
         testFinance.setTill(new Till(denomination));
-        for (Money value: denomination) {
+        for (Money value : denomination) {
             testFinance.getTill().addDenomination(value, 10);
         }
 
@@ -52,7 +55,7 @@ public class FinanceTest {
         testFinance.getTill().removeDenomination(Money.parse("NZD 0.20"), 10);
         testFinance.getTill().removeDenomination(Money.parse("NZD 0.10"), 10);
         assertEquals(new ArrayList<>(Arrays.asList(Money.parse("NZD 20.00"), Money.parse("NZD 20.00"), Money.parse("NZD 20.00"))),
-                     testFinance.calcChange(Money.parse("NZD 60.00")));
+                testFinance.calcChange(Money.parse("NZD 60.00")));
     }
 
     @Test
@@ -76,6 +79,7 @@ public class FinanceTest {
         expectedResult.add(Money.parse("NZD 1.00"));
         assertEquals(expectedResult, result);
     }
+
     @Test
     public void testPaymentError() {
 
@@ -95,6 +99,7 @@ public class FinanceTest {
         });
 
     }
+
     @Test
     public void testRefund() throws InsufficientCashException {
         Order testOrder = new Order(new HashMap<>(), Money.parse("NZD 15.00"), "tempid");
@@ -140,6 +145,7 @@ public class FinanceTest {
         denomination.add(Money.parse("NZD 0.10"));
         assertEquals(testFinance.getDenomination(), denomination);
     }
+
     @Test
     public void testGetTransactionHistory() {
         assertEquals(testFinance.getTransactionHistory(), new HashMap<>());

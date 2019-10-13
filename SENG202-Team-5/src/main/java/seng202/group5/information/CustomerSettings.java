@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Holds the settings when initialising a customer. These can be edited through the GUI.
+ *
  * @author James Kwok
  */
 @XmlRootElement
@@ -20,12 +21,12 @@ public class CustomerSettings {
         return initialPurchasePoints;
     }
 
-    public int getRatio() {
-        return ratio;
-    }
-
     public void setInitialPurchasePoints(int tempInitialPurchasePoints) {
         initialPurchasePoints = tempInitialPurchasePoints;
+    }
+
+    public int getRatio() {
+        return ratio;
     }
 
     public void setRatio(int tempRatio) {

@@ -1,4 +1,3 @@
-
 @import url("jfx-combobox.css");
 @import url("jfx-table-view.css");
 @import url("jfx-button.css");
@@ -9,12 +8,11 @@
 @import url("jfx-date-picker.css");
 @import url("jfx-time-picker.css");
 
-
 /*
 This is for the main back ground
  */
 .root {
-    -fx-background-color:  #ECE6CE;
+    -fx-background-color: #ECE6CE;
     -fx-font-family: 'Open Sans', sans-serif;
     -fx-text-fill: rgba(58, 62, 89, 1);
 

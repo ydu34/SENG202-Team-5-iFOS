@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Holds the list of customers, allows JAXB to easily import and export the customers data
+ *
  * @author James Kwok
  */
 @XmlRootElement
@@ -27,7 +28,8 @@ public class Customers {
 
     private CustomerSettings customerSettings = new CustomerSettings();
 
-    public Customers() {    }
+    public Customers() {
+    }
 
     public void add(Customer customer) {
         customer.setPurchasePoints(customerSettings.getInitialPurchasePoints());
@@ -38,7 +40,9 @@ public class Customers {
         return customerList;
     }
 
-    public CustomerSettings getCustomerSettings() { return customerSettings; }
+    public CustomerSettings getCustomerSettings() {
+        return customerSettings;
+    }
 
     public void setCustomerSettings(CustomerSettings customerSettings) {
         this.customerSettings = customerSettings;

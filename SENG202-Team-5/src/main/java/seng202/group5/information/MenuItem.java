@@ -53,12 +53,6 @@ public class MenuItem {
     private boolean edited;
 
     /**
-     * total cost of the menu item
-     */
-    @XmlJavaTypeAdapter(MoneyAdapter.class)
-    private Money totalCost;
-
-    /**
      * A string representing the image for this menu item
      */
     private String imageString;
@@ -73,27 +67,26 @@ public class MenuItem {
         inMenu = true;
         itemType = TypeEnum.MAIN;
         edited = false;
-        totalCost = Money.parse("NZD 0.00");
         imageString = null;
     }
 
     /**
-     * @param tempItemName is the name of an item on the menu
-     * @param tempRecipe   is the recipe for a an item on the menu
-     * @param tempMarkupCost   is the cost added to the ingredient cost of the menu item
-     * @param uniqueId     is the unique id related to each menu item
-     * @param tempInMenu whether or not the item is in the menu
+     * @param tempItemName   is the name of an item on the menu
+     * @param tempRecipe     is the recipe for a an item on the menu
+     * @param tempMarkupCost is the cost added to the ingredient cost of the menu item
+     * @param uniqueId       is the unique id related to each menu item
+     * @param tempInMenu     whether or not the item is in the menu
+     * @param type           the type of the new item
      */
     @Deprecated(since = "ID is made using ID Maker now, this may be useful for tests though")
-    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu) {
+    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu, TypeEnum type) {
         itemName = tempItemName;
         recipe = tempRecipe;
         markupCost = tempMarkupCost;
         id = uniqueId;
         inMenu = tempInMenu;
-        itemType = TypeEnum.MAIN;
+        itemType = type;
         edited = false;
-        totalCost = calculateFinalCost();
     }
 
     /**
@@ -110,7 +103,6 @@ public class MenuItem {
         inMenu = tempInMenu;
         this.itemType = itemType;
         edited = false;
-        totalCost = calculateFinalCost();
     }
 
 
@@ -138,8 +130,8 @@ public class MenuItem {
      *
      * @return the selling cost of the menu item in the form of the Money object in NZD
      */
-    public Money calculateFinalCost() {
-        totalCost = Money.parse("NZD 0.00");
+    public Money getTotalCost() {
+        Money totalCost = Money.parse("NZD 0.00");
         if (markupCost != null) {
             totalCost = calculateMakingCost().plus(markupCost);
         }
@@ -148,7 +140,6 @@ public class MenuItem {
     }
 
     /**
-     *
      * @return a boolean based on if the if the item is in the menu or not
      */
     public boolean isInMenu() {
@@ -157,6 +148,7 @@ public class MenuItem {
 
     /**
      * The function returns the id for the menu item
+     *
      * @return td id for the menu item
      */
 
@@ -166,19 +158,29 @@ public class MenuItem {
 
     /**
      * The function returns the name of the item
+     *
      * @return the name of the item
      */
 
     public String getItemName() {
         if (edited) {
-            return  "Edited\n" + itemName;
+            return "Edited\n" + itemName;
         } else {
             return itemName;
         }
     }
 
     /**
+     * The function sets the name of the menu item
      *
+     * @param tempName the assigned name for the menu item
+     */
+
+    public void setItemName(String tempName) {
+        itemName = tempName;
+    }
+
+    /**
      * @return The function returns the recipe object
      */
 
@@ -187,14 +189,16 @@ public class MenuItem {
     }
 
     /**
-     *
      * @return The function returns the markup cost set by the user
      */
 
-    public Money getMarkupCost() { return markupCost; }
+    public Money getMarkupCost() {
+        return markupCost;
+    }
 
     /**
      * The function assigns the value to the markup cost
+     *
      * @param markupCost is the cost added to the ingredient cost of the menu item
      */
 
@@ -203,7 +207,6 @@ public class MenuItem {
     }
 
     /**
-     *
      * @return a unique integer based on the contents of this menu item
      */
 
@@ -228,17 +231,16 @@ public class MenuItem {
      */
     public MenuItem clone() {
         Recipe tempRecipe = new Recipe(recipe.getName(),
-                                       recipe.getRecipeText(),
-                                       new HashMap<>(recipe.getIngredientsAmount()),
-                                       new HashMap<>(recipe.getIngredientIDs()));
-        MenuItem returnItem = new MenuItem(itemName, tempRecipe, markupCost, id, inMenu);
+                recipe.getRecipeText(),
+                new HashMap<>(recipe.getIngredientsAmount()),
+                new HashMap<>(recipe.getIngredientIDs()));
+        MenuItem returnItem = new MenuItem(itemName, tempRecipe, markupCost, id, inMenu, itemType);
         returnItem.setEdited(edited);
         returnItem.setType(itemType);
         return returnItem;
     }
 
     /**
-     *
      * @return the enum which reflects the dietary information for the menu item
      */
 
@@ -248,20 +250,12 @@ public class MenuItem {
 
     /**
      * This function sets the itemType enum for the menu item
+     *
      * @param itemType the new type of the item
      */
 
     public void setType(TypeEnum itemType) {
         this.itemType = itemType;
-    }
-
-    /**
-     * The function sets the name of the menu item
-     * @param tempName the assigned name for the menu item
-     */
-
-    public void setItemName(String tempName) {
-        itemName = tempName;
     }
 
     /**
@@ -275,28 +269,12 @@ public class MenuItem {
 
     /**
      * Sets the boolean to true if the menu item was edited
+     *
      * @param tempEdited whether or not the item was edited
      */
 
     public void setEdited(boolean tempEdited) {
         edited = tempEdited;
-    }
-
-    /**
-     * The function returns the total cost of the menu item
-     * @return the total cost for a menu item
-     */
-    public Money getTotalCost() {
-        calculateFinalCost();
-        return totalCost;
-    }
-
-    /**
-     * The function sets the total cost of the menu item
-     * @param totalCost the final cost of the menu item
-     */
-    public void setTotalCost(Money totalCost) {
-        this.totalCost = totalCost;
     }
 
     public String getImageString() {

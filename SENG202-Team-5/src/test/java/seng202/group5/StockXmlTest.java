@@ -5,8 +5,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.AppEnvironment;
-import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.logic.Stock;
@@ -25,7 +23,6 @@ class StockXmlTest {
     private AppEnvironment appEnvironment = new AppEnvironment(false);
     private Database database = appEnvironment.getDatabase();
     private Stock stock;
-
 
 
     @BeforeAll
@@ -71,6 +68,12 @@ class StockXmlTest {
         }
     }
 
+    @AfterAll
+    public static void teardown() {
+        File file = new File(testDirectory + "/stock.xml");
+        file.delete();
+    }
+
     @BeforeEach
     public void testUnmarshalStock() {
         try {
@@ -83,7 +86,6 @@ class StockXmlTest {
         }
 
     }
-
 
     @Test
     public void testIngredientNameInStock() {
@@ -111,7 +113,7 @@ class StockXmlTest {
 
     @Test
     public void testIngredientDietaryInformationInStock() {
-        HashSet<DietEnum> dietInfo= stock.getIngredients().get("INGR2").getDietInfo();
+        HashSet<DietEnum> dietInfo = stock.getIngredients().get("INGR2").getDietInfo();
         assertTrue(dietInfo.contains(DietEnum.GLUTEN_FREE));
     }
 
@@ -125,12 +127,6 @@ class StockXmlTest {
     public void testIngredientsStockMapContainsALlQuantities() {
         Map<String, Integer> ingredientStockMap = stock.getIngredientStock();
         assertEquals(4, ingredientStockMap.size());
-    }
-
-    @AfterAll
-    public static void teardown() {
-        File file = new File(testDirectory + "/stock.xml");
-        file.delete();
     }
 
 }

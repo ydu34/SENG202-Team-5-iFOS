@@ -24,10 +24,14 @@ import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Order;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A controller for managing the invoice screen.
+ *
  * @author Tasman Berry, Shivin Gaba, Michael Morgoun
  */
 public class InvoiceController extends GeneralController {
@@ -54,7 +58,7 @@ public class InvoiceController extends GeneralController {
      * The column for the item price.
      */
     @FXML
-    private TableColumn<MenuItem,String> itemPriceCol;
+    private TableColumn<MenuItem, String> itemPriceCol;
 
     /**
      * The label which shows the remaining cost.
@@ -187,7 +191,7 @@ public class InvoiceController extends GeneralController {
 
         // Creates a new listener for the removeItem button
         currentOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if(newSelection != null){
+            if (newSelection != null) {
                 removeItem.setDisable(false);
             }
         });
@@ -223,10 +227,10 @@ public class InvoiceController extends GeneralController {
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         itemPriceCol.setCellValueFactory(data -> {
-                                             int quantity = orderItemsMap.get(data.getValue());
-            Money totalPrice = data.getValue().calculateFinalCost().multipliedBy(quantity);
-                                             return new SimpleStringProperty(totalPrice.toString());
-                                         }
+                    int quantity = orderItemsMap.get(data.getValue());
+                    Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);
+                    return new SimpleStringProperty(totalPrice.toString());
+                }
         );
 
         itemQuantityCol.setCellValueFactory(data -> {
@@ -353,7 +357,8 @@ public class InvoiceController extends GeneralController {
                     remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
                 }
                 pseudoInitialize();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         }
     }
 
@@ -402,13 +407,14 @@ public class InvoiceController extends GeneralController {
             clearPayment();
             clearSelectedMember();
         } catch (InsufficientCashException e) {
-        warningLabel.setTextFill(Color.RED);
-        warningLabel.setText("Not enough money in the till for change!");
+            warningLabel.setTextFill(Color.RED);
+            warningLabel.setText("Not enough money in the till for change!");
         }
     }
 
     /**
      * This method intialises the screen used for a successful payment.
+     *
      * @param change An ArrayList<Money> which has all the change required.
      */
     private void initialiseChangeScreen(ArrayList<Money> change) {
@@ -452,8 +458,9 @@ public class InvoiceController extends GeneralController {
 
     /**
      * A method used to create the string to visualise the denominations payed in the current payment.
+     *
      * @param builder The StringBuilder.
-     * @param key The String key which is the denomination.
+     * @param key     The String key which is the denomination.
      * @param tempKey The Money tempKey which is used to get the number of denominations.
      * @return The final StringBuilder built.
      */
@@ -472,7 +479,7 @@ public class InvoiceController extends GeneralController {
      *
      * @param value the cash denomination to add in cents
      */
-    private void addMoney(int value){
+    private void addMoney(int value) {
         if (currentOrder.getOrderItems().isEmpty()) {
             warningLabel.setTextFill(Color.RED);
             warningLabel.setText("There is no order to pay for!");
@@ -534,8 +541,8 @@ public class InvoiceController extends GeneralController {
         boolean someOrder;
 
         currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
-        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
-        if(someOrder){
+        someOrder = this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if (someOrder) {
             removeItem.setDisable(false);
         }
         pseudoInitialize();
@@ -551,7 +558,7 @@ public class InvoiceController extends GeneralController {
         totalPayedLabel.setText("$0.00");
 
         currentOrder = getAppEnvironment().getOrderManager().getOrder();
-        currentOrder.resetStock(getAppEnvironment().getStock());
+        currentOrder.setStock(getAppEnvironment().getStock());
         currentOrder.clearItemsInOrder();
 
         // Clear customer labels
@@ -572,7 +579,7 @@ public class InvoiceController extends GeneralController {
      * Adds 10 Cents to the payment.
      */
     @FXML
-    private void addTenCent(){
+    private void addTenCent() {
         addMoney(10);
     }
 
@@ -580,7 +587,7 @@ public class InvoiceController extends GeneralController {
      * Adds 20 cents to the payment.
      */
     @FXML
-    private void addTwentyCent(){
+    private void addTwentyCent() {
         addMoney(20);
     }
 
@@ -588,7 +595,7 @@ public class InvoiceController extends GeneralController {
      * Adds 50 cents to the payment.
      */
     @FXML
-    private void addFiftyCent(){
+    private void addFiftyCent() {
         addMoney(50);
     }
 
@@ -596,7 +603,7 @@ public class InvoiceController extends GeneralController {
      * Adds 1 dollar to the payment.
      */
     @FXML
-    private void addOneDollar(){
+    private void addOneDollar() {
         addMoney(100);
     }
 
@@ -604,7 +611,7 @@ public class InvoiceController extends GeneralController {
      * Adds 2 dollars to the payment.
      */
     @FXML
-    private void addTwoDollar(){
+    private void addTwoDollar() {
         addMoney(200);
     }
 
@@ -612,7 +619,7 @@ public class InvoiceController extends GeneralController {
      * Adds 5 dollars to the payment.
      */
     @FXML
-    private void addFiveDollar(){
+    private void addFiveDollar() {
         addMoney(500);
     }
 
@@ -620,7 +627,7 @@ public class InvoiceController extends GeneralController {
      * Adds 10 dollars to the payment.
      */
     @FXML
-    private void addTenDollar(){
+    private void addTenDollar() {
         addMoney(1000);
     }
 
@@ -628,7 +635,7 @@ public class InvoiceController extends GeneralController {
      * Adds 20 dollars to the payment.
      */
     @FXML
-    private void addTwentyDollar(){
+    private void addTwentyDollar() {
         addMoney(2000);
     }
 
@@ -636,7 +643,7 @@ public class InvoiceController extends GeneralController {
      * Adds 50 dollars to the payment.
      */
     @FXML
-    private void addFiftyDollar(){
+    private void addFiftyDollar() {
         addMoney(5000);
     }
 
@@ -644,7 +651,7 @@ public class InvoiceController extends GeneralController {
      * Adds 100 dollars to the payment.
      */
     @FXML
-    private void addHundredDollar(){
+    private void addHundredDollar() {
         addMoney(10000);
     }
 }

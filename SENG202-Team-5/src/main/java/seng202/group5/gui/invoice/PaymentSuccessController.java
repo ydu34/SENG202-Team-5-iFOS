@@ -8,7 +8,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.gui.GeneralController;
-import seng202.group5.information.Customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import java.util.HashMap;
 /**
  * The Controller for the screen after payment is accepted. This screen shows the change quantities for the worker
  * to give to the customer.
+ *
  * @author Michael Morgoun
  */
 public class PaymentSuccessController extends GeneralController {
@@ -106,8 +106,11 @@ public class PaymentSuccessController extends GeneralController {
 
     /**
      * Sets the change to give back to the customer.
+     *
      * @param tempChange The change to be given.
      */
-    public void setChange(ArrayList<Money> tempChange) { change = tempChange ;}
+    public void setChange(ArrayList<Money> tempChange) {
+        change = tempChange;
+    }
 
 }

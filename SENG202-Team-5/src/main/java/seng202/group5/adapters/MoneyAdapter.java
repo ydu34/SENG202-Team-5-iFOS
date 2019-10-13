@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * An adapter for jaxb to be able to marshal and unmarshal Money objects.
+ *
  * @author Yu Duan
  */
 public class MoneyAdapter extends XmlAdapter<String, Money> {
@@ -21,7 +22,7 @@ public class MoneyAdapter extends XmlAdapter<String, Money> {
 
     /**
      * @param v the Money object
-     * @return the Money string 
+     * @return the Money string
      * @throws Exception if the marshalling fails
      */
     @Override

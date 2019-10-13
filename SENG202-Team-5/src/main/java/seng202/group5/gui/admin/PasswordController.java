@@ -84,7 +84,6 @@ public class PasswordController extends GeneralController {
     }
 
 
-
     /**
      * The function sets the text fields to  "*" when the buttons are clicked on.
      */
@@ -95,19 +94,19 @@ public class PasswordController extends GeneralController {
             passwordInput1.setText("  *");
 
         }
-        if(input.length() == 1){
+        if (input.length() == 1) {
             passwordInput2.setText("  *");
 
         }
-        if(input.length() == 2){
+        if (input.length() == 2) {
             passwordInput3.setText(" *");
 
         }
-        if(input.length() == 3){
+        if (input.length() == 3) {
             passwordInput4.setText(" *");
         }
 
-        if(input.length() > 3) {
+        if (input.length() > 3) {
             warningText.setText("Password must be of length 4");
         }
     }
@@ -257,6 +256,7 @@ public class PasswordController extends GeneralController {
     /**
      * Takes a number and adds it to the password, for checking against the set password, if the current passwords length
      * is greater than 4, then no other number is added to the password.
+     *
      * @param num the number to be added to the password.
      */
     private void addNumber(String num) {
@@ -271,7 +271,7 @@ public class PasswordController extends GeneralController {
      * This function clears the password that was in progress and lets the user enter the password again
      */
 
-    public void clearPassword(){
+    public void clearPassword() {
         passwordInput1.setText("");
         passwordInput2.setText("");
         passwordInput3.setText("");
@@ -282,6 +282,7 @@ public class PasswordController extends GeneralController {
     public void setSource(GeneralController controller) {
         source = controller;
     }
+
     public void setEvent(ActionEvent event) {
         origin = event;
     }
@@ -294,7 +295,6 @@ public class PasswordController extends GeneralController {
 
         boolean check(int passwordHash);
     }
-
 
 
 }

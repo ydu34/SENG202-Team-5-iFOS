@@ -6,13 +6,11 @@ import seng202.group5.IDGenerator;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
-import static org.joda.money.Money.parse;
 
 /**
  * The Customer class holds information about each Customer who is considered a member and have a unique ID and an
  * amount of loyalty points that can purchase food with.
+ *
  * @author Michael Morgoun, James Kwok
  */
 @XmlRootElement
@@ -27,13 +25,14 @@ public class Customer {
 
     private int purchasePoints = 1;
 
-    public Customer()  {
+    public Customer() {
 
     }
 
     /**
-     *Calculates and adds purchase points to a customers account when they have spent money.
+     * Calculates and adds purchase points to a customers account when they have spent money.
      * Default Rate: NZD $10 gives 1 Point = $0.50 discount
+     *
      * @param spentMoney The total amount of money spent on an order, disregarding discounts.
      */
     public void purchasePoints(Money spentMoney, int ratio) {
@@ -47,7 +46,8 @@ public class Customer {
     /**
      * Subtracts a given amount of purchase points from an order and returns the amount of money discounted to an order
      * Based on how many points were used.
-     * @param usedPoints The amount of points to be used for discounts.
+     *
+     * @param usedPoints        The amount of points to be used for discounts.
      * @param currentOrderPrice The price of the customers order.
      * @return discountMoney The amount of money to be removed from the order.
      */
@@ -66,31 +66,36 @@ public class Customer {
         return discountMoney;
     }
 
+    public void addPurchasePoints(int tempPurchasePoints) {
+        purchasePoints += tempPurchasePoints;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setName(String newName) {
         name = newName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String newPhoneNumber) {
         phoneNumber = newPhoneNumber;
     }
 
-    public void setPurchasePoints(int tempPurchasePoints) {
-        purchasePoints = tempPurchasePoints;
-    }
-
-    public void addPurchasePoints(int tempPurchasePoints) {
-        purchasePoints += tempPurchasePoints;
-    }
-
-    public String getName() { return name; }
-
-    public String getPhoneNumber() { return phoneNumber; }
-
     public int getPurchasePoints() {
         return purchasePoints;
     }
 
-    public String getID() { return customerID; }
+    public void setPurchasePoints(int tempPurchasePoints) {
+        purchasePoints = tempPurchasePoints;
+    }
+
+    public String getID() {
+        return customerID;
+    }
 
 }

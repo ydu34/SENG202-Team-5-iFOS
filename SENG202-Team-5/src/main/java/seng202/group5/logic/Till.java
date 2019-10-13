@@ -4,7 +4,10 @@ import org.joda.money.Money;
 import seng202.group5.adapters.MoneyMapAdapter;
 import seng202.group5.exceptions.InsufficientCashException;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,8 +45,9 @@ public class Till {
     }
 
     /**
-    * Adds the given value to the denominations stored. If a given denomination does not exist, it is added to the
+     * Adds the given value to the denominations stored. If a given denomination does not exist, it is added to the
      * denominations HashMap.
+     *
      * @param value holds the value of a denomination using Joda Money.
      * @param count The number of denominations to be added.
      */
@@ -57,6 +61,7 @@ public class Till {
     /**
      * Removes a number stated by count worth of denominations from the held denominations. Assumes only valid money
      * values will be selected from other methods.
+     *
      * @param value holds the value of a denomination using Joda Money.
      * @param count The number of denominations to be added.
      * @throws InsufficientCashException when there are not enough denominations to remove.
@@ -75,6 +80,7 @@ public class Till {
     /**
      * Adds multiple denominations by calling addDenomination multiple times.
      * Further assumes that only valid money values wil be selected from other methods.
+     *
      * @param valueMap Uses the Money type as a key and the number of denominations to be removed.
      */
     public void addDenominations(HashMap<Money, Integer> valueMap) {
@@ -87,6 +93,7 @@ public class Till {
     /**
      * Returns the total amount of money held as a sum.
      * Calls Joda-Moneys method multipliedBy().
+     *
      * @return totalSum, the total of all denominations multiplied by the number counted.
      */
     public Money totalValue() {
@@ -105,6 +112,7 @@ public class Till {
 
     /**
      * Copies the current till.
+     *
      * @return A new till with a copy of the denominations.
      */
     public Till clone() {

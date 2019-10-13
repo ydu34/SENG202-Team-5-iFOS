@@ -47,6 +47,15 @@ public class Database {
      * The detail about this passwordHash would also be mentioned in the user manual as well.
      */
     private int passwordHash = "1111".hashCode();
+    private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
+
+    public Database() {
+    }
+
+    public Database(AppEnvironment appEnvironment) {
+        this.appEnvironment = appEnvironment;
+        loadAppData();
+    }
 
     /**
      * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
@@ -65,16 +74,6 @@ public class Database {
             ingredients.put(ingredient, quantity);
         }
         return ingredients;
-    }
-
-    private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;
-
-    public Database() {
-    }
-
-    public Database(AppEnvironment appEnvironment) {
-        this.appEnvironment = appEnvironment;
-        loadAppData();
     }
 
     /**
@@ -407,7 +406,9 @@ public class Database {
             if (fileMap.containsKey("customers.xml")) {
                 customersXmlToObject(fileMap.get("customers.xml").getParent());
             }
-            if (fileMap.containsKey("settings.xml")) { settingsXmlToObject(fileMap.get("settings.xml").getParent()); }
+            if (fileMap.containsKey("settings.xml")) {
+                settingsXmlToObject(fileMap.get("settings.xml").getParent());
+            }
             checkDataIntegrity();
         } catch (Exception e) {
             appEnvironment.setStock(oldStock);
@@ -446,26 +447,6 @@ public class Database {
             }
         }
 
-    }
-
-    @XmlTransient
-    public enum OverwriteType {
-        OVERWRITE_ALL,
-        MERGE_PREFER_NEW,
-        MERGE_PREFER_OLD;
-
-        public String toString() {
-            switch (this) {
-                case OVERWRITE_ALL:
-                    return "Overwrite: Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)";
-                case MERGE_PREFER_NEW:
-                    return "Merge and replace with imported data: Merge existing data with imported data and replace conflicting data with imported data";
-                case MERGE_PREFER_OLD:
-                    return "Merge and keep data in application: Merge imported data with existing data and keep existing data when conflicts occurs";
-                default:
-                    return "";
-            }
-        }
     }
 
     /**
@@ -507,12 +488,12 @@ public class Database {
         this.autoloadEnabled = autoloadEnabled;
     }
 
-    public void setSaveFileLocation(String saveFileLocation) {
-        this.saveFileLocation = saveFileLocation;
-    }
-
     public String getSaveFileLocation() {
         return saveFileLocation;
+    }
+
+    public void setSaveFileLocation(String saveFileLocation) {
+        this.saveFileLocation = saveFileLocation;
     }
 
     public OverwriteType getOverwriteSetting() {
@@ -542,6 +523,26 @@ public class Database {
      */
     public void setPasswordHash(int newPasswordHash) {
         passwordHash = newPasswordHash;
+    }
+
+    @XmlTransient
+    public enum OverwriteType {
+        OVERWRITE_ALL,
+        MERGE_PREFER_NEW,
+        MERGE_PREFER_OLD;
+
+        public String toString() {
+            switch (this) {
+                case OVERWRITE_ALL:
+                    return "Overwrite: Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)";
+                case MERGE_PREFER_NEW:
+                    return "Merge and replace with imported data: Merge existing data with imported data and replace conflicting data with imported data";
+                case MERGE_PREFER_OLD:
+                    return "Merge and keep data in application: Merge imported data with existing data and keep existing data when conflicts occurs";
+                default:
+                    return "";
+            }
+        }
     }
 
 }

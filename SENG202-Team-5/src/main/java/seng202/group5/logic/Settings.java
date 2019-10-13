@@ -21,6 +21,7 @@ public class Settings {
 
     /**
      * Gets the max ingredient amount for adding extra ingredients.
+     *
      * @return The max ingredient amount.
      */
     public int getMaxIngredientAmount() {
@@ -29,6 +30,7 @@ public class Settings {
 
     /**
      * Sets the max ingredient amount for adding extra ingredients.
+     *
      * @param tempMaxIngredientAmount The new max ingredient.
      */
     public void setMaxIngredientAmount(int tempMaxIngredientAmount) {

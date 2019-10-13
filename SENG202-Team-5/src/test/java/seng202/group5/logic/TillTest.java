@@ -1,14 +1,15 @@
 package seng202.group5.logic;
 
 import org.joda.money.Money;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.logic.Till;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TillTest {
 
@@ -19,11 +20,12 @@ class TillTest {
 
     @BeforeEach
     public void init() {
-    HashMap<Money, Integer> testDenominations = new HashMap<Money, Integer>();
-    testTill = new Till(testDenominations);
+        HashMap<Money, Integer> testDenominations = new HashMap<Money, Integer>();
+        testTill = new Till(testDenominations);
     }
 
-    @Test void testInitialiseUsingList() {
+    @Test
+    void testInitialiseUsingList() {
         ArrayList<Money> moneyList = new ArrayList<Money>();
         HashMap<Money, Integer> expectedMap = new HashMap<Money, Integer>();
         expectedMap.put(testMoney10, 0);
@@ -33,6 +35,7 @@ class TillTest {
         Till testTillList = new Till(moneyList);
         assertEquals(expectedMap, testTillList.getDenominations());
     }
+
     @Test
     public void testAddNewDenomination() {
         Money testMoney30 = Money.parse("NZD 30.00");
@@ -67,7 +70,7 @@ class TillTest {
     @Test
     public void testTotalValueMultipleDenominations() {
         testTill.addDenomination(testMoney20, 5);
-        assertEquals( Money.parse("NZD 100.00"), testTill.totalValue());
+        assertEquals(Money.parse("NZD 100.00"), testTill.totalValue());
         testTill.addDenomination(testMoney10, 2);
         assertEquals(Money.parse("NZD 120.00"), testTill.totalValue());
     }

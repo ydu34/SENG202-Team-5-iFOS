@@ -1,15 +1,11 @@
 package seng202.group5.information;
 
 import org.joda.money.Money;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import seng202.group5.information.DietEnum;
-import seng202.group5.information.Ingredient;
-import static org.junit.jupiter.api.Assertions.*;
 
 import static org.joda.money.Money.parse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerTest {
 
@@ -89,7 +85,6 @@ class CustomerTest {
         Money result = customer.discount(9, validCash, Money.parse("NZD " + 0.01 * customerSettings.getPointValue()));
         assertEquals(1, customer.getPurchasePoints());
     }
-
 
 
     @Test

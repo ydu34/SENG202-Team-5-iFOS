@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.*;
+import seng202.group5.AppEnvironment;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.information.*;
 import seng202.group5.logic.Order;
@@ -21,9 +21,14 @@ import java.util.HashSet;
 
 /**
  * A class that sets up the application and starts it
+ *
  * @author Daniel Harris, Shivin Gaba, Yu Duan, James Kwok, Tasman Berry ,Michael Morgoun
  */
 public class GuiManager extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     /**
      * Starts the application
@@ -107,7 +112,7 @@ public class GuiManager extends Application {
         MenuItem vegeBurger = new MenuItem("Vege Burger", testRecipe2, Money.parse("NZD 7"), true, TypeEnum.MAIN);
         vegeBurger.setImageString("vege_burger.jpg");
         environment.getMenuManager().getItemMap().put(vegeBurger.getID(), vegeBurger);
-        
+
 
         environment.getOrderManager().newOrder();
 
@@ -117,15 +122,11 @@ public class GuiManager extends Application {
             environment.getFinance().pay(new ArrayList<>() {{
                                              add(Money.parse("NZD 100.00"));
                                          }},
-                                         LocalDateTime.now(),
-                                         tempOrder);
+                    LocalDateTime.now(),
+                    tempOrder);
         } catch (InsufficientCashException e) {
             e.printStackTrace();
         }
 
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

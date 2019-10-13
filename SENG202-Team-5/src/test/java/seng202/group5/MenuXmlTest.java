@@ -5,12 +5,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seng202.group5.AppEnvironment;
-import seng202.group5.Database;
 import seng202.group5.information.DietEnum;
-import seng202.group5.information.TypeEnum;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.MenuManager;
 
 import javax.xml.bind.JAXBException;
@@ -80,6 +78,12 @@ public class MenuXmlTest {
         }
     }
 
+    @AfterAll
+    public static void teardown() {
+        File file = new File(testDirectory + "/menu.xml");
+        file.delete();
+    }
+
     @BeforeEach
     public void testUnmarshallMenu() {
         try {
@@ -126,12 +130,6 @@ public class MenuXmlTest {
     public void testMenuItemIdIsInMenuManager() {
         String id = menuManager.getItemMap().get("1222").getID();
         assertEquals("1222", id);
-    }
-
-    @AfterAll
-    public static void teardown() {
-        File file = new File(testDirectory + "/menu.xml");
-        file.delete();
     }
 
     @Test

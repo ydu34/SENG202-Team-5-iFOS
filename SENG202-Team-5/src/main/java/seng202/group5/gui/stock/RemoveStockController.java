@@ -1,7 +1,6 @@
 package seng202.group5.gui.stock;
 
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -77,6 +76,7 @@ public class RemoveStockController extends GeneralController {
 
     /**
      * Sets the ingredient to the one that is being removed.
+     *
      * @param ingredient1 The ingredient being removed.
      */
     public void setIngredient(Ingredient ingredient1) {
@@ -85,7 +85,10 @@ public class RemoveStockController extends GeneralController {
 
     /**
      * Sets the stock.
+     *
      * @param newStock The stock of the system.
      */
-    public void setStock(Stock newStock) { stock = newStock; }
+    public void setStock(Stock newStock) {
+        stock = newStock;
+    }
 }

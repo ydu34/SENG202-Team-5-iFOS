@@ -10,7 +10,10 @@ import javax.xml.bind.annotation.*;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Finance class records order history, refunds past orders and calculates change.
@@ -22,14 +25,6 @@ import java.util.*;
 public class Finance {
 
     /**
-     * An ID generator stored here so that it is kept persistent across the application
-     */
-    @XmlElement
-    private IDGenerator generator = new IDGenerator();
-
-    private HashMap<String, Transaction> transactionHistory;
-
-    /**
      * A list of cash denominations available
      */
     @XmlTransient
@@ -37,9 +32,15 @@ public class Finance {
             Money.parse("NZD 50.00"), Money.parse("NZD 20.00"), Money.parse("NZD 10.00"),
             Money.parse("NZD 5.00"), Money.parse("NZD 2.00"), Money.parse("NZD 1.00"),
             Money.parse("NZD 0.50"), Money.parse("NZD 0.20"), Money.parse("NZD 0.10")));
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+    @XmlElement
+    private IDGenerator generator = new IDGenerator();
+    private HashMap<String, Transaction> transactionHistory;
     @XmlElement
     private Till till;
-    
+
 
     public Finance() {
         transactionHistory = new HashMap<>();
@@ -70,31 +71,29 @@ public class Finance {
      * Saves order to database and returns a list of notes to return as change.
      *
      * @param amountPayed a list of Money representing the coins payed
-     * @param datetime        the Date and time the order occurred at
-     * @param order     the order that is being paid for
+     * @param datetime    the Date and time the order occurred at
+     * @param order       the order that is being paid for
      * @return a list of Money representing coins to give as change in descending size order
      * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
      */
     public ArrayList<Money> pay(ArrayList<Money> amountPayed, LocalDateTime datetime, Order order) throws InsufficientCashException {
+        if (!enoughMoney(amountPayed, order)) throw new InsufficientCashException("Not enough cash in till!");
         Money payedSum = Money.parse("NZD 0");
         Money changeSum = Money.parse("NZD 0");
         Money totalCost = order.getTotalCost();
 
-        for (Money money: amountPayed)
-        {
+        for (Money money : amountPayed) {
             payedSum = payedSum.plus(money);
         }
         if (totalCost.isGreaterThan(payedSum) || totalCost.isNegative()) {
             throw new InsufficientCashException();
         }
 
-        for (Money money: amountPayed)
-        {
+        for (Money money : amountPayed) {
             till.addDenomination(money, 1);
         }
         ArrayList<Money> change = calcChange(payedSum.minus(totalCost).rounded(1, RoundingMode.HALF_DOWN));
-        for (Money money: change)
-        {
+        for (Money money : change) {
             changeSum = changeSum.plus(money);
         }
         Transaction transaction = new Transaction(datetime, changeSum, order);
@@ -105,11 +104,12 @@ public class Finance {
 
     /**
      * Checks the till for if there are enough denominations to give change
+     *
      * @param payment The ArrayList of money given from the customer.
-     * @param order The order which the customer is paying for.
+     * @param order   The order which the customer is paying for.
      * @return A boolean saying whether there is enough money in the till to give back change.
      */
-    public boolean enoughMoney(ArrayList<Money> payment, Order order) {
+    private boolean enoughMoney(ArrayList<Money> payment, Order order) {
         // Copy the till so that changes can be made without affecting the main program
         Till copyTill = till.clone();
 

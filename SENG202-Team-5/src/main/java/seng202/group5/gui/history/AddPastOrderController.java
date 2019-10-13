@@ -2,7 +2,6 @@ package seng202.group5.gui.history;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,25 +10,23 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
-import seng202.group5.logic.Order;
 import seng202.group5.gui.AddExtraIngredientController;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.gui.OrderController;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
 import seng202.group5.logic.Stock;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 
 /**
  * A controller for detailing a past order specifically for the history
@@ -197,7 +194,7 @@ public class AddPastOrderController extends OrderController {
     /**
      * Adds the past order to the history
      *
-     * @param event     an event that caused this to happen
+     * @param event an event that caused this to happen
      */
     public void sendPastOrderToHistory(ActionEvent event) {
         HistoryController controller = (HistoryController) changeScreen(event, "/gui/history.fxml");
@@ -207,6 +204,7 @@ public class AddPastOrderController extends OrderController {
 
     /**
      * Returns to the history screen without adding the past order
+     *
      * @param event an event that caused this to happen
      */
     public void returnToHistory(ActionEvent event) {
@@ -217,7 +215,7 @@ public class AddPastOrderController extends OrderController {
      * This method launches the screen for adding extra ingredients to the selected menu item and
      * passes the item and order from the current class to the controller
      *
-     * @param event     an event that caused this to happen
+     * @param event an event that caused this to happen
      */
     @Override
     public void addExtraIngredientScreen(ActionEvent event) {

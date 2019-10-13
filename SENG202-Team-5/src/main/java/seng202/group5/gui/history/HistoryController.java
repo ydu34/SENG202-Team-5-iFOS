@@ -163,7 +163,6 @@ public class HistoryController extends GeneralController {
 
     /**
      * Sets the DateCell creators for the start date picker
-     *
      */
     public void setStartDateUpdater() {
         historyStartDatePicker.setDayCellFactory(picker -> new DateCell() {
@@ -194,7 +193,6 @@ public class HistoryController extends GeneralController {
 
     /**
      * Sets the DateCell creators for the end date picker
-     *
      */
     public void setEndDateUpdater() {
         historyEndDatePicker.setDayCellFactory(picker -> new DateCell() {
@@ -225,7 +223,6 @@ public class HistoryController extends GeneralController {
 
     /**
      * Updates the orders that are visible in the order table
-     *
      */
     public void updateVisibleOrders() {
         LocalDate firstDate = historyStartDatePicker.getValue();

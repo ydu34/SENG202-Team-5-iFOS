@@ -3,10 +3,8 @@ package seng202.group5.logic;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import seng202.group5.IDGenerator;
-import seng202.group5.adapters.LocalDateTimeAdapter;
 import seng202.group5.adapters.MoneyAdapter;
 import seng202.group5.information.Customer;
-import seng202.group5.logic.Stock;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 
@@ -15,8 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -115,26 +111,6 @@ public class Order {
         temporaryStock = tempStock.clone();
     }
 
-
-    /**
-     * Gives a discount to the order based off a percentage given as a parameter.
-     *
-     * @param percentage The percentage of the discount.
-     */
-    public void discount(int percentage) {
-        //TODO refactor the class so it applies the discount passively, should possibly store the discount as an attribute
-        totalCost = totalCost.minus(totalCost.multipliedBy(percentage / 100.0, RoundingMode.UP));
-    }
-
-    /**
-     * Applies a discount to an order.
-     *
-     * @param reduction The amount to be reduced from the order.
-     */
-    public void applyDiscount(Money reduction) {
-        totalCost = totalCost.minus(reduction);
-        }
-
     /**
      * Adds a new item/s to the order and checks the temporaryStock in case there are not enough ingredients
      *
@@ -173,10 +149,9 @@ public class Order {
         }
 
         // Add price of item to total cost
-        totalCost = totalCost.plus(item.calculateFinalCost().multipliedBy(quantity));
+        totalCost = totalCost.plus(item.getTotalCost().multipliedBy(quantity));
         return true;
     }
-
 
 
     /**
@@ -184,7 +159,7 @@ public class Order {
      * it was successful or not.
      *
      * @param item The item that is to be removed from the order.
-     * @param all True if all items are to be removed. If False, then only one item is removed.
+     * @param all  True if all items are to be removed. If False, then only one item is removed.
      * @return The boolean success of the removal.
      */
     public boolean removeItem(MenuItem item, boolean all) {
@@ -211,13 +186,13 @@ public class Order {
                 orderItems.remove(item);
             } else {
                 int oldCount = orderItems.get(item);
-                orderItems.replace(item, oldCount, oldCount -1);
+                orderItems.replace(item, oldCount, oldCount - 1);
                 if (orderItems.get(item) == 0) {
                     orderItems.remove(item);
                 }
             }
             // Minuses the price of the item from the total cost
-            totalCost = totalCost.minus(item.calculateFinalCost().multipliedBy(quantity));
+            totalCost = totalCost.minus(item.getTotalCost().multipliedBy(quantity));
 
             return true;
         } else {
@@ -265,22 +240,13 @@ public class Order {
             MenuItem a = entry.getKey();
             Integer b = entry.getValue();
             outputString.append(format("%d %s(s) - %s\n",
-                                       b,
-                                       a.getItemName(),
-                                       a.calculateFinalCost().multipliedBy(b)));
+                    b,
+                    a.getItemName(),
+                    a.getTotalCost().multipliedBy(b)));
         }
         outputString.append("Total cost - ");
         outputString.append(getTotalCost());
         return outputString.toString();
-    }
-
-    /**
-     * Sets the stock to a clone of the specified stock
-     *
-     * @param stock the new stock to be cloned
-     */
-    public void resetStock(Stock stock) {
-        temporaryStock = stock.clone();
     }
 
     /**
@@ -290,6 +256,15 @@ public class Order {
      */
     public String getId() {
         return id;
+    }
+
+    /**
+     * Sets the id of the order. Not necessary since it creates a new ID when initialised.
+     *
+     * @param id A string ID
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -320,34 +295,47 @@ public class Order {
     }
 
     /**
-     * Returns the discount.
-     * @return A money type discount.
+     * Sets the stock to a clone of the specified stock
+     *
+     * @param stock the new stock to be cloned
      */
-    public Money getDiscount() { return discount; }
+    public void setStock(Stock stock) {
+        temporaryStock = stock.clone();
+    }
 
     /**
-     * Sets the id of the order. Not necessary since it creates a new ID when initialised.
-     * @param id A string ID
+     * Returns the discount.
+     *
+     * @return A money type discount.
      */
-    public void setId(String id) {
-        this.id = id;
+    public Money getDiscount() {
+        return discount;
+    }
+
+    /**
+     * Sets the discount for the order.
+     *
+     * @param tempMoney The money saved.
+     */
+    public void setDiscount(Money tempMoney) {
+        discount = tempMoney;
     }
 
     /**
      * Gets the current customer of the order if they exist.
+     *
      * @return the current customer.
      */
-    public Customer getCurrentCustomer() { return currentCustomer; }
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
 
     /**
      * Sets the current customer.
+     *
      * @param customer The new customer of the order.
      */
-    public void setCurrentCustomer(Customer customer) { currentCustomer = customer; }
-
-    /**
-     * Sets the discount for the order.
-     * @param tempMoney The money saved.
-     */
-    public void setDiscount(Money tempMoney) { discount = tempMoney; }
+    public void setCurrentCustomer(Customer customer) {
+        currentCustomer = customer;
+    }
 }
