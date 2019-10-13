@@ -3,9 +3,11 @@ package seng202.group5.gui.history;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -49,12 +51,15 @@ public class AddPastOrderController extends OrderController {
     /**
      * A picker for the time at which the order was made
      */
-    private JFXTextField timePicker;
+    private JFXTimePicker timePicker;
 
     /**
      * A button to confirm the new past order
      */
     private JFXButton confirmButton;
+
+    @FXML
+    private JFXButton cancelOrderButton;
 
     /**
      * The grid pane on the order screen that is used for the nodes added to the order screen
@@ -101,6 +106,7 @@ public class AddPastOrderController extends OrderController {
     private void setNodeConstraints(Region node) {
         GridPane.setHgrow(node, Priority.ALWAYS);
         GridPane.setVgrow(node, Priority.ALWAYS);
+        GridPane.setMargin(node, new Insets(5, 5, 5, 5));
         node.setMinHeight(Region.USE_PREF_SIZE);
         node.setPrefHeight(40);
         node.setMaxHeight(Region.USE_PREF_SIZE);
@@ -141,40 +147,24 @@ public class AddPastOrderController extends OrderController {
         });
 
         // Creating the time picker
-        timePicker = new JFXTextField();
+        timePicker = new JFXTimePicker();
         setNodeConstraints(timePicker);
-        // This formats the input into a string that matches something like 2:45 am
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-        timePicker.setTextFormatter(new TextFormatter<>(new StringConverter<>() {
-            @Override
-            public String toString(TemporalAccessor temporalAccessor) {
-                return formatter.format(temporalAccessor);
-            }
-
-            @Override
-            public TemporalAccessor fromString(String s) {
-                return formatter.parse(s);
-            }
-        }, formatter.parse(formatter.format(LocalTime.now()))));
+        timePicker.setValue(LocalTime.now());
 
         // Creating the button to confirm the new order
         confirmButton = new JFXButton("Confirm");
-        confirmButton.setOnAction((ActionEvent event) -> sendPastOrderToHistory(event, formatter));
+        confirmButton.setOnAction(this::sendPastOrderToHistory);
         confirmButton.setDisable(true);
         setNodeConstraints(confirmButton);
 
-        // Creating the button to cancel the order
-        Button cancelButton = new JFXButton("Cancel");
-        cancelButton.setOnAction(this::returnToHistory);
-        setNodeConstraints(cancelButton);
+        cancelOrderButton.setOnAction(this::returnToHistory);
 
         // Adding the nodes into the grid pane
-        bottomRightGridPane.addRow(3);
-        bottomRightGridPane.add(datePicker, 0, 3);
-        bottomRightGridPane.add(timePicker, 1, 3);
-        bottomRightGridPane.addRow(4);
-        bottomRightGridPane.add(cancelButton, 0, 4);
-        bottomRightGridPane.add(confirmButton, 1, 4);
+        bottomRightGridPane.addRow(1);
+        bottomRightGridPane.add(datePicker, 0, 1);
+        bottomRightGridPane.add(timePicker, 1, 1);
+        bottomRightGridPane.addRow(2);
+        bottomRightGridPane.add(confirmButton, 0, 2, 2, 1);
 
         // Setting the row constraints of the new rows
         RowConstraints row3 = new RowConstraints();
@@ -210,12 +200,11 @@ public class AddPastOrderController extends OrderController {
      * Adds the past order to the history
      *
      * @param event     an event that caused this to happen
-     * @param formatter the formatter for the time picker
      */
-    public void sendPastOrderToHistory(ActionEvent event, DateTimeFormatter formatter) {
+    public void sendPastOrderToHistory(ActionEvent event) {
         HistoryController controller = (HistoryController) changeScreen(event, "/gui/history.fxml");
         controller.addNewOrder(order, LocalDateTime.of(datePicker.getValue(),
-                                                       LocalTime.from(formatter.parse(timePicker.getText()))));
+                timePicker.getValue()));
     }
 
     /**

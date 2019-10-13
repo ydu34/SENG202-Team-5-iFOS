@@ -2,6 +2,7 @@ package seng202.group5.gui;
 
 //import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -87,7 +88,7 @@ public class OrderController extends GeneralController {
     private TilePane tilePane;
 
     @FXML
-    private MenuButton sortingBox;
+    private JFXComboBox<SortType> sortingBox;
 
     @FXML
     private Text promptText;
@@ -115,7 +116,6 @@ public class OrderController extends GeneralController {
 
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
-
     private SortType sortingType = SortType.NAME;
 
     @Override
@@ -129,6 +129,8 @@ public class OrderController extends GeneralController {
         } catch (NoOrderException e) {
             System.out.println(e);
         }
+        sortingBox.setItems(FXCollections.observableArrayList(SortType.values()));
+        sortingBox.setValue(sortingType);
 
         currentOrderTable();
         orderIDText.setText(currentOrder.getId());
@@ -158,19 +160,25 @@ public class OrderController extends GeneralController {
      * @param event an event that caused this to happen
      */
 
-    public void sortItemsPrice(ActionEvent event) {
-        sortingType = SortType.PRICE;
+    public void sortItems(ActionEvent event) {
+        sortingType = sortingBox.getValue();
         filterItems();
     }
 
-    /**
-     * Tis function sorts the menu items by its name
-     * @param event an event that caused this to happen
-     */
+    private enum SortType {
+        NAME,
+        PRICE;
 
-    public void sortItemsName(ActionEvent event) {
-        sortingType = SortType.NAME;
-        filterItems();
+        public String toString() {
+            switch (this) {
+                case NAME:
+                    return "Name";
+                case PRICE:
+                    return "Price";
+                default:
+                    return "";
+            }
+        }
     }
 
     /**
@@ -378,11 +386,6 @@ public class OrderController extends GeneralController {
 
         }
         pseudoInitialize();
-    }
-
-    private enum SortType {
-        NAME,
-        PRICE
     }
 
 

@@ -28,6 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.AdminController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="800.0" />
@@ -277,16 +278,13 @@
                                                 <Insets />
                                             </GridPane.margin>
                                         </Text>
-                                        <MenuButton fx:id="dataMergeTypeMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Data Merge Type" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeOverwriteAll" text="Overwrite: Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)" />
-                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeMergePreferNew" text="Merge and replace with imported data: Merge existing data with imported data and replace conflicting data with imported data" />
-                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeMergePreferOld" text="Merge and keep data in application: Merge imported data with existing data and keep existing data when conflicts occurs" />
-                                            </items>
+                                        <JFXComboBox fx:id="dataMergeTypeMenu" GridPane.columnSpan="3"
+                                                     GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                                                     GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                                             </GridPane.margin>
-                                        </MenuButton>
+                                        </JFXComboBox>
                                         <JFXButton fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="40.0" prefWidth="200.0" text="Import Data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets />

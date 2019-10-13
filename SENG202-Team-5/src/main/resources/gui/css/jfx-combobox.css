@@ -13,3 +13,23 @@
 .choice-box .arrow {
     -fx-background-color: rgba(242, 239, 223, 1.0);
 }
+
+.jfx-combo-box {
+    -jfx-focus-color: #ed6b58;
+    -jfx-unfocus-color: #f9ac68;
+    -fx-background-color: #ECE6CE;
+}
+
+.jfx-combo-box .cell {
+    -fx-prompt-text-fill: rgba(58, 62, 89, 1);
+    -fx-text-fill: rgba(58, 62, 89, 1);
+    -fx-highlight-fill: #3399ff;
+}
+
+.jfx-combo-box .cell:filled:selected {
+    -fx-background-color: #ed6b58;
+}
+
+.jfx-combo-box .cell:filled:hover {
+    -fx-background-color: #f9ac68;
+}
