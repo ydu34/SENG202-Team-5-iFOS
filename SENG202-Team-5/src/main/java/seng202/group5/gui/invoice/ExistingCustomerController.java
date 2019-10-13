@@ -32,19 +32,19 @@ public class ExistingCustomerController extends GeneralController {
      * The column for IDs.
      */
     @FXML
-    private TableColumn<Customer, String> rowID;
+    private TableColumn<Customer, String> colID;
 
     /**
      * The column for the names.
      */
     @FXML
-    private TableColumn<Customer, String> rowName;
+    private TableColumn<Customer, String> colName;
 
     /**
      * The column for the phone numbers.
      */
     @FXML
-    private TableColumn<Customer, String> rowPhoneNumber;
+    private TableColumn<Customer, String> colPhoneNumber;
 
     /**
      * The search bar for the name.
@@ -101,9 +101,9 @@ public class ExistingCustomerController extends GeneralController {
         ObservableList<Customer> customersList = FXCollections.observableArrayList(
                 customers.getCustomerList());
 
-        rowID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        rowName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        rowPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        colID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         customerTable.setItems(customersList);
     }
