@@ -27,9 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-          minHeight="600.0" minWidth="800.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@css/ifos-theme.css"
-          xmlns="http://javafx.com/javafx/11.0.1" fx:controller="seng202.group5.gui.admin.AdminController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@css/ifos-theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.group5.gui.admin.AdminController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="800.0" />
     </columnConstraints>
@@ -303,10 +301,10 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To import the data you have previously exported, you must select all data one by one. You must locate and select stock.xml, menu.xml and finance.xml. Then you must press the Import Data button for the data to be imported to the system." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To import the data you have previously exported, you must select the data to import one by one. Then you must press the Import Data button for the data to be imported to the system." textAlignment="JUSTIFY" wrappingWidth="800.0" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
@@ -375,7 +373,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                     </children>
@@ -392,8 +390,8 @@
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                                        <RowConstraints vgrow="SOMETIMES"/>
-                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Images Folder " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -401,7 +399,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select the folder where you store images for the menu items" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -409,24 +407,19 @@
                                                 <Font size="18.0" />
                                             </font>
                                         </Text>
-                                        <HBox alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                                              GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                        <HBox alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                                             <children>
-                                                <JFXTextField fx:id="imageLocation" alignment="CENTER" editable="false"
-                                                              promptText="Default - Stored in program folder"
-                                                              HBox.hgrow="ALWAYS">
+                                                <JFXTextField fx:id="imageLocation" alignment="CENTER" editable="false" promptText="Default - Stored in program folder" HBox.hgrow="ALWAYS">
                                                     <HBox.margin>
-                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </HBox.margin>
                                                 </JFXTextField>
-                                                <JFXButton fx:id="selectImagesFolderButton" alignment="CENTER"
-                                                           contentDisplay="CENTER" mnemonicParsing="false"
-                                                           onAction="#selectImagesFolder" text="Select Images Folder">
+                                                <JFXButton fx:id="selectImagesFolderButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectImagesFolder" text="Select Images Folder">
                                                     <cursor>
-                                                        <Cursor fx:constant="HAND"/>
+                                                        <Cursor fx:constant="HAND" />
                                                     </cursor>
                                                     <HBox.margin>
-                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </HBox.margin>
                                                 </JFXButton>
                                             </children>
@@ -438,11 +431,10 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0"
-                                                        vgrow="ALWAYS"/>
-                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS"/>
-                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
+                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="ALWAYS" />
+                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+                                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+                                        <RowConstraints vgrow="ALWAYS" />
                                     </rowConstraints>
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -450,7 +442,7 @@
                                                 <Font size="40.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                         <JFXButton fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="40.0" prefWidth="200.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -461,23 +453,20 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXButton>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To export the data from the system, press the Export Data button. This will lead you to select the directory to store the data." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To export the data from the system, press the Export Data button. This will lead you to select the directory to store the data." textAlignment="JUSTIFY" wrappingWidth="800.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
-                                        <Text fx:id="exportNotificationText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              textAlignment="CENTER" wrappingWidth="794.13671875"
-                                              GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                              GridPane.valignment="CENTER">
+                                        <Text fx:id="exportNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                             <font>
-                                                <Font size="26.0"/>
+                                                <Font size="26.0" />
                                             </font>
                                             <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Text>
                                     </children>
