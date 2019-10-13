@@ -117,15 +117,14 @@ public class ExistingCustomerController extends GeneralController {
         deleteMenu.getItems().add(deleteMenuItem);
 
         customerTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
+            // Mouse Listeners for a double click, a right click and nothing
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // Mouse Listeners for a double click, a right click and nothing
                 if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                     deleteMenu.show(customerTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
                 } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && customerTable.getSelectionModel().getSelectedItem() != null) {
                     selectCustomer();
-                }
-                else {
+                } else {
                     deleteMenu.hide();
                 }
             }

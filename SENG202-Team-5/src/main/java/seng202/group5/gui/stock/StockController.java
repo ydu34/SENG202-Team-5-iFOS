@@ -3,12 +3,16 @@ package seng202.group5.gui.stock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -139,6 +143,9 @@ public class StockController extends GeneralController {
         stockTable.getSortOrder().add(columnID);
         stockTable.sort();
 
+        // Mouse listener for the context menu
+        initialiseContextMenu();
+
         // If the order is in progress, the stock can't be modified
         if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
             warningLabel.setFill(Color.RED);
@@ -163,6 +170,49 @@ public class StockController extends GeneralController {
                 stockTable.getItems().add(ingredient);
             }
         }
+    }
+
+    /**
+     * Initialises the context menu for the stock table.
+     */
+    private void initialiseContextMenu() {
+        // Creating the ContextMenu and MenuItems
+        ContextMenu cm = new ContextMenu();
+        MenuItem modifyItem = new MenuItem("Modify");
+        MenuItem deleteItem = new MenuItem("Delete");
+        cm.getItems().add(modifyItem);
+        cm.getItems().add(deleteItem);
+
+        // Creating the Handler for MouseEvents
+        stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
+            // Shows cm if right clicked, or goes straight to modify if double clicked.
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    cm.show(stockTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && stockTable.getSelectionModel().getSelectedItem() != null) {
+                    modifyIngredient();
+                } else {
+                    cm.hide();
+                }
+            }
+        });
+
+        // Modifies ingredient if selected.
+        modifyItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                modifyIngredient();
+            }
+        });
+
+        // Deletes ingredient if selected.
+        deleteItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                removeIngredient();
+            }
+        });
     }
 
     /**
