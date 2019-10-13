@@ -482,9 +482,9 @@
                     <content>
                         <BorderPane>
                             <center>
-                                <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+                                <GridPane alignment="CENTER" prefHeight="880.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
                                     <children>
-                                        <Spinner fx:id="spinner10c" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                        <Spinner fx:id="spinner10c" prefHeight="50.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -492,12 +492,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="10c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="0">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="73.0" prefWidth="132.0" text="10c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner20c" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <Spinner fx:id="spinner20c" prefHeight="68.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -505,12 +508,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="20c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="144.0" prefWidth="132.0" text="20c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner50c" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Spinner fx:id="spinner50c" prefHeight="39.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -518,12 +524,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="50c" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="161.0" prefWidth="132.0" text="50c" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner1d" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <Spinner fx:id="spinner1d" prefHeight="55.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -531,12 +540,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$1" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="138.0" prefWidth="132.0" text="\$1" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner2d" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Spinner fx:id="spinner2d" prefHeight="60.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -544,12 +556,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$2" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="104.0" prefWidth="132.0" text="\$2" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner5d" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                        <Spinner fx:id="spinner5d" prefHeight="43.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -557,12 +572,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$5" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="96.0" prefWidth="132.0" text="\$5" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="8">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner10d" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                        <Spinner fx:id="spinner10d" prefHeight="40.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="9">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -570,12 +588,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$10" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="84.0" prefWidth="132.0" text="\$10" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="9">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner20d" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                        <Spinner fx:id="spinner20d" prefHeight="36.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="10">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -583,12 +604,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$20" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="7">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="132.0" text="\$20" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="10">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner50d" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                        <Spinner fx:id="spinner50d" prefHeight="36.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="11">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -596,12 +620,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$50" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="8">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="132.0" text="\$50" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="11">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <Spinner fx:id="spinner100d" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                        <Spinner fx:id="spinner100d" prefHeight="37.0" prefWidth="171.0" GridPane.columnIndex="2" GridPane.rowIndex="12">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -609,12 +636,15 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </Spinner>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="\$100" textAlignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="9">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="52.0" prefWidth="132.0" text="\$100" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="12">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
                                         </Label>
-                                        <JFXButton maxWidth="1.7976931348623157E308" onAction="#resetTill" text="Reset Till" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
+                                        <JFXButton maxWidth="1.7976931348623157E308" onAction="#resetTill" prefHeight="73.0" prefWidth="332.0" text="Reset Till" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="13">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
@@ -624,21 +654,28 @@
                                         </JFXButton>
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                              <ColumnConstraints maxWidth="92.0" minWidth="8.0" prefWidth="8.0" />
+                                        <ColumnConstraints maxWidth="142.0" minWidth="-Infinity" prefWidth="142.0" />
                                         <ColumnConstraints />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
-                                        <RowConstraints />
+                              <RowConstraints maxHeight="46.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="46.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="46.0" minHeight="0.0" prefHeight="29.0" />
+                                        <RowConstraints maxHeight="62.0" minHeight="34.0" prefHeight="47.0" />
+                                        <RowConstraints maxHeight="61.0" minHeight="26.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="60.0" minHeight="33.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="51.0" minHeight="42.0" prefHeight="50.0" />
+                                        <RowConstraints maxHeight="54.0" minHeight="39.0" prefHeight="45.0" />
+                                        <RowConstraints maxHeight="49.0" minHeight="31.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="69.0" minHeight="27.0" prefHeight="46.0" />
+                                        <RowConstraints maxHeight="72.0" minHeight="36.0" prefHeight="45.0" />
+                                        <RowConstraints maxHeight="75.0" minHeight="37.0" prefHeight="44.0" />
+                                        <RowConstraints maxHeight="86.0" minHeight="36.0" prefHeight="43.0" />
+                                        <RowConstraints maxHeight="105.0" minHeight="0.0" prefHeight="85.0" />
+                              <RowConstraints maxHeight="70.0" minHeight="0.0" prefHeight="9.0" />
+                              <RowConstraints maxHeight="43.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="29.0" minHeight="0.0" prefHeight="0.0" />
                                     </rowConstraints>
                                 </GridPane>
                             </center>
