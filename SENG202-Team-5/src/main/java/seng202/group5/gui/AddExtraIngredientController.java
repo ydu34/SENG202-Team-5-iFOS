@@ -80,7 +80,11 @@ public class AddExtraIngredientController extends GeneralController {
 
     private Set<Ingredient> selectedIngredientSet;
 
+    private boolean isConfirmed = true;
+
     private ObservableList<Ingredient> itemIngredients;
+
+    private MenuItem oldItemRef;
 
     int numberOfItems;
 
@@ -107,7 +111,11 @@ public class AddExtraIngredientController extends GeneralController {
         columnWarning.setCellValueFactory(data -> {
             HashSet<DietEnum> dietInconsistencySet =
                     selectedItem.getRecipe().checkInconsistency(data.getValue());
-            return new SimpleStringProperty((dietInconsistencySet.toString()));
+                    if (dietInconsistencySet.size() == 0) {
+                        return new SimpleStringProperty((""));
+                    } else {
+                        return new SimpleStringProperty((dietInconsistencySet.toString()));
+                    }
         });
         columnQuantity.setCellValueFactory(data -> {
             int quantity = updatedStock.getIngredientStock().get(data.getValue().getID());
@@ -118,30 +126,6 @@ public class AddExtraIngredientController extends GeneralController {
             Money cost = updatedStock.getIngredients().get(data.getValue().getID()).getCost();
             return new SimpleStringProperty(cost.toString());
         });
-    }
-
-    /**
-     * Opens the warning screen when a user tries to add an ingredient which doesn't meet an items dietary requirements.
-     */
-    public void addItemPrompt(Ingredient ingredient, HashSet<DietEnum> brokenDietEnums) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addItemWarning.fxml"));
-            Parent root = loader.load();
-            AddItemWarningController controller = loader.getController();
-            controller.setParentController(this);
-            controller.setCurrentIngredient(ingredient);
-            controller.setDietRequirements(brokenDietEnums);
-            controller.pseudoInitialize();
-
-            Stage stage = new Stage();
-            stage.setTitle("Dietary Requirement Not Met");
-            stage.setScene(new Scene(root, 800, 600));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(backButton.getScene().getWindow());
-            stage.showAndWait();
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
     }
 
     /**
@@ -188,13 +172,36 @@ public class AddExtraIngredientController extends GeneralController {
                                 selectedItem.getRecipe().addIngredient(ingredient, newValue - oldValue);
                             }
                     });
-
                     setGraphic(spinner);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 }
             }
         });
     }
+
+    /**
+     * Opens the warning screen when a user tries to add an ingredient which doesn't meet an items dietary requirements.
+     */
+    public void addItemPrompt(HashSet<DietEnum> brokenDietEnums) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addItemWarning.fxml"));
+            Parent root = loader.load();
+            AddItemWarningController controller = loader.getController();
+            controller.setParentController(this);
+            controller.setDietRequirements(brokenDietEnums);
+            controller.pseudoInitialize();
+
+            Stage stage = new Stage();
+            stage.setTitle("Dietary Requirement Not Met");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(backButton.getScene().getWindow());
+            stage.showAndWait();
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+    }
+
 
     /**
      * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
@@ -205,21 +212,36 @@ public class AddExtraIngredientController extends GeneralController {
         switch (openMode) {
             case "Order": {
                 MenuItem originalItem = getOriginalItem();
-                if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
-                    selectedItem.setEdited(false);
+                HashSet<DietEnum> remainingRequirements = oldItem.getRecipe().getDietaryInformation();
+                HashSet<DietEnum> allRequirements = new HashSet<>();
+                for (DietEnum dietEnum : DietEnum.values()) {
+                    allRequirements.add(dietEnum);
+                }
+                allRequirements.retainAll(selectedItem.getRecipe().getDietaryInformation());
+                remainingRequirements.removeAll(allRequirements);
+                if (remainingRequirements.size() != 0) {
+                    addItemPrompt(remainingRequirements);
+                }
+
+                if (isConfirmed) {
+                    if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {
+                        selectedItem.setEdited(false);
+                    } else {
+                        selectedItem.setEdited(true);
+                    }
+
+                    if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
+                        currentOrder.removeItem(oldItemRef, false);
+                        currentOrder.addItem(selectedItem, 1);
+                    }
+
+                    OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
+                    controller.setCurrentOrder(currentOrder);
+                    controller.setMenuItem(selectedItem);
+                    controller.populateIngredientsTable();
                 } else {
-                    selectedItem.setEdited(true);
+                    isConfirmed = true;
                 }
-
-                if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {
-                    currentOrder.removeItem(oldItem, false);
-                    currentOrder.addItem(selectedItem, 1);
-                }
-
-                OrderController controller = (OrderController) changeScreen(actionEvent, "/gui/order.fxml");
-                controller.setCurrentOrder(currentOrder);
-                controller.setMenuItem(selectedItem);
-                controller.populateIngredientsTable();
                 break;
             }
             case "Recipe": {
@@ -285,7 +307,8 @@ public class AddExtraIngredientController extends GeneralController {
     }
 
     public void setMenuItem(MenuItem newItem) {
-        oldItem = newItem;
+        oldItemRef = newItem;
+        oldItem = newItem.clone();
         selectedItem = newItem.clone();
     }
     public void setCurrentOrder(Order tempOrder) {
@@ -335,6 +358,10 @@ public class AddExtraIngredientController extends GeneralController {
 
     protected Order getCurrentOrder() {
         return currentOrder;
+    }
+
+    public void setIsConfirmed(boolean tempIsConfirmed) {
+        isConfirmed = tempIsConfirmed;
     }
 
 }

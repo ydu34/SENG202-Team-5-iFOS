@@ -35,9 +35,9 @@ public class AddItemWarningController {
      */
     @FXML
     public void pseudoInitialize() {
-        warningText.setText("Warning: The ingredient " + currentIngredient.getName() + " you are trying to add " +
-                "breaks the following dietary requirements of the item: " +
-                brokenEnumSet);
+        warningText.setText("Warning: The ingredients you are trying to add " +
+                "breaks the following dietary requirements: \n" + brokenEnumSet +
+                "\n are you sure you want to add them?");
     }
 
     /**
@@ -45,16 +45,22 @@ public class AddItemWarningController {
      */
     public void closeScreen() {
         Stage stage = (Stage) backButton.getScene().getWindow();
-
+        parentController.setIsConfirmed(false);
         stage.close();
     }
 
-    public void setParentController(AddExtraIngredientController tempParentController) {
-        parentController = tempParentController;
+
+    /**
+     * Sends confirmation to the parent controller if the item is to be added to the menu.
+     */
+    public void confirmItem() {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
     }
 
-    public void setCurrentIngredient(Ingredient tempIngredient) {
-        currentIngredient = tempIngredient;
+
+    public void setParentController(AddExtraIngredientController tempParentController) {
+        parentController = tempParentController;
     }
 
     public void setDietRequirements(HashSet<DietEnum> tempBrokenEnumSet) {

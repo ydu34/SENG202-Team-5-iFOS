@@ -114,6 +114,7 @@ public class Recipe {
             notRetainedDietaryInfo.add(value);
         }
         HashSet<DietEnum> ingredientDietInfo = ingredientToBeAdded.getDietInfo();
+        notRetainedDietaryInfo.retainAll(getDietaryInformation());
         notRetainedDietaryInfo.removeAll(ingredientDietInfo);
         return notRetainedDietaryInfo;
     }
