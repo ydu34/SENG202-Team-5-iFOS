@@ -65,7 +65,17 @@ public class Database {
 
     public static void main(String[] args) {
         Database thing = new Database();
-        thing.loadAppData();
+        AppEnvironment other = new AppEnvironment(false);
+        thing.saveFileLocation = "";
+        thing.autosaveEnabled = false;
+        thing.autoloadEnabled = true;
+        thing.overwriteSetting = OverwriteType.MERGE_PREFER_NEW;
+        thing.setAppEnvironment(other);
+        try {
+            thing.customersXmlToObject(thing.getDefaultLocation());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Database() {
@@ -317,17 +327,17 @@ public class Database {
                     break;
                 case MERGE_PREFER_NEW:
                     for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {
-                        if (!tempCustomerIDs.contains(entry.getID())) {
+                        if (tempCustomerIDs.contains(entry.getID())) {
+                            tempCustomers.getCustomerList().forEach(customer -> {
+                                if (customer.getID().equals(entry.getID())) { tempCustomers.getCustomerList().remove(customer); }
+                            });
                             tempCustomers.add(entry);
                         }
                     }
                     break;
                 case MERGE_PREFER_OLD:
                     for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {
-                        if (tempCustomerIDs.contains(entry.getID())) {
-                            tempCustomers.getCustomerList().forEach(customer -> {
-                                if (customer.getID().equals(entry.getID())) { tempCustomers.getCustomerList().remove(customer); }
-                            });
+                        if (!tempCustomerIDs.contains(entry.getID())) {
                             tempCustomers.add(entry);
                         }
                     }
@@ -490,5 +500,6 @@ public class Database {
     public void setAppEnvironment(AppEnvironment appEnvironment) {
         this.appEnvironment = appEnvironment;
     }
+
 
 }

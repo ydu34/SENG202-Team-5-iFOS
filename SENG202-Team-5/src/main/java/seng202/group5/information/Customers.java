@@ -15,18 +15,12 @@ import java.util.ArrayList;
 public class Customers {
 
     @XmlElement
-    private ArrayList<Customer> customerList;
+    private ArrayList<Customer> customerList = new ArrayList<>();
 
-    public Customers() {
-        customerList = new ArrayList<>();
-    }
+    public Customers() {    }
 
     public void add(Customer customer) {
         customerList.add(customer);
-    }
-
-    public void setCustomerList(ArrayList<Customer> tempCustomerSet) {
-        customerList = tempCustomerSet;
     }
 
     public ArrayList<Customer> getCustomerList() {
