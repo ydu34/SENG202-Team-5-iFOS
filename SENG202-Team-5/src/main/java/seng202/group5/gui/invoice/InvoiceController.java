@@ -541,6 +541,7 @@ public class InvoiceController extends GeneralController {
     private void cancelOrder() {
         clearPayment();
         remainingCostLabel.setText("$0.00");
+        totalPayedLabel.setText("$0.00");
 
         currentOrder = getAppEnvironment().getOrderManager().getOrder();
         currentOrder.resetStock(getAppEnvironment().getStock());
