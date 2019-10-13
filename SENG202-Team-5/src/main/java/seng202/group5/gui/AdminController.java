@@ -513,6 +513,7 @@ public class AdminController extends GeneralController {
             finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
+            recipeTableInitialize();
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
         }
