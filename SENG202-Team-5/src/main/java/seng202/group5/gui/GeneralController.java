@@ -1,7 +1,6 @@
 package seng202.group5.gui;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,17 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import seng202.group5.AppEnvironment;
 
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -143,7 +138,7 @@ public class GeneralController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/password.fxml"));
             Parent root = loader.load();
 
-            passwordController controller = loader.getController();
+            PasswordController controller = loader.getController();
             controller.setSource(this);
             controller.setEvent(event);
 
@@ -151,7 +146,7 @@ public class GeneralController {
 
             Stage stage = new Stage();
             stage.setTitle("Enter the password");
-            stage.setScene(new Scene(root, 601, 432));
+            stage.setScene(new Scene(root, 555, 432));
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.showAndWait();
