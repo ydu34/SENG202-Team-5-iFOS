@@ -136,6 +136,7 @@ public class GeneralController {
     public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
         changeScreen(actionEvent, "/gui/admin.fxml");
     }
+
     @FXML
     private void launchPasswordScreen(javafx.event.ActionEvent event) {
         try {
@@ -146,8 +147,7 @@ public class GeneralController {
             controller.setSource(this);
             controller.setEvent(event);
 
-            controller.setPassword(getAppEnvironment().getPassword());
-
+            controller.setPasswordChecker(passwordHash -> appEnvironment.getDatabase().validatePassword(passwordHash));
 
             Stage stage = new Stage();
             stage.setTitle("Enter the password");

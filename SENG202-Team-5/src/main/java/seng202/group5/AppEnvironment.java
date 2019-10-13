@@ -22,12 +22,6 @@ public class AppEnvironment {
     private IDGenerator idGenerator;
     private String imagesFolderPath;
     private Database database;
-    /**
-     * Default password when the app is launched for the first time.
-     * The detail about this password would also be mentioned in the user manual as well.
-     */
-    private int password = "1111".hashCode();
-
 
     /**
      * The constructor for AppEnvironment
@@ -143,14 +137,6 @@ public class AppEnvironment {
 
     public void setImagesFolderPath(String imagesFolderPath) {
         this.imagesFolderPath = imagesFolderPath;
-    }
-
-    public int getPassword(){
-        return password;
-    }
-
-    public void setPassword(int newPassword){
-        password = newPassword;
     }
 
 }
