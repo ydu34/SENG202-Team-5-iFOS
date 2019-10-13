@@ -18,8 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Recipe;
@@ -124,11 +122,7 @@ public class OrderController extends GeneralController {
         allItems = new ArrayList<>();
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
         filterItems();
-        try {
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
-        } catch (NoOrderException e) {
-            System.out.println(e);
-        }
+        currentOrder = getAppEnvironment().getOrderManager().getOrder();
         sortingBox.setItems(FXCollections.observableArrayList(SortType.values()));
         sortingBox.setValue(sortingType);
 
@@ -330,10 +324,11 @@ public class OrderController extends GeneralController {
             promptText.setFill(Color.GREEN);
             currentOrderTable();
             setMenuItem(item);
-       } else {
-           promptText.setText("Some ingredients are low in stock!!\n" + item.getItemName() +  " was not added to the current order");
-           promptText.setFill(Color.RED);
-       }
+        } else {
+            promptText.setText("Some ingredients are low in stock!\n" + item.getItemName() + " was not added to the current order");
+            promptText.setFill(Color.RED);
+        }
+        totalCostDisplay.setText(currentOrder.getTotalCost().toString());
     }
 
     /**
@@ -378,13 +373,9 @@ public class OrderController extends GeneralController {
      */
     @FXML
     private void cancelCurrentOrder() {
-        try {
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentOrder.resetStock(getAppEnvironment().getStock());
-            currentOrder.clearItemsInOrder();
-        } catch (NoOrderException ignored) {
-
-        }
+        currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        currentOrder.resetStock(getAppEnvironment().getStock());
+        currentOrder.clearItemsInOrder();
         pseudoInitialize();
     }
 
@@ -411,6 +402,7 @@ public class OrderController extends GeneralController {
      */
     protected void setCurrentOrder(Order order) {
         currentOrder = order;
+        currentOrderTable();
     }
 
     /**

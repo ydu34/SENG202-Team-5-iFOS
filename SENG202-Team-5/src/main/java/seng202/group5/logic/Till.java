@@ -95,8 +95,7 @@ public class Till {
             int count = denominations.get(moneyKey);
             moneyArrayList.add(moneyKey.multipliedBy(count));
         }
-        Money totalSum = Money.total(moneyArrayList);
-        return totalSum;
+        return Money.total(moneyArrayList);
     }
 
     public HashMap<Money, Integer> getDenominations() {
@@ -109,7 +108,7 @@ public class Till {
      * @return A new till with a copy of the denominations.
      */
     public Till clone() {
-        return new Till((HashMap<Money, Integer>) denominations.clone());
+        return new Till(new HashMap<>(denominations));
     }
 
 }

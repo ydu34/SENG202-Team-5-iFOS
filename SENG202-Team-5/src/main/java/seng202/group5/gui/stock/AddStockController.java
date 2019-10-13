@@ -1,11 +1,8 @@
 package seng202.group5.gui.stock;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,60 +14,92 @@ import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
 import seng202.group5.logic.Stock;
 
-import javax.naming.directory.InvalidAttributeValueException;
-import java.awt.*;
 import java.util.HashSet;
 
 /**
- * A controller for a screen that adds ingredients to the stock
+ * A controller for a screen that adds ingredients to the stock.
  *
  * @author Michael Morgoun
  */
 public class AddStockController extends GeneralController {
 
+    /**
+     * The button for which the final creation is made.
+     */
     @FXML
     private JFXButton createButton;
 
+    /**
+     * The name field of the ingredient.
+     */
     @FXML
     private TextField nameField;
 
-    @FXML
-    private TextField unitField;
-
+    /**
+     * The category field for the ingredient.
+     */
     @FXML
     private TextField categoryField;
 
+    /**
+     * The cost field for the ingredient.
+     */
     @FXML
     private TextField costField;
 
+    /**
+     * The quantity field for the ingredient.
+     */
     @FXML
     private TextField quantityField;
 
+    /**
+     * The warning label which shows when a field is missing.
+     */
     @FXML
     private Label warningLabel;
 
+    /**
+     * A check for a vegan ingredient.
+     */
     @FXML
     private CheckBox veganCheck;
 
+    /**
+     * A check for a vegetarian ingredient.
+     */
     @FXML
     private CheckBox vegetarianCheck;
 
+    /**
+     * A check for a gluten free ingredient.
+     */
     @FXML
     private CheckBox glutenFreeCheck;
 
+    /**
+     * The stock of the system.
+     */
     private Stock stock;
 
+    /**
+     * The current ingredient being modifed, or made.
+     */
     private Ingredient ingredient;
 
+    /**
+     * Initialises the fields to one of an existing ingredient, or to empty fields.
+     */
     @Override
     public void pseudoInitialize() {
         super.pseudoInitialize();
-        // Set text of all text field to the ones of the ingredient if it exists
+        // Set text of all text field to the ones of the ingredient if it exists.
         if (ingredient != null) {
             nameField.setText(ingredient.getName());
             categoryField.setText(ingredient.getCategory());
             costField.setText(ingredient.getCost().getAmount().toString());
 
+            // Matches the checkboxes with that of the existent ingredient.
             for (DietEnum diet : ingredient.getDietInfo()) {
                 switch (diet) {
                     case GLUTEN_FREE: glutenFreeCheck.setSelected(true); break;
@@ -79,7 +108,7 @@ public class AddStockController extends GeneralController {
                 }
             }
 
-            // Changing button label
+            // Changing button label.
             createButton.setText("Modify");
         } else {
             createButton.setText("Create");

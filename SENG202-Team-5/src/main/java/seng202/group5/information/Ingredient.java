@@ -47,7 +47,7 @@ public class Ingredient {
      */
     private HashSet<DietEnum> dietaryInformation = new HashSet<>();
 
-    Ingredient(){}
+    public Ingredient(){}
 
     public Ingredient(String tempName, String tempCategory, Money tempPrice) {
         name = tempName;
@@ -179,6 +179,22 @@ public class Ingredient {
         for (DietEnum newDietInfo : dietInfoToRemove) {
             removeDietInfo(newDietInfo);
         }
+    }
+
+    /**
+     * Loops over the dietEnum Hashset and creates a string representing the dietary infomraiton
+     * @return a string with all the dietary information
+     */
+    public String getDietaryInformationString() {
+        String dietInfoString= "";
+        for (DietEnum dietEnum: dietaryInformation) {
+            dietInfoString += dietEnum.toString() + ", ";
+        }
+
+        if (dietInfoString.length() > 0) {
+            dietInfoString = dietInfoString.substring(0, dietInfoString.length() - 2);
+        }
+        return dietInfoString;
     }
 
     /**

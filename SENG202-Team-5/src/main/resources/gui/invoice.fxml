@@ -61,12 +61,12 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Total Cost:" GridPane.halignment="RIGHT">
+                                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Remaining Cost:" GridPane.halignment="RIGHT">
                                             <font>
                                                 <Font size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="totalCostLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="\$0.00" GridPane.columnIndex="1">
+                                        <Label fx:id="remainingCostLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="\$0.00" GridPane.columnIndex="1">
                                             <font>
                                                 <Font size="26.0" />
                                             </font>
@@ -74,12 +74,12 @@
                                                 <Insets left="25.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Currently Payed:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Total Cost:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                             <font>
                                                 <Font size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="currentlyPayedLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="\$0.00" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Label fx:id="totalPayedLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="\$0.00" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <font>
                                                 <Font size="26.0" />
                                             </font>

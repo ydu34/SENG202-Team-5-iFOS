@@ -1,10 +1,5 @@
 package seng202.group5.logic;
 
-import seng202.group5.exceptions.NoOrderException;
-
-import static java.lang.String.format;
-
-
 /**
  * A class to manage the operations of a worker using the app
  *
@@ -55,12 +50,8 @@ public class OrderManager {
      * Gets the current order
      *
      * @return the current order
-     * @throws NoOrderException if there is no current order
      */
-    public Order getOrder() throws NoOrderException {
-        if (currentOrder == null) {
-            throw new NoOrderException("No order exists to get");
-        }
+    public Order getOrder() {
         return currentOrder;
     }
 

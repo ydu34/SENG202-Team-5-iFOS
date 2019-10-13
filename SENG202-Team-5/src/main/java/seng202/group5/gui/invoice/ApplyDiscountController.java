@@ -1,33 +1,56 @@
 package seng202.group5.gui.invoice;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.joda.money.Money;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
 
+/**
+ * This Controller is for when the worker wants to apply a discount. A screen is opened controlled by this class.
+ * @author Michael Morgoun
+ */
 public class ApplyDiscountController extends GeneralController {
 
+    /**
+     * How many points the customer currently has.
+     */
     @FXML
     private Label pointsLabel;
 
+    /**
+     * The field where the points they want to use are inputted.
+     */
     @FXML
     private TextField pointField;
 
+    /**
+     * This label shows how much money they are saving if they spend so many points.
+     */
     @FXML
     private Label calculatedLabel;
 
+    /**
+     * This is how much money is being saved by using however many points.
+     */
     private Money moneySaved;
 
+    /**
+     * The max price of the order so they don't exceed it.
+     */
     private Money maxPrice;
 
+    /**
+     * The current customer of the order.
+     */
     private Customer customer;
 
+    /**
+     * Initialises the screen by showing all relevant information.
+     */
     @Override
     public void pseudoInitialize() {
         // Listener for the points textfield
@@ -91,16 +114,14 @@ public class ApplyDiscountController extends GeneralController {
             calculatedLabel.setTextFill(Color.RED);
             calculatedLabel.setText("Discount is more than price of Order!");
         } else {
-            try {
-                customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost());
+            customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost());
 
-                // Set the moneySaved
-                moneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
+            // Set the moneySaved
+            moneySaved = customer.getPointValue().multipliedBy(Integer.parseInt(pointField.getText()));
 
-                // Close the window
-                Stage stage = (Stage) calculatedLabel.getScene().getWindow();
-                stage.close();
-            } catch (NoOrderException ignored) {}
+            // Close the window
+            Stage stage = (Stage) calculatedLabel.getScene().getWindow();
+            stage.close();
         }
     }
 

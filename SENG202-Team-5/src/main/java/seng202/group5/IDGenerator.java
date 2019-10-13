@@ -84,87 +84,80 @@ public class IDGenerator {
      * Creates a new Customer ID and increments the static variable by 1.
      * @return The new ID as a string.
      */
-    public static String newCustomerID() {
-        String newID = "CUST" + customerID++;
-        return newID;
-    }
+    public static String newCustomerID() { return "CUST" + customerID++; }
 
     /**
-     * Sets the last Ingredient ID used, to the string lastID.
-     * @param lastID A string ID.
+     * Returns the last ingredientID used.
+     * @return an integer last ingredientID.
      */
-    public void setLastIngredientID(String lastID) {
-        ingredientID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
-    }
-
-    /**
-     * Sets the last MenuItem ID used, to the string lastID.
-     * @param lastID A string ID.
-     */
-    public void setLastMenuItemID(String lastID) {
-        menuItemID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
-    }
-
-    /**
-     * Sets the last Order ID used, to the string lastID.
-     * @param lastID A string ID.
-     */
-    public void setLastOrderID(String lastID) {
-        orderID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
-    }
-
-    /**
-     * Sets the last Transaction ID used, to the string lastID.
-     * @param lastID A string ID.
-     */
-    public void setLastTransactionID(String lastID) {
-        transactionID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
-    }
-
-    /**
-     * Sets the last Customer ID used, to the string lastID.
-     * @param lastID A string ID.
-     */
-    public void setLastCustomerID(String lastID) {
-        customerID = Integer.parseInt(lastID.replaceAll("[^\\d.]", ""));
-    }
-
     public static int getIngredientID() {
         return ingredientID;
     }
 
-    public static void setIngredientID(int newIngredientID) {
-        if (ingredientID < newIngredientID) ingredientID = newIngredientID;
-    }
+    /**
+     * Sets the last ingredientID to the parameter.
+     * @param newIngredientID An integer referring to the digit of the new ingredientID.
+     */
+    public static void setIngredientID(int newIngredientID) { if (ingredientID < newIngredientID) ingredientID = newIngredientID; }
 
+    /**
+     * Returns the last menuItemID used.
+     * @return an integer last menuItemID.
+     */
     public static int getMenuItemID() {
         return menuItemID;
     }
 
+    /**
+     * Sets the last menuItemID to the parameter.
+     * @param newMenuItemID An integer referring to the digit of the new menuItemID.
+     */
     public static void setMenuItemID(int newMenuItemID) {
         if (menuItemID < newMenuItemID) menuItemID = newMenuItemID;
     }
 
+    /**
+     * Returns the last orderID used.
+     * @return an integer last orderID.
+     */
     public static int getOrderID() {
         return orderID;
     }
 
+    /**
+     * Sets the last orderID to the parameter.
+     * @param newOrderID An integer referring to the digit of the new orderID.
+     */
     public static void setOrderID(int newOrderID) {
         if (orderID < newOrderID) orderID = newOrderID;
     }
 
+    /**
+     * Returns the last transactionID used.
+     * @return an integer last transactionID.
+     */
     public static int getTransactionID() {
         return transactionID;
     }
 
-    public static void setTransactionID(int newTransactionID) {
-        if (transactionID < newTransactionID) transactionID = newTransactionID;
-    }
+    /**
+     * Sets the last transactionID to the parameter.
+     * @param newTransactionID An integer referring to the digit of the new transactionID.
+     */
+    public static void setTransactionID(int newTransactionID) { if (transactionID < newTransactionID) transactionID = newTransactionID; }
 
+    /**
+     * Returns the last customerID used.
+     * @return an integer last customerID.
+     */
     public static int getCustomerID() {
         return customerID;
     }
 
+    /**
+     * Sets the last customerID to the parameter.
+     * @param newCustomerID An integer referring to the digit of the new customerID.
+     */
     public static void setCustomerID(int newCustomerID) {
         if (customerID < newCustomerID) customerID = newCustomerID;
     }

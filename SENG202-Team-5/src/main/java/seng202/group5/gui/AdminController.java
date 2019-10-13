@@ -23,7 +23,6 @@ import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
 import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
@@ -69,6 +68,9 @@ public class AdminController extends GeneralController {
     private Button selectFinanceButton;
 
     @FXML
+    private Button selectCustomersButton;
+
+    @FXML
     private Button importDataButton;
 
     @FXML
@@ -78,13 +80,19 @@ public class AdminController extends GeneralController {
     private Text fileNotificationText;
 
     @FXML
+    private Text exportNotificationText;
+
+    @FXML
+    private JFXTextField imageLocation;
+
+    @FXML
     private Text stockWarningText;
 
     @FXML
     private Text menuWarningText;
 
     @FXML
-    private Text historyWarningText;
+    private Text customersWarningText;
 
     @FXML
     private Text financeWarningText;
@@ -222,6 +230,9 @@ public class AdminController extends GeneralController {
         autoloadCheckbox.setSelected(getAppEnvironment().getDatabase().isAutoloadEnabled());
         autoLocation.setText(getAppEnvironment().getDatabase().getSaveFileLocation());
 
+        if (!getAppEnvironment().getImagesFolderPath().equals(""))
+            imageLocation.setText(getAppEnvironment().getImagesFolderPath());
+
         // Disables buttons if an order is in progress
         checkIfOrderInProgress();
     }
@@ -247,20 +258,16 @@ public class AdminController extends GeneralController {
      */
     public void checkIfOrderInProgress() {
 
-        try {
-            System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
-            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
-                infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
-                selectFinanceButton.setDisable(true);
-                selectMenuButton.setDisable(true);
-                selectStockButton.setDisable(true);
-                exportDataButton.setDisable(true);
-                addButton.setDisable(true);
-                modifyButton.setDisable(true);
-                deleteButton.setDisable(true);
-            }
-        } catch (NoOrderException e) {
-            e.printStackTrace();
+        System.out.println(getAppEnvironment().getOrderManager().getOrder().getOrderItems().values());
+        if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+            infoText.setText("Can not Add/Modify/Delete Menu Item when Order is in progress.");
+            selectFinanceButton.setDisable(true);
+            selectMenuButton.setDisable(true);
+            selectStockButton.setDisable(true);
+            exportDataButton.setDisable(true);
+            addButton.setDisable(true);
+            modifyButton.setDisable(true);
+            deleteButton.setDisable(true);
         }
     }
 
@@ -335,7 +342,7 @@ public class AdminController extends GeneralController {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate tempEndDate = endDate.getValue();
-                startDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
+                endDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
                 if (tempEndDate == null) {
                     setDisable(empty);
                 } else {
@@ -360,7 +367,7 @@ public class AdminController extends GeneralController {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate tempStartDate = startDate.getValue();
-                endDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
+                startDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
                 if (tempStartDate == null) {
                     setDisable(empty);
                 } else {
@@ -489,6 +496,17 @@ public class AdminController extends GeneralController {
         }
     }
 
+    public void selectCustomers() {
+        File selectedFile = getSelectedFile();
+        if (checkSelectedFile("customers.xml", selectedFile)) {
+            fileMap.put("customers.xml", selectedFile);
+            customersWarningText.setText("customers.xml selected");
+            checkFilesSelected();
+        } else {
+            customersWarningText.setText("invalid file selected");
+        }
+    }
+
     /**
      * Gets all the xml files in the hashmap and unmarshal the xml files to objects.
      * If the files are corrupted or invalid, the user is notified.
@@ -499,6 +517,7 @@ public class AdminController extends GeneralController {
             finance = getAppEnvironment().getFinance();
             fileNotificationText.setText("All xml files successfully uploaded into application!");
             updateTillSpinners();
+            recipeTableInitialize();
         } catch (Exception e) {
             fileNotificationText.setText(e.getMessage());
         }
@@ -580,9 +599,9 @@ public class AdminController extends GeneralController {
         if (selectedDirectory != null) {
             try {
                 getAppEnvironment().getDatabase().allObjectsToXml(selectedDirectory.getPath());
-                fileNotificationText.setText("All files successfully exported!");
+                exportNotificationText.setText("All files successfully exported!");
             } catch (Exception e) {
-                fileNotificationText.setText("Files failed to export, please try again.");
+                exportNotificationText.setText("Files failed to export, please try again.");
             }
         }
 
@@ -600,7 +619,7 @@ public class AdminController extends GeneralController {
         if (selectedDirectory != null) {
             String imageFolderPath = selectedDirectory.getPath();
             getAppEnvironment().setImagesFolderPath(imageFolderPath);
-            fileNotificationText.setText("Images Folder selected");
+            imageLocation.setText(imageFolderPath);
         }
     }
 

@@ -4,10 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The Recipe class records all the recipes along with the steps that are stored in the database.
@@ -104,6 +101,22 @@ public class Recipe {
     }
 
     /**
+     * Checks if an ingredient breaks the current dietary requirements of an item.
+     * @param ingredientToBeAdded The item which is going to be added into an item.
+     * @return HashSet(DietEnum) which contains all of the broken dietary requirements when adding the item.
+     */
+    public HashSet<DietEnum> checkInconsistency(Ingredient ingredientToBeAdded) {
+        HashSet<DietEnum> notRetainedDietaryInfo = new HashSet<>();
+        for (DietEnum value : DietEnum.values()) {
+            notRetainedDietaryInfo.add(value);
+        }
+        HashSet<DietEnum> ingredientDietInfo = ingredientToBeAdded.getDietInfo();
+        notRetainedDietaryInfo.retainAll(getDietaryInformation());
+        notRetainedDietaryInfo.removeAll(ingredientDietInfo);
+        return notRetainedDietaryInfo;
+    }
+
+    /**
      * This function removes the specified ingredient from the recipe and returns the boolean accordingly.
      *
      * @param someIngredient ingredient that needs to be removed
@@ -152,15 +165,17 @@ public class Recipe {
      * @return a string with all the dietary information
      */
     public String getDietaryInformationString() {
-        String dietInfoString= "";
-        for (DietEnum dietEnum: dietaryInformation) {
-            dietInfoString += dietEnum.toString() + ", ";
+        StringBuilder dietInfoString = new StringBuilder();
+        ArrayList<DietEnum> tempList = new ArrayList<>(dietaryInformation);
+        tempList.sort(Comparator.comparing(DietEnum::toString));
+        for (DietEnum dietEnum : tempList) {
+            dietInfoString.append(dietEnum.toString()).append(", ");
         }
 
         if (dietInfoString.length() > 0) {
-            dietInfoString = dietInfoString.substring(0, dietInfoString.length() - 2);
+            return dietInfoString.substring(0, dietInfoString.length() - 2);
         }
-        return dietInfoString;
+        return dietInfoString.toString();
     }
 
     /**

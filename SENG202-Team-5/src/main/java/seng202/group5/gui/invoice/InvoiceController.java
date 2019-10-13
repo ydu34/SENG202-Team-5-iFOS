@@ -17,7 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Customer;
 import seng202.group5.information.MenuItem;
@@ -27,74 +26,140 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * A controller for managing the invoice screen
+ * A controller for managing the invoice screen.
  * @author Tasman Berry, Shivin Gaba, Michael Morgoun
  */
 public class InvoiceController extends GeneralController {
 
     /**
-     * Displays the items in the order
+     * Displays the items in the order.
      */
     @FXML
     private TableView<MenuItem> currentOrderTable;
 
+    /**
+     * The column for the item name.
+     */
     @FXML
     private TableColumn<MenuItem, String> itemNameCol;
 
+    /**
+     * The column for the item quantity.
+     */
     @FXML
     private TableColumn<MenuItem, String> itemQuantityCol;
 
+    /**
+     * The column for the item price.
+     */
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
 
+    /**
+     * The label which shows the remaining cost.
+     */
     @FXML
-    private Label totalCostLabel;
+    private Label remainingCostLabel;
 
+    /**
+     * The label which shows the current discount for the order.
+     */
     @FXML
     private Label discountLabel;
 
+    /**
+     * The label which shows the total cost of the order.
+     */
     @FXML
-    private Label currentlyPayedLabel;
+    private Label totalPayedLabel;
 
+    /**
+     * A warning label which shows information when something is wrong.
+     */
     @FXML
     private Label warningLabel;
 
+    /**
+     * The label which shows the orders' customer name.
+     */
     @FXML
     private Label customerNameLabel;
 
+    /**
+     * The label which shows the current customers amount of points.
+     */
     @FXML
     private Label customerPointsLabel;
 
+    /**
+     * The label which shows all the denominations payed thus far.
+     */
     @FXML
     private Text denomDollarLabel;
 
+    /**
+     * The label which shows all the denominations payed thus far.
+     */
     @FXML
     private Text denomCentLabel;
 
+    /**
+     * The button which removes a selected item.
+     */
     @FXML
     private Button removeItem;
 
+    /**
+     * A button which prompts the payCash() method.
+     */
     @FXML
     private Button payCashButton;
 
+    /**
+     * A button for opening the existing member screen or to clear the selected member.
+     */
     @FXML
     private Button existingMemberButton;
 
+    /**
+     * A button for creating a new member or applying a discount.
+     */
     @FXML
     private Button newMemberButton;
 
+    /**
+     * A HashMap which shows which denominations have been payed so far and how many of each.
+     */
     private HashMap<Money, Integer> currentPayment = new HashMap<>();
 
+    /**
+     * An ArrayList which shows all the cash payed so far. To be passed into AppEnvironment for the payment.
+     */
     private ArrayList<Money> paymentArray = new ArrayList<>();
 
-    private Money total = Money.parse("NZD 0");
+    /**
+     * The total amount of money payed.
+     */
+    private Money totalPayed = Money.parse("NZD 0");
 
+    /**
+     * The current order on the system.
+     */
     private Order currentOrder;
 
+    /**
+     * A Map of the order items and their quantities.
+     */
     private Map<MenuItem, Integer> orderItemsMap;
 
+    /**
+     * The current customer of the order. Can be null.
+     */
     private Customer currentCustomer;
 
+    /**
+     * How many points have been used so far.
+     */
     private int customerPoints;
 
 
@@ -105,15 +170,14 @@ public class InvoiceController extends GeneralController {
         super.pseudoInitialize();
 
         // Attempts to get the current order and customer
-        try {
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentCustomer = currentOrder.getCurrentCustomer();
-            removeItem.setDisable(true);
-        } catch (NoOrderException ignored) { }
+        currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        currentCustomer = currentOrder.getCurrentCustomer();
+        removeItem.setDisable(true);
 
         // Sets the total cost of the order
         Money totalCost = currentOrder.getTotalCost();
-        totalCostLabel.setText("$" + totalCost.toString().replaceAll("[^\\d.]", ""));
+        remainingCostLabel.setText("$" + totalCost.minus(totalPayed).toString().replace("NZD ", ""));
+        totalPayedLabel.setText("$" + currentOrder.getDiscount().plus(currentOrder.getTotalCost()).toString().replaceAll("[^\\d.]", ""));
         currentOrderTable();
 
         // Creates a new listener for the removeItem button
@@ -134,10 +198,14 @@ public class InvoiceController extends GeneralController {
         }
 
         // Disabling payCashButton
-        payCashButton.setDisable(true);
-        payCashButton.setTextFill(Color.GREY);
+        if (currentOrder.getTotalCost().minus(totalPayed).isPositive() || currentOrder.getOrderItems().isEmpty()) {
+            payCashButton.setDisable(true);
+            payCashButton.setTextFill(Color.GREY);
+        } else {
+            payCashButton.setDisable(false);
+            payCashButton.setTextFill(Color.GREEN);
+        }
         // Settings all labels to default
-        currentlyPayedLabel.setText("$0.00");
         warningLabel.setText("");
     }
 
@@ -145,7 +213,7 @@ public class InvoiceController extends GeneralController {
      * This method goes through the list which contains the list of menu items for the current order and displays the menu item
      * and the price and its quantity on the in the table view.
      */
-    public void currentOrderTable() {
+    private void currentOrderTable() {
         orderItemsMap = currentOrder.getOrderItems();
         List<MenuItem> orderItems = new ArrayList<>(orderItemsMap.keySet());
         itemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -240,7 +308,11 @@ public class InvoiceController extends GeneralController {
         }
     }
 
-    public void applyDiscount() {
+    /**
+     * This method is called if there is a currentCustomer. Opens the screen for where the discount can be applied.
+     */
+    private void applyDiscount() {
+        // Can not apply discount if order it empty, or if there is cash already paid.
         if (currentOrder.getOrderItems().isEmpty()) {
             warningLabel.setTextFill(Color.RED);
             warningLabel.setText("There is no order to discount!");
@@ -261,7 +333,7 @@ public class InvoiceController extends GeneralController {
 
                 controller.setAppEnvironment(getAppEnvironment());
                 controller.setCustomer(currentCustomer);
-                controller.setMaxPrice(currentOrder.getTotalCost().minus(total));
+                controller.setMaxPrice(currentOrder.getTotalCost().minus(totalPayed));
                 controller.pseudoInitialize();
 
                 stage.showAndWait();
@@ -272,31 +344,43 @@ public class InvoiceController extends GeneralController {
 
                 customerPoints = controller.getPoints();
                 discountLabel.setText("$" + Money.parse("NZD " + discountLabel.getText().replace("$", "")).plus(moneySaved).toString().replaceAll("[^\\d.]", ""));
-                totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+                remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
                 pseudoInitialize();
-            } catch (IOException e) {
-            }
+            } catch (IOException e) {}
         }
     }
 
-    public void clearSelectedMember() {
+    /**
+     * Clears the selected member and returns any points they might have used before paying for the order.
+     */
+    private void clearSelectedMember() {
+        // Removing the customer from the order.
         currentOrder.setCurrentCustomer(null);
+        // Resetting the discount
         currentOrder.setDiscount(Money.parse("NZD 0"));
-        currentCustomer.addPurchasePoints(customerPoints);
+
+        // Returns the points they used in the order before paying for it
+        if (customerPoints != 0) {
+            currentCustomer.addPurchasePoints(customerPoints);
+        }
+
+        // Clearing the local variables of the customer
         currentCustomer = null;
         customerPoints = 0;
-        // Clear labels
+
+        // Clearing labels
         discountLabel.setText("$0.00");
         customerNameLabel.setText("");
         customerPointsLabel.setText("");
         existingMemberButton.setText("Existing Member");
         newMemberButton.setText("New Member");
 
+        // Reinitialise the screen
         pseudoInitialize();
     }
 
     /**
-     * Confirms order payment in cash
+     * Confirms order payment in cash.
      */
     public void payCash() {
         try {
@@ -309,7 +393,8 @@ public class InvoiceController extends GeneralController {
             pseudoInitialize();
             cancelOrder();
             clearPayment();
-        } catch (InsufficientCashException e) { ;
+            clearSelectedMember();
+        } catch (InsufficientCashException e) {
         warningLabel.setTextFill(Color.RED);
         warningLabel.setText("Not enough money in the till for change!");
         }
@@ -319,7 +404,7 @@ public class InvoiceController extends GeneralController {
      * This method intialises the screen used for a successful payment.
      * @param change An ArrayList<Money> which has all the change required.
      */
-    public void initialiseChangeScreen(ArrayList<Money> change) {
+    private void initialiseChangeScreen(ArrayList<Money> change) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/paymentSuccess.fxml"));
             Parent root = loader.load();
@@ -344,13 +429,12 @@ public class InvoiceController extends GeneralController {
      */
     public void clearPayment() {
         // Clear local variables
-        total = Money.parse("NZD 0");
+        totalPayed = Money.parse("NZD 0");
         currentPayment = new HashMap<>();
         paymentArray = new ArrayList<>();
-        totalCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
+        remainingCostLabel.setText("$" + currentOrder.getTotalCost().toString().replaceAll("[^\\d.]", ""));
 
         // Clear money labels
-        currentlyPayedLabel.setText("$0.00");
         denomDollarLabel.setText("");
         denomCentLabel.setText("");
 
@@ -366,7 +450,7 @@ public class InvoiceController extends GeneralController {
      * @param tempKey The Money tempKey which is used to get the number of denominations.
      * @return The final StringBuilder built.
      */
-    public StringBuilder stringBuilder(StringBuilder builder, String key, Money tempKey) {
+    private StringBuilder stringBuilder(StringBuilder builder, String key, Money tempKey) {
         builder.append("$");
         builder.append(Float.parseFloat(key));
         builder.append(": ");
@@ -391,10 +475,10 @@ public class InvoiceController extends GeneralController {
 
             // Adding the money to the total
             Money money = Money.parse("NZD " + 0.01 * value);
-            total = total.plus(money);
+            totalPayed = totalPayed.plus(money);
 
             // Minus the money from the visual total
-            totalCostLabel.setText("$" + Money.parse("NZD " + totalCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("NZD", ""));
+            remainingCostLabel.setText("$" + Money.parse("NZD " + remainingCostLabel.getText().replace("$", "")).minus(money).toString().replaceAll("NZD ", ""));
 
             // Adding money to a HashSet containing it's quantity
             if (currentPayment.containsKey(money)) {
@@ -403,17 +487,17 @@ public class InvoiceController extends GeneralController {
                 currentPayment.put(money, 1);
             }
 
+            // Adding the money to the array that will be passed into the AppEnvironment
+            paymentArray.add(money);
+
             // Disable pay button when there isn't enough money payed yet
-            if (!total.isGreaterThan(currentOrder.getTotalCost()) || !total.isEqual(currentOrder.getTotalCost())) {
+            if (Money.parse("NZD " + remainingCostLabel.getText().replace("$", "")).isPositive()) {
                 payCashButton.setDisable(true);
                 payCashButton.setTextFill(Color.GREY);
             } else {
                 payCashButton.setDisable(false);
                 payCashButton.setTextFill(Color.GREEN);
             }
-
-            // Adding the money to the array that will be passed into the AppEnvironment
-            paymentArray.add(money);
 
             ArrayList<Money> keyArray = new ArrayList<>(currentPayment.keySet());
 
@@ -432,8 +516,22 @@ public class InvoiceController extends GeneralController {
             // Setting the labels to the strings.
             denomCentLabel.setText(tempCent.toString());
             denomDollarLabel.setText(tempDollar.toString());
-            currentlyPayedLabel.setText("$" + total.toString().replaceAll("[^\\d.]", ""));
         }
+    }
+
+    /**
+     * This function removes the selected menu item from the current order.
+     */
+    @FXML
+    private void deleteRowFromTable() {
+        boolean someOrder;
+
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
+        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if(someOrder){
+            removeItem.setDisable(false);
+        }
+        pseudoInitialize();
     }
 
     /**
@@ -441,27 +539,24 @@ public class InvoiceController extends GeneralController {
      */
     @FXML
     private void cancelOrder() {
-        try {
-            clearPayment();
-            totalCostLabel.setText("$0.00");
+        clearPayment();
+        remainingCostLabel.setText("$0.00");
+        totalPayedLabel.setText("$0.00");
 
-            currentOrder = getAppEnvironment().getOrderManager().getOrder();
-            currentOrder.resetStock(getAppEnvironment().getStock());
-            currentOrder.clearItemsInOrder();
+        currentOrder = getAppEnvironment().getOrderManager().getOrder();
+        currentOrder.resetStock(getAppEnvironment().getStock());
+        currentOrder.clearItemsInOrder();
 
-            // Clear customer labels
-            discountLabel.setText("$0.00");
-            customerPoints = 0;
-            currentOrder.setCurrentCustomer(null);
-            customerNameLabel.setText("");
-            customerPointsLabel.setText("");
+        // Clear customer labels
+        discountLabel.setText("$0.00");
+        customerPoints = 0;
+        currentOrder.setCurrentCustomer(null);
+        customerNameLabel.setText("");
+        customerPointsLabel.setText("");
 
-            // Reset Customer Buttons
-            existingMemberButton.setText("Existing Member");
-            newMemberButton.setText("New Member");
-        } catch (NoOrderException ignored) {
-
-        }
+        // Reset Customer Buttons
+        existingMemberButton.setText("Existing Member");
+        newMemberButton.setText("New Member");
         // Refresh currentOrderTable
         currentOrderTable();
     }
@@ -544,19 +639,5 @@ public class InvoiceController extends GeneralController {
     @FXML
     private void addHundredDollar(){
         addMoney(10000);
-    }
-
-    /**
-     * This function removes the selected menu item from the current order.
-     */
-    @FXML
-    private void deleteRowFromTable() {
-        boolean someOrder;
-
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
-        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
-        if(someOrder){
-            removeItem.setDisable(false);
-        }
     }
 }

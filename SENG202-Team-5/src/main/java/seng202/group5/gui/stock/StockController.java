@@ -4,15 +4,19 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
 import seng202.group5.information.Ingredient;
 
@@ -21,42 +25,81 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * A controller for managing the stock screen
+ * A controller for managing the stock screen.
  *
  * @author Shivin Gaba, Michael Morgoun
  */
 public class StockController extends GeneralController {
 
-
+    /**
+     * The TableView for the visualisation of stock.
+     */
     @FXML
     private TableView<Ingredient> stockTable;
 
+    /**
+     * The column for item cost.
+     */
     @FXML
-    TableColumn<Ingredient, String> columnCost;
+    private TableColumn<Ingredient, String> columnCost;
+
+    /**
+     * The column for item ID.
+     */
     @FXML
     private TableColumn<Ingredient, String> columnID;
+
+    /**
+     * The column for item name.
+     */
     @FXML
     private TableColumn<Ingredient, String> columnIngredient;
+
+    /**
+     * The column for item quantity.
+     */
     @FXML
     private TableColumn<Ingredient, Integer> columnQuantity;
+
+    /**
+     * The column for item category.
+     */
     @FXML
     private TableColumn<Ingredient, String> columnCategory;
 
+    /**
+     * The button for adding new stock.
+     */
     @FXML
     private Button addButton;
 
+    /**
+     * The button for modifying existing stock.
+     */
     @FXML
     private Button modifyButton;
 
+    /**
+     * The button for removing stock.
+     */
     @FXML
     private Button removeButton;
 
+    /**
+     * The text field for searching the stock.
+     */
     @FXML
     private TextField ingredientSearchField;
 
+    /**
+     * A warning label in case the stock can't be modified.
+     */
     @FXML
-    private Label warningLabel;
+    private Text warningLabel;
 
+    /**
+     * A HashMap for the quantities of ingredients.
+     */
     private HashMap<String, Integer> quantities;
 
     /**
@@ -80,7 +123,7 @@ public class StockController extends GeneralController {
         modifyButton.setDisable(false);
         removeButton.setDisable(false);
 
-
+        // Initialising the TableView
         ObservableList<Ingredient> ingredients = FXCollections.observableArrayList(
                 getAppEnvironment().getStock().getIngredients().values());
 
@@ -100,20 +143,22 @@ public class StockController extends GeneralController {
         stockTable.getSortOrder().add(columnID);
         stockTable.sort();
 
-        try {
-            ///getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
+        // Mouse listener for the context menu
+        initialiseContextMenu();
 
-            if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
-                warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
-                addButton.setDisable(true);
-                modifyButton.setDisable(true);
-                removeButton.setDisable(true);
-            }
-        } catch (NoOrderException e) {
-            e.printStackTrace();
+        // If the order is in progress, the stock can't be modified
+        if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
+            warningLabel.setFill(Color.RED);
+            warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
+            addButton.setDisable(true);
+            modifyButton.setDisable(true);
+            removeButton.setDisable(true);
         }
     }
 
+    /**
+     * Updates the visible ingredients, removing those that aren't matched in the search field.
+     */
     private void updateVisibleIngredients() {
         stockTable.getItems().clear();
 
@@ -127,6 +172,55 @@ public class StockController extends GeneralController {
         }
     }
 
+    /**
+     * Initialises the context menu for the stock table.
+     */
+    private void initialiseContextMenu() {
+        // Creating the ContextMenu and MenuItems
+        ContextMenu cm = new ContextMenu();
+        MenuItem modifyItem = new MenuItem("Modify");
+        MenuItem removeItem = new MenuItem("Remove");
+        cm.getItems().add(modifyItem);
+        cm.getItems().add(removeItem);
+
+        // Creating the Handler for MouseEvents
+        stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
+            // Shows cm if right clicked, or goes straight to modify if double clicked.
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    cm.show(stockTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && stockTable.getSelectionModel().getSelectedItem() != null) {
+                    modifyIngredient();
+                } else {
+                    cm.hide();
+                }
+            }
+        });
+
+        // Modifies ingredient if selected.
+        modifyItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                modifyIngredient();
+            }
+        });
+
+        // Deletes ingredient if selected.
+        removeItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                removeIngredient();
+            }
+        });
+    }
+
+    /**
+     * Initialises both the Add and Modify screens.
+     * @param setTitle A title that is set to "Create a new Ingredient" or "Modifing <ingredient>"
+     * @param ingredient The ingredient to be modified.
+     * @param quantity The quantity of that ingredient.
+     */
     private void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/addStock.fxml"));
@@ -210,5 +304,4 @@ public class StockController extends GeneralController {
             warningLabel.setText("Please select an item to remove.");
         }
     }
-
 }

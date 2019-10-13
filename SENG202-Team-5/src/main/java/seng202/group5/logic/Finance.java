@@ -183,13 +183,13 @@ public class Finance {
         ArrayList<Money> totalChange = new ArrayList<>();
 
         // First try a greedy algorithm
-        change = change.rounded(1, RoundingMode.HALF_UP);
+        Money tempChange = change.rounded(1, RoundingMode.HALF_UP);
         for (Money value : denomination) {
-            while (!change.isLessThan(value) && till.getDenominations().get(value) > 0) {
+            while (!tempChange.isLessThan(value) && till.getDenominations().get(value) > 0) {
                 try {
                     till.removeDenomination(value, 1);
                     totalChange.add(value);
-                    change = change.minus(value);
+                    tempChange = tempChange.minus(value);
                 } catch (InsufficientCashException e) {
                     e.printStackTrace();
                 }
@@ -197,7 +197,7 @@ public class Finance {
         }
 
         // Return the result if it matches the amount required
-        if (change.isZero()) {
+        if (tempChange.isZero()) {
             return totalChange;
         }
 
@@ -205,7 +205,7 @@ public class Finance {
         for (Money coin : totalChange) till.addDenomination(coin, 1);
         totalChange = new ArrayList<>();
         ArrayList<Map.Entry<Money, Money>> valueList = new ArrayList<>(); // Helper value, Actual value (weight)
-        ArrayList<Money> tempDenominations = (ArrayList<Money>) denomination.clone();
+        ArrayList<Money> tempDenominations = new ArrayList<>(denomination);
         tempDenominations.sort(Money::compareTo);
         for (Money coin : tempDenominations) {
             for (int i = 0; i < till.getDenominations().getOrDefault(coin, 0); i++) {
@@ -220,7 +220,7 @@ public class Finance {
              i = i.plus(Money.parse("NZD 0.10"))) {
             tempList.add(Money.parse("NZD 0.00"));
         }
-        for (int i = 0; i <= valueList.size(); i++) cache.add((ArrayList<Money>) tempList.clone());
+        for (int i = 0; i <= valueList.size(); i++) cache.add(new ArrayList<>(tempList));
 
         for (int n = 1; n <= valueList.size(); n++) {
             for (int top = 1; top < cache.get(0).size(); top++) {
@@ -259,7 +259,7 @@ public class Finance {
      * @return a clone of the transaction history
      */
     public HashMap<String, Transaction> getTransactionHistoryClone() {
-        return (HashMap<String, Transaction>) transactionHistory.clone();
+        return new HashMap<>(transactionHistory);
     }
 
     public Till getTill() {

@@ -29,6 +29,12 @@ public class RecipeTest {
         chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
     }
 
+    @Test
+    public void testDietaryInformationString() {
+        assertEquals("Gluten free, Vegan, Vegetarian", testRecipe.getDietaryInformationString());
+        testRecipe.addIngredient(chickenPatty, 1);
+        assertEquals("Gluten free", testRecipe.getDietaryInformationString());
+    }
 
     @Test
     public void testAddIngredient() {
@@ -41,10 +47,10 @@ public class RecipeTest {
         }};
         Ingredient cheese = new Ingredient("cheese", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 2);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 2);
+        assertEquals(2, (int) testRecipe.getIngredientsAmount().get(chickenPatty));
         testRecipe.addIngredient(chickenPatty, 12);
         testRecipe.addIngredient(cheese, 1);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 14);
+        assertEquals(14, (int) testRecipe.getIngredientsAmount().get(chickenPatty));
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.GLUTEN_FREE));
         assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
         assertFalse(testRecipe.getDietaryInformation().contains(DietEnum.VEGAN));
@@ -63,8 +69,8 @@ public class RecipeTest {
 
         testRecipe.addIngredient(chickenPatty, 12);
         testRecipe.removeIngredient(chickenPatty, 3);
-        assertNotEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 23);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 9);
+        assertNotEquals(23, testRecipe.getIngredientsAmount().get(chickenPatty));
+        assertEquals(9, (int) testRecipe.getIngredientsAmount().get(chickenPatty));
         testRecipe.removeIngredient(chickenPatty);
         assertTrue(testRecipe.getDietaryInformation().contains(DietEnum.VEGETARIAN));
         testRecipe.addIngredient(chickenPatty, 12);
@@ -84,8 +90,8 @@ public class RecipeTest {
         testRecipe.addIngredient(chickenPatty, 10);
         testRecipe.editRecipe(chickenPatty, 5);
         testRecipe.editRecipe(cheese, 2);
-        assertEquals(testRecipe.getIngredientsAmount().get(chickenPatty), 5);
-        assertEquals(testRecipe.getIngredientsAmount().get(cheese), 2);
+        assertEquals(5, (int) testRecipe.getIngredientsAmount().get(chickenPatty));
+        assertEquals(2, (int) testRecipe.getIngredientsAmount().get(cheese));
     }
 
     @Test
@@ -94,7 +100,7 @@ public class RecipeTest {
         HashMap<String, Integer> ingredientIDs = new HashMap<>();
         Recipe testRecipe2 = new Recipe("Burger", "Making Burger", ingredientsAmount, ingredientIDs);
         testRecipe2.addIngredient(chickenPatty, 2);
-        assertEquals(testRecipe2.getIngredientsAmount().get(chickenPatty), 2);
+        assertEquals(2, (int) testRecipe2.getIngredientsAmount().get(chickenPatty));
 
     }
 

@@ -47,12 +47,6 @@ public class Stepdefs {
         manager.createItem("Burger", burgerRecipe, burgerCost,"testId", true);
         burger = manager.getItemMap().get("testId");
     }
-    @Given("Order exists")
-    public void Order_exists() {
-
-        order = new Order(new HashMap<>(), Money.parse("NZD 0.00"), "Test01", stock);
-
-    }
 
     @When("Burger is added to order")
     public void Burger_is_added_to_order() {

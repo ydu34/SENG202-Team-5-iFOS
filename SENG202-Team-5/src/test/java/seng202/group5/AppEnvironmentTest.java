@@ -4,7 +4,6 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Customers;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -16,9 +15,7 @@ import seng202.group5.logic.OrderManager;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,9 +86,9 @@ class AppEnvironmentTest {
             paymentAmount.add(Money.parse("NZD 4.0"));
             ArrayList<Money> change = handler.confirmPayment(paymentAmount);
             for (Money x : change) changeSum = changeSum.plus(x);
-        } catch (NoOrderException | InsufficientCashException e) {
+        } catch (InsufficientCashException e) {
             e.printStackTrace();
-            fail();
+            fail("No order!");
         }
 
         assertTrue(changeSum.isEqual(Money.parse("NZD 4.0")));
@@ -99,28 +96,11 @@ class AppEnvironmentTest {
 
     @Test
     public void testConfirmPaymentRaisesInsufficientCashException() { // Need finance implemented properly so confirmPayment raises exception
-        try {
-            handler.getOrderManager().getOrder().addItem(cheeseBurger, 2);
-        } catch (NoOrderException e) {
-            e.printStackTrace();
-        }
+        handler.getOrderManager().getOrder().addItem(cheeseBurger, 2);
         ArrayList<Money> paymentAmount = new ArrayList<>();
         paymentAmount.add(cheeseBurger.calculateFinalCost());
         paymentAmount.add(cheeseBurger.calculateFinalCost().dividedBy(2, RoundingMode.DOWN));
         assertThrows(InsufficientCashException.class, () -> handler.confirmPayment(paymentAmount));
-    }
-
-    @Test
-    void testConfirmPaymentWithoutOrder() {
-        handler.getOrderManager().setCurrentOrder(null);
-
-        ArrayList<Money> paymentAmount = new ArrayList<>();
-
-        try {
-            handler.getOrderManager().getOrder();
-        } catch (NoOrderException e) {
-            assertEquals("No order exists to get", e.getMessage());
-        }
     }
 
     @Test
