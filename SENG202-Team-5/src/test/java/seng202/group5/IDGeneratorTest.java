@@ -50,17 +50,6 @@ public class IDGeneratorTest {
     }
 
     @Test
-    void testUniqueTransactionIDs() {
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(IDGenerator.newTransactionID());
-        }
-
-        HashSet<String> set = new HashSet<>(list);
-        assertEquals(set.size(), list.size());
-    }
-
-    @Test
     void testUniqueCustomerIDs() {
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -77,15 +66,13 @@ public class IDGeneratorTest {
         Ingredient ingredient = new Ingredient();
         Order order = new Order(new Stock());
         MenuItem item = new MenuItem(null, null, Money.parse("NZD 0.10"), false, null);
-        Transaction transaction = new Transaction(null, null, null);
 
         ArrayList<String> ids = new ArrayList<>();
         ids.add(ingredient.getID());
         ids.add(order.getId());
         ids.add(item.getID());
-        ids.add(transaction.getTransactionID());
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             for (String idd : ids) {
                 if (ids.indexOf(idd) != i) {
                     assertNotEquals(ids.get(i), idd);
@@ -125,17 +112,6 @@ public class IDGeneratorTest {
         IDGenerator.setOrderID(prevID);
 
         assertEquals(IDGenerator.getOrderID(), prevID);
-    }
-
-    @Test
-    void testSetTransactionID() {
-        int prevID = 700;
-
-        assertNotEquals(IDGenerator.getTransactionID(), prevID);
-
-        IDGenerator.setTransactionID(prevID);
-
-        assertEquals(IDGenerator.getTransactionID(), prevID);
     }
 
     @Test

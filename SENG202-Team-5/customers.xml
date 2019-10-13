@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <customers>
+    <generator>
+        <ingredientID>12</ingredientID>
+        <menuItemID>9</menuItemID>
+        <orderID>3</orderID>
+        <customerID>10</customerID>
+    </generator>
     <customerList>
         <customerID>CUST0</customerID>
         <name>Misha Morgoun</name>

@@ -33,12 +33,6 @@ public class IDGenerator {
     private static int orderID = 0;
 
     /**
-     * A static variable ID which shows the last Transaction ID used or 0 if none used so far.
-     */
-    @XmlElement
-    private static int transactionID = 0;
-
-    /**
      * A static variable ID which shows the last Customer ID used or 0 if none used so far.
      */
     @XmlElement
@@ -70,14 +64,6 @@ public class IDGenerator {
      */
     public static String newOrderID() {
         return "ORDR" + orderID++;
-    }
-
-    /**
-     * Creates a new  Transaction ID and increments the static variable by 1.
-     * @return The new ID as a string.
-     */
-    public static String newTransactionID() {
-        return "TRAN" + transactionID++;
     }
 
     /**
@@ -131,20 +117,6 @@ public class IDGenerator {
     public static void setOrderID(int newOrderID) {
         if (orderID < newOrderID) orderID = newOrderID;
     }
-
-    /**
-     * Returns the last transactionID used.
-     * @return an integer last transactionID.
-     */
-    public static int getTransactionID() {
-        return transactionID;
-    }
-
-    /**
-     * Sets the last transactionID to the parameter.
-     * @param newTransactionID An integer referring to the digit of the new transactionID.
-     */
-    public static void setTransactionID(int newTransactionID) { if (transactionID < newTransactionID) transactionID = newTransactionID; }
 
     /**
      * Returns the last customerID used.

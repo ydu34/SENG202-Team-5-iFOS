@@ -1,5 +1,7 @@
 package seng202.group5.information;
 
+import seng202.group5.IDGenerator;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,6 +15,12 @@ import java.util.ArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Customers {
+
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+    @XmlElement
+    private IDGenerator generator = new IDGenerator();
 
     @XmlElement
     private ArrayList<Customer> customerList = new ArrayList<>();

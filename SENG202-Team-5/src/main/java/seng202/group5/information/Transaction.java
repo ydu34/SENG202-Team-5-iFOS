@@ -53,7 +53,7 @@ public class Transaction {
             transactionID = newOrder.getId();
         } else {
             totalPrice = null;
-            transactionID = IDGenerator.newTransactionID();
+            transactionID = null;
         }
         order = newOrder;
     }
