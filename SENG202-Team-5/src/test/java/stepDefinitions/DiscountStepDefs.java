@@ -5,9 +5,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import seng202.group5.information.Customer;
-import seng202.group5.information.Ingredient;
-import seng202.group5.information.MenuItem;
+import seng202.group5.information.*;
 import seng202.group5.logic.*;
 
 import java.util.HashMap;
@@ -15,7 +13,6 @@ import java.util.HashMap;
 import static org.joda.money.Money.parse;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seng202.group5.information.TypeEnum.MAIN;
 
 public class DiscountStepDefs {
@@ -60,11 +57,7 @@ public class DiscountStepDefs {
         boolean ans = manager.getOrder().addItem(item1, 1);
 
         Money result = customer.discount(int1, parse("NZD " + dub1), Money.parse("NZD " + 0.01 * customerSettings.getPointValue()));
-        try {
-            manager.getOrder().applyDiscount(result);
-        } catch (NoOrderException e) {
-            fail();
-        }
+        manager.getOrder().applyDiscount(result);
     }
 
     @Then("Order now Costs ${double}")

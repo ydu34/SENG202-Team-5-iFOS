@@ -2,8 +2,6 @@ package seng202.group5;
 
 import org.joda.money.Money;
 import seng202.group5.exceptions.InsufficientCashException;
-import seng202.group5.exceptions.NoOrderException;
-import seng202.group5.information.CustomerSettings;
 import seng202.group5.information.Customers;
 import seng202.group5.logic.*;
 
@@ -73,7 +71,7 @@ public class AppEnvironment {
             Order order = orderManager.getOrder();
 
             if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-                order.getCurrentCustomer().purchasePoints(order.getTotalCost());
+                order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
             }
             setStock(order.getStock().clone());
             orderManager.setStock(stock);

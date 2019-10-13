@@ -117,17 +117,15 @@ public class ApplyDiscountController extends GeneralController {
             calculatedLabel.setTextFill(Color.RED);
             calculatedLabel.setText("Discount is more than price of Order!");
         } else {
-            try {
-                customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost(),
-                                  Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText())));
+            customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost(),
+                              Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText())));
 
-                // Set the moneySaved
-                moneySaved = Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));
+            // Set the moneySaved
+            moneySaved = Money.parse("NZD " + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));
 
-                // Close the window
-                Stage stage = (Stage) calculatedLabel.getScene().getWindow();
-                stage.close();
-            } catch (NoOrderException ignored) {}
+            // Close the window
+            Stage stage = (Stage) calculatedLabel.getScene().getWindow();
+            stage.close();
         }
     }
 
