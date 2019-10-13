@@ -2,11 +2,13 @@ package seng202.group5.gui.invoice;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.gui.GeneralController;
@@ -43,6 +45,8 @@ public class ExistingCustomerController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        createContextMenu();
+
         // Listeners for the TextFields to stop incorrect characters
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("([\\-' ]*\\w*)*")) {
@@ -72,6 +76,31 @@ public class ExistingCustomerController extends GeneralController {
         rowPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         customerTable.setItems(customersList);
+    }
+
+    private void createContextMenu() {
+        ContextMenu deleteMenu = new ContextMenu();
+        MenuItem deleteMenuItem = new MenuItem("Delete Member");
+        deleteMenu.getItems().add(deleteMenuItem);
+
+        customerTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    deleteMenu.show(customerTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                } else {
+                    deleteMenu.hide();
+                }
+            }
+        });
+
+        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                customers.getCustomerList().remove(customerTable.getSelectionModel().getSelectedItem());
+                updateVisibleCustomers();
+            }
+        });
     }
 
     @FXML
