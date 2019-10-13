@@ -45,6 +45,7 @@ public class ExistingCustomerController extends GeneralController {
 
     @Override
     public void pseudoInitialize() {
+        // Initalise the context menu for right clicking on existing members
         createContextMenu();
 
         // Listeners for the TextFields to stop incorrect characters
