@@ -1,10 +1,11 @@
 package seng202.group5;
 
 import seng202.group5.information.Customers;
-import seng202.group5.logic.*;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Stock;
 
 import javax.xml.bind.JAXBContext;
-import java.io.File;
 import java.io.FileWriter;
 
 /**
@@ -41,7 +42,7 @@ public class SchemaGenerator {
      */
     public void writeSchemaToFile(Class c, String schemaFileName) {
         try {
-            FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/SENG202-Team-5/src/main/resources/schema" + "/" + schemaFileName);
+            FileWriter stockSchema = new FileWriter(System.getProperty("user.dir") + "/src/main/resources/schema" + "/" + schemaFileName);
 
             stockSchema.write(generateSchema(c));
             stockSchema.close();
