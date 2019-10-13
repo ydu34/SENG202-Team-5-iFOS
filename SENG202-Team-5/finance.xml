@@ -9,12 +9,12 @@
     </generator>
     <transactionHistory>
         <entry>
-            <key>0</key>
+            <key>TRAN0</key>
             <value>
                 <datetime>2019-09-24T12:18:27.589159</datetime>
                 <change>NZD 0.00</change>
                 <totalPrice>NZD 11.50</totalPrice>
-                <transactionID>0</transactionID>
+                <transactionID>TRAN0</transactionID>
                 <refunded>false</refunded>
                 <order>
                     <orderItems>
@@ -26,7 +26,7 @@
                                     <recipeText>1. Deep fry fries.</recipeText>
                                     <ingredientIDs>
                                         <entry>
-                                            <key>4</key>
+                                            <key>INGR4</key>
                                             <value>2</value>
                                         </entry>
                                     </ingredientIDs>
@@ -61,23 +61,23 @@
     </recipeText>
     <ingredientIDs>
         <entry>
-            <key>1</key>
+            <key>INGR1</key>
             <value>1</value>
         </entry>
         <entry>
-            <key>2</key>
+            <key>INGR2</key>
             <value>1</value>
         </entry>
         <entry>
-            <key>3</key>
+            <key>INGR3</key>
             <value>1</value>
         </entry>
         <entry>
-            <key>5</key>
+            <key>INGR5</key>
             <value>2</value>
         </entry>
         <entry>
-            <key>7</key>
+            <key>INGR7</key>
             <value>1</value>
         </entry>
     </ingredientIDs>
@@ -99,7 +99,7 @@
     <recipeText>No recipe required</recipeText>
     <ingredientIDs>
         <entry>
-            <key>8</key>
+            <key>INGR8</key>
             <value>1</value>
         </entry>
     </ingredientIDs>
@@ -118,7 +118,7 @@
                         </entry>
                     </orderItems>
                     <totalCost>NZD 11.50</totalCost>
-                    <id>0</id>
+                    <id>ORDR0</id>
                 </order>
             </value>
         </entry>

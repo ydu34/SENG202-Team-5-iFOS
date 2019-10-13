@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customers>
+    <customerList>
+        <customerID>CUST0</customerID>
+        <name>Misha Morgoun</name>
+        <phoneNumber>0223181247</phoneNumber>
+        <purchasePoints>10</purchasePoints>
+    </customerList>
+    <customerList>
+        <customerID>CUST1</customerID>
+        <name>testMember</name>
+        <phoneNumber>133742069</phoneNumber>
+        <purchasePoints>10</purchasePoints>
+    </customerList>
+</customers>

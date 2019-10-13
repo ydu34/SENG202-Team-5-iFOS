@@ -9,7 +9,7 @@
     </generator>
     <itemMap>
         <entry>
-            <key>12</key>
+            <key>ITEM12</key>
             <value>
                 <itemName>Chicken Burger</itemName>
                 <recipe>
@@ -26,29 +26,29 @@
 10. Put other bun on top</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>1</key>
+                            <key>INGR1</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>2</key>
+                            <key>INGR2</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>3</key>
+                            <key>INGR3</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>5</key>
+                            <key>INGR5</key>
                             <value>2</value>
                         </entry>
                         <entry>
-                            <key>7</key>
+                            <key>INGR7</key>
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
                 </recipe>
                 <markupCost>NZD 4.30</markupCost>
-                <id>12</id>
+                <id>ITEM12</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
@@ -56,7 +56,7 @@
             </value>
         </entry>
         <entry>
-            <key>15</key>
+            <key>ITEM15</key>
             <value>
                 <itemName>Coke Can (330mL)</itemName>
                 <recipe>
@@ -64,7 +64,7 @@
                     <recipeText>No recipe required</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>8</key>
+                            <key>INGR8</key>
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
@@ -73,7 +73,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>15</id>
+                <id>ITEM15</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -81,7 +81,7 @@
             </value>
         </entry>
         <entry>
-            <key>38</key>
+            <key>ITEM38</key>
             <value>
                 <itemName>Fruit Juice (250mL)</itemName>
                 <recipe>
@@ -89,7 +89,7 @@
                     <recipeText>No recipe required</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>10</key>
+                            <key>INGR10</key>
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
@@ -98,7 +98,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>38</id>
+                <id>ITEM38</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -106,7 +106,7 @@
             </value>
         </entry>
         <entry>
-            <key>28</key>
+            <key>ITEM28</key>
             <value>
                 <itemName>Vegetarian Burger</itemName>
                 <recipe>
@@ -122,23 +122,23 @@
 10. Put other bun on top</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>11</key>
+                            <key>INGR11</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>1</key>
+                            <key>INGR1</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>3</key>
+                            <key>INGR3</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>25</key>
+                            <key>INGR25</key>
                             <value>1</value>
                         </entry>
                         <entry>
-                            <key>5</key>
+                            <key>INGR5</key>
                             <value>2</value>
                         </entry>
                     </ingredientIDs>
@@ -146,7 +146,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 4.00</markupCost>
-                <id>28</id>
+                <id>ITEM28</id>
                 <inMenu>true</inMenu>
                 <itemType>MAIN</itemType>
                 <edited>false</edited>
@@ -154,7 +154,7 @@
             </value>
         </entry>
         <entry>
-            <key>18</key>
+            <key>ITEM18</key>
             <value>
                 <itemName>Sprite Can (330mL)</itemName>
                 <recipe>
@@ -162,7 +162,7 @@
                     <recipeText>No recipe required</recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>9</key>
+                            <key>INGR9</key>
                             <value>1</value>
                         </entry>
                     </ingredientIDs>
@@ -171,7 +171,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 1.40</markupCost>
-                <id>18</id>
+                <id>ITEM18</id>
                 <inMenu>true</inMenu>
                 <itemType>BEVERAGE</itemType>
                 <edited>false</edited>
@@ -179,7 +179,7 @@
             </value>
         </entry>
         <entry>
-            <key>32</key>
+            <key>ITEM32</key>
             <value>
                 <itemName>Medium Fries </itemName>
                 <recipe>
@@ -187,7 +187,7 @@
                     <recipeText>1. Deep fry fries. </recipeText>
                     <ingredientIDs>
                         <entry>
-                            <key>4</key>
+                            <key>INGR4</key>
                             <value>2</value>
                         </entry>
                     </ingredientIDs>
@@ -196,7 +196,7 @@
                     <dietaryInformation>VEGETARIAN</dietaryInformation>
                 </recipe>
                 <markupCost>NZD 3.00</markupCost>
-                <id>32</id>
+                <id>ITEM32</id>
                 <inMenu>true</inMenu>
                 <itemType>SIDE</itemType>
                 <edited>false</edited>
