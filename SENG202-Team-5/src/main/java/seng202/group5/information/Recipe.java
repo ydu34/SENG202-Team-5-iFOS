@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * The Recipe class records all the recipes along with the steps that are stored in the database.
@@ -74,6 +75,8 @@ public class Recipe {
         dietaryInformation = new HashSet<>();
         ingredientsAmount = tempIngredientsAmount;
         ingredientIDs = new HashMap<>();
+        for (Map.Entry<Ingredient, Integer> entry : ingredientsAmount.entrySet())
+            ingredientIDs.put(entry.getKey().getID(), entry.getValue());
         for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);
     }
 

@@ -7,11 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -20,8 +17,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.Ingredient;
 import seng202.group5.information.MenuItem;
@@ -30,7 +25,6 @@ import seng202.group5.information.TypeEnum;
 import seng202.group5.logic.Order;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -43,8 +37,6 @@ public class OrderController extends GeneralController {
 
     private MenuItem item;
 
-    @FXML
-    private Recipe testRecipe2;
     @FXML
     private Label totalCostDisplay;
 
@@ -79,9 +71,6 @@ public class OrderController extends GeneralController {
     private TableColumn<Ingredient, String> ingredientQuantityCol;
 
     @FXML
-    private Text itemNameText;
-
-    @FXML
     private Text recipeText;
 
     @FXML
@@ -113,8 +102,6 @@ public class OrderController extends GeneralController {
 
     private Order currentOrder;
 
-    private boolean someOrder = false;
-
     private ArrayList<MenuItem> allItems;
 
     private Map<MenuItem, Integer> orderItemsMap;
@@ -128,8 +115,7 @@ public class OrderController extends GeneralController {
     @FXML
     private TableColumn<MenuItem,String> itemPriceCol;
 
-    private ArrayList<MenuItem> filteredItems;
-    private SORT_TYPE sortingType = SORT_TYPE.NAME;
+    private SortType sortingType = SortType.NAME;
 
     @Override
     public void pseudoInitialize() {
@@ -138,7 +124,7 @@ public class OrderController extends GeneralController {
         allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());
         filterItems();
         try {
-             currentOrder = getAppEnvironment().getOrderManager().getOrder();
+            currentOrder = getAppEnvironment().getOrderManager().getOrder();
 
         } catch (NoOrderException e) {
             System.out.println(e);
@@ -173,7 +159,7 @@ public class OrderController extends GeneralController {
      */
 
     public void sortItemsPrice(ActionEvent event) {
-        sortingType = SORT_TYPE.PRICE;
+        sortingType = SortType.PRICE;
         filterItems();
     }
 
@@ -183,7 +169,7 @@ public class OrderController extends GeneralController {
      */
 
     public void sortItemsName(ActionEvent event) {
-        sortingType = SORT_TYPE.NAME;
+        sortingType = SortType.NAME;
         filterItems();
     }
 
@@ -199,9 +185,9 @@ public class OrderController extends GeneralController {
             buttons.clear();
             ArrayList<MenuItem> sortedItems = new ArrayList<>(items);
 
-            if (sortingType == SORT_TYPE.NAME) {
+            if (sortingType == SortType.NAME) {
                 sortedItems.sort(Comparator.comparing(MenuItem::getItemName));
-            } else if (sortingType == SORT_TYPE.PRICE) {
+            } else if (sortingType == SortType.PRICE) {
                 sortedItems.sort(Comparator.comparing(MenuItem::calculateFinalCost));
             }
 
@@ -227,22 +213,6 @@ public class OrderController extends GeneralController {
 
     }
 
-    private Image getItemImage(MenuItem item) {
-        Image itemImage = new Image(getClass().getResourceAsStream("/images/default.png"));
-        try {
-
-            itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/"+item.getImageString()));
-        } catch (Exception e) {
-
-        }
-        return itemImage;
-    }
-
-    private enum SORT_TYPE {
-        NAME,
-        PRICE
-    }
-
     /**
      * Filters the menu items in the menu based on the check boxes on the order screen
      */
@@ -251,7 +221,7 @@ public class OrderController extends GeneralController {
         if (allItems != null) {
             filteredMenuItems = new ArrayList<>(allItems);
         }
-        filteredItems = new ArrayList<>(filteredMenuItems);
+        ArrayList<MenuItem> filteredItems = new ArrayList<>(filteredMenuItems);
 
 
         if (glutenFree.isSelected()) {
@@ -305,6 +275,31 @@ public class OrderController extends GeneralController {
         filteredItems = filteredMenuItems;
         populateTilePane(filteredMenuItems);
 
+    }
+
+    private Image getItemImage(MenuItem item) {
+        Image itemImage = new Image(getClass().getResourceAsStream("/images/default.png"));
+        try {
+
+            itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
+        } catch (Exception e) {
+
+        }
+        return itemImage;
+    }
+
+    /**
+     * This function removes the selected item from the current order when clicked on the remove button and updates the invoice display
+     *
+     * @param actionEvent
+     */
+    @FXML
+    private void removeSelectedItem(javafx.event.ActionEvent actionEvent) {
+        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
+        boolean someOrder = this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
+        if (someOrder == true) {
+            removeItemButton.setDisable(false);
+        }
     }
 
     /**
@@ -389,17 +384,9 @@ public class OrderController extends GeneralController {
         pseudoInitialize();
     }
 
-    /**
-     * This function removes the selected item from the current order when clicked on the remove button and updates the invoice display
-     * @param actionEvent
-     */
-    @FXML
-    private void removeSelectedItem(javafx.event.ActionEvent actionEvent ) {
-        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);
-        someOrder =  this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());
-        if(someOrder == true){
-            removeItemButton.setDisable(false);
-        }
+    private enum SortType {
+        NAME,
+        PRICE
     }
 
 

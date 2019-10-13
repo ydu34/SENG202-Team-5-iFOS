@@ -84,11 +84,6 @@ public class HistoryController extends GeneralController {
     @FXML
     private JFXButton addPastOrderButton;
 
-    public void initialize() {
-        setStartDateUpdater();
-        setEndDateUpdater();
-    }
-
     @Override
     public void pseudoInitialize() {
         super.pseudoInitialize();

@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
@@ -17,10 +19,13 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
+import seng202.group5.Database;
 import seng202.group5.exceptions.InsufficientCashException;
 import seng202.group5.exceptions.NoOrderException;
 import seng202.group5.information.MenuItem;
+import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.Till;
 
@@ -39,9 +44,13 @@ import java.util.Map;
 /**
  * A controller for managing the administration screen
  *
- * @author Yu Duan, Shivin Gaba
+ * @author Yu Duan, Shivin Gaba, Daniel Harris
  */
 public class AdminController extends GeneralController {
+
+    public static String[] OverwriteTypeNames = {"Overwrite",// Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)
+            "Merge and replace with imported data",// Merge existing data with imported data and replace conflicting data with imported data
+            "Merge and keep data in application"};// Merge imported data with existing data and keep existing data when conflicts occurs
 
     @FXML
     private DatePicker startDate;
@@ -86,6 +95,9 @@ public class AdminController extends GeneralController {
     private Text financeWarningText;
 
     @FXML
+    private LineChart<String, Integer> financeGraph;
+
+    @FXML
     private Button addButton;
 
     private Finance finance;
@@ -116,8 +128,8 @@ public class AdminController extends GeneralController {
 
     @FXML
     private JFXTabPane adminTabPane;
-
-    private FileChooser fileChooser;
+    @FXML
+    private MenuButton dataMergeTypeMenu;
 
     private Map<String, File> fileMap;
 
@@ -174,9 +186,11 @@ public class AdminController extends GeneralController {
     public void pseudoInitialize() {
         super.pseudoInitialize();
         finance = getAppEnvironment().getFinance();
+        financeInitialize();
+        viewHistory();
+
         recipeTableInitialize();
         fileMap = new HashMap<>();
-        viewHistory();
 
         // Creating listeners for each spinner in the TillManager
         spinnerList = new ArrayList<>(Arrays.asList(
@@ -187,7 +201,6 @@ public class AdminController extends GeneralController {
         textFieldListeners(oldPasswordText);
         textFieldListeners(newPasswordText);
         textFieldListeners(confirmPasswordText);
-
 
         for (Spinner<Integer> spinner : spinnerList) {
             spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
@@ -203,6 +216,19 @@ public class AdminController extends GeneralController {
                     finance.getTill().addDenomination(amount, newValue - oldValue);
                 }
             });
+        }
+
+        // Setting the text for the overwrite setting of the database
+        switch (getAppEnvironment().getDatabase().getOverwriteSetting()) {
+            case OVERWRITE_ALL:
+                dataMergeTypeMenu.setText(OverwriteTypeNames[0]);
+                break;
+            case MERGE_PREFER_NEW:
+                dataMergeTypeMenu.setText(OverwriteTypeNames[1]);
+                break;
+            case MERGE_PREFER_OLD:
+                dataMergeTypeMenu.setText(OverwriteTypeNames[2]);
+                break;
         }
 
         // Setting initial values for autosaving/loading elements
@@ -298,7 +324,90 @@ public class AdminController extends GeneralController {
         } else {
             saleSummaryText.setText("End date is before start date");
         }
+        updateFinanceGraph();
+    }
 
+    /**
+     * Initializes the start date and end date pickers for the finance tab
+     */
+    private void financeInitialize() {
+        LocalDate minDate = LocalDate.MAX;
+        LocalDate maxDate = LocalDate.MIN;
+        for (Transaction transaction : finance.getTransactionHistory().values()) {
+            if (transaction.getDateTime().toLocalDate().isBefore(minDate))
+                minDate = transaction.getDateTime().toLocalDate();
+            if (transaction.getDateTime().toLocalDate().isAfter(maxDate))
+                maxDate = transaction.getDateTime().toLocalDate();
+        }
+        startDate.setValue(minDate);
+        endDate.setValue(maxDate);
+        startDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate tempEndDate = endDate.getValue();
+                startDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isAfter(newObj)));
+                if (tempEndDate == null) {
+                    setDisable(empty);
+                } else {
+                    setDisable(empty || date.isAfter(tempEndDate));
+                }
+            }
+        });
+        startDate.setConverter(new LocalDateStringConverter() {
+            @Override
+            public LocalDate fromString(String input) {
+                LocalDate date = super.fromString(input);
+                LocalDate tempEndDate = endDate.getValue();
+                if (tempEndDate != null && date.isAfter(tempEndDate)) {
+                    date = tempEndDate;
+                }
+                return date;
+            }
+        });
+
+        endDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate tempStartDate = startDate.getValue();
+                endDate.valueProperty().addListener((unused, old, newObj) -> this.setDisable(date.isBefore(newObj)));
+                if (tempStartDate == null) {
+                    setDisable(empty);
+                } else {
+                    setDisable(empty || date.isBefore(tempStartDate));
+                }
+            }
+        });
+        endDate.setConverter(new LocalDateStringConverter() {
+            @Override
+            public LocalDate fromString(String input) {
+                LocalDate date = super.fromString(input);
+                LocalDate tempStartDate = startDate.getValue();
+                if (tempStartDate != null && date.isBefore(tempStartDate)) {
+                    date = tempStartDate;
+                }
+                return date;
+            }
+        });
+    }
+
+    /**
+     * Updates the graph containing profits for the specified period
+     */
+    private void updateFinanceGraph() {
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        startDate.getValue().datesUntil(endDate.getValue().plusDays(1))
+                .forEach((date) -> series.getData().add(new XYChart.Data<>(DateTimeFormatter.ofPattern("dd-MM").format(date),
+                        finance.totalCalculator(LocalDateTime.of(date, LocalTime.MIN),
+                                LocalDateTime.of(date, LocalTime.MAX)).get(2).getAmountMajorInt())));
+        financeGraph.setCreateSymbols(false);
+        financeGraph.getData().clear();
+        financeGraph.getData().add(series);
+        financeGraph.setTitle(String.format("Total profits in NZD from %s to %s",
+                DateTimeFormatter.ofPattern("dd-MM-yy").format(startDate.getValue()),
+                DateTimeFormatter.ofPattern("dd-MM-yy").format(endDate.getValue())));
+        financeGraph.setLegendVisible(false);
     }
 
     /**
@@ -306,7 +415,7 @@ public class AdminController extends GeneralController {
      * @return the selected file from the file chooser.
      */
     public File getSelectedFile() {
-        fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Xml Files", "*.xml"));
         File selectedFile = fileChooser.showOpenDialog(null);
         fileNotificationText.setText(null);
@@ -338,7 +447,7 @@ public class AdminController extends GeneralController {
      * Therefore enable the import data button for the user to click.
      */
     public void checkFilesSelected() {
-        if (fileMap.size() == 3) {
+        if (fileMap.size() >= 1) {
             importDataButton.setDisable(false);
         } else {
             importDataButton.setDisable(true);
@@ -520,22 +629,43 @@ public class AdminController extends GeneralController {
         }
     }
 
+    /**
+     * Updates the autosave feature of the database
+     */
     public void updateAutosave() {
         getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());
-        if (autosaveCheckbox.isSelected() && !autoloadCheckbox.isSelected()) {
-            // Display warning
-        } else {
-            // Remove warning
-        }
+        dataMergeTypeMenu.setText("Overwrite");
     }
 
+    /**
+     * Updates the autoload feature of the database
+     */
     public void updateAutoload() {
         getAppEnvironment().getDatabase().setAutoloadEnabled(autoloadCheckbox.isSelected());
-        if (autosaveCheckbox.isSelected() && !autoloadCheckbox.isSelected()) {
-            // Display warning
-        } else {
-            // Remove warning
-        }
+    }
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void overwriteTypeOverwriteAll() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.OVERWRITE_ALL);
+        dataMergeTypeMenu.setText(OverwriteTypeNames[0]);
+    }
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void overwriteTypeMergePreferNew() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.MERGE_PREFER_NEW);
+        dataMergeTypeMenu.setText(OverwriteTypeNames[1]);
+    }
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void overwriteTypeMergePreferOld() {
+        getAppEnvironment().getDatabase().setOverwriteSetting(Database.OverwriteType.MERGE_PREFER_OLD);
+        dataMergeTypeMenu.setText(OverwriteTypeNames[2]);
     }
 
     /**

@@ -8,8 +8,13 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
@@ -84,25 +89,25 @@
                                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="NEVER" />
                                     </rowConstraints>
                                     <children>
-                                        <JFXDatePicker fx:id="endDate" promptText="End Date" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                                        <JFXDatePicker fx:id="endDate" promptText="End Date" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                             <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                                             </GridPane.margin>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXDatePicker>
-                                        <JFXDatePicker fx:id="startDate" promptText="Start Date" GridPane.halignment="RIGHT">
+                                        <JFXDatePicker fx:id="startDate" promptText="Start Date" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                                             <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                                             </GridPane.margin>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXDatePicker>
-                                        <JFXButton fx:id="viewHistoryButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#viewHistory" text="Get finance information" GridPane.columnIndex="2">
+                                        <JFXButton fx:id="viewHistoryButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#viewHistory" text="Get finance information" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                             <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                                             </GridPane.margin>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -111,13 +116,27 @@
                                     </children>
                                 </GridPane>
                             </top>
-                            <center>
+                     <bottom>
                                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                                     <children>
                                         <Label fx:id="saleSummaryText" alignment="CENTER" contentDisplay="CENTER" text="Label" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                                     </children>
                                 </AnchorPane>
-                            </center>
+                     </bottom>
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <LineChart fx:id="financeGraph" layoutX="235.0" layoutY="39.0" title="Total profits in NZD" verticalZeroLineVisible="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                           </children>
+                        </AnchorPane>
+                     </center>
                         </BorderPane>
                     </content>
                 </Tab>
@@ -193,7 +212,7 @@
                         <GridPane gridLinesVisible="true">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints percentHeight="50.0" vgrow="SOMETIMES" />
@@ -207,12 +226,13 @@
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" percentWidth="33.33" prefWidth="200.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="133.3333282470703" minHeight="10.0" prefHeight="133.3333282470703" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="133.3333282470703" minHeight="10.0" prefHeight="133.3333282470703" vgrow="SOMETIMES" />
                                         <RowConstraints maxHeight="91.66667175292969" minHeight="27.666671752929688" prefHeight="27.666671752929688" vgrow="SOMETIMES" />
                                         <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                                         <RowConstraints />
                                     </rowConstraints>
                                     <children>
@@ -225,9 +245,9 @@
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
+                                            <GridPane.margin>
+                                                <Insets />
+                                            </GridPane.margin>
                                         </JFXButton>
                                         <JFXButton fx:id="selectFinanceButton" mnemonicParsing="false" onAction="#selectFinance" prefHeight="40.0" prefWidth="200.0" text="Select finance.xml" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
                                             <cursor>
@@ -249,15 +269,25 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </GridPane.margin>
                                         </Text>
-                                      <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-                                          <font>
-                                              <Font size="26.0" />
-                                          </font>
-                                          <GridPane.margin>
-                                              <Insets />
-                                          </GridPane.margin>
-                                      </Text>
-                                        <JFXButton fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="40.0" prefWidth="200.0" text="Import Data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                        <Text fx:id="fileNotificationText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="794.13671875" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                            <font>
+                                                <Font size="26.0" />
+                                            </font>
+                                            <GridPane.margin>
+                                                <Insets />
+                                            </GridPane.margin>
+                                        </Text>
+                                        <MenuButton fx:id="dataMergeTypeMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Data Merge Type" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeOverwriteAll" text="Overwrite: Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)" />
+                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeMergePreferNew" text="Merge and replace with imported data: Merge existing data with imported data and replace conflicting data with imported data" />
+                                                <MenuItem mnemonicParsing="false" onAction="#overwriteTypeMergePreferOld" text="Merge and keep data in application: Merge imported data with existing data and keep existing data when conflicts occurs" />
+                                            </items>
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </MenuButton>
+                                        <JFXButton fx:id="importDataButton" disable="true" mnemonicParsing="false" onAction="#importData" prefHeight="40.0" prefWidth="200.0" text="Import Data" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets />
                                             </GridPane.margin>
@@ -265,112 +295,124 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXButton>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Import Data" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="40.0" />
-                                 </font>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To import the data you have previously exported, you must select all data one by one. You must locate and select stock.xml, menu.xml and finance.xml. Then you must press the Import Data button for the data to be imported to the system." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Import Data" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="40.0" />
+                                            </font>
+                                        </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To import the data you have previously exported, you must select all data one by one. You must locate and select stock.xml, menu.xml and finance.xml. Then you must press the Import Data button for the data to be imported to the system." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Text>
                                     </children>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </GridPane.margin>
                                 </GridPane>
-                        <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                                      <Label text="Autosave will save the program data to the selected location whenever the screen is changed." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                      <Label alignment="CENTER" contentDisplay="CENTER" text="Autoload will load all data from the selected location on startup." GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                                      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-                                          <children>
-                                              <JFXCheckBox fx:id="autosaveCheckbox" alignment="CENTER" onAction="#updateAutosave" text="Autosave" HBox.hgrow="NEVER">
-                                                  <HBox.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                  </HBox.margin>
-                                              </JFXCheckBox>
-                                              <JFXCheckBox fx:id="autoloadCheckbox" alignment="CENTER" onAction="#updateAutoload" text="Autoload" HBox.hgrow="NEVER">
-                                                  <HBox.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                  </HBox.margin>
-                                              </JFXCheckBox>
-                                              <JFXTextField fx:id="autoLocation" alignment="CENTER" editable="false" maxWidth="1.7976931348623157E308" promptText="Default - Stored in program folder" HBox.hgrow="ALWAYS">
-                                                  <HBox.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                  </HBox.margin>
-                                              </JFXTextField>
-                                              <JFXButton onAction="#updateAutoLocation" text="Set autosave/load location">
-                                                  <HBox.margin>
-                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                  </HBox.margin>
-                                                  <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                  </cursor>
-                                              </JFXButton>
-                                          </children>
-                                      </HBox>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Autosave and Autoload" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="40.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
-                        </GridPane>
-                        <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
+                                <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Autosave will save the program data to the selected location whenever the screen is changed." GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" text="Autoload will load all data from the selected location on startup." GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                            <children>
+                                                <JFXCheckBox fx:id="autosaveCheckbox" alignment="CENTER" onAction="#updateAutosave" text="Autosave" HBox.hgrow="NEVER">
+                                                    <HBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </HBox.margin>
+                                                </JFXCheckBox>
+                                                <JFXCheckBox fx:id="autoloadCheckbox" alignment="CENTER" onAction="#updateAutoload" text="Autoload" HBox.hgrow="NEVER">
+                                                    <HBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </HBox.margin>
+                                                </JFXCheckBox>
+                                                <JFXTextField fx:id="autoLocation" alignment="CENTER" editable="false" maxWidth="1.7976931348623157E308" promptText="Default - Stored in program folder" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </HBox.margin>
+                                                </JFXTextField>
+                                                <JFXButton onAction="#updateAutoLocation" text="Set autosave/load location">
+                                                    <HBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </HBox.margin>
+                                                    <cursor>
+                                                        <Cursor fx:constant="HAND" />
+                                                    </cursor>
+                                                </JFXButton>
+                                            </children>
+                                        </HBox>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Autosave and Autoload" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="40.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </GridPane.margin>
+                                </GridPane>
+                                <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </GridPane.margin>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
                                         <JFXButton fx:id="selectImagesFolderButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectImagesFolder" prefHeight="40.0" prefWidth="200.0" text="Select Images Folder" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXButton>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Images Folder " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="40.0" />
-                                 </font>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select the folder where you store images for the menu items" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="220.66668701171875" minHeight="10.0" prefHeight="134.66668701171875" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="347.0" minHeight="10.0" prefHeight="280.33331298828125" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="40.0" />
-                                 </font>
-                              </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Images Folder " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="40.0" />
+                                            </font>
+                                        </Text>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please select the folder where you store images for the menu items" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </GridPane>
+                                <GridPane GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="220.66668701171875" minHeight="10.0" prefHeight="134.66668701171875" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="347.0" minHeight="10.0" prefHeight="280.33331298828125" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export Data" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="40.0" />
+                                            </font>
+                                        </Text>
                                         <JFXButton fx:id="exportDataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exportData" prefHeight="40.0" prefWidth="200.0" text="Export Data" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -379,16 +421,16 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXButton>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To export the data from the system, press the Export Data button. This will lead you to select the directory to store the data." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </GridPane.margin>
-                        </GridPane>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions: To export the data from the system, press the Export Data button. This will lead you to select the directory to store the data." textAlignment="JUSTIFY" wrappingWidth="900.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </GridPane.margin>
+                                </GridPane>
                             </children>
                         </GridPane>
                     </content>
@@ -567,128 +609,127 @@
                         </BorderPane>
                     </content>
                 </Tab>
-            <Tab text="Password Settings">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <GridPane layoutX="1.0" prefHeight="72.0" prefWidth="800.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label prefHeight="61.0" prefWidth="373.0" text="Update Password ">
-                                 <font>
-                                    <Font size="36.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                              </Label>
-                           </children>
-                        </GridPane>
-                        <GridPane layoutX="-2.0" layoutY="65.0" prefHeight="816.0" prefWidth="1045.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="273.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="691.0" minWidth="10.0" prefWidth="527.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="158.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="396.0" minHeight="0.0" prefHeight="17.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label prefHeight="16.0" prefWidth="212.0" text="Old Password ">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label prefHeight="16.0" prefWidth="240.0" text="New Password " GridPane.rowIndex="1">
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label prefHeight="16.0" prefWidth="247.0" text="Confirm Password" GridPane.rowIndex="2">
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Label>
-                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="86.0" minHeight="2.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                              <GridPane GridPane.columnIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="172.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="479.0" minWidth="10.0" prefWidth="479.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Text fx:id="oldPasswordWarning" fill="#da0f0f" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="426.7294921875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Tab text="Password Settings">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <GridPane layoutX="1.0" prefHeight="72.0" prefWidth="800.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label prefHeight="61.0" prefWidth="373.0" text="Update Password ">
+                                            <font>
+                                                <Font size="36.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets left="15.0" />
+                                            </padding>
+                                        </Label>
+                                    </children>
+                                </GridPane>
+                                <GridPane layoutX="-2.0" layoutY="65.0" prefHeight="816.0" prefWidth="1045.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="273.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="691.0" minWidth="10.0" prefWidth="527.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="158.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="396.0" minHeight="0.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label prefHeight="16.0" prefWidth="212.0" text="Old Password ">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" />
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="22.0" />
+                                            </font>
+                                        </Label>
+                                        <Label prefHeight="16.0" prefWidth="240.0" text="New Password " GridPane.rowIndex="1">
+                                            <padding>
+                                                <Insets left="15.0" />
+                                            </padding>
+                                            <font>
+                                                <Font size="22.0" />
+                                            </font>
+                                        </Label>
+                                        <Label prefHeight="16.0" prefWidth="247.0" text="Confirm Password" GridPane.rowIndex="2">
+                                            <padding>
+                                                <Insets left="15.0" />
+                                            </padding>
+                                            <font>
+                                                <Font size="22.0" />
+                                            </font>
+                                        </Label>
+                                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="86.0" minHeight="2.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            </GridPane>
+                                        <GridPane GridPane.columnIndex="1">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="172.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="479.0" minWidth="10.0" prefWidth="479.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Text fx:id="oldPasswordWarning" fill="#da0f0f" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="426.7294921875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="17.0" />
                                        </font>
                                     </Text>
-                                    <JFXPasswordField fx:id="oldPasswordText" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
-                                 </children>
-                              </GridPane>
-                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="217.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="434.0" minWidth="10.0" prefWidth="434.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <JFXPasswordField fx:id="newPasswordText" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
-                                    <Text fx:id="promptText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="196.7294921875" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                    <Text fx:id="newPasswordWarning" fill="#1afc2c" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="362.7294921875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                <JFXPasswordField fx:id="oldPasswordText" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="217.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="434.0" minWidth="10.0" prefWidth="434.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <JFXPasswordField fx:id="newPasswordText" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
+                                                <Text fx:id="promptText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="196.7294921875" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                            <Text fx:id="newPasswordWarning" fill="#1afc2c" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="362.7294921875" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="17.0" />
                                        </font></Text>
                                  </children>
-                              </GridPane>
-                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="196.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" minWidth="10.0" prefWidth="455.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <JFXPasswordField fx:id="confirmPasswordText" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </GridPane>
+                                        </GridPane>
+                                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="196.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" minWidth="10.0" prefWidth="455.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <JFXPasswordField fx:id="confirmPasswordText" maxWidth="-Infinity" prefHeight="26.0" prefWidth="176.0" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children></GridPane>
                         <GridPane layoutX="1539.0" layoutY="838.0" prefHeight="148.0" prefWidth="377.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -716,11 +757,11 @@
                             <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="172.0" vgrow="SOMETIMES" />
                           </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
             </tabs>
         </JFXTabPane>
     </children>
