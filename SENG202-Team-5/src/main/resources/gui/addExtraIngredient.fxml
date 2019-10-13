@@ -18,7 +18,7 @@
                 <TableColumn fx:id="columnCategory" prefWidth="750.0" text="Categories" />
                 <TableColumn fx:id="columnQuantity" prefWidth="220.0" text="Quantity" />
                 <TableColumn fx:id="columnCost" prefWidth="200.0" text="Cost per Unit" />
-            <TableColumn fx:id="columnWarning" prefWidth="100.0" text="Warning" />
+            <TableColumn fx:id="columnWarning" prefWidth="100.0" text="Dietary Information" />
                 <TableColumn fx:id="columnSpinner" prefWidth="500.0" text="Selected" />
             </columns>
             <columnResizePolicy>

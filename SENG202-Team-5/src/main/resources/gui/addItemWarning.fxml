@@ -25,19 +25,19 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="backButton" onAction="#closeScreen" prefHeight="75.0" prefWidth="170.0" stylesheets="@css/back-button.css" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <JFXButton fx:id="backButton" onAction="#closeScreen" prefHeight="75.0" prefWidth="170.0" text="Back" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="confirmButton" onAction="#confirmItem" prefHeight="75.0" prefWidth="170.0" stylesheets="@css/confirm-button.css" text="Confirm" GridPane.halignment="CENTER">
+            <JFXButton fx:id="confirmButton" onAction="#confirmItem" prefHeight="75.0" prefWidth="170.0" text="Confirm" GridPane.halignment="CENTER">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
          </children>
       </GridPane>
-      <Text fx:id="warningText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="332.427734375" GridPane.halignment="CENTER">
+      <Text fx:id="warningText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="332.427734375" GridPane.halignment="CENTER">
          <font>
             <Font size="19.0" />
          </font>

@@ -36,8 +36,8 @@ public class AddItemWarningController {
     @FXML
     public void pseudoInitialize() {
         warningText.setText("Warning: The ingredients you are trying to add " +
-                "breaks the following dietary requirements: \n" + brokenEnumSet +
-                "\n are you sure you want to add them?");
+                "breaks the following dietary requirements: \n" + dietaryInfoString(brokenEnumSet) +
+                "\nAre you sure you want to add them?");
     }
 
     /**
@@ -61,6 +61,23 @@ public class AddItemWarningController {
 
     public void setParentController(AddExtraIngredientController tempParentController) {
         parentController = tempParentController;
+    }
+
+
+    /**
+     * Creates a string by concatenating the dietary requirements which are broken.
+     * @param hashSet containing broken dietary requirements to be output.
+     * @return a string of concatenated dietary requirements.
+     */
+    public String dietaryInfoString(HashSet<DietEnum> hashSet) {
+        String dietInfoString= "";
+        for (DietEnum dietEnum: hashSet) {
+            dietInfoString += dietEnum.toString() + ", ";
+        }
+        if (dietInfoString.length() > 0) {
+            dietInfoString = dietInfoString.substring(0, dietInfoString.length() - 2);
+        }
+        return dietInfoString;
     }
 
     public void setDietRequirements(HashSet<DietEnum> tempBrokenEnumSet) {

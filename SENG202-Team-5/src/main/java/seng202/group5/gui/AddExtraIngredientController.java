@@ -109,12 +109,10 @@ public class AddExtraIngredientController extends GeneralController {
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         columnWarning.setCellValueFactory(data -> {
-            HashSet<DietEnum> dietInconsistencySet =
-                    selectedItem.getRecipe().checkInconsistency(data.getValue());
-                    if (dietInconsistencySet.size() == 0) {
+                    if (data.getValue().getDietInfo().size() == 0) {
                         return new SimpleStringProperty((""));
                     } else {
-                        return new SimpleStringProperty((dietInconsistencySet.toString()));
+                        return new SimpleStringProperty((data.getValue().getDietaryInformationString()));
                     }
         });
         columnQuantity.setCellValueFactory(data -> {

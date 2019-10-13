@@ -182,6 +182,22 @@ public class Ingredient {
     }
 
     /**
+     * Loops over the dietEnum Hashset and creates a string representing the dietary infomraiton
+     * @return a string with all the dietary information
+     */
+    public String getDietaryInformationString() {
+        String dietInfoString= "";
+        for (DietEnum dietEnum: dietaryInformation) {
+            dietInfoString += dietEnum.toString() + ", ";
+        }
+
+        if (dietInfoString.length() > 0) {
+            dietInfoString = dietInfoString.substring(0, dietInfoString.length() - 2);
+        }
+        return dietInfoString;
+    }
+
+    /**
      * Gets the dietary information of this ingredient
      *
      * @return the dietary information about this ingredient
