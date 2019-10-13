@@ -1,6 +1,7 @@
 package seng202.group5;
 
 import org.joda.money.Money;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,16 +14,17 @@ import seng202.group5.information.Recipe;
 import seng202.group5.logic.MenuManager;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuXmlTest {
 
-    static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
-    static AppEnvironment appEnvironment = new AppEnvironment(false);
-    Database database = appEnvironment.getDatabase();
-    MenuManager menuManager;
+    private static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
+    private static AppEnvironment appEnvironment = new AppEnvironment(false);
+    private Database database = appEnvironment.getDatabase();
+    private MenuManager menuManager;
 
     @BeforeAll
     public static void createAndMarshalMenuData() {
@@ -126,10 +128,10 @@ public class MenuXmlTest {
         assertEquals("1222", id);
     }
 
-    @Test
-    public void testMenuItemInMenuBooleanIsInMenuManager() {
-        Boolean inMenu = menuManager.getItemMap().get("1222").isInMenu();
-        assertTrue(inMenu);
+    @AfterAll
+    public static void teardown() {
+        File file = new File(testDirectory + "/menu.xml");
+        file.delete();
     }
 
     @Test
@@ -139,8 +141,14 @@ public class MenuXmlTest {
     }
 
     @Test
+    public void testMenuItemInMenuBooleanIsInMenuManager() {
+        boolean inMenu = menuManager.getItemMap().get("1222").isInMenu();
+        assertTrue(inMenu);
+    }
+
+    @Test
     public void testMenuItemEditedBooleanIsInMenuManager() {
-        Boolean edited = menuManager.getItemMap().get("1222").isEdited();
+        boolean edited = menuManager.getItemMap().get("1222").isEdited();
         assertFalse(edited);
     }
 }

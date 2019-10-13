@@ -1,6 +1,7 @@
 package seng202.group5;
 
 import org.joda.money.Money;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import seng202.group5.information.Transaction;
 import seng202.group5.logic.Finance;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
@@ -21,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FinanceXmlTest {
 
-    static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
-    static AppEnvironment appEnvironment = new AppEnvironment(false);
-    Database database = appEnvironment.getDatabase();
-    Finance finance;
+    private static String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
+    private static AppEnvironment appEnvironment = new AppEnvironment(false);
+    private Database database = appEnvironment.getDatabase();
+    private Finance finance;
 
     @BeforeAll
     public static void createAndMarshalFinanceData() {
@@ -134,5 +136,11 @@ public class FinanceXmlTest {
     public void testTransactionOrderIdIsInFinance() {
         String orderId = finance.getTransactionHistory().get("9").getOrderID();
         assertEquals("8", orderId);
+    }
+
+    @AfterAll
+    public static void teardown() {
+        File file = new File(testDirectory + "/finance.xml");
+        file.delete();
     }
 }
