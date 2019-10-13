@@ -25,7 +25,7 @@ public class Customer {
 
     private String phoneNumber;
 
-    private int purchasePoints = 10;
+    private int purchasePoints = 1;
 
     @XmlTransient
     private int ratio = 10;

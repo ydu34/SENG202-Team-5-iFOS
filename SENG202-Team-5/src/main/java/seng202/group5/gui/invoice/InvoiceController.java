@@ -281,6 +281,7 @@ public class InvoiceController extends GeneralController {
 
     public void clearSelectedMember() {
         currentOrder.setCurrentCustomer(null);
+        currentOrder.setDiscount(Money.parse("NZD 0"));
         currentCustomer.addPurchasePoints(customerPoints);
         currentCustomer = null;
         customerPoints = 0;
@@ -290,6 +291,8 @@ public class InvoiceController extends GeneralController {
         customerPointsLabel.setText("");
         existingMemberButton.setText("Existing Member");
         newMemberButton.setText("New Member");
+
+        pseudoInitialize();
     }
 
     /**
