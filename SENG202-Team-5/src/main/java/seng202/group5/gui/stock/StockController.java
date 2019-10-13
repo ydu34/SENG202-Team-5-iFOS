@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.group5.exceptions.NoOrderException;
@@ -101,10 +103,10 @@ public class StockController extends GeneralController {
         stockTable.sort();
 
         try {
-            ///getAppEnvironment().getOrderManager().getOrder().resetStock(getAppEnvironment().getStock());
 
             if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
                 warningLabel.setText("Can not Add/Modify/Remove Stock when Order is in progress.");
+                warningLabel.setTextFill(Color.RED);
                 addButton.setDisable(true);
                 modifyButton.setDisable(true);
                 removeButton.setDisable(true);
