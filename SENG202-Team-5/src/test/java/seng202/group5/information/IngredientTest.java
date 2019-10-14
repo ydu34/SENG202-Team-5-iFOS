@@ -4,6 +4,7 @@ import org.joda.money.Money;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,4 +64,49 @@ public class IngredientTest {
         ingredient.setPrice(Money.parse("NZD 1000"));
         assertEquals(ingredient.getPrice(), Money.parse("NZD 1000"));
     }
+    @Test
+    public void testDietaryInfoString() {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("New ingredient");
+        ingredient.setPrice(Money.parse("NZD50.00"));
+        ingredient.setId("INGR15");
+        HashSet<DietEnum> testEnumSet = new HashSet<>();
+        testEnumSet.add(DietEnum.GLUTEN_FREE);
+        ingredient.setDietaryInformation(testEnumSet);
+        assertEquals("Gluten free", ingredient.getDietaryInformationString());
+    }
+
+    @Test
+    public void testRemoveDietInfo() {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("New ingredient");
+        ingredient.setPrice(Money.parse("NZD50.00"));
+        ingredient.setId("INGR15");
+        HashSet<DietEnum> testEnumSet = new HashSet<>();
+        testEnumSet.add(DietEnum.VEGETARIAN);
+        ingredient.setDietaryInformation(testEnumSet);
+        assertTrue(ingredient.getDietInfo().size() == 1);
+        ingredient.removeDietInfo(DietEnum.VEGETARIAN);
+        assertTrue(ingredient.getDietInfo().size() == 0);
+    }
+
+    @Test
+    public void testRemoveMultipleDietInfo() {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("New ingredient");
+        ingredient.setPrice(Money.parse("NZD50.00"));
+        ingredient.setId("INGR15");
+        HashSet<DietEnum> testEnumSet = new HashSet<>();
+        testEnumSet.add(DietEnum.VEGETARIAN);
+        testEnumSet.add(DietEnum.VEGAN);
+        ingredient.setDietaryInformation(testEnumSet);
+        assertTrue(ingredient.getDietInfo().size() == 2);
+        ArrayList<DietEnum> toBeRemoved = new ArrayList<>();
+        toBeRemoved.add(DietEnum.VEGAN);
+        toBeRemoved.add(DietEnum.VEGETARIAN);
+        ingredient.removeDietInfo(toBeRemoved);
+        assertTrue(ingredient.getDietInfo().size() == 0);
+    }
+
+
 }

@@ -26,8 +26,7 @@ class StockXmlTest {
 
 
     @BeforeAll
-    public static void createAndMarshalStockData() {
-        String testDirectory = System.getProperty("user.dir") + "/src/test/java/seng202/group5";
+    static void createAndMarshalStockData() {
         AppEnvironment oldAppEnvironment = new AppEnvironment(false);
         Ingredient flour = new Ingredient("Flour", "Flour", Money.parse("NZD 7.00"));
         HashSet<DietEnum> ingredientInfo1 = new HashSet<>() {{
@@ -69,13 +68,13 @@ class StockXmlTest {
     }
 
     @AfterAll
-    public static void teardown() {
+    static void teardown() {
         File file = new File(testDirectory + "/stock.xml");
         file.delete();
     }
 
     @BeforeEach
-    public void testUnmarshalStock() {
+    void testUnmarshalStock() {
         try {
             database.stockXmlToObject(testDirectory);
             stock = appEnvironment.getStock();
@@ -88,7 +87,7 @@ class StockXmlTest {
     }
 
     @Test
-    public void testIngredientNameInStock() {
+    void testIngredientNameInStock() {
         String name = stock.getIngredients().get("INGR2").getName();
         assertEquals("Chicken", name);
     }

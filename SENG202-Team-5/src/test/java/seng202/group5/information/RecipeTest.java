@@ -22,23 +22,24 @@ public class RecipeTest {
     private HashSet<DietEnum> ingredientInfo;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         ingredientInfo = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
         }};
-        testRecipe = new Recipe("Chicken burger", "Steps to chicken burger");
+        testRecipe = new Recipe("Chiken burger", "Steps to chicken burger");
+        testRecipe.setName("Chicken burger");
         chickenPatty = new Ingredient("chicken", "meat", "12", Money.parse("NZD 20"), ingredientInfo);
     }
 
     @Test
-    public void testDietaryInformationString() {
+    void testDietaryInformationString() {
         assertEquals("Gluten free, Vegan, Vegetarian", testRecipe.getDietaryInformationString());
         testRecipe.addIngredient(chickenPatty, 1);
         assertEquals("Gluten free", testRecipe.getDietaryInformationString());
     }
 
     @Test
-    public void testAddIngredient() {
+    void testAddIngredient() {
 
 
         HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
@@ -59,7 +60,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void testRemoveIngredient() {
+    void testRemoveIngredient() {
 
         HashSet<DietEnum> ingredientInfo = new HashSet<>() {{
             add(DietEnum.GLUTEN_FREE);
@@ -85,7 +86,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void testEditIngredient() {
+    void testEditIngredient() {
 
         Ingredient cheese = new Ingredient("cheese", "dairy", "12", Money.parse("NZD 20"), ingredientInfo);
         testRecipe.addIngredient(chickenPatty, 10);
@@ -96,13 +97,49 @@ public class RecipeTest {
     }
 
     @Test
-    public void testRecipeConstructors() {
+    void testRecipeConstructors() {
         HashMap<Ingredient, Integer> ingredientsAmount = new HashMap<>();
         HashMap<String, Integer> ingredientIDs = new HashMap<>();
         Recipe testRecipe2 = new Recipe("Burger", "Making Burger", ingredientsAmount, ingredientIDs);
         testRecipe2.addIngredient(chickenPatty, 2);
         assertEquals(2, (int) testRecipe2.getIngredientsAmount().get(chickenPatty));
 
+    }
+
+    @Test
+    void testIsVegan() {
+        ingredientInfo = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+            add(DietEnum.VEGETARIAN);
+            add(DietEnum.VEGAN);
+        }};
+        testRecipe.setDietaryInformation(ingredientInfo);
+
+        assertTrue(testRecipe.isVegan());
+    }
+
+    @Test
+    void testIsVegetarian() {
+        ingredientInfo = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+            add(DietEnum.VEGETARIAN);
+            add(DietEnum.VEGAN);
+        }};
+        testRecipe.setDietaryInformation(ingredientInfo);
+
+        assertTrue(testRecipe.isVegetarian());
+    }
+
+    @Test
+    void testIsGlutenFree() {
+        ingredientInfo = new HashSet<>() {{
+            add(DietEnum.GLUTEN_FREE);
+            add(DietEnum.VEGETARIAN);
+            add(DietEnum.VEGAN);
+        }};
+        testRecipe.setDietaryInformation(ingredientInfo);
+
+        assertTrue(testRecipe.isGlutenFree());
     }
 
 }
