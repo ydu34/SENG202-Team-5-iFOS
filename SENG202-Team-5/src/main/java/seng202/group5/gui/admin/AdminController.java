@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,6 +22,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 import org.joda.money.Money;
 import seng202.group5.Database;
@@ -102,7 +104,7 @@ public class AdminController extends GeneralController {
     private Text financeWarningText;
 
     @FXML
-    private LineChart<String, Integer> financeGraph;
+    private LineChart<Number, Number> financeGraph;
 
     @FXML
     private Button addButton;
@@ -373,11 +375,11 @@ public class AdminController extends GeneralController {
                 maxDate = transaction.getDateTime().toLocalDate();
         }
         if (!minDate.isAfter(maxDate)) {
-            startDate.setValue(minDate);
-            endDate.setValue(maxDate);
+            startDate.setValue(minDate.minusDays(1));
+            endDate.setValue(maxDate.plusDays(1));
         } else {
-            startDate.setValue(LocalDate.now());
-            endDate.setValue(LocalDate.now());
+            startDate.setValue(LocalDate.now().minusDays(1));
+            endDate.setValue(LocalDate.now().plusDays(1));
         }
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -434,11 +436,36 @@ public class AdminController extends GeneralController {
      * Updates the graph containing profits for the specified period
      */
     private void updateFinanceGraph() {
-        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
         startDate.getValue().datesUntil(endDate.getValue().plusDays(1))
-                .forEach((date) -> series.getData().add(new XYChart.Data<>(DateTimeFormatter.ofPattern("dd-MM").format(date),
+                .forEach((date) -> series.getData().add(new XYChart.Data<>((int) date.toEpochDay(),
                         finance.totalCalculator(LocalDateTime.of(date, LocalTime.MIN),
                                 LocalDateTime.of(date, LocalTime.MAX)).get(2).getAmountMajorInt())));
+        financeGraph.getXAxis().setAutoRanging(false);
+        ((NumberAxis) financeGraph.getXAxis()).setLowerBound(startDate.getValue().toEpochDay());
+        ((NumberAxis) financeGraph.getXAxis()).setUpperBound(endDate.getValue().toEpochDay());
+        ((NumberAxis) financeGraph.getXAxis()).setTickLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Number object) {
+                return DateTimeFormatter.ofPattern("dd-MM").format(LocalDate.ofEpochDay(object.intValue()));
+            }
+
+            @Override
+            public Number fromString(String string) {
+                return null;
+            }
+        });
+        ((NumberAxis) financeGraph.getYAxis()).setTickLabelFormatter(new StringConverter<Number>() {
+            @Override
+            public String toString(Number object) {
+                return String.format("NZD %.2f", object);
+            }
+
+            @Override
+            public Number fromString(String string) {
+                return null;
+            }
+        });
         financeGraph.setCreateSymbols(false);
         financeGraph.getData().clear();
         financeGraph.getData().add(series);
