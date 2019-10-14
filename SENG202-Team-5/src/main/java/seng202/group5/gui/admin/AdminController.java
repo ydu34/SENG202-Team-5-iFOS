@@ -820,7 +820,11 @@ public class AdminController extends GeneralController {
         if (Integer.parseInt(maxIngredientField.getText()) < 5) {
             successLabel.setText("At least 5 Ingredients!");
             successLabel.setTextFill(Color.RED);
-        } else {
+        } else if (Integer.parseInt(ratioField.getText()) == 0) {
+            successLabel.setText("Ratio must be at least 1!");
+            successLabel.setTextFill(Color.RED);
+        }
+        else {
             // Saving Max % of Ingredients
             getAppEnvironment().getSettings().setMaxIngredientAmount(Integer.parseInt(maxIngredientField.getText()));
 
