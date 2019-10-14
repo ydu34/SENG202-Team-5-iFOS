@@ -145,6 +145,13 @@ public class ExistingCustomerController extends GeneralController {
         close();
     }
 
+    @FXML
+    public void removeCustomer() {
+        Customer customer = customerTable.getSelectionModel().getSelectedItem();
+        getAppEnvironment().getCustomers().getCustomerList().remove(customer);
+        updateVisibleCustomers();
+    }
+
     /**
      * Updates the visible customers via TextFields that are about the Name, Phone number or ID.
      */
