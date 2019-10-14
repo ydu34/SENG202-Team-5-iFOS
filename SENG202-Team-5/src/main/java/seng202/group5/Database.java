@@ -351,17 +351,6 @@ public class Database {
     public void settingsXmlToObject(String fileDirectory) throws Exception {
         try {
             Settings tempSettings = (Settings) xmlToObject(Settings.class, "settings.xml", "settings.xsd", fileDirectory);
-            switch (overwriteSetting) {
-                case OVERWRITE_ALL:
-                    break;
-                case MERGE_PREFER_NEW:
-                    break;
-                case MERGE_PREFER_OLD:
-
-                    break;
-                default:
-                    break;
-            }
             appEnvironment.setSettings(tempSettings);
         } catch (JAXBException | SAXException e) {
             throw new Exception("settings.xml file is invalid");

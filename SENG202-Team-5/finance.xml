@@ -38,7 +38,6 @@
 <inMenu>true</inMenu>
 <itemType>BEVERAGE</itemType>
 <edited>false</edited>
-<totalCost>NZD 2.00</totalCost>
                             </key>
                             <value>1</value>
                         </entry>
@@ -63,7 +62,6 @@
 <inMenu>true</inMenu>
 <itemType>SIDE</itemType>
 <edited>false</edited>
-<totalCost>NZD 3.20</totalCost>
                             </key>
                             <value>1</value>
                         </entry>
@@ -111,7 +109,6 @@
 <inMenu>true</inMenu>
 <itemType>MAIN</itemType>
 <edited>false</edited>
-<totalCost>NZD 6.30</totalCost>
                             </key>
                             <value>1</value>
                         </entry>

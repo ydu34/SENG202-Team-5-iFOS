@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
@@ -146,7 +145,7 @@
                                                    AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
                                                    AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                                             <xAxis>
-                                                <CategoryAxis side="BOTTOM"/>
+                                                <NumberAxis side="BOTTOM"/>
                                             </xAxis>
                                             <yAxis>
                                                 <NumberAxis side="LEFT"/>

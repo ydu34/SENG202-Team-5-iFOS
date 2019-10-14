@@ -19,26 +19,49 @@
                     <orderItems>
                         <entry>
                             <key>
-                                <itemName>Medium Fries</itemName>
-                                <recipe>
-                                    <name>Medium Fries</name>
-                                    <recipeText>1. Deep fry fries.</recipeText>
-                                    <ingredientIDs>
-                                        <entry>
-                                            <key>INGR4</key>
-                                            <value>2</value>
-                                        </entry>
-                                    </ingredientIDs>
-                                    <dietaryInformation>VEGAN</dietaryInformation>
-                                    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-                                    <dietaryInformation>VEGETARIAN</dietaryInformation>
-                                </recipe>
-                                <markupCost>NZD 3.00</markupCost>
-                                <id>32</id>
-                                <inMenu>true</inMenu>
-                                <itemType>SIDE</itemType>
-                                <edited>false</edited>
-                                <totalCost>NZD 3.20</totalCost>
+<itemName>Coke Can (330mL)</itemName>
+<recipe>
+    <name>Coke Can (330mL)</name>
+    <recipeText>No recipe required</recipeText>
+    <ingredientIDs>
+        <entry>
+            <key>INGR8</key>
+            <value>1</value>
+        </entry>
+    </ingredientIDs>
+    <dietaryInformation>VEGETARIAN</dietaryInformation>
+    <dietaryInformation>VEGAN</dietaryInformation>
+    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+</recipe>
+<markupCost>NZD 1.40</markupCost>
+<id>15</id>
+<inMenu>true</inMenu>
+<itemType>BEVERAGE</itemType>
+<edited>false</edited>
+                            </key>
+                            <value>1</value>
+                        </entry>
+                        <entry>
+                            <key>
+<itemName>Medium Fries</itemName>
+<recipe>
+    <name>Medium Fries</name>
+    <recipeText>1. Deep fry fries.</recipeText>
+    <ingredientIDs>
+        <entry>
+            <key>INGR4</key>
+            <value>2</value>
+        </entry>
+    </ingredientIDs>
+    <dietaryInformation>VEGETARIAN</dietaryInformation>
+    <dietaryInformation>VEGAN</dietaryInformation>
+    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
+</recipe>
+<markupCost>NZD 3.00</markupCost>
+<id>32</id>
+<inMenu>true</inMenu>
+<itemType>SIDE</itemType>
+<edited>false</edited>
                             </key>
                             <value>1</value>
                         </entry>
@@ -64,11 +87,11 @@
             <value>1</value>
         </entry>
         <entry>
-            <key>INGR2</key>
+            <key>INGR3</key>
             <value>1</value>
         </entry>
         <entry>
-            <key>INGR3</key>
+            <key>INGR2</key>
             <value>1</value>
         </entry>
         <entry>
@@ -86,32 +109,6 @@
 <inMenu>true</inMenu>
 <itemType>MAIN</itemType>
 <edited>false</edited>
-<totalCost>NZD 6.30</totalCost>
-                            </key>
-                            <value>1</value>
-                        </entry>
-                        <entry>
-                            <key>
-<itemName>Coke Can (330mL)</itemName>
-<recipe>
-    <name>Coke Can (330mL)</name>
-    <recipeText>No recipe required</recipeText>
-    <ingredientIDs>
-        <entry>
-            <key>INGR8</key>
-            <value>1</value>
-        </entry>
-    </ingredientIDs>
-    <dietaryInformation>VEGAN</dietaryInformation>
-    <dietaryInformation>GLUTEN_FREE</dietaryInformation>
-    <dietaryInformation>VEGETARIAN</dietaryInformation>
-</recipe>
-<markupCost>NZD 1.40</markupCost>
-<id>15</id>
-<inMenu>true</inMenu>
-<itemType>BEVERAGE</itemType>
-<edited>false</edited>
-<totalCost>NZD 2.00</totalCost>
                             </key>
                             <value>1</value>
                         </entry>
