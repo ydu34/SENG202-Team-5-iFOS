@@ -213,7 +213,7 @@ public class Database {
                 importData(Map.of("stock.xml", stockFile, "menu.xml", menuFile, "finance.xml", financeFile, "customers.xml", customersFile));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
             saveFileLocation = "";
             autosaveEnabled = false;
             autoloadEnabled = true;
@@ -222,7 +222,7 @@ public class Database {
             try {
                 objectToXml(Database.class, this, "metadata.xml", System.getProperty("user.dir"));
             } catch (JAXBException e1) {
-                e1.printStackTrace();
+
             }
         }
     }
@@ -405,7 +405,7 @@ public class Database {
             appEnvironment.setFinance(oldFinance);
             appEnvironment.setCustomers(oldCustomers);
             appEnvironment.setSettings(oldSettings);
-            e.printStackTrace();
+
             throw new Exception(e.getMessage());
         }
     }

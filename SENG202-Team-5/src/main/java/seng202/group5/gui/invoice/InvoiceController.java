@@ -272,7 +272,7 @@ public class InvoiceController extends GeneralController {
                 stage.showAndWait();
                 pseudoInitialize();
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
     }
@@ -312,7 +312,7 @@ public class InvoiceController extends GeneralController {
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
     }
@@ -433,7 +433,7 @@ public class InvoiceController extends GeneralController {
 
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 

@@ -85,7 +85,7 @@ public class FinanceXmlTest {
         try {
             oldAppEnvironment.getDatabase().objectToXml(Finance.class, oldAppEnvironment.getFinance(), "finance.xml", testDirectory);
         } catch (JAXBException e) {
-            System.out.println("Failed to marshal object");
+
         }
     }
 
@@ -102,7 +102,7 @@ public class FinanceXmlTest {
             finance = appEnvironment.getFinance();
             assertEquals(1, finance.getTransactionHistory().size());
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -120,7 +120,7 @@ public class FinanceXmlTest {
 
     @Test
     public void testTransactionTotalPriceIsInFinance() {
-        System.out.println(finance);
+
         String totalPrice = finance.getTransactionHistory().get("9").getTotalPrice().toString();
         assertEquals("NZD 80.00", totalPrice);
     }

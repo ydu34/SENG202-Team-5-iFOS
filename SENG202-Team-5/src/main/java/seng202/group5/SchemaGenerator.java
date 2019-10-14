@@ -56,7 +56,7 @@ public class SchemaGenerator {
             stockSchema.write(generateSchema(c));
             stockSchema.close();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }

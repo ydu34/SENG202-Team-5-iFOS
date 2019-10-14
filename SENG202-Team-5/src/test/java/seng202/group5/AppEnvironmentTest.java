@@ -84,7 +84,7 @@ class AppEnvironmentTest {
             ArrayList<Money> change = handler.confirmPayment(paymentAmount);
             for (Money x : change) changeSum = changeSum.plus(x);
         } catch (InsufficientCashException e) {
-            e.printStackTrace();
+
             fail("No order!");
         }
 

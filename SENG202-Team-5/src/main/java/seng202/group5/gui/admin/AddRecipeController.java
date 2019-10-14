@@ -131,7 +131,6 @@ public class AddRecipeController extends GeneralController {
     public void saveRecipe() {
         try {
             saveTextFieldValues();
-            System.out.println("Item image" + item.getImageString());
             menuManager.addItem(item);
             closeScreen();
         } catch (NumberFormatException e) {
@@ -316,7 +315,6 @@ public class AddRecipeController extends GeneralController {
                     Image image = new Image(new FileInputStream(selectedFile.getPath()));
                     itemImage.setImage(image);
                     itemImageName = selectedFile.getName();
-                    System.out.println(itemImageName);
                 } catch (Exception ignored) {
                 }
             }

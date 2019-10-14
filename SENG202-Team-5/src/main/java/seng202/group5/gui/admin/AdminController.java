@@ -630,7 +630,7 @@ public class AdminController extends GeneralController {
             stage.showAndWait();
             pseudoInitialize();
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -669,7 +669,7 @@ public class AdminController extends GeneralController {
                 stage.showAndWait();
                 recipeTableInitialize();
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
     }
