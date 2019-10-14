@@ -14,8 +14,8 @@ I) Running the jar application through jar file.
    - Open terminal in the directory
    - Run application with "java -jar SENG202-Team-5-1.0-SNAPSHOT.jar"
    - You may import pre made .xml files in the xmlFiles folder
-   - Once on the application is running
-   - Go to Admin
+   - Once the application is running
+   - The admin screen should launched
    - Go to Import/Export Data
    - Import each individual file in xmlFiles
    - Select Import Data
@@ -50,4 +50,8 @@ VI) Running the Acceptance testing
  - In intellJ
  - Select SENG202-Team-5 > src > test > stepDefinations
  - Right Click on the RunCucumberTest
+
+VII) Accessing the Admin Screen
+ - The default password is "1111"
+ - Users can set a new password under the settings screen
 

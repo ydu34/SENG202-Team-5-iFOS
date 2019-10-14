@@ -47,6 +47,7 @@ public class AppEnvironment {
         menuManager = new MenuManager();
         orderManager = new OrderManager(stock);
         customers = new Customers();
+        settings = new Settings();
         idGenerator = new IDGenerator();
         database = new Database();
         database.setAppEnvironment(this);
