@@ -266,7 +266,7 @@ public class OrderController extends GeneralController {
     }
 
     private Image getItemImage(MenuItem item) {
-        Image itemImage = new Image(getClass().getResourceAsStream("/images/default.png"));
+        Image itemImage = new Image(getClass().getResourceAsStream("/images/default.jpg"));
         try {
 
             itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + "/" + item.getImageString()));
