@@ -48,7 +48,7 @@ public class GuiManager extends Application {
             try {
                 appEnvironment.getDatabase().autosave();
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
             System.exit(0);
         }));
@@ -125,7 +125,7 @@ public class GuiManager extends Application {
                     LocalDateTime.now(),
                     tempOrder);
         } catch (InsufficientCashException e) {
-            e.printStackTrace();
+
         }
 
     }

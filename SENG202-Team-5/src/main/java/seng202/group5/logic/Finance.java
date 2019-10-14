@@ -191,7 +191,7 @@ public class Finance {
                     totalChange.add(value);
                     tempChange = tempChange.minus(value);
                 } catch (InsufficientCashException e) {
-                    e.printStackTrace();
+
                 }
             }
         }

@@ -91,12 +91,12 @@ public class GeneralController {
                 oldStage.getScene().setRoot(finalSampleScene);
             });
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         try {
             appEnvironment.getDatabase().autosave();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return controller;
     }
@@ -156,7 +156,7 @@ public class GeneralController {
 
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
     }

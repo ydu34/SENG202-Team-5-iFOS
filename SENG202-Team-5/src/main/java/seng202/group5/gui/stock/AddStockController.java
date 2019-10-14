@@ -150,7 +150,7 @@ public class AddStockController extends GeneralController {
             Stage stage = (Stage) createButton.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            e.printStackTrace();
+
             warningLabel.setText("Error creating ingredient.");
         }
     }

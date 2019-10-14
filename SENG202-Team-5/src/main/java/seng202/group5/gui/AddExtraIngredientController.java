@@ -189,7 +189,7 @@ public class AddExtraIngredientController extends GeneralController {
             stage.initOwner(backButton.getScene().getWindow());
             stage.showAndWait();
         } catch (Exception e) {
-            //e.printStackTrace();
+
         }
     }
 

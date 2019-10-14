@@ -231,7 +231,7 @@ public class StockController extends GeneralController {
             pseudoInitialize();
 
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 

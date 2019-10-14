@@ -90,7 +90,7 @@ public class AddPastOrderController extends OrderController {
             smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) ->
                     oldStage.getScene().setRoot(finalSampleScene));
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         return controller;
     }
@@ -238,7 +238,7 @@ public class AddPastOrderController extends OrderController {
             double prevWidth = ((Node) event.getSource()).getScene().getWidth();
             oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 

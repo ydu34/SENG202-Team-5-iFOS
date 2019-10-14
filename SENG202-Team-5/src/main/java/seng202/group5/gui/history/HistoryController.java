@@ -156,7 +156,7 @@ public class HistoryController extends GeneralController {
 
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
     }
@@ -267,7 +267,7 @@ public class HistoryController extends GeneralController {
             history.put(order.getId(), tempTransaction);
             updateVisibleOrders();
         } else {
-            System.out.println("Order already exists in history!");
+
         }
     }
 
