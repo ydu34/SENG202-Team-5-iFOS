@@ -141,9 +141,6 @@ public class StockController extends GeneralController {
         stockTable.getSortOrder().add(columnID);
         stockTable.sort();
 
-        // Mouse listener for the context menu
-        initialiseContextMenu();
-
         // If the order is in progress, the stock can't be modified
         if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {
             warningLabel.setFill(Color.RED);
@@ -151,6 +148,9 @@ public class StockController extends GeneralController {
             addButton.setDisable(true);
             modifyButton.setDisable(true);
             removeButton.setDisable(true);
+        } else {
+            // Mouse listener for the context menu
+            initialiseContextMenu();
         }
     }
 
@@ -186,7 +186,8 @@ public class StockController extends GeneralController {
         stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 cm.show(stockTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 && stockTable.getSelectionModel().getSelectedItem() != null) {
+            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2 &&
+                    stockTable.getSelectionModel().getSelectedItem() != null) {
                 modifyIngredient();
             } else {
                 cm.hide();
