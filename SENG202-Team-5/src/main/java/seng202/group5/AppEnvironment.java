@@ -76,9 +76,7 @@ public class AppEnvironment {
         setStock(order.getStock().clone());
         orderManager.setStock(stock);
         orderManager.newOrder();
-        if (order.getDiscount().isEqual(Money.parse("NZD 0")) && order.getCurrentCustomer() != null) {
-            order.getCurrentCustomer().purchasePoints(order.getTotalCost(), customers.getCustomerSettings().getRatio());
-        }
+
         setStock(order.getStock().clone());
         orderManager.setStock(stock);
         orderManager.newOrder();
