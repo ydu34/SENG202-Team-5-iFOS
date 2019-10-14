@@ -8,6 +8,7 @@ import seng202.group5.information.*;
 import seng202.group5.logic.Finance;
 import seng202.group5.logic.MenuManager;
 import seng202.group5.logic.OrderManager;
+import seng202.group5.logic.Settings;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -132,6 +133,21 @@ class AppEnvironmentTest {
         Customers customers = new Customers();
         handler.setCustomers(customers);
         assertEquals(customers, handler.getCustomers());
+    }
+
+    @Test
+    void testSetGetCustomerSettings() {
+        CustomerSettings customerSettings = new CustomerSettings();
+        handler.setCustomers(new Customers());
+        handler.getCustomers().setCustomerSettings(customerSettings);
+        assertEquals(customerSettings, handler.getCustomers().getCustomerSettings());
+    }
+
+    @Test
+    void testSetSettings() {
+        Settings settings = new Settings();
+        handler.setSettings(settings);
+        assertEquals(settings, handler.getSettings());
     }
 
 }
