@@ -9,8 +9,8 @@
 ### Table of contents: 
 
 * I)   Running the application
-* II)  Importing the project to IntellJ
-* III) Running the application from IntellJ
+* II)  Importing the project to Intellij
+* III) Running the application from Intellij
 * IV)  Importing the .xml files to the application 
 * V)   Running the JUnit Tests
 * VI)  Running the Acceptance testing  
@@ -27,19 +27,19 @@
    - Click "Select Images Folder" and select the "images" folder
    
 
-### II) Importing the project to IntellJ
-   - Open IntelliJ
+### II) Importing the project to Intellij
+   - Open Intellij
    - Select File > New > Project from existing sources
-   - Find the directory where the contents from the zip file were extracted
+   - Find the directory where the contents from the zip file
    - Select the pom.xml 
    - Click Next > Select the maven project to import 
    - Select the JDK version 1.11.0 
    - Click Next > Finish 
 
-### III) Running the application in IntellJ
+### III) Running the application in Intellij
    - To run the graphical application go to 
    - SENG202-Team5/src/main/java/seng202.group5/gui/Main
-   - Run it buy clicking the green arrow on the top left of the screen or by right clicking Main and selecting run
+   - Run it by clicking the green arrow on the top left of the screen or by right clicking Main and selecting run
 
 ### IV) Importing the test .xml files to the application
    - Once the application is running 
@@ -48,12 +48,12 @@
    - Click "Select Images Folder" and select the "images" folder
 
 ### V) Runng the JUnit Tests
-   - In IntellJ 
+   - In Intellij 
    - Select SENG202-Team-5 > src > test > java
    - Right click seng202.group5 > select "Run tests in seng202.group.5"/"Run tests in seng202.group.5" with coverage
 
 ### VI) Running the Acceptance testing 
-   - In IntellJ 
+   - In Intellij 
    - Select SENG202-Team-5 > src > test > java > stepDefinitions
    - Right Click on the RunCucumberTest and click "Run 'RunCucumberTest'"
 
