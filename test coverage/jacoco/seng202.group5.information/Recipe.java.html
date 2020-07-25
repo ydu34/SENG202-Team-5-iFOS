@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recipe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.information</a> &gt; <span class="el_source">Recipe.java</span></div><h1>Recipe.java</h1><pre class="source lang-java linenums">package seng202.group5.information;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.*;
+
+/**
+ * The Recipe class records all the recipes along with the steps that are stored in the database.
+ *
+ * @author Shivin Gaba, Yu Duan, Daniel Harris
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Recipe {
+
+    /**
+     * Name of each recipe in the database
+     **/
+    private String name;
+
+    /**
+     * All the steps involve in the recipe
+     **/
+    private String recipeText;
+
+    /**
+     * Hash map for all the ingredients' string id and its quantity.
+     */
+    private HashMap&lt;String, Integer&gt; ingredientIDs;
+
+    /**
+     * Hash map for all the ingredients and its quantity
+     **/
+    @XmlTransient
+    private HashMap&lt;Ingredient, Integer&gt; ingredientsAmount;
+
+    //TODO is this XmlTransient?
+    /**
+     * A HashSet to store dietary information about the recipe
+     */
+    private HashSet&lt;DietEnum&gt; dietaryInformation;
+
+<span class="fc" id="L45">    public Recipe() {</span>
+<span class="fc" id="L46">        name = &quot;&quot;;</span>
+<span class="fc" id="L47">        recipeText = &quot;No recipe required&quot;;</span>
+<span class="fc" id="L48">        ingredientsAmount = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L49">        ingredientIDs = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L50">        dietaryInformation = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * A new recipe with no ingredients initially added
+     *
+     * @param tempName       the name of the new recipe
+     * @param tempRecipeText the text describing the recipe steps
+     */
+<span class="fc" id="L59">    public Recipe(String tempName, String tempRecipeText) {</span>
+<span class="fc" id="L60">        name = tempName;</span>
+<span class="fc" id="L61">        recipeText = tempRecipeText;</span>
+<span class="fc" id="L62">        dietaryInformation = new HashSet&lt;&gt;(Arrays.asList(DietEnum.values()));</span>
+<span class="fc" id="L63">        ingredientsAmount = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L64">        ingredientIDs = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L66">    }</span>
+
+
+<span class="fc" id="L69">    public Recipe(String tempName, String tempRecipeText, HashMap&lt;Ingredient, Integer&gt; tempIngredientsAmount) {</span>
+<span class="fc" id="L70">        name = tempName;</span>
+<span class="fc" id="L71">        recipeText = tempRecipeText;</span>
+<span class="fc" id="L72">        dietaryInformation = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L73">        ingredientsAmount = tempIngredientsAmount;</span>
+<span class="fc" id="L74">        ingredientIDs = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (Map.Entry&lt;Ingredient, Integer&gt; entry : ingredientsAmount.entrySet())</span>
+<span class="fc" id="L76">            ingredientIDs.put(entry.getKey().getID(), entry.getValue());</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);</span>
+<span class="fc" id="L78">    }</span>
+
+<span class="fc" id="L80">    public Recipe(String tempName, String tempRecipeText, HashMap&lt;Ingredient, Integer&gt; tempIngredientsAmount, HashMap&lt;String, Integer&gt; tempIngredientIDs) {</span>
+<span class="fc" id="L81">        name = tempName;</span>
+<span class="fc" id="L82">        recipeText = tempRecipeText;</span>
+<span class="fc" id="L83">        ingredientsAmount = tempIngredientsAmount;</span>
+<span class="fc" id="L84">        ingredientIDs = tempIngredientIDs;</span>
+<span class="fc" id="L85">        dietaryInformation = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (DietEnum dietType : DietEnum.values()) checkDietaryInfo(dietType);</span>
+
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * This function adds the specified amount of ingredient that needs to be added in the recipe.
+     *
+     * @param someIngredient ingredient that needs to be added
+     * @param quantity       the amount of someIngredient
+     */
+    public void addIngredient(Ingredient someIngredient, int quantity) {
+
+<span class="fc" id="L98">        ingredientsAmount.merge(someIngredient, quantity, Integer::sum);</span>
+<span class="fc" id="L99">        ingredientIDs.merge(someIngredient.getID(), quantity, Integer::sum);</span>
+<span class="fc" id="L100">        dietaryInformation.retainAll(someIngredient.getDietInfo());</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * This function removes the specified ingredient from the recipe and returns the boolean accordingly.
+     *
+     * @param someIngredient ingredient that needs to be removed
+     * @param quantity       the quantity of the ingredient to remove
+     * @return True if the removal of the ingredient was successful, else returns false
+     */
+    public boolean removeIngredient(Ingredient someIngredient, int quantity) {
+<span class="fc" id="L111">        boolean removed = false;</span>
+
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (ingredientsAmount.containsKey(someIngredient)) {</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (quantity &gt;= ingredientsAmount.get(someIngredient)) {</span>
+<span class="nc" id="L115">                removeIngredient(someIngredient);</span>
+            } else {
+<span class="fc" id="L117">                ingredientsAmount.replace(someIngredient, ingredientsAmount.get(someIngredient) - quantity);</span>
+            }
+<span class="fc" id="L119">            removed = true;</span>
+        }
+<span class="fc" id="L121">        return removed;</span>
+    }
+
+    /**
+     * Completely removes an ingredient from the recipe
+     *
+     * @param someIngredient The ingredient to remove
+     * @return Whether or not the ingredient was removed
+     */
+    public boolean removeIngredient(Ingredient someIngredient) {
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (ingredientsAmount.containsKey(someIngredient)) {</span>
+<span class="fc" id="L132">            ingredientsAmount.remove(someIngredient);</span>
+
+            // This section checks if the dietary information can be changed
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            for (DietEnum dietType : DietEnum.values()) {</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                if (!dietaryInformation.contains(dietType) &amp;&amp;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">                        !someIngredient.getDietInfo().contains(dietType)) {</span>
+<span class="fc" id="L138">                    checkDietaryInfo(dietType);</span>
+                }
+            }
+<span class="fc" id="L141">            return true;</span>
+        } else {
+<span class="nc" id="L143">            return false;</span>
+        }
+    }
+
+    /**
+     * Loops over the dietEnum Hashset and creates a string representing the dietary infomraiton
+     *
+     * @return a string with all the dietary information
+     */
+    public String getDietaryInformationString() {
+<span class="fc" id="L153">        StringBuilder dietInfoString = new StringBuilder();</span>
+<span class="fc" id="L154">        ArrayList&lt;DietEnum&gt; tempList = new ArrayList&lt;&gt;(dietaryInformation);</span>
+<span class="fc" id="L155">        tempList.sort(Comparator.comparing(DietEnum::toString));</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for (DietEnum dietEnum : tempList) {</span>
+<span class="fc" id="L157">            dietInfoString.append(dietEnum.toString()).append(&quot;, &quot;);</span>
+<span class="fc" id="L158">        }</span>
+
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (dietInfoString.length() &gt; 0) {</span>
+<span class="fc" id="L161">            return dietInfoString.substring(0, dietInfoString.length() - 2);</span>
+        }
+<span class="nc" id="L163">        return dietInfoString.toString();</span>
+    }
+
+    /**
+     * Checks if this recipe satisfies one of the dietary types, and updates the dietary info accordingly
+     *
+     * @param typeToCheck the dietary type to check
+     */
+    public void checkDietaryInfo(DietEnum typeToCheck) {
+<span class="fc" id="L172">        boolean isOfType = true;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        for (Ingredient ingredient : ingredientsAmount.keySet()) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            if (!ingredient.getDietInfo().contains(typeToCheck)) {</span>
+<span class="fc" id="L175">                isOfType = false;</span>
+<span class="fc" id="L176">                break;</span>
+            }
+<span class="fc" id="L178">        }</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (isOfType) {</span>
+<span class="fc" id="L180">            dietaryInformation.add(typeToCheck);</span>
+        } else {
+<span class="fc" id="L182">            dietaryInformation.remove(typeToCheck);</span>
+        }
+<span class="fc" id="L184">    }</span>
+
+    /**
+     * This function edits the quantity of the specified ingredient and returns the boolean accordingly.
+     *
+     * @param someIngredient ingredient whose quantity needs to be edited
+     * @param quantity       amount by which the quantity needs to be edited
+     */
+    public void editRecipe(Ingredient someIngredient, int quantity) {
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">        if (ingredientsAmount.containsKey(someIngredient) &amp;&amp; quantity &gt;= 1) {</span>
+<span class="fc" id="L194">            ingredientsAmount.put(someIngredient, quantity);</span>
+        } else {
+<span class="fc" id="L196">            addIngredient(someIngredient, quantity);</span>
+        }
+<span class="fc" id="L198">    }</span>
+
+    /**
+     * Returns the name of the recipe
+     *
+     * @return Name of the recipe.
+     **/
+    public String getName() {
+<span class="fc" id="L206">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L210">        this.name = name;</span>
+<span class="fc" id="L211">    }</span>
+
+    /**
+     * Returns all the step in written in a particular recipe
+     *
+     * @return the text representing the recipe (i.e. steps to make something)
+     **/
+    public String getRecipeText() {
+<span class="fc" id="L219">        return recipeText;</span>
+    }
+
+    public void setRecipeText(String recipeText) {
+<span class="nc" id="L223">        this.recipeText = recipeText;</span>
+<span class="nc" id="L224">    }</span>
+
+    public HashMap&lt;String, Integer&gt; getIngredientIDs() {
+<span class="fc" id="L227">        return ingredientIDs;</span>
+    }
+
+    public void setIngredientIDs(HashMap&lt;String, Integer&gt; ingredientIDs) {
+<span class="fc" id="L231">        this.ingredientIDs = ingredientIDs;</span>
+<span class="fc" id="L232">    }</span>
+
+    public HashMap&lt;Ingredient, Integer&gt; getIngredientsAmount() {
+<span class="fc" id="L235">        return ingredientsAmount;</span>
+    }
+
+    public void setIngredientsAmount(HashMap&lt;Ingredient, Integer&gt; ingredientsAmount) {
+<span class="fc" id="L239">        this.ingredientsAmount = ingredientsAmount;</span>
+<span class="fc" id="L240">    }</span>
+
+    public boolean isGlutenFree() {
+<span class="fc" id="L243">        return dietaryInformation.contains(DietEnum.GLUTEN_FREE);</span>
+    }
+
+    public boolean isVegan() {
+<span class="fc" id="L247">        return dietaryInformation.contains(DietEnum.VEGAN);</span>
+    }
+
+    public boolean isVegetarian() {
+<span class="fc" id="L251">        return dietaryInformation.contains(DietEnum.VEGETARIAN);</span>
+    }
+
+    public HashSet&lt;DietEnum&gt; getDietaryInformation() {
+<span class="fc" id="L255">        return dietaryInformation;</span>
+    }
+
+    public void setDietaryInformation(HashSet&lt;DietEnum&gt; dietaryInformation) {
+<span class="fc" id="L259">        this.dietaryInformation = dietaryInformation;</span>
+<span class="fc" id="L260">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

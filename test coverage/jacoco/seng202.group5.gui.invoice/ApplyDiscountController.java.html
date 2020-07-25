@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApplyDiscountController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.invoice</a> &gt; <span class="el_source">ApplyDiscountController.java</span></div><h1>ApplyDiscountController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.invoice;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import org.joda.money.Money;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Customer;
+import seng202.group5.information.CustomerSettings;
+
+/**
+ * This Controller is for when the worker wants to apply a discount. A screen is opened controlled by this class.
+ *
+ * @author Michael Morgoun
+ */
+<span class="nc" id="L18">public class ApplyDiscountController extends GeneralController {</span>
+
+    /**
+     * How many points the customer currently has.
+     */
+    @FXML
+    private Label pointsLabel;
+
+    /**
+     * The field where the points they want to use are inputted.
+     */
+    @FXML
+    private TextField pointField;
+
+    /**
+     * This label shows how much money they are saving if they spend so many points.
+     */
+    @FXML
+    private Label calculatedLabel;
+
+    /**
+     * This is how much money is being saved by using however many points.
+     */
+    private Money moneySaved;
+
+    /**
+     * The max price of the order so they don't exceed it.
+     */
+    private Money maxPrice;
+
+    /**
+     * The current customer of the order.
+     */
+    private Customer customer;
+
+    private CustomerSettings customerSettings;
+
+    /**
+     * Initialises the screen by showing all relevant information.
+     */
+    @Override
+    public void pseudoInitialize() {
+        // Listener for the points textfield
+<span class="nc" id="L61">        pointField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,6}&quot;)) {</span>
+<span class="nc" id="L63">                pointField.setText(oldValue);</span>
+            }
+<span class="nc" id="L65">            calculateSavings();</span>
+<span class="nc" id="L66">        });</span>
+
+<span class="nc" id="L68">        pointsLabel.setText(&quot;Current Number of Points: &quot; + customer.getPurchasePoints());</span>
+<span class="nc" id="L69">    }</span>
+
+    /**
+     * Add the value in the pointField by 1.
+     */
+    @FXML
+    public void add() {
+<span class="nc" id="L76">        int points = Integer.parseInt(pointField.getText());</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (points != customer.getPurchasePoints()) {</span>
+<span class="nc" id="L78">            pointField.setText(String.valueOf(points + 1));</span>
+        }
+<span class="nc" id="L80">    }</span>
+
+    /**
+     * Minus the value in the pointField by 1.
+     */
+    @FXML
+    public void minus() {
+<span class="nc" id="L87">        int points = Integer.parseInt(pointField.getText());</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (points != 0) {</span>
+<span class="nc" id="L89">            pointField.setText(String.valueOf(points - 1));</span>
+        }
+<span class="nc" id="L91">    }</span>
+
+    /**
+     * Changes the textfield to add all available points.
+     */
+    @FXML
+    public void all() {
+<span class="nc" id="L98">        pointField.setText(String.valueOf(customer.getPurchasePoints()));</span>
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * Calculates how much money you're saving by using however many points are selected.
+     */
+    public void calculateSavings() {
+<span class="nc" id="L105">        Money tempMoneySaved = Money.parse(&quot;NZD &quot; + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));</span>
+<span class="nc" id="L106">        String savedString = tempMoneySaved.toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L107">        calculatedLabel.setText(&quot;You save $&quot; + savedString + &quot; by using &quot; + pointField.getText() + &quot; points&quot;);</span>
+<span class="nc" id="L108">    }</span>
+
+    /**
+     * This method is called when the apply button is hit. Which applies the discount and closes the window.
+     * Unless the amount that is being discounted is more than the cost of the order. The it issues a warning.
+     */
+    @FXML
+    public void apply() {
+<span class="nc" id="L116">        Money tempMoneySaved = Money.parse(&quot;NZD &quot; + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (tempMoneySaved.isGreaterThan(maxPrice)) {</span>
+<span class="nc" id="L118">            calculatedLabel.setTextFill(Color.RED);</span>
+<span class="nc" id="L119">            calculatedLabel.setText(&quot;Discount is more than price of Order!&quot;);</span>
+        } else {
+<span class="nc" id="L121">            customer.discount(Integer.parseInt(pointField.getText()), getAppEnvironment().getOrderManager().getOrder().getTotalCost(),</span>
+<span class="nc" id="L122">                    Money.parse(&quot;NZD &quot; + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText())));</span>
+
+            // Set the moneySaved
+<span class="nc" id="L125">            moneySaved = Money.parse(&quot;NZD &quot; + customerSettings.getPointValue() * 0.01).multipliedBy(Integer.parseInt(pointField.getText()));</span>
+
+            // Close the window
+<span class="nc" id="L128">            Stage stage = (Stage) calculatedLabel.getScene().getWindow();</span>
+<span class="nc" id="L129">            stage.close();</span>
+        }
+<span class="nc" id="L131">    }</span>
+
+    /**
+     * Sets the customer.
+     *
+     * @param newCustomer The new customer.
+     */
+    public void setCustomer(Customer newCustomer) {
+<span class="nc" id="L139">        customer = newCustomer;</span>
+<span class="nc" id="L140">    }</span>
+
+    /**
+     * Sets the customerSettings.
+     *
+     * @param newCustomerSettings The new customerSettings.
+     */
+    public void setCustomerSettings(CustomerSettings newCustomerSettings) {
+<span class="nc" id="L148">        customerSettings = newCustomerSettings;</span>
+<span class="nc" id="L149">    }</span>
+
+    /**
+     * Sets the max price of the order to stop the discount from going into the negatives.
+     *
+     * @param tempMaxPrice The max price of the order
+     */
+    public void setMaxPrice(Money tempMaxPrice) {
+<span class="nc" id="L157">        maxPrice = tempMaxPrice;</span>
+<span class="nc" id="L158">    }</span>
+
+    /**
+     * Returns the money saved from the discount.
+     *
+     * @return The money saved.
+     */
+    public Money getMoneySaved() {
+<span class="nc" id="L166">        return moneySaved;</span>
+    }
+
+    /**
+     * Gets the points used in the discount.
+     *
+     * @return The amount of points used.
+     */
+    public int getPoints() {
+<span class="nc" id="L175">        return Integer.parseInt(pointField.getText());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

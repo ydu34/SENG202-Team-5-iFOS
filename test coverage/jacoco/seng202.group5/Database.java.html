@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Database.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5</a> &gt; <span class="el_source">Database.java</span></div><h1>Database.java</h1><pre class="source lang-java linenums">package seng202.group5;
+
+import org.joda.money.Money;
+import org.xml.sax.SAXException;
+import seng202.group5.information.*;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.MenuManager;
+import seng202.group5.logic.Settings;
+import seng202.group5.logic.Stock;
+
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * This class containing all the methods for data importing and exporting xml files,
+ * also includes auto saving methods.
+ *
+ * @author Yu Duan, Daniel Harris
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Database {
+
+    @XmlTransient
+    private AppEnvironment appEnvironment;
+
+    private String saveFileLocation;
+    private boolean autosaveEnabled;
+    private boolean autoloadEnabled;
+
+    /**
+     * Default passwordHash when the app is launched for the first time.
+     * The detail about this passwordHash would also be mentioned in the user manual as well.
+     */
+<span class="pc" id="L49">    private int passwordHash = &quot;1111&quot;.hashCode();</span>
+<span class="pc" id="L50">    private OverwriteType overwriteSetting = OverwriteType.MERGE_PREFER_OLD;</span>
+
+<span class="fc" id="L52">    public Database() {</span>
+<span class="fc" id="L53">    }</span>
+
+<span class="nc" id="L55">    public Database(AppEnvironment appEnvironment) {</span>
+<span class="nc" id="L56">        this.appEnvironment = appEnvironment;</span>
+<span class="nc" id="L57">        loadAppData();</span>
+<span class="nc" id="L58">    }</span>
+
+    /**
+     * Given the hash map containing ingredient ids and the quantity, search for the corresponding ingredient for each id in the stock and return a
+     * HashMap containing the ingredient and quantity.
+     *
+     * @param IngredientIDs Contains a string as the ingredient id and the value as the quantity.
+     * @return A new hash map containing the string ids replaced with ingredient objects, while the value of the hash map is the quantity.
+     */
+    private HashMap&lt;Ingredient, Integer&gt; getIngredientsFromID(HashMap&lt;String, Integer&gt; IngredientIDs) throws NullPointerException {
+<span class="fc" id="L68">        HashMap&lt;Ingredient, Integer&gt; ingredients = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (Map.Entry&lt;String, Integer&gt; entry : IngredientIDs.entrySet()) {</span>
+<span class="fc" id="L70">            String ID = entry.getKey();</span>
+<span class="fc" id="L71">            Integer quantity = entry.getValue();</span>
+<span class="fc" id="L72">            Ingredient ingredient = appEnvironment.getStock().getIngredients().get(ID);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (ingredient == null) throw new NullPointerException(&quot;Some required ingredients are not present!&quot;);</span>
+<span class="fc" id="L74">            ingredients.put(ingredient, quantity);</span>
+<span class="fc" id="L75">        }</span>
+<span class="fc" id="L76">        return ingredients;</span>
+    }
+
+    /**
+     * Marshals the given object o into a xml file
+     *
+     * @param c             The class of the object o
+     * @param o             The object you want to marshal into xml file
+     * @param fileName      The name of the xml file
+     * @param fileDirectory The directory to where the file should be marshalled
+     * @throws JAXBException if JAXB fails to convert the file
+     */
+    void objectToXml(Class c, Object o, String fileName, String fileDirectory) throws JAXBException {
+<span class="fc" id="L89">        JAXBContext jaxbContext = JAXBContext.newInstance(c);</span>
+<span class="fc" id="L90">        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();</span>
+
+<span class="fc" id="L92">        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);</span>
+<span class="fc" id="L93">        jaxbMarshaller.marshal(c.cast(o), new File(fileDirectory + &quot;/&quot; + fileName));</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Converts the xml file to an object o
+     *
+     * @param c              the class to create an instance of
+     * @param fileName       the name of the file to create the object from
+     * @param schemaFileName the name of the schema to use to convert the file
+     * @param fileDirectory  the path to the directory the file is in
+     * @return an object o
+     * @throws JAXBException if JAXB fails to convert the file
+     * @throws SAXException  if JAXB fails to convert the file
+     */
+    private Object xmlToObject(Class c, String fileName, String schemaFileName, String fileDirectory) throws JAXBException, SAXException {
+<span class="fc" id="L108">        JAXBContext jaxbContext = JAXBContext.newInstance(c);</span>
+<span class="fc" id="L109">        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();</span>
+
+        //Setup schema validator
+<span class="fc" id="L112">        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);</span>
+<span class="fc" id="L113">        Schema schema = sf.newSchema(new StreamSource(getClass().getClassLoader().getResourceAsStream(&quot;schema/&quot; + schemaFileName)));</span>
+<span class="fc" id="L114">        jaxbUnmarshaller.setSchema(schema);</span>
+
+<span class="fc" id="L116">        return c.cast(jaxbUnmarshaller.unmarshal(new File(fileDirectory + &quot;/&quot; + fileName)));</span>
+    }
+
+    /**
+     * Gets the stock.xml from fileDirectory and unmarshal it to an object.
+     * The original stock from the app environment is not modified by this function
+     *
+     * @param fileDirectory The directory of the stock.xml
+     * @throws Exception throws exception if stock.xml is invalid
+     */
+    void stockXmlToObject(String fileDirectory) throws Exception {
+        try {
+<span class="fc" id="L128">            Stock tempStock = (Stock) xmlToObject(Stock.class, &quot;stock.xml&quot;, &quot;stock.xsd&quot;, fileDirectory);</span>
+<span class="pc bpc" id="L129" title="3 of 4 branches missed.">            switch (overwriteSetting) {</span>
+                case OVERWRITE_ALL:
+<span class="nc" id="L131">                    break;</span>
+                case MERGE_PREFER_NEW:
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                    for (Map.Entry&lt;String, Ingredient&gt; entry : appEnvironment.getStock().getIngredients().entrySet()) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {</span>
+<span class="nc" id="L135">                            tempStock.addNewIngredient(entry.getValue());</span>
+<span class="nc" id="L136">                            tempStock.modifyQuantity(entry.getKey(),</span>
+<span class="nc" id="L137">                                    appEnvironment.getStock().getIngredientStock().get(entry.getKey()));</span>
+                        }
+<span class="nc" id="L139">                    }</span>
+<span class="nc" id="L140">                    break;</span>
+                case MERGE_PREFER_OLD:
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">                    for (Map.Entry&lt;String, Ingredient&gt; entry : appEnvironment.getStock().getIngredients().entrySet()) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                        if (!tempStock.getIngredients().containsKey(entry.getKey())) {</span>
+<span class="nc" id="L144">                            tempStock.addNewIngredient(entry.getValue());</span>
+                        }
+<span class="nc" id="L146">                        tempStock.modifyQuantity(entry.getKey(),</span>
+<span class="nc" id="L147">                                appEnvironment.getStock().getIngredientStock().get(entry.getKey()));</span>
+<span class="nc" id="L148">                    }</span>
+<span class="fc" id="L149">                    break;</span>
+                default:
+                    break;
+            }
+<span class="fc" id="L153">            appEnvironment.setStock(tempStock);</span>
+<span class="nc" id="L154">        } catch (JAXBException | SAXException e) {</span>
+<span class="nc" id="L155">            throw new Exception(&quot;stock.xml file is invalid&quot;);</span>
+<span class="fc" id="L156">        }</span>
+<span class="fc" id="L157">    }</span>
+
+
+    /**
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
+     *
+     * @param menuItems Contains the menu items.
+     */
+    private void handleMenu(HashMap&lt;String, MenuItem&gt; menuItems) throws NullPointerException {
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        for (Map.Entry&lt;String, MenuItem&gt; entry : menuItems.entrySet()) {</span>
+<span class="fc" id="L168">            MenuItem menuItem = entry.getValue();</span>
+<span class="fc" id="L169">            Recipe recipe = menuItem.getRecipe();</span>
+<span class="fc" id="L170">            HashMap&lt;String, Integer&gt; ingredientIDs = menuItem.getRecipe().getIngredientIDs();</span>
+<span class="fc" id="L171">            HashMap&lt;Ingredient, Integer&gt; recipeIngredients = getIngredientsFromID(ingredientIDs);</span>
+<span class="fc" id="L172">            recipe.setIngredientsAmount(recipeIngredients);</span>
+<span class="fc" id="L173">        }</span>
+<span class="fc" id="L174">    }</span>
+
+
+    /**
+     * Given the hash map containing all the menu items, search through each menu item and get access it's recipe
+     * and fill up the ingredientsAmount hash map with ingredient objects using the getIngredientsFromID method.
+     *
+     * @param transactionItems Contains the menu items.
+     */
+    private void handleFinance(HashMap&lt;String, Transaction&gt; transactionItems) throws NullPointerException {
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        for (Transaction transaction : transactionItems.values()) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            for (Map.Entry&lt;MenuItem, Integer&gt; entry : transaction.getOrder().getOrderItems().entrySet()) {</span>
+<span class="fc" id="L186">                MenuItem menuItem = entry.getKey();</span>
+<span class="fc" id="L187">                Recipe recipe = menuItem.getRecipe();</span>
+<span class="fc" id="L188">                HashMap&lt;String, Integer&gt; ingredientIDs = menuItem.getRecipe().getIngredientIDs();</span>
+<span class="fc" id="L189">                HashMap&lt;Ingredient, Integer&gt; recipeIngredients = getIngredientsFromID(ingredientIDs);</span>
+<span class="fc" id="L190">                recipe.setIngredientsAmount(recipeIngredients);</span>
+<span class="fc" id="L191">            }</span>
+<span class="fc" id="L192">        }</span>
+<span class="fc" id="L193">    }</span>
+
+    /**
+     * Gets the metadata about the application from a file in the root location of the app,
+     * then loads application data if autoload is enabled
+     */
+    private void loadAppData() {
+        try {
+<span class="nc" id="L201">            Database tempDatabase = (Database) xmlToObject(Database.class, &quot;metadata.xml&quot;, &quot;metadata.xsd&quot;, getDefaultLocation());</span>
+<span class="nc" id="L202">            saveFileLocation = tempDatabase.getSaveFileLocation();</span>
+<span class="nc" id="L203">            autoloadEnabled = tempDatabase.isAutoloadEnabled();</span>
+<span class="nc" id="L204">            autosaveEnabled = tempDatabase.isAutosaveEnabled();</span>
+<span class="nc" id="L205">            passwordHash = tempDatabase.getPassword();</span>
+<span class="nc" id="L206">            overwriteSetting = tempDatabase.getOverwriteSetting();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">            if (autoloadEnabled) {</span>
+<span class="nc" id="L208">                String location = getLocation();</span>
+<span class="nc" id="L209">                File stockFile = new File(location + &quot;/stock.xml&quot;);</span>
+<span class="nc" id="L210">                File menuFile = new File(location + &quot;/menu.xml&quot;);</span>
+<span class="nc" id="L211">                File financeFile = new File(location + &quot;/finance.xml&quot;);</span>
+<span class="nc" id="L212">                File customersFile = new File(location + &quot;/customers.xml&quot;);</span>
+<span class="nc" id="L213">                importData(Map.of(&quot;stock.xml&quot;, stockFile, &quot;menu.xml&quot;, menuFile, &quot;finance.xml&quot;, financeFile, &quot;customers.xml&quot;, customersFile));</span>
+            }
+<span class="nc" id="L215">        } catch (Exception e) {</span>
+
+<span class="nc" id="L217">            saveFileLocation = &quot;&quot;;</span>
+<span class="nc" id="L218">            autosaveEnabled = false;</span>
+<span class="nc" id="L219">            autoloadEnabled = true;</span>
+<span class="nc" id="L220">            overwriteSetting = OverwriteType.MERGE_PREFER_NEW;</span>
+<span class="nc" id="L221">            passwordHash = &quot;1111&quot;.hashCode();</span>
+            try {
+<span class="nc" id="L223">                objectToXml(Database.class, this, &quot;metadata.xml&quot;, System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L224">            } catch (JAXBException e1) {</span>
+
+<span class="nc" id="L226">            }</span>
+<span class="nc" id="L227">        }</span>
+<span class="nc" id="L228">    }</span>
+
+    /**
+     * Gets the finance.xml from fileDirectory and unmarshal it to an object.
+     * The original finance from the app environment is not modified by this function
+     *
+     * @param fileDirectory The directory of the finance.xml
+     * @throws Exception throws exception if finance.xml is invalid
+     */
+    void financeXmlToObject(String fileDirectory) throws Exception {
+        try {
+<span class="fc" id="L239">            Finance tempFinance = (Finance) xmlToObject(Finance.class, &quot;finance.xml&quot;, &quot;finance.xsd&quot;, fileDirectory);</span>
+<span class="fc" id="L240">            handleFinance(tempFinance.getTransactionHistory());</span>
+<span class="pc bpc" id="L241" title="3 of 4 branches missed.">            switch (overwriteSetting) {</span>
+                case OVERWRITE_ALL:
+<span class="nc" id="L243">                    appEnvironment.setFinance(tempFinance);</span>
+<span class="nc" id="L244">                    return;</span>
+                case MERGE_PREFER_NEW:
+<span class="nc bnc" id="L246" title="All 2 branches missed.">                    for (Map.Entry&lt;String, Transaction&gt; entry : appEnvironment.getFinance().getTransactionHistoryClone().entrySet()) {</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">                        if (!tempFinance.getTransactionHistory().containsKey(entry.getKey())) {</span>
+<span class="nc" id="L248">                            tempFinance.getTransactionHistory().put(entry.getKey(), entry.getValue());</span>
+                        }
+<span class="nc" id="L250">                    }</span>
+<span class="nc" id="L251">                    break;</span>
+                case MERGE_PREFER_OLD:
+<span class="fc bfc" id="L253" title="All 2 branches covered.">                    for (Map.Entry&lt;String, Transaction&gt; entry : appEnvironment.getFinance().getTransactionHistoryClone().entrySet()) {</span>
+<span class="fc" id="L254">                        tempFinance.getTransactionHistory().put(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L255">                    }</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">                    for (Map.Entry&lt;Money, Integer&gt; entry : appEnvironment.getFinance().getTill().getDenominations().entrySet()) {</span>
+<span class="fc" id="L257">                        tempFinance.getTill().getDenominations().put(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L258">                    }</span>
+<span class="fc" id="L259">                    break;</span>
+                default:
+                    break;
+            }
+
+<span class="fc" id="L264">            appEnvironment.setFinance(tempFinance);</span>
+<span class="nc" id="L265">        } catch (JAXBException | SAXException e) {</span>
+<span class="nc" id="L266">            throw new Exception(&quot;finance.xml file is invalid&quot;);</span>
+<span class="fc" id="L267">        }</span>
+<span class="fc" id="L268">    }</span>
+
+    /**
+     * Gets the menu.xml from fileDirectory and unmarshal it to an object.
+     * The original menu from the app environment is not modified by this function
+     *
+     * @param fileDirectory The directory of the menu.xml
+     * @throws Exception throws exception if menu.xml is invalid
+     */
+    void menuXmlToObject(String fileDirectory) throws Exception {
+        try {
+<span class="fc" id="L279">            MenuManager tempMenu = (MenuManager) xmlToObject(MenuManager.class, &quot;menu.xml&quot;, &quot;menu.xsd&quot;, fileDirectory);</span>
+<span class="fc" id="L280">            handleMenu(tempMenu.getMenuItems());</span>
+<span class="pc bpc" id="L281" title="3 of 4 branches missed.">            switch (overwriteSetting) {</span>
+                case OVERWRITE_ALL:
+<span class="nc" id="L283">                    break;</span>
+                case MERGE_PREFER_NEW:
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                    for (Map.Entry&lt;String, MenuItem&gt; entry : appEnvironment.getMenuManager().getItemMap().entrySet()) {</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">                        if (!tempMenu.getItemMap().containsKey(entry.getKey())) {</span>
+<span class="nc" id="L287">                            tempMenu.addItem(entry.getValue());</span>
+                        }
+<span class="nc" id="L289">                    }</span>
+<span class="nc" id="L290">                    break;</span>
+                case MERGE_PREFER_OLD:
+<span class="fc bfc" id="L292" title="All 2 branches covered.">                    for (Map.Entry&lt;String, MenuItem&gt; entry : appEnvironment.getMenuManager().getItemMap().entrySet()) {</span>
+<span class="fc" id="L293">                        tempMenu.getItemMap().put(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L294">                    }</span>
+<span class="fc" id="L295">                    break;</span>
+                default:
+                    break;
+            }
+<span class="fc" id="L299">            appEnvironment.setMenuManager(tempMenu);</span>
+<span class="nc" id="L300">        } catch (JAXBException | SAXException e) {</span>
+<span class="nc" id="L301">            throw new Exception(&quot;menu.xml file is invalid&quot;);</span>
+<span class="fc" id="L302">        }</span>
+<span class="fc" id="L303">    }</span>
+
+    /**
+     * Gets the customers.xml from fileDirectory and unmarshalls it to an object.
+     * The original customers from the appEnvironment are not modified by this function.
+     *
+     * @param fileDirectory The directory of the customers.xml
+     * @throws Exception throws exception if customers.xml is invalid
+     */
+    void customersXmlToObject(String fileDirectory) throws Exception {
+        try {
+<span class="fc" id="L314">            Customers tempCustomers = (Customers) xmlToObject(Customers.class, &quot;customers.xml&quot;, &quot;customers.xsd&quot;, fileDirectory);</span>
+<span class="fc" id="L315">            ArrayList&lt;String&gt; tempCustomerIDs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L316">            tempCustomers.getCustomerList().forEach(customer -&gt; tempCustomerIDs.add(customer.getID()));</span>
+<span class="pc bpc" id="L317" title="3 of 4 branches missed.">            switch (overwriteSetting) {</span>
+                case OVERWRITE_ALL:
+<span class="nc" id="L319">                    break;</span>
+                case MERGE_PREFER_NEW:
+<span class="nc bnc" id="L321" title="All 2 branches missed.">                    for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">                        if (tempCustomerIDs.contains(entry.getID())) {</span>
+<span class="nc" id="L323">                            tempCustomers.getCustomerList().removeIf(customer -&gt; customer.getID().equals(entry.getID()));</span>
+<span class="nc" id="L324">                            tempCustomers.add(entry);</span>
+                        }
+<span class="nc" id="L326">                    }</span>
+<span class="nc" id="L327">                    break;</span>
+                case MERGE_PREFER_OLD:
+<span class="fc bfc" id="L329" title="All 2 branches covered.">                    for (Customer entry : appEnvironment.getCustomers().getCustomerList()) {</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">                        if (!tempCustomerIDs.contains(entry.getID())) {</span>
+<span class="nc" id="L331">                            tempCustomers.add(entry);</span>
+                        }
+<span class="fc" id="L333">                    }</span>
+<span class="fc" id="L334">                    break;</span>
+                default:
+                    break;
+            }
+<span class="fc" id="L338">            appEnvironment.setCustomers(tempCustomers);</span>
+<span class="nc" id="L339">        } catch (JAXBException | SAXException e) {</span>
+<span class="nc" id="L340">            throw new Exception(&quot;customers.xml file is invalid&quot;);</span>
+<span class="fc" id="L341">        }</span>
+<span class="fc" id="L342">    }</span>
+
+    /**
+     * Gets the settings.xml from fileDirectory and unmarshalls it to an object.
+     * The original settings from the appEnvironment are not modified by this function.
+     *
+     * @param fileDirectory The directory of the customers.xml
+     * @throws Exception throws exception if customers.xml is invalid
+     */
+    public void settingsXmlToObject(String fileDirectory) throws Exception {
+        try {
+<span class="fc" id="L353">            Settings tempSettings = (Settings) xmlToObject(Settings.class, &quot;settings.xml&quot;, &quot;settings.xsd&quot;, fileDirectory);</span>
+<span class="fc" id="L354">            appEnvironment.setSettings(tempSettings);</span>
+<span class="nc" id="L355">        } catch (JAXBException | SAXException e) {</span>
+<span class="nc" id="L356">            throw new Exception(&quot;settings.xml file is invalid&quot;);</span>
+<span class="fc" id="L357">        }</span>
+<span class="fc" id="L358">    }</span>
+
+    /**
+     * Converts all relevant stored data in the system to xml files
+     *
+     * @param fileDirectory The destination directory for the xml files
+     * @throws Exception throws exception if failed to export data to xml
+     */
+    public void allObjectsToXml(String fileDirectory) throws Exception {
+        try {
+<span class="nc" id="L368">            objectToXml(Stock.class, appEnvironment.getStock(), &quot;stock.xml&quot;, fileDirectory);</span>
+<span class="nc" id="L369">            objectToXml(Finance.class, appEnvironment.getFinance(), &quot;finance.xml&quot;, fileDirectory);</span>
+<span class="nc" id="L370">            objectToXml(MenuManager.class, appEnvironment.getMenuManager(), &quot;menu.xml&quot;, fileDirectory);</span>
+<span class="nc" id="L371">            objectToXml(Customers.class, appEnvironment.getCustomers(), &quot;customers.xml&quot;, fileDirectory);</span>
+<span class="nc" id="L372">            objectToXml(Settings.class, appEnvironment.getSettings(), &quot;settings.xml&quot;, fileDirectory);</span>
+<span class="nc" id="L373">        } catch (JAXBException e) {</span>
+<span class="nc" id="L374">            throw new Exception(e.getMessage());</span>
+<span class="nc" id="L375">        }</span>
+<span class="nc" id="L376">    }</span>
+
+    /**
+     * Imports selected data into the application. This overrides existing data.
+     * If any of the files are not present, or are incorrect, the import is aborted
+     *
+     * @param fileMap A mapping from the name of the file to the file object
+     * @throws Exception when the files are incorrect
+     */
+    public void importData(Map&lt;String, File&gt; fileMap) throws Exception {
+<span class="nc" id="L386">        Stock oldStock = appEnvironment.getStock();</span>
+<span class="nc" id="L387">        MenuManager oldMenu = appEnvironment.getMenuManager();</span>
+<span class="nc" id="L388">        Finance oldFinance = appEnvironment.getFinance();</span>
+<span class="nc" id="L389">        Customers oldCustomers = appEnvironment.getCustomers();</span>
+<span class="nc" id="L390">        Settings oldSettings = appEnvironment.getSettings();</span>
+        try {
+<span class="nc bnc" id="L392" title="All 2 branches missed.">            if (fileMap.containsKey(&quot;stock.xml&quot;)) stockXmlToObject(fileMap.get(&quot;stock.xml&quot;).getParent());</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">            if (fileMap.containsKey(&quot;menu.xml&quot;)) menuXmlToObject(fileMap.get(&quot;menu.xml&quot;).getParent());</span>
+<span class="nc bnc" id="L394" title="All 2 branches missed.">            if (fileMap.containsKey(&quot;finance.xml&quot;)) financeXmlToObject(fileMap.get(&quot;finance.xml&quot;).getParent());</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">            if (fileMap.containsKey(&quot;customers.xml&quot;)) {</span>
+<span class="nc" id="L396">                customersXmlToObject(fileMap.get(&quot;customers.xml&quot;).getParent());</span>
+            }
+<span class="nc bnc" id="L398" title="All 2 branches missed.">            if (fileMap.containsKey(&quot;settings.xml&quot;)) {</span>
+<span class="nc" id="L399">                settingsXmlToObject(fileMap.get(&quot;settings.xml&quot;).getParent());</span>
+            }
+<span class="nc" id="L401">            checkDataIntegrity();</span>
+<span class="nc" id="L402">        } catch (Exception e) {</span>
+<span class="nc" id="L403">            appEnvironment.setStock(oldStock);</span>
+<span class="nc" id="L404">            appEnvironment.setMenuManager(oldMenu);</span>
+<span class="nc" id="L405">            appEnvironment.setFinance(oldFinance);</span>
+<span class="nc" id="L406">            appEnvironment.setCustomers(oldCustomers);</span>
+<span class="nc" id="L407">            appEnvironment.setSettings(oldSettings);</span>
+
+<span class="nc" id="L409">            throw new Exception(e.getMessage());</span>
+<span class="nc" id="L410">        }</span>
+<span class="nc" id="L411">    }</span>
+
+    /**
+     * Checks that all data in the application is not dependent on unimported data
+     */
+    private void checkDataIntegrity() throws Exception {
+<span class="nc" id="L417">        Stock stock = appEnvironment.getStock();</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">        if (!stock.getIngredients().keySet().equals(stock.getIngredientStock().keySet())) {</span>
+<span class="nc" id="L419">            throw new Exception(&quot;Stock ingredients/quantity mismatch!&quot;);</span>
+        }
+<span class="nc" id="L421">        HashMap&lt;String, MenuItem&gt; menuItems = appEnvironment.getMenuManager().getItemMap();</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">        for (MenuItem item : menuItems.values()) {</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">            for (Ingredient ingredient : item.getRecipe().getIngredientsAmount().keySet()) {</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">                if (!stock.getIngredients().containsKey(ingredient.getID())) {</span>
+<span class="nc" id="L425">                    throw new Exception(&quot;Menu items contain unstored ingredients!&quot;);</span>
+                }
+<span class="nc" id="L427">            }</span>
+<span class="nc" id="L428">        }</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">        for (Transaction transaction : appEnvironment.getFinance().getTransactionHistory().values()) {</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">            for (MenuItem item : transaction.getOrder().getOrderItems().keySet()) {</span>
+<span class="nc bnc" id="L431" title="All 2 branches missed.">                for (Ingredient ingredient : item.getRecipe().getIngredientsAmount().keySet()) {</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">                    if (!stock.getIngredients().containsKey(ingredient.getID())) {</span>
+<span class="nc" id="L433">                        throw new Exception(&quot;Transactions contain unstored ingredients!&quot;);</span>
+                    }
+<span class="nc" id="L435">                }</span>
+<span class="nc" id="L436">            }</span>
+<span class="nc" id="L437">        }</span>
+
+<span class="nc" id="L439">    }</span>
+
+    /**
+     * Exports all of the data to the save location if autosave is enabled
+     */
+    public void autosave() throws Exception {
+<span class="nc" id="L445">        objectToXml(Database.class, this, &quot;metadata.xml&quot;, System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">        if (autosaveEnabled) {</span>
+<span class="nc" id="L447">            String location = getLocation();</span>
+<span class="nc" id="L448">            allObjectsToXml(location);</span>
+        }
+<span class="nc" id="L450">    }</span>
+
+    private String getLocation() {
+<span class="nc bnc" id="L453" title="All 4 branches missed.">        if (saveFileLocation == null || saveFileLocation.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L454">            return getDefaultLocation();</span>
+        } else {
+<span class="nc" id="L456">            return saveFileLocation;</span>
+        }
+    }
+
+    private String getDefaultLocation() {
+<span class="nc" id="L461">        return System.getProperty(&quot;user.dir&quot;);</span>
+    }
+
+    public boolean isAutosaveEnabled() {
+<span class="nc" id="L465">        return autosaveEnabled;</span>
+    }
+
+    public void setAutosaveEnabled(boolean autosaveEnabled) {
+<span class="nc" id="L469">        this.autosaveEnabled = autosaveEnabled;</span>
+<span class="nc" id="L470">    }</span>
+
+    public boolean isAutoloadEnabled() {
+<span class="nc" id="L473">        return autoloadEnabled;</span>
+    }
+
+    public void setAutoloadEnabled(boolean autoloadEnabled) {
+<span class="fc" id="L477">        this.autoloadEnabled = autoloadEnabled;</span>
+<span class="fc" id="L478">    }</span>
+
+    public String getSaveFileLocation() {
+<span class="nc" id="L481">        return saveFileLocation;</span>
+    }
+
+    public void setSaveFileLocation(String saveFileLocation) {
+<span class="nc" id="L485">        this.saveFileLocation = saveFileLocation;</span>
+<span class="nc" id="L486">    }</span>
+
+    public OverwriteType getOverwriteSetting() {
+<span class="nc" id="L489">        return overwriteSetting;</span>
+    }
+
+    public void setOverwriteSetting(OverwriteType newSetting) {
+<span class="nc" id="L493">        overwriteSetting = newSetting;</span>
+<span class="nc" id="L494">    }</span>
+
+    public void setAppEnvironment(AppEnvironment appEnvironment) {
+<span class="fc" id="L497">        this.appEnvironment = appEnvironment;</span>
+<span class="fc" id="L498">    }</span>
+
+    private int getPassword() {
+<span class="nc" id="L501">        return passwordHash;</span>
+    }
+
+    public boolean validatePassword(int providedHash) {
+<span class="nc bnc" id="L505" title="All 2 branches missed.">        return (passwordHash == providedHash);</span>
+    }
+
+    /**
+     * Sets the stored hashcode of the password to the specified hashcode
+     *
+     * @param newPasswordHash the new password hash
+     */
+    public void setPasswordHash(int newPasswordHash) {
+<span class="nc" id="L514">        passwordHash = newPasswordHash;</span>
+<span class="nc" id="L515">    }</span>
+
+<span class="fc" id="L517">    @XmlTransient</span>
+    public enum OverwriteType {
+<span class="fc" id="L519">        OVERWRITE_ALL,</span>
+<span class="fc" id="L520">        MERGE_PREFER_NEW,</span>
+<span class="fc" id="L521">        MERGE_PREFER_OLD;</span>
+
+        public String toString() {
+<span class="nc bnc" id="L524" title="All 4 branches missed.">            switch (this) {</span>
+                case OVERWRITE_ALL:
+<span class="nc" id="L526">                    return &quot;Overwrite: Delete data in application and add imported data (The overwritten data will no longer be stored by the application!)&quot;;</span>
+                case MERGE_PREFER_NEW:
+<span class="nc" id="L528">                    return &quot;Merge and replace with imported data: Merge existing data with imported data and replace conflicting data with imported data&quot;;</span>
+                case MERGE_PREFER_OLD:
+<span class="nc" id="L530">                    return &quot;Merge and keep data in application: Merge imported data with existing data and keep existing data when conflicts occurs&quot;;</span>
+                default:
+<span class="nc" id="L532">                    return &quot;&quot;;</span>
+            }
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

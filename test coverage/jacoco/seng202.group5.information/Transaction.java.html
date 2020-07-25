@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transaction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.information</a> &gt; <span class="el_source">Transaction.java</span></div><h1>Transaction.java</h1><pre class="source lang-java linenums">package seng202.group5.information;
+
+import org.joda.money.Money;
+import seng202.group5.adapters.LocalDateTimeAdapter;
+import seng202.group5.adapters.MoneyAdapter;
+import seng202.group5.logic.Order;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDateTime;
+
+
+/**
+ * The Transaction class records past orders and if they were refunded;
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Transaction {
+
+    /**
+     * When this transaction occurred
+     */
+    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
+    private LocalDateTime datetime;
+
+    /**
+     * The change given
+     */
+    @XmlJavaTypeAdapter(value = MoneyAdapter.class)
+    private Money change;
+    @XmlJavaTypeAdapter(value = MoneyAdapter.class)
+    private Money totalPrice;
+    private String transactionID;
+
+    /**
+     * Whether or not this transaction has been refunded
+     */
+    private Boolean refunded;
+
+    private Order order;
+
+<span class="fc" id="L44">    Transaction() {</span>
+<span class="fc" id="L45">    }</span>
+
+<span class="fc" id="L47">    public Transaction(LocalDateTime newDateTime, Money newChange, Order newOrder) {</span>
+<span class="fc" id="L48">        refunded = false;</span>
+<span class="fc" id="L49">        datetime = newDateTime;</span>
+<span class="fc" id="L50">        change = newChange;</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (newOrder != null) {</span>
+<span class="fc" id="L52">            totalPrice = newOrder.getTotalCost();</span>
+<span class="fc" id="L53">            transactionID = newOrder.getId();</span>
+        } else {
+<span class="nc" id="L55">            totalPrice = null;</span>
+<span class="nc" id="L56">            transactionID = null;</span>
+        }
+<span class="fc" id="L58">        order = newOrder;</span>
+<span class="fc" id="L59">    }</span>
+
+    public Boolean isRefunded() {
+<span class="fc" id="L62">        return refunded;</span>
+    }
+
+    public Money getTotalPrice() {
+<span class="fc" id="L66">        return totalPrice;</span>
+    }
+
+    public Money getChange() {
+<span class="fc" id="L70">        return change;</span>
+    }
+
+    public String getTransactionID() {
+<span class="fc" id="L74">        return transactionID;</span>
+    }
+
+    public void setTransactionID(String transactionID) {
+<span class="fc" id="L78">        this.transactionID = transactionID;</span>
+<span class="fc" id="L79">    }</span>
+
+    public LocalDateTime getDateTime() {
+<span class="fc" id="L82">        return datetime;</span>
+    }
+
+    public void refund() {
+<span class="fc" id="L86">        refunded = true;</span>
+<span class="fc" id="L87">    }</span>
+
+    public String getOrderID() {
+<span class="fc" id="L90">        return order.getId();</span>
+    }
+
+    public Order getOrder() {
+<span class="fc" id="L94">        return order;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

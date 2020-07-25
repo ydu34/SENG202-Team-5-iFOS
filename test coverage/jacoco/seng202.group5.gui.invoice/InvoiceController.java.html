@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InvoiceController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.invoice</a> &gt; <span class="el_source">InvoiceController.java</span></div><h1>InvoiceController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.invoice;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.joda.money.Money;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Customer;
+import seng202.group5.information.CustomerSettings;
+import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * A controller for managing the invoice screen.
+ *
+ * @author Tasman Berry, Shivin Gaba, Michael Morgoun
+ */
+<span class="nc" id="L37">public class InvoiceController extends GeneralController {</span>
+
+    /**
+     * Displays the items in the order.
+     */
+    @FXML
+    private TableView&lt;MenuItem&gt; currentOrderTable;
+
+    /**
+     * The column for the item name.
+     */
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; itemNameCol;
+
+    /**
+     * The column for the item quantity.
+     */
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; itemQuantityCol;
+
+    /**
+     * The column for the item price.
+     */
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; itemPriceCol;
+
+    /**
+     * The label which shows the remaining cost.
+     */
+    @FXML
+    private Label remainingCostLabel;
+
+    /**
+     * The label which shows the current discount for the order.
+     */
+    @FXML
+    private Label discountLabel;
+
+    /**
+     * The label which shows the total cost of the order.
+     */
+    @FXML
+    private Label totalPayedLabel;
+
+    /**
+     * A warning label which shows information when something is wrong.
+     */
+    @FXML
+    private Label warningLabel;
+
+    /**
+     * The label which shows the orders' customer name.
+     */
+    @FXML
+    private Label customerNameLabel;
+
+    /**
+     * The label which shows the current customers amount of points.
+     */
+    @FXML
+    private Label customerPointsLabel;
+
+    /**
+     * The label which shows all the denominations payed thus far.
+     */
+    @FXML
+    private Text denomDollarLabel;
+
+    /**
+     * The label which shows all the denominations payed thus far.
+     */
+    @FXML
+    private Text denomCentLabel;
+
+    /**
+     * The button which removes a selected item.
+     */
+    @FXML
+    private Button removeItem;
+
+    /**
+     * A button which prompts the payCash() method.
+     */
+    @FXML
+    private Button payCashButton;
+
+    /**
+     * A button for opening the existing member screen or to clear the selected member.
+     */
+    @FXML
+    private Button existingMemberButton;
+
+    /**
+     * A button for creating a new member or applying a discount.
+     */
+    @FXML
+    private Button newMemberButton;
+
+    /**
+     * A HashMap which shows which denominations have been payed so far and how many of each.
+     */
+<span class="nc" id="L138">    private HashMap&lt;Money, Integer&gt; currentPayment = new HashMap&lt;&gt;();</span>
+
+    /**
+     * An ArrayList which shows all the cash payed so far. To be passed into AppEnvironment for the payment.
+     */
+<span class="nc" id="L143">    private ArrayList&lt;Money&gt; paymentArray = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * The total amount of money payed.
+     */
+<span class="nc" id="L148">    private Money totalPayed = Money.parse(&quot;NZD 0&quot;);</span>
+
+    /**
+     * The current order on the system.
+     */
+    private Order currentOrder;
+
+    /**
+     * A Map of the order items and their quantities.
+     */
+    private Map&lt;MenuItem, Integer&gt; orderItemsMap;
+
+    private CustomerSettings customerSettings;
+
+    /**
+     * The current customer of the order. Can be null.
+     */
+    private Customer currentCustomer;
+
+    /**
+     * How many points have been used so far.
+     */
+<span class="nc" id="L170">    private int customerPoints = 0;</span>
+
+
+    /**
+     * The initializer for this controller
+     */
+    public void pseudoInitialize() {
+<span class="nc" id="L177">        super.pseudoInitialize();</span>
+
+        // Attempts to get the current order and customer
+<span class="nc" id="L180">        currentOrder = getAppEnvironment().getOrderManager().getOrder();</span>
+<span class="nc" id="L181">        currentCustomer = currentOrder.getCurrentCustomer();</span>
+<span class="nc" id="L182">        removeItem.setDisable(true);</span>
+
+<span class="nc" id="L184">        customerSettings = getAppEnvironment().getCustomers().getCustomerSettings();</span>
+
+        // Sets the total cost of the order
+<span class="nc" id="L187">        Money totalCost = currentOrder.getTotalCost();</span>
+<span class="nc" id="L188">        remainingCostLabel.setText(&quot;$&quot; + totalCost.minus(totalPayed).toString().replace(&quot;NZD &quot;, &quot;&quot;));</span>
+<span class="nc" id="L189">        totalPayedLabel.setText(&quot;$&quot; + currentOrder.getDiscount().plus(currentOrder.getTotalCost()).toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;));</span>
+<span class="nc" id="L190">        currentOrderTable();</span>
+
+        // Creates a new listener for the removeItem button
+<span class="nc" id="L193">        currentOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -&gt; {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">            if (newSelection != null) {</span>
+<span class="nc" id="L195">                removeItem.setDisable(false);</span>
+            }
+<span class="nc" id="L197">        });</span>
+
+        // If a customer exists, displays information about the customer
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        if (currentCustomer != null) {</span>
+<span class="nc" id="L201">            customerNameLabel.setText(&quot;Selected Member: &quot; + currentCustomer.getName());</span>
+<span class="nc" id="L202">            customerPointsLabel.setText(&quot;Current Points: &quot; + currentCustomer.getPurchasePoints());</span>
+
+            // Change button labels to when a customer exists
+<span class="nc" id="L205">            existingMemberButton.setText(&quot;Clear Selected Member&quot;);</span>
+<span class="nc" id="L206">            newMemberButton.setText(&quot;Apply Discount&quot;);</span>
+        }
+
+        // Disabling payCashButton
+<span class="nc bnc" id="L210" title="All 4 branches missed.">        if (currentOrder.getTotalCost().minus(totalPayed).isPositive() || currentOrder.getOrderItems().isEmpty()) {</span>
+<span class="nc" id="L211">            payCashButton.setDisable(true);</span>
+<span class="nc" id="L212">            payCashButton.setTextFill(Color.GREY);</span>
+        } else {
+<span class="nc" id="L214">            payCashButton.setDisable(false);</span>
+<span class="nc" id="L215">            payCashButton.setTextFill(Color.GREEN);</span>
+        }
+        // Settings all labels to default
+<span class="nc" id="L218">        warningLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L219">    }</span>
+
+    /**
+     * This method goes through the list which contains the list of menu items for the current order and displays the menu item
+     * and the price and its quantity on the in the table view.
+     */
+    private void currentOrderTable() {
+<span class="nc" id="L226">        orderItemsMap = currentOrder.getOrderItems();</span>
+<span class="nc" id="L227">        List&lt;MenuItem&gt; orderItems = new ArrayList&lt;&gt;(orderItemsMap.keySet());</span>
+<span class="nc" id="L228">        itemNameCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;itemName&quot;));</span>
+<span class="nc" id="L229">        itemPriceCol.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L230">                    int quantity = orderItemsMap.get(data.getValue());</span>
+<span class="nc" id="L231">                    Money totalPrice = data.getValue().getTotalCost().multipliedBy(quantity);</span>
+<span class="nc" id="L232">                    return new SimpleStringProperty(totalPrice.toString());</span>
+                }
+        );
+
+<span class="nc" id="L236">        itemQuantityCol.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L237">            int quantity = orderItemsMap.get(data.getValue());</span>
+<span class="nc" id="L238">            return new SimpleStringProperty(Integer.toString(quantity));</span>
+
+        });
+
+<span class="nc" id="L242">        currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));</span>
+<span class="nc" id="L243">    }</span>
+
+    /**
+     * Opens a screen to search and choose and existing member of the loyalty club.
+     * Or if a customer already exists, it clears the selected customer.
+     */
+    @FXML
+    private void existingMember() {
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        if (currentCustomer != null) {</span>
+<span class="nc" id="L252">            clearSelectedMember();</span>
+        } else {
+            try {
+<span class="nc" id="L255">                FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/existingCustomer.fxml&quot;));</span>
+<span class="nc" id="L256">                Parent root = loader.load();</span>
+
+<span class="nc" id="L258">                ExistingCustomerController controller = loader.getController();</span>
+
+<span class="nc" id="L260">                Stage stage = new Stage();</span>
+<span class="nc" id="L261">                stage.setScene(new Scene(root, 545, 650));</span>
+<span class="nc" id="L262">                stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L263">                stage.setTitle(&quot;Find an existing Member!&quot;);</span>
+
+<span class="nc" id="L265">                controller.setCustomers(getAppEnvironment().getCustomers());</span>
+
+                // Set AppEnvironment so that it can change the current customer
+<span class="nc" id="L268">                controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L269">                controller.pseudoInitialize();</span>
+
+                // Waits for the window to close before reinitialising
+<span class="nc" id="L272">                stage.showAndWait();</span>
+<span class="nc" id="L273">                pseudoInitialize();</span>
+<span class="nc" id="L274">            } catch (IOException e) {</span>
+
+<span class="nc" id="L276">            }</span>
+        }
+<span class="nc" id="L278">    }</span>
+
+    /**
+     * This method opens the menu for a new Member.
+     * Or if a customer is already a part of the order, it opens the Apply Discount screen.
+     */
+    @FXML
+    private void newMember() {
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (currentCustomer != null) {</span>
+<span class="nc" id="L287">            applyDiscount();</span>
+        } else {
+            try {
+<span class="nc" id="L290">                FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/newCustomer.fxml&quot;));</span>
+<span class="nc" id="L291">                Parent root = loader.load();</span>
+
+<span class="nc" id="L293">                NewCustomerController controller = loader.getController();</span>
+
+<span class="nc" id="L295">                Stage stage = new Stage();</span>
+<span class="nc" id="L296">                stage.setScene(new Scene(root, 600, 400));</span>
+<span class="nc" id="L297">                stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L298">                stage.setTitle(&quot;Create a new Member!&quot;);</span>
+
+<span class="nc" id="L300">                controller.setCustomers(getAppEnvironment().getCustomers());</span>
+<span class="nc" id="L301">                controller.pseudoInitialize();</span>
+
+<span class="nc" id="L303">                stage.showAndWait();</span>
+
+                // If a new customer was created, show that information on the screen
+<span class="nc" id="L306">                Customer customer = controller.getCustomer();</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">                if (customer != null) {</span>
+                    // Sets the currentCustomer of the order to the new one
+<span class="nc" id="L309">                    currentOrder.setCurrentCustomer(customer);</span>
+
+<span class="nc" id="L311">                    pseudoInitialize();</span>
+                }
+
+<span class="nc" id="L314">            } catch (IOException e) {</span>
+
+<span class="nc" id="L316">            }</span>
+        }
+<span class="nc" id="L318">    }</span>
+
+    /**
+     * This method is called if there is a currentCustomer. Opens the screen for where the discount can be applied.
+     */
+    private void applyDiscount() {
+        // Can not apply discount if order it empty, or if there is cash already paid.
+<span class="nc bnc" id="L325" title="All 2 branches missed.">        if (currentOrder.getOrderItems().isEmpty()) {</span>
+<span class="nc" id="L326">            warningLabel.setTextFill(Color.RED);</span>
+<span class="nc" id="L327">            warningLabel.setText(&quot;There is no order to discount!&quot;);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">        } else if (!paymentArray.isEmpty()) {</span>
+<span class="nc" id="L329">            warningLabel.setTextFill(Color.RED);</span>
+<span class="nc" id="L330">            warningLabel.setText(&quot;Can not apply discount after inputting cash!&quot;);</span>
+        } else {
+            try {
+<span class="nc" id="L333">                FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/applyDiscount.fxml&quot;));</span>
+<span class="nc" id="L334">                Parent root = loader.load();</span>
+
+<span class="nc" id="L336">                ApplyDiscountController controller = loader.getController();</span>
+
+<span class="nc" id="L338">                Stage stage = new Stage();</span>
+<span class="nc" id="L339">                stage.setScene(new Scene(root, 600, 400));</span>
+<span class="nc" id="L340">                stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L341">                stage.setTitle(&quot;Apply a discount!&quot;);</span>
+
+<span class="nc" id="L343">                controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L344">                controller.setCustomer(currentCustomer);</span>
+<span class="nc" id="L345">                controller.setCustomerSettings(customerSettings);</span>
+<span class="nc" id="L346">                controller.setMaxPrice(currentOrder.getTotalCost().minus(totalPayed));</span>
+<span class="nc" id="L347">                controller.pseudoInitialize();</span>
+
+<span class="nc" id="L349">                stage.showAndWait();</span>
+
+                // Set the discount
+<span class="nc" id="L352">                customerPoints += controller.getPoints();</span>
+<span class="nc" id="L353">                Money moneySaved = controller.getMoneySaved();</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">                if (moneySaved != null) {</span>
+<span class="nc" id="L355">                    currentOrder.setDiscount(currentOrder.getDiscount().plus(moneySaved));</span>
+<span class="nc" id="L356">                    discountLabel.setText(&quot;$&quot; + Money.parse(&quot;NZD &quot; + discountLabel.getText().replace(&quot;$&quot;, &quot;&quot;)).plus(moneySaved).toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;));</span>
+<span class="nc" id="L357">                    remainingCostLabel.setText(&quot;$&quot; + currentOrder.getTotalCost().toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;));</span>
+                }
+<span class="nc" id="L359">                pseudoInitialize();</span>
+<span class="nc" id="L360">            } catch (IOException e) {</span>
+<span class="nc" id="L361">            }</span>
+        }
+<span class="nc" id="L363">    }</span>
+
+    /**
+     * Clears the selected member and returns any points they might have used before paying for the order.
+     */
+    private void clearSelectedMember() {
+        // Removing the customer from the order.
+<span class="nc" id="L370">        currentOrder.setCurrentCustomer(null);</span>
+        // Resetting the discount
+<span class="nc" id="L372">        currentOrder.setDiscount(Money.parse(&quot;NZD 0&quot;));</span>
+
+        // Returns the points they used in the order before paying for it
+<span class="nc bnc" id="L375" title="All 2 branches missed.">        if (customerPoints != 0) {</span>
+<span class="nc" id="L376">            currentCustomer.addPurchasePoints(customerPoints);</span>
+        }
+
+        // Clearing the local variables of the customer
+<span class="nc" id="L380">        currentCustomer = null;</span>
+<span class="nc" id="L381">        customerPoints = 0;</span>
+
+        // Clearing labels
+<span class="nc" id="L384">        discountLabel.setText(&quot;$0.00&quot;);</span>
+<span class="nc" id="L385">        customerNameLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L386">        customerPointsLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L387">        existingMemberButton.setText(&quot;Existing Member&quot;);</span>
+<span class="nc" id="L388">        newMemberButton.setText(&quot;New Member&quot;);</span>
+
+        // Reinitialise the screen
+<span class="nc" id="L391">        pseudoInitialize();</span>
+<span class="nc" id="L392">    }</span>
+
+    /**
+     * Confirms order payment in cash.
+     */
+    public void payCash() {
+        try {
+            // Pass through the payment to AppEnvironment
+<span class="nc" id="L400">            ArrayList&lt;Money&gt; change = getAppEnvironment().confirmPayment(paymentArray);</span>
+
+<span class="nc" id="L402">            initialiseChangeScreen(change);</span>
+
+            // Refresh table
+<span class="nc" id="L405">            pseudoInitialize();</span>
+<span class="nc" id="L406">            cancelOrder();</span>
+<span class="nc" id="L407">            clearPayment();</span>
+<span class="nc" id="L408">            clearSelectedMember();</span>
+<span class="nc" id="L409">        } catch (InsufficientCashException e) {</span>
+<span class="nc" id="L410">            warningLabel.setTextFill(Color.RED);</span>
+<span class="nc" id="L411">            warningLabel.setText(&quot;Not enough money in the till for change!&quot;);</span>
+<span class="nc" id="L412">        }</span>
+<span class="nc" id="L413">    }</span>
+
+    /**
+     * This method intialises the screen used for a successful payment.
+     *
+     * @param change An ArrayList&lt;Money&gt; which has all the change required.
+     */
+    private void initialiseChangeScreen(ArrayList&lt;Money&gt; change) {
+        try {
+<span class="nc" id="L422">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/paymentSuccess.fxml&quot;));</span>
+<span class="nc" id="L423">            Parent root = loader.load();</span>
+
+<span class="nc" id="L425">            PaymentSuccessController controller = loader.getController();</span>
+
+<span class="nc" id="L427">            Stage stage = new Stage();</span>
+<span class="nc" id="L428">            stage.setScene(new Scene(root, 600, 400));</span>
+<span class="nc" id="L429">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+
+<span class="nc" id="L431">            controller.setChange(change);</span>
+<span class="nc" id="L432">            controller.pseudoInitialize();</span>
+
+<span class="nc" id="L434">            stage.showAndWait();</span>
+<span class="nc" id="L435">        } catch (IOException e) {</span>
+
+<span class="nc" id="L437">        }</span>
+<span class="nc" id="L438">    }</span>
+
+    /**
+     * Resets the list containing the currently given denominations
+     */
+    public void clearPayment() {
+        // Clear local variables
+<span class="nc" id="L445">        totalPayed = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="nc" id="L446">        currentPayment = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L447">        paymentArray = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L448">        remainingCostLabel.setText(&quot;$&quot; + currentOrder.getTotalCost().toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;));</span>
+
+        // Clear money labels
+<span class="nc" id="L451">        denomDollarLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L452">        denomCentLabel.setText(&quot;&quot;);</span>
+
+        // Disable the pay button
+<span class="nc" id="L455">        payCashButton.setDisable(true);</span>
+<span class="nc" id="L456">        payCashButton.setTextFill(Color.GREY);</span>
+<span class="nc" id="L457">    }</span>
+
+    /**
+     * A method used to create the string to visualise the denominations payed in the current payment.
+     *
+     * @param builder The StringBuilder.
+     * @param key     The String key which is the denomination.
+     * @param tempKey The Money tempKey which is used to get the number of denominations.
+     * @return The final StringBuilder built.
+     */
+    private StringBuilder stringBuilder(StringBuilder builder, String key, Money tempKey) {
+<span class="nc" id="L468">        builder.append(&quot;$&quot;);</span>
+<span class="nc" id="L469">        builder.append(Float.parseFloat(key));</span>
+<span class="nc" id="L470">        builder.append(&quot;: &quot;);</span>
+<span class="nc" id="L471">        builder.append(currentPayment.get(tempKey));</span>
+<span class="nc" id="L472">        builder.append(&quot;\n&quot;);</span>
+
+<span class="nc" id="L474">        return builder;</span>
+    }
+
+    /**
+     * Adds the specified cash denomination to add to the total
+     *
+     * @param value the cash denomination to add in cents
+     */
+    private void addMoney(int value) {
+<span class="nc bnc" id="L483" title="All 2 branches missed.">        if (currentOrder.getOrderItems().isEmpty()) {</span>
+<span class="nc" id="L484">            warningLabel.setTextFill(Color.RED);</span>
+<span class="nc" id="L485">            warningLabel.setText(&quot;There is no order to pay for!&quot;);</span>
+        } else {
+            // Setting the label to nothing in case it's set to something already
+<span class="nc" id="L488">            warningLabel.setText(&quot;&quot;);</span>
+
+            // Adding the money to the total
+<span class="nc" id="L491">            Money money = Money.parse(&quot;NZD &quot; + 0.01 * value);</span>
+<span class="nc" id="L492">            totalPayed = totalPayed.plus(money);</span>
+
+            // Minus the money from the visual total
+<span class="nc" id="L495">            remainingCostLabel.setText(&quot;$&quot; + Money.parse(&quot;NZD &quot; + remainingCostLabel.getText().replace(&quot;$&quot;, &quot;&quot;)).minus(money).toString().replaceAll(&quot;NZD &quot;, &quot;&quot;));</span>
+
+            // Adding money to a HashSet containing it's quantity
+<span class="nc bnc" id="L498" title="All 2 branches missed.">            if (currentPayment.containsKey(money)) {</span>
+<span class="nc" id="L499">                currentPayment.replace(money, currentPayment.get(money) + 1);</span>
+            } else {
+<span class="nc" id="L501">                currentPayment.put(money, 1);</span>
+            }
+
+            // Adding the money to the array that will be passed into the AppEnvironment
+<span class="nc" id="L505">            paymentArray.add(money);</span>
+
+            // Disable pay button when there isn't enough money payed yet
+<span class="nc bnc" id="L508" title="All 2 branches missed.">            if (Money.parse(&quot;NZD &quot; + remainingCostLabel.getText().replace(&quot;$&quot;, &quot;&quot;)).isPositive()) {</span>
+<span class="nc" id="L509">                payCashButton.setDisable(true);</span>
+<span class="nc" id="L510">                payCashButton.setTextFill(Color.GREY);</span>
+            } else {
+<span class="nc" id="L512">                payCashButton.setDisable(false);</span>
+<span class="nc" id="L513">                payCashButton.setTextFill(Color.GREEN);</span>
+            }
+
+<span class="nc" id="L516">            ArrayList&lt;Money&gt; keyArray = new ArrayList&lt;&gt;(currentPayment.keySet());</span>
+
+            // Creating the strings to visualise the amount payed thus far
+<span class="nc" id="L519">            StringBuilder tempDollar = new StringBuilder();</span>
+<span class="nc" id="L520">            StringBuilder tempCent = new StringBuilder();</span>
+<span class="nc bnc" id="L521" title="All 2 branches missed.">            for (Money tempKey : keyArray) {</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">                if (tempKey.isLessThan(Money.parse(&quot;NZD 5.00&quot;))) {</span>
+<span class="nc" id="L523">                    String key = tempKey.toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L524">                    tempCent = stringBuilder(tempCent, key, tempKey);</span>
+<span class="nc" id="L525">                } else {</span>
+<span class="nc" id="L526">                    String key = tempKey.toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;);</span>
+<span class="nc" id="L527">                    tempDollar = stringBuilder(tempDollar, key, tempKey);</span>
+                }
+<span class="nc" id="L529">            }</span>
+            // Setting the labels to the strings.
+<span class="nc" id="L531">            denomCentLabel.setText(tempCent.toString());</span>
+<span class="nc" id="L532">            denomDollarLabel.setText(tempDollar.toString());</span>
+        }
+<span class="nc" id="L534">    }</span>
+
+    /**
+     * This function removes the selected menu item from the current order.
+     */
+    @FXML
+    private void deleteRowFromTable() {
+        boolean someOrder;
+
+<span class="nc" id="L543">        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);</span>
+<span class="nc" id="L544">        someOrder = this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">        if (someOrder) {</span>
+<span class="nc" id="L546">            removeItem.setDisable(false);</span>
+        }
+<span class="nc" id="L548">        pseudoInitialize();</span>
+<span class="nc" id="L549">    }</span>
+
+    /**
+     * Cancels the current order.
+     */
+    @FXML
+    private void cancelOrder() {
+<span class="nc" id="L556">        clearPayment();</span>
+<span class="nc" id="L557">        remainingCostLabel.setText(&quot;$0.00&quot;);</span>
+<span class="nc" id="L558">        totalPayedLabel.setText(&quot;$0.00&quot;);</span>
+
+<span class="nc" id="L560">        currentOrder = getAppEnvironment().getOrderManager().getOrder();</span>
+<span class="nc" id="L561">        currentOrder.setStock(getAppEnvironment().getStock());</span>
+<span class="nc" id="L562">        currentOrder.clearItemsInOrder();</span>
+
+        // Clear customer labels
+<span class="nc" id="L565">        discountLabel.setText(&quot;$0.00&quot;);</span>
+<span class="nc" id="L566">        customerPoints = 0;</span>
+<span class="nc" id="L567">        currentOrder.setCurrentCustomer(null);</span>
+<span class="nc" id="L568">        customerNameLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L569">        customerPointsLabel.setText(&quot;&quot;);</span>
+
+        // Reset Customer Buttons
+<span class="nc" id="L572">        existingMemberButton.setText(&quot;Existing Member&quot;);</span>
+<span class="nc" id="L573">        newMemberButton.setText(&quot;New Member&quot;);</span>
+        // Refresh currentOrderTable
+<span class="nc" id="L575">        currentOrderTable();</span>
+<span class="nc" id="L576">    }</span>
+
+    /**
+     * Adds 10 Cents to the payment.
+     */
+    @FXML
+    private void addTenCent() {
+<span class="nc" id="L583">        addMoney(10);</span>
+<span class="nc" id="L584">    }</span>
+
+    /**
+     * Adds 20 cents to the payment.
+     */
+    @FXML
+    private void addTwentyCent() {
+<span class="nc" id="L591">        addMoney(20);</span>
+<span class="nc" id="L592">    }</span>
+
+    /**
+     * Adds 50 cents to the payment.
+     */
+    @FXML
+    private void addFiftyCent() {
+<span class="nc" id="L599">        addMoney(50);</span>
+<span class="nc" id="L600">    }</span>
+
+    /**
+     * Adds 1 dollar to the payment.
+     */
+    @FXML
+    private void addOneDollar() {
+<span class="nc" id="L607">        addMoney(100);</span>
+<span class="nc" id="L608">    }</span>
+
+    /**
+     * Adds 2 dollars to the payment.
+     */
+    @FXML
+    private void addTwoDollar() {
+<span class="nc" id="L615">        addMoney(200);</span>
+<span class="nc" id="L616">    }</span>
+
+    /**
+     * Adds 5 dollars to the payment.
+     */
+    @FXML
+    private void addFiveDollar() {
+<span class="nc" id="L623">        addMoney(500);</span>
+<span class="nc" id="L624">    }</span>
+
+    /**
+     * Adds 10 dollars to the payment.
+     */
+    @FXML
+    private void addTenDollar() {
+<span class="nc" id="L631">        addMoney(1000);</span>
+<span class="nc" id="L632">    }</span>
+
+    /**
+     * Adds 20 dollars to the payment.
+     */
+    @FXML
+    private void addTwentyDollar() {
+<span class="nc" id="L639">        addMoney(2000);</span>
+<span class="nc" id="L640">    }</span>
+
+    /**
+     * Adds 50 dollars to the payment.
+     */
+    @FXML
+    private void addFiftyDollar() {
+<span class="nc" id="L647">        addMoney(5000);</span>
+<span class="nc" id="L648">    }</span>
+
+    /**
+     * Adds 100 dollars to the payment.
+     */
+    @FXML
+    private void addHundredDollar() {
+<span class="nc" id="L655">        addMoney(10000);</span>
+<span class="nc" id="L656">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

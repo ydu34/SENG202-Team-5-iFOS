@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Finance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.logic</a> &gt; <span class="el_source">Finance.java</span></div><h1>Finance.java</h1><pre class="source lang-java linenums">package seng202.group5.logic;
+
+import org.joda.money.Money;
+import seng202.group5.IDGenerator;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Transaction;
+
+import javax.xml.bind.annotation.*;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Finance class records order history, refunds past orders and calculates change.
+ *
+ * @author Tasman Berry, Daniel Harris
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Finance {
+
+    /**
+     * A list of cash denominations available
+     */
+    @XmlTransient
+<span class="fc" id="L31">    private static ArrayList&lt;Money&gt; denomination = new ArrayList&lt;&gt;(Arrays.asList(Money.parse(&quot;NZD 100.00&quot;),</span>
+<span class="fc" id="L32">            Money.parse(&quot;NZD 50.00&quot;), Money.parse(&quot;NZD 20.00&quot;), Money.parse(&quot;NZD 10.00&quot;),</span>
+<span class="fc" id="L33">            Money.parse(&quot;NZD 5.00&quot;), Money.parse(&quot;NZD 2.00&quot;), Money.parse(&quot;NZD 1.00&quot;),</span>
+<span class="fc" id="L34">            Money.parse(&quot;NZD 0.50&quot;), Money.parse(&quot;NZD 0.20&quot;), Money.parse(&quot;NZD 0.10&quot;)));</span>
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+<span class="fc" id="L38">    @XmlElement</span>
+    private IDGenerator generator = new IDGenerator();
+    private HashMap&lt;String, Transaction&gt; transactionHistory;
+    @XmlElement
+    private Till till;
+
+
+<span class="fc" id="L45">    public Finance() {</span>
+<span class="fc" id="L46">        transactionHistory = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L47">        till = new Till(denomination);</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Refunds a previous order and returns the list of notes to return in descending size order.
+     *
+     * @param ID the id of the order to refund
+     * @return a list of Money representing coins in descending size order
+     */
+    public ArrayList&lt;Money&gt; refund(String ID) {
+<span class="fc" id="L57">        Transaction refundedOrder = transactionHistory.get(ID);</span>
+<span class="fc" id="L58">        ArrayList&lt;Money&gt; refund = calcChange(refundedOrder.getTotalPrice());</span>
+<span class="fc" id="L59">        Money refundSum = Money.parse(&quot;NZD 0.00&quot;);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (Money amt : refund) refundSum = refundSum.plus(amt);</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">        if (refundSum.equals(refundedOrder.getTotalPrice()) &amp;&amp; !refundedOrder.isRefunded()) {</span>
+<span class="fc" id="L62">            refundedOrder.refund();</span>
+<span class="fc" id="L63">            return refund;</span>
+        } else {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            for (Money coin : refund) till.addDenomination(coin, 1);</span>
+<span class="nc" id="L66">            return new ArrayList&lt;&gt;();</span>
+        }
+    }
+
+    /**
+     * Saves order to database and returns a list of notes to return as change.
+     *
+     * @param amountPayed a list of Money representing the coins payed
+     * @param datetime    the Date and time the order occurred at
+     * @param order       the order that is being paid for
+     * @return a list of Money representing coins to give as change in descending size order
+     * @throws InsufficientCashException Throws error when total cost is negative or the total cost is higher than the amount payed
+     */
+    public ArrayList&lt;Money&gt; pay(ArrayList&lt;Money&gt; amountPayed, LocalDateTime datetime, Order order) throws InsufficientCashException {
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (!enoughMoney(amountPayed, order)) throw new InsufficientCashException(&quot;Not enough cash in till!&quot;);</span>
+<span class="fc" id="L81">        Money payedSum = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="fc" id="L82">        Money changeSum = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="fc" id="L83">        Money totalCost = order.getTotalCost();</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (Money money : amountPayed) {</span>
+<span class="fc" id="L86">            payedSum = payedSum.plus(money);</span>
+<span class="fc" id="L87">        }</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">        if (totalCost.isGreaterThan(payedSum) || totalCost.isNegative()) {</span>
+<span class="fc" id="L89">            throw new InsufficientCashException();</span>
+        }
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (Money money : amountPayed) {</span>
+<span class="fc" id="L93">            till.addDenomination(money, 1);</span>
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">        ArrayList&lt;Money&gt; change = calcChange(payedSum.minus(totalCost).rounded(1, RoundingMode.HALF_DOWN));</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        for (Money money : change) {</span>
+<span class="fc" id="L97">            changeSum = changeSum.plus(money);</span>
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        Transaction transaction = new Transaction(datetime, changeSum, order);</span>
+<span class="fc" id="L100">        transactionHistory.put(transaction.getTransactionID(), transaction);</span>
+
+<span class="fc" id="L102">        return change;</span>
+    }
+
+    /**
+     * Checks the till for if there are enough denominations to give change
+     *
+     * @param payment The ArrayList of money given from the customer.
+     * @param order   The order which the customer is paying for.
+     * @return A boolean saying whether there is enough money in the till to give back change.
+     */
+    private boolean enoughMoney(ArrayList&lt;Money&gt; payment, Order order) {
+        // Copy the till so that changes can be made without affecting the main program
+<span class="fc" id="L114">        Till copyTill = till.clone();</span>
+
+        // Calculating the total amount remaining after payment
+<span class="fc" id="L117">        Money totalPayed = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (Money money : payment) {</span>
+<span class="fc" id="L119">            totalPayed = totalPayed.plus(money);</span>
+<span class="fc" id="L120">            copyTill.addDenomination(money, 1);</span>
+<span class="fc" id="L121">        }</span>
+
+
+<span class="fc" id="L124">        Money total = totalPayed.minus(order.getTotalCost()).rounded(1, RoundingMode.HALF_DOWN);</span>
+        try {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            for (Money money : denomination) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                while (total.isGreaterThan(money)) {</span>
+<span class="fc" id="L128">                    total = total.minus(money);</span>
+<span class="fc" id="L129">                    copyTill.removeDenomination(money, 1);</span>
+                }
+<span class="fc" id="L131">            }</span>
+<span class="nc" id="L132">        } catch (InsufficientCashException e) {</span>
+<span class="nc" id="L133">            return false;</span>
+<span class="fc" id="L134">        }</span>
+<span class="fc" id="L135">        return true;</span>
+    }
+
+    /**
+     * returns a list containing total profits, average profits, and other information to be displayed on the finance screen over the imputed time period
+     * Index 0: Total income before expenses
+     * Index 1: Average daily income before expenses
+     * Index 2: Total profits
+     * Index 3: Average daily profits
+     *
+     * @param startDate the first date to search from
+     * @param endDate   the last date to search to
+     * @return a list of Money representing total profits, average profits, and other things
+     */
+    public ArrayList&lt;Money&gt; totalCalculator(LocalDateTime startDate, LocalDateTime endDate) {
+<span class="fc" id="L150">        Money total = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="fc" id="L151">        Money totalProfits = Money.parse(&quot;NZD 0.00&quot;);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (Transaction transaction : transactionHistory.values()) {</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">            if (transaction.getDateTime().compareTo(startDate) &gt;= 0 &amp;&amp;</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">                    transaction.getDateTime().compareTo(endDate) &lt;= 0) {</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                if (!transaction.isRefunded()) {</span>
+<span class="fc" id="L156">                    total = total.plus(transaction.getTotalPrice());</span>
+<span class="fc" id="L157">                    totalProfits = totalProfits.plus(transaction.getTotalPrice());</span>
+                }
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">                for (Map.Entry&lt;MenuItem, Integer&gt; entry : transaction.getOrder().getOrderItems().entrySet()) {</span>
+<span class="nc" id="L160">                    totalProfits = totalProfits.minus(entry.getKey().calculateMakingCost().multipliedBy(entry.getValue()));</span>
+<span class="nc" id="L161">                }</span>
+            }
+<span class="fc" id="L163">        }</span>
+<span class="fc" id="L164">        ArrayList&lt;Money&gt; totals = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L165">        totals.add(total);</span>
+
+<span class="fc" id="L167">        long daysBetween = ChronoUnit.DAYS.between(startDate.toLocalDate(), endDate.toLocalDate()) + 1;</span>
+<span class="fc" id="L168">        totals.add(total.dividedBy(daysBetween, RoundingMode.DOWN));</span>
+
+<span class="fc" id="L170">        totals.add(totalProfits);</span>
+<span class="fc" id="L171">        totals.add(totalProfits.dividedBy(daysBetween, RoundingMode.DOWN));</span>
+
+<span class="fc" id="L173">        return totals;</span>
+    }
+
+    /**
+     * returns a list containing the change need to be returned
+     *
+     * @param change the first date to search from
+     * @return returns a list containing the change need to be returned
+     */
+    public ArrayList&lt;Money&gt; calcChange(Money change) {
+<span class="fc" id="L183">        ArrayList&lt;Money&gt; totalChange = new ArrayList&lt;&gt;();</span>
+
+        // First try a greedy algorithm
+<span class="fc" id="L186">        Money tempChange = change.rounded(1, RoundingMode.HALF_UP);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        for (Money value : denomination) {</span>
+<span class="fc bfc" id="L188" title="All 4 branches covered.">            while (!tempChange.isLessThan(value) &amp;&amp; till.getDenominations().get(value) &gt; 0) {</span>
+                try {
+<span class="fc" id="L190">                    till.removeDenomination(value, 1);</span>
+<span class="fc" id="L191">                    totalChange.add(value);</span>
+<span class="fc" id="L192">                    tempChange = tempChange.minus(value);</span>
+<span class="nc" id="L193">                } catch (InsufficientCashException e) {</span>
+
+<span class="pc" id="L195">                }</span>
+            }
+<span class="fc" id="L197">        }</span>
+
+        // Return the result if it matches the amount required
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (tempChange.isZero()) {</span>
+<span class="fc" id="L201">            return totalChange;</span>
+        }
+
+        // Otherwise, try a dynamic programming approach
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        for (Money coin : totalChange) till.addDenomination(coin, 1);</span>
+<span class="fc" id="L206">        totalChange = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L207">        ArrayList&lt;Map.Entry&lt;Money, Money&gt;&gt; valueList = new ArrayList&lt;&gt;(); // Helper value, Actual value (weight)</span>
+<span class="fc" id="L208">        ArrayList&lt;Money&gt; tempDenominations = new ArrayList&lt;&gt;(denomination);</span>
+<span class="fc" id="L209">        tempDenominations.sort(Money::compareTo);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Money coin : tempDenominations) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">            for (int i = 0; i &lt; till.getDenominations().getOrDefault(coin, 0); i++) {</span>
+<span class="fc" id="L212">                valueList.add(Map.entry(coin.minus(Money.parse(&quot;NZD 0.01&quot;)), coin));</span>
+            }
+<span class="fc" id="L214">        }</span>
+
+<span class="fc" id="L216">        ArrayList&lt;ArrayList&lt;Money&gt;&gt; cache = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L217">        ArrayList&lt;Money&gt; tempList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L218">        for (Money i = Money.parse(&quot;NZD 0.00&quot;);</span>
+<span class="fc bfc" id="L219" title="All 4 branches covered.">             i.isLessThan(change) || i.isEqual(change);</span>
+<span class="fc" id="L220">             i = i.plus(Money.parse(&quot;NZD 0.10&quot;))) {</span>
+<span class="fc" id="L221">            tempList.add(Money.parse(&quot;NZD 0.00&quot;));</span>
+        }
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        for (int i = 0; i &lt;= valueList.size(); i++) cache.add(new ArrayList&lt;&gt;(tempList));</span>
+
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        for (int n = 1; n &lt;= valueList.size(); n++) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">            for (int top = 1; top &lt; cache.get(0).size(); top++) {</span>
+<span class="fc" id="L227">                Money best = cache.get(n - 1).get(top);</span>
+<span class="fc" id="L228">                Money valueWithoutLast = best;</span>
+<span class="fc" id="L229">                Map.Entry&lt;Money, Money&gt; coin = valueList.get(n - 1);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">                if (!coin.getValue().isGreaterThan(Money.parse(&quot;NZD 0.10&quot;).multipliedBy(top))) {</span>
+<span class="fc" id="L231">                    Money valueWithLast = coin.getKey().plus(cache.get(n - 1).get(top - coin.getValue()</span>
+<span class="fc" id="L232">                            .multipliedBy(10).getAmountMajorInt()));</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">                    if (valueWithLast.isGreaterThan(valueWithoutLast)) best = valueWithLast;</span>
+                }
+<span class="fc" id="L235">                cache.get(n).set(top, best);</span>
+            }
+        }
+
+<span class="fc" id="L239">        int x = cache.get(0).size() - 1;</span>
+<span class="fc" id="L240">        int y = cache.size() - 1;</span>
+<span class="pc bpc" id="L241" title="1 of 4 branches missed.">        while (x != 0 &amp;&amp; y != 0) {</span>
+<span class="fc" id="L242">            Money value = valueList.get(y - 1).getKey();</span>
+<span class="fc" id="L243">            Money coin = valueList.get(y - 1).getValue();</span>
+<span class="fc" id="L244">            int diff = coin.multipliedBy(10).getAmountMajorInt();</span>
+<span class="fc bfc" id="L245" title="All 4 branches covered.">            if (x &gt;= diff &amp;&amp; !cache.get(y - 1).get(x).isGreaterThan(</span>
+<span class="fc" id="L246">                    cache.get(y - 1).get(x - diff).plus(value))) {</span>
+<span class="fc" id="L247">                totalChange.add(coin);</span>
+<span class="fc" id="L248">                x = x - diff;</span>
+            }
+<span class="fc" id="L250">            y--;</span>
+<span class="fc" id="L251">        }</span>
+
+<span class="fc" id="L253">        return totalChange;</span>
+    }
+
+    /**
+     * Gets a clone of the transaction history
+     *
+     * @return a clone of the transaction history
+     */
+    public HashMap&lt;String, Transaction&gt; getTransactionHistoryClone() {
+<span class="fc" id="L262">        return new HashMap&lt;&gt;(transactionHistory);</span>
+    }
+
+    public Till getTill() {
+<span class="fc" id="L266">        return till;</span>
+    }
+
+    public void setTill(Till till) {
+<span class="fc" id="L270">        this.till = till;</span>
+<span class="fc" id="L271">    }</span>
+
+    public HashMap&lt;String, Transaction&gt; getTransactionHistory() {
+<span class="fc" id="L274">        return transactionHistory;</span>
+    }
+
+    public ArrayList&lt;Money&gt; getDenomination() {
+<span class="fc" id="L278">        return denomination;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

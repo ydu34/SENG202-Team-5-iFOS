@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.admin</a> &gt; <span class="el_source">AdminController.java</span></div><h1>AdminController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.admin;
+
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.LocalDateStringConverter;
+import org.joda.money.Money;
+import seng202.group5.Database;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.CustomerSettings;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Transaction;
+import seng202.group5.logic.Finance;
+import seng202.group5.logic.Till;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * A controller for managing the administration screen
+ *
+ * @author Yu Duan, Shivin Gaba, Daniel Harris
+ */
+<span class="nc" id="L53">public class AdminController extends GeneralController {</span>
+
+    @FXML
+    private DatePicker startDate;
+
+    @FXML
+    private DatePicker endDate;
+
+    @FXML
+    private Label saleSummaryText;
+
+    @FXML
+    private Button exportDataButton;
+
+    @FXML
+    private Button selectStockButton;
+
+    @FXML
+    private Button selectMenuButton;
+
+    @FXML
+    private Button selectFinanceButton;
+
+    @FXML
+    private Button selectCustomersButton;
+
+    @FXML
+    private Button selectSettingsButton;
+
+    @FXML
+    private Button importDataButton;
+
+    @FXML
+    private Text fileNotificationText;
+
+    @FXML
+    private Text exportNotificationText;
+
+    @FXML
+    private JFXTextField imageLocation;
+
+    @FXML
+    private Text stockWarningText;
+
+    @FXML
+    private Text menuWarningText;
+
+    @FXML
+    private Text customersWarningText;
+
+    @FXML
+    private Text financeWarningText;
+
+    @FXML
+    private LineChart&lt;Number, Number&gt; financeGraph;
+
+    @FXML
+    private Button addButton;
+
+    private Finance finance;
+
+    @FXML
+    private TableView&lt;MenuItem&gt; itemTable;
+
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; nameCol;
+
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; dietaryCol;
+
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; sellingPriceCol;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button modifyButton;
+
+    @FXML
+    private Text infoText;
+
+    @FXML
+    private Text warningText;
+
+    @FXML
+    private JFXComboBox&lt;Database.OverwriteType&gt; dataMergeTypeMenu;
+
+    private Map&lt;String, File&gt; fileMap;
+
+    @FXML
+    private JFXCheckBox autosaveCheckbox;
+
+    @FXML
+    private JFXCheckBox autoloadCheckbox;
+
+    @FXML
+    private JFXTextField autoLocation;
+
+    @FXML
+    private Spinner&lt;Integer&gt; spinner10c;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner20c;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner50c;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner1d;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner2d;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner5d;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner10d;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner20d;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner50d;
+    @FXML
+    private Spinner&lt;Integer&gt; spinner100d;
+    @FXML
+    private Text oldPasswordWarning;
+    @FXML
+    private Text newPasswordWarning;
+    @FXML
+    private JFXPasswordField oldPasswordText;
+    @FXML
+    private JFXPasswordField newPasswordText;
+    @FXML
+    private JFXPasswordField confirmPasswordText;
+
+    private ArrayList&lt;Spinner&lt;Integer&gt;&gt; spinnerList;
+
+    /**
+     * The text field for changing the initial purchase points.
+     */
+    @FXML
+    private TextField initialPointsField;
+
+    /**
+     * The text field for changing the ratio.
+     */
+    @FXML
+    private TextField ratioField;
+
+    /**
+     * The text field for changing the value of points.
+     */
+    @FXML
+    private TextField pointValueField;
+
+    /**
+     * The text field for changing the max ingredients in addExtraIngredient.
+     */
+    @FXML
+    private TextField maxIngredientField;
+
+    /**
+     * The label on the settings screen which shows success when values are saved.
+     */
+    @FXML
+    private Label successLabel;
+
+    /**
+     * The button for saving the values of the settings screen.
+     */
+    @FXML
+    private Button saveValuesButton;
+
+    /**
+     * An initializer for this controller.
+     */
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L226">        super.pseudoInitialize();</span>
+<span class="nc" id="L227">        finance = getAppEnvironment().getFinance();</span>
+<span class="nc" id="L228">        financeInitialize();</span>
+<span class="nc" id="L229">        viewHistory();</span>
+
+<span class="nc" id="L231">        recipeTableInitialize();</span>
+<span class="nc" id="L232">        fileMap = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L234">        textFieldListeners(oldPasswordText);</span>
+<span class="nc" id="L235">        textFieldListeners(newPasswordText);</span>
+<span class="nc" id="L236">        textFieldListeners(confirmPasswordText);</span>
+
+        // Initialise the settings
+<span class="nc" id="L239">        initialiseSettings();</span>
+
+        // Creating listeners for each spinner in the TillManager
+<span class="nc" id="L242">        spinnerList = new ArrayList&lt;&gt;(Arrays.asList(</span>
+                spinner10c, spinner20c, spinner50c, spinner1d, spinner2d, spinner5d, spinner10d,
+                spinner20d, spinner50d, spinner100d));
+<span class="nc" id="L245">        updateTillSpinners();</span>
+
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        for (Spinner&lt;Integer&gt; spinner : spinnerList) {</span>
+<span class="nc" id="L248">            spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);</span>
+<span class="nc" id="L249">            Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);</span>
+<span class="nc" id="L250">            spinner.valueProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">                if (oldValue &gt; newValue) {</span>
+                    try {
+<span class="nc" id="L253">                        finance.getTill().removeDenomination(amount, oldValue - newValue);</span>
+<span class="nc" id="L254">                    } catch (InsufficientCashException ignored) {</span>
+
+<span class="nc" id="L256">                    }</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">                } else if (newValue &gt; oldValue) {</span>
+<span class="nc" id="L258">                    finance.getTill().addDenomination(amount, newValue - oldValue);</span>
+                }
+<span class="nc" id="L260">            });</span>
+<span class="nc" id="L261">        }</span>
+
+        // Setting the text for the overwrite setting of the database
+<span class="nc" id="L264">        dataMergeTypeMenu.setItems(FXCollections.observableArrayList(Database.OverwriteType.values()));</span>
+<span class="nc" id="L265">        dataMergeTypeMenu.setValue(getAppEnvironment().getDatabase().getOverwriteSetting());</span>
+
+        // Setting initial values for autosaving/loading elements
+<span class="nc" id="L268">        autosaveCheckbox.setSelected(getAppEnvironment().getDatabase().isAutosaveEnabled());</span>
+<span class="nc" id="L269">        autoloadCheckbox.setSelected(getAppEnvironment().getDatabase().isAutoloadEnabled());</span>
+<span class="nc" id="L270">        autoLocation.setText(getAppEnvironment().getDatabase().getSaveFileLocation());</span>
+
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if (!getAppEnvironment().getImagesFolderPath().equals(&quot;&quot;))</span>
+<span class="nc" id="L273">            imageLocation.setText(getAppEnvironment().getImagesFolderPath());</span>
+
+        // Disables buttons if an order is in progress
+<span class="nc" id="L276">        checkIfOrderInProgress();</span>
+<span class="nc" id="L277">    }</span>
+
+    /**
+     * This function adds listeners to the text fields under the password setting tab pane and only allow the user to enter a
+     * a 4 digit pin. It also prevents the user from typing and special characters or alphabets.
+     *
+     * @param someTextField the text field to add the listener to
+     */
+    private void textFieldListeners(JFXPasswordField someTextField) {
+
+<span class="nc" id="L287">        someTextField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,4}?&quot;)) {</span>
+<span class="nc" id="L289">                someTextField.setText(oldValue);</span>
+            }
+<span class="nc" id="L291">        });</span>
+
+<span class="nc" id="L293">    }</span>
+
+    /**
+     * If an order is in progress, disables buttons on admin screen.
+     */
+    private void checkIfOrderInProgress() {
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {</span>
+<span class="nc" id="L300">            infoText.setText(&quot;Can not Add/Modify/Delete Menu Item when Order is in progress.&quot;);</span>
+<span class="nc" id="L301">            selectFinanceButton.setDisable(true);</span>
+<span class="nc" id="L302">            selectMenuButton.setDisable(true);</span>
+<span class="nc" id="L303">            selectStockButton.setDisable(true);</span>
+<span class="nc" id="L304">            selectCustomersButton.setDisable(true);</span>
+<span class="nc" id="L305">            exportDataButton.setDisable(true);</span>
+<span class="nc" id="L306">            addButton.setDisable(true);</span>
+<span class="nc" id="L307">            modifyButton.setDisable(true);</span>
+<span class="nc" id="L308">            deleteButton.setDisable(true);</span>
+<span class="nc" id="L309">            selectSettingsButton.setDisable(true);</span>
+
+            // For the Settings screen
+<span class="nc" id="L312">            saveValuesButton.setDisable(true);</span>
+<span class="nc" id="L313">            successLabel.setText(&quot;Order in Progress!&quot;);</span>
+<span class="nc" id="L314">            successLabel.setTextFill(Color.RED);</span>
+        }
+<span class="nc" id="L316">    }</span>
+
+
+    private void recipeTableInitialize() {
+<span class="nc" id="L320">        ObservableList&lt;MenuItem&gt; items = FXCollections.observableArrayList(getAppEnvironment().getMenuManager().getMenuItems().values());</span>
+
+<span class="nc" id="L322">        nameCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;itemName&quot;));</span>
+<span class="nc" id="L323">        dietaryCol.setCellValueFactory(cellData -&gt; {</span>
+
+<span class="nc" id="L325">            String string = cellData.getValue().getRecipe().getDietaryInformationString();</span>
+
+<span class="nc" id="L327">            return new SimpleStringProperty(string);</span>
+        });
+<span class="nc" id="L329">        sellingPriceCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;totalCost&quot;));</span>
+<span class="nc" id="L330">        itemTable.getItems().clear();</span>
+<span class="nc" id="L331">        itemTable.setItems(items);</span>
+<span class="nc" id="L332">        itemTable.getSortOrder().add(nameCol);</span>
+<span class="nc" id="L333">        itemTable.sort();</span>
+<span class="nc" id="L334">    }</span>
+
+    /**
+     * Views information about transactions in the specified period
+     */
+    @FXML
+    public void viewHistory() {
+        LocalDateTime eDate;
+        LocalDateTime sDate;
+<span class="nc bnc" id="L343" title="All 2 branches missed.">        if (endDate.getValue() != null) {</span>
+<span class="nc" id="L344">            eDate = LocalDateTime.of(endDate.getValue(), LocalTime.MAX);</span>
+        } else {
+<span class="nc" id="L346">            eDate = LocalDateTime.of(LocalDate.MAX, LocalTime.MAX);</span>
+        }
+<span class="nc bnc" id="L348" title="All 2 branches missed.">        if (startDate.getValue() != null) {</span>
+<span class="nc" id="L349">            sDate = LocalDateTime.of(startDate.getValue(), LocalTime.MIN);</span>
+        } else {
+<span class="nc" id="L351">            sDate = LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);</span>
+        }
+<span class="nc bnc" id="L353" title="All 2 branches missed.">        if (!eDate.isBefore(sDate)) {</span>
+<span class="nc" id="L354">            ArrayList&lt;Money&gt; result = finance.totalCalculator(sDate, eDate);</span>
+<span class="nc" id="L355">            saleSummaryText.setText(&quot;Total cost of orders: &quot; + result.get(0) +</span>
+<span class="nc" id="L356">                    &quot;\nAverage daily cost: &quot; + result.get(1) +</span>
+<span class="nc" id="L357">                    &quot;\nTotal profits: &quot; + result.get(2) +</span>
+<span class="nc" id="L358">                    &quot;\nAverage daily profits: &quot; + result.get(3));</span>
+<span class="nc" id="L359">        } else {</span>
+<span class="nc" id="L360">            saleSummaryText.setText(&quot;End date is before start date&quot;);</span>
+        }
+<span class="nc" id="L362">        updateFinanceGraph();</span>
+<span class="nc" id="L363">    }</span>
+
+    /**
+     * Initializes the start date and end date pickers for the finance tab
+     */
+    private void financeInitialize() {
+<span class="nc" id="L369">        LocalDate minDate = LocalDate.MAX;</span>
+<span class="nc" id="L370">        LocalDate maxDate = LocalDate.MIN;</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">        for (Transaction transaction : finance.getTransactionHistory().values()) {</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">            if (transaction.getDateTime().toLocalDate().isBefore(minDate))</span>
+<span class="nc" id="L373">                minDate = transaction.getDateTime().toLocalDate();</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">            if (transaction.getDateTime().toLocalDate().isAfter(maxDate))</span>
+<span class="nc" id="L375">                maxDate = transaction.getDateTime().toLocalDate();</span>
+<span class="nc" id="L376">        }</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">        if (!minDate.isAfter(maxDate)) {</span>
+<span class="nc" id="L378">            startDate.setValue(minDate.minusDays(1));</span>
+<span class="nc" id="L379">            endDate.setValue(maxDate.plusDays(1));</span>
+        } else {
+<span class="nc" id="L381">            startDate.setValue(LocalDate.now().minusDays(1));</span>
+<span class="nc" id="L382">            endDate.setValue(LocalDate.now().plusDays(1));</span>
+        }
+<span class="nc" id="L384">        startDate.setDayCellFactory(picker -&gt; new DateCell() {</span>
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L387">                super.updateItem(date, empty);</span>
+<span class="nc" id="L388">                LocalDate tempEndDate = endDate.getValue();</span>
+<span class="nc" id="L389">                endDate.valueProperty().addListener((unused, old, newObj) -&gt; this.setDisable(date.isAfter(newObj)));</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">                if (tempEndDate == null) {</span>
+<span class="nc" id="L391">                    setDisable(empty);</span>
+                } else {
+<span class="nc bnc" id="L393" title="All 4 branches missed.">                    setDisable(empty || date.isAfter(tempEndDate));</span>
+                }
+<span class="nc" id="L395">            }</span>
+        });
+<span class="nc" id="L397">        startDate.setConverter(new LocalDateStringConverter() {</span>
+            @Override
+            public LocalDate fromString(String input) {
+<span class="nc" id="L400">                LocalDate date = super.fromString(input);</span>
+<span class="nc" id="L401">                LocalDate tempEndDate = endDate.getValue();</span>
+<span class="nc bnc" id="L402" title="All 4 branches missed.">                if (tempEndDate != null &amp;&amp; date.isAfter(tempEndDate)) {</span>
+<span class="nc" id="L403">                    date = tempEndDate;</span>
+                }
+<span class="nc" id="L405">                return date;</span>
+            }
+        });
+
+<span class="nc" id="L409">        endDate.setDayCellFactory(picker -&gt; new DateCell() {</span>
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L412">                super.updateItem(date, empty);</span>
+<span class="nc" id="L413">                LocalDate tempStartDate = startDate.getValue();</span>
+<span class="nc" id="L414">                startDate.valueProperty().addListener((unused, old, newObj) -&gt; this.setDisable(date.isBefore(newObj)));</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">                if (tempStartDate == null) {</span>
+<span class="nc" id="L416">                    setDisable(empty);</span>
+                } else {
+<span class="nc bnc" id="L418" title="All 4 branches missed.">                    setDisable(empty || date.isBefore(tempStartDate));</span>
+                }
+<span class="nc" id="L420">            }</span>
+        });
+<span class="nc" id="L422">        endDate.setConverter(new LocalDateStringConverter() {</span>
+            @Override
+            public LocalDate fromString(String input) {
+<span class="nc" id="L425">                LocalDate date = super.fromString(input);</span>
+<span class="nc" id="L426">                LocalDate tempStartDate = startDate.getValue();</span>
+<span class="nc bnc" id="L427" title="All 4 branches missed.">                if (tempStartDate != null &amp;&amp; date.isBefore(tempStartDate)) {</span>
+<span class="nc" id="L428">                    date = tempStartDate;</span>
+                }
+<span class="nc" id="L430">                return date;</span>
+            }
+        });
+<span class="nc" id="L433">    }</span>
+
+    /**
+     * Updates the graph containing profits for the specified period
+     */
+    private void updateFinanceGraph() {
+<span class="nc" id="L439">        XYChart.Series&lt;Number, Number&gt; series = new XYChart.Series&lt;&gt;();</span>
+<span class="nc" id="L440">        startDate.getValue().datesUntil(endDate.getValue().plusDays(1))</span>
+<span class="nc" id="L441">                .forEach((date) -&gt; series.getData().add(new XYChart.Data&lt;&gt;((int) date.toEpochDay(),</span>
+<span class="nc" id="L442">                        finance.totalCalculator(LocalDateTime.of(date, LocalTime.MIN),</span>
+<span class="nc" id="L443">                                LocalDateTime.of(date, LocalTime.MAX)).get(2).getAmountMajorInt())));</span>
+<span class="nc" id="L444">        financeGraph.getXAxis().setAutoRanging(false);</span>
+<span class="nc" id="L445">        ((NumberAxis) financeGraph.getXAxis()).setLowerBound(startDate.getValue().toEpochDay());</span>
+<span class="nc" id="L446">        ((NumberAxis) financeGraph.getXAxis()).setUpperBound(endDate.getValue().toEpochDay());</span>
+<span class="nc" id="L447">        ((NumberAxis) financeGraph.getXAxis()).setTickLabelFormatter(new StringConverter&lt;&gt;() {</span>
+            @Override
+            public String toString(Number object) {
+<span class="nc" id="L450">                return DateTimeFormatter.ofPattern(&quot;dd-MM&quot;).format(LocalDate.ofEpochDay(object.intValue()));</span>
+            }
+
+            @Override
+            public Number fromString(String string) {
+<span class="nc" id="L455">                return null;</span>
+            }
+        });
+<span class="nc" id="L458">        ((NumberAxis) financeGraph.getYAxis()).setTickLabelFormatter(new StringConverter&lt;Number&gt;() {</span>
+            @Override
+            public String toString(Number object) {
+<span class="nc" id="L461">                return String.format(&quot;NZD %.2f&quot;, object);</span>
+            }
+
+            @Override
+            public Number fromString(String string) {
+<span class="nc" id="L466">                return null;</span>
+            }
+        });
+<span class="nc" id="L469">        financeGraph.setCreateSymbols(false);</span>
+<span class="nc" id="L470">        financeGraph.getData().clear();</span>
+<span class="nc" id="L471">        financeGraph.getData().add(series);</span>
+<span class="nc" id="L472">        financeGraph.setTitle(String.format(&quot;Total profits in NZD from %s to %s&quot;,</span>
+<span class="nc" id="L473">                DateTimeFormatter.ofPattern(&quot;dd-MM-yy&quot;).format(startDate.getValue()),</span>
+<span class="nc" id="L474">                DateTimeFormatter.ofPattern(&quot;dd-MM-yy&quot;).format(endDate.getValue())));</span>
+<span class="nc" id="L475">        financeGraph.setLegendVisible(false);</span>
+<span class="nc" id="L476">    }</span>
+
+    /**
+     * Gets the file that the user selects, limits the user to only select xml files
+     *
+     * @return the selected file from the file chooser.
+     */
+    private File getSelectedFile() {
+<span class="nc" id="L484">        FileChooser fileChooser = new FileChooser();</span>
+<span class="nc" id="L485">        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(&quot;Xml Files&quot;, &quot;*.xml&quot;));</span>
+<span class="nc" id="L486">        File selectedFile = fileChooser.showOpenDialog(null);</span>
+<span class="nc" id="L487">        fileNotificationText.setText(null);</span>
+<span class="nc" id="L488">        return selectedFile;</span>
+
+    }
+
+    /**
+     * Compares the xml file name with the selected file name to see if the correct file
+     * is selected.
+     *
+     * @param xmlFileName  The name of the xml file with .xml
+     * @param selectedFile The selected file that the user selects
+     * @return whether or not the correct file is selected
+     */
+    private boolean checkSelectedFile(String xmlFileName, File selectedFile) {
+<span class="nc" id="L501">        boolean correct = false;</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">        if (selectedFile != null) {</span>
+<span class="nc" id="L503">            String fileName = selectedFile.getName();</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">            if (fileName.equals(xmlFileName)) {</span>
+<span class="nc" id="L505">                correct = true;</span>
+            }
+        }
+<span class="nc" id="L508">        return correct;</span>
+    }
+
+    /**
+     * Checks if the number of files selected by the user is 5, if it is
+     * it means that all xml files are selected and ready to be imported.
+     * Therefore enable the import data button for the user to click.
+     */
+    private void checkFilesSelected() {
+<span class="nc bnc" id="L517" title="All 2 branches missed.">        if (fileMap.size() &gt;= 1) {</span>
+<span class="nc" id="L518">            importDataButton.setDisable(false);</span>
+        } else {
+<span class="nc" id="L520">            importDataButton.setDisable(true);</span>
+        }
+<span class="nc" id="L522">    }</span>
+
+    /**
+     * Action for the select stock button to add the selected file to the list of files
+     * if it is stock.xml otherwise tell the user it is invalid.
+     */
+    public void selectStock() {
+<span class="nc" id="L529">        File selectedFile = getSelectedFile();</span>
+<span class="nc bnc" id="L530" title="All 2 branches missed.">        if (checkSelectedFile(&quot;stock.xml&quot;, selectedFile)) {</span>
+<span class="nc" id="L531">            fileMap.put(&quot;stock.xml&quot;, selectedFile);</span>
+<span class="nc" id="L532">            stockWarningText.setText(&quot;stock.xml selected&quot;);</span>
+<span class="nc" id="L533">            checkFilesSelected();</span>
+        } else {
+<span class="nc" id="L535">            stockWarningText.setText(&quot;Invalid file selected&quot;);</span>
+        }
+<span class="nc" id="L537">    }</span>
+
+    /**
+     * Action for the select menu button to add the selected file to the list of files
+     * if it is menu.xml otherwise tell the user it is invalid.
+     */
+    public void selectMenu() {
+<span class="nc" id="L544">        File selectedFile = getSelectedFile();</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">        if (checkSelectedFile(&quot;menu.xml&quot;, selectedFile)) {</span>
+<span class="nc" id="L546">            fileMap.put(&quot;menu.xml&quot;, selectedFile);</span>
+<span class="nc" id="L547">            menuWarningText.setText(&quot;menu.xml selected&quot;);</span>
+<span class="nc" id="L548">            checkFilesSelected();</span>
+        } else {
+<span class="nc" id="L550">            menuWarningText.setText(&quot;Invalid file selected&quot;);</span>
+        }
+<span class="nc" id="L552">    }</span>
+
+    /**
+     * Action for the select settings button to add the selected file to the list of files
+     * if it is settings.xml otherwise tell the user it is invalid.
+     */
+    public void selectSettings() {
+<span class="nc" id="L559">        File selectedFile = getSelectedFile();</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">        if (checkSelectedFile(&quot;settings.xml&quot;, selectedFile)) {</span>
+<span class="nc" id="L561">            fileMap.put(&quot;settings.xml&quot;, selectedFile);</span>
+<span class="nc" id="L562">            selectSettingsButton.setText(&quot;Selected Settings!&quot;);</span>
+<span class="nc" id="L563">            checkFilesSelected();</span>
+        } else {
+<span class="nc" id="L565">            selectSettingsButton.setText(&quot;Invalid settings.xml!&quot;);</span>
+        }
+<span class="nc" id="L567">    }</span>
+
+    /**
+     * Action for the select finance button to add the selected file to the list of files
+     * if it is finance.xml otherwise tell the user it is invalid.
+     */
+    public void selectFinance() {
+<span class="nc" id="L574">        File selectedFile = getSelectedFile();</span>
+<span class="nc bnc" id="L575" title="All 2 branches missed.">        if (checkSelectedFile(&quot;finance.xml&quot;, selectedFile)) {</span>
+<span class="nc" id="L576">            fileMap.put(&quot;finance.xml&quot;, selectedFile);</span>
+<span class="nc" id="L577">            financeWarningText.setText(&quot;finance.xml selected&quot;);</span>
+<span class="nc" id="L578">            checkFilesSelected();</span>
+        } else {
+<span class="nc" id="L580">            financeWarningText.setText(&quot;invalid file selected&quot;);</span>
+        }
+<span class="nc" id="L582">    }</span>
+
+    public void selectCustomers() {
+<span class="nc" id="L585">        File selectedFile = getSelectedFile();</span>
+<span class="nc bnc" id="L586" title="All 2 branches missed.">        if (checkSelectedFile(&quot;customers.xml&quot;, selectedFile)) {</span>
+<span class="nc" id="L587">            fileMap.put(&quot;customers.xml&quot;, selectedFile);</span>
+<span class="nc" id="L588">            customersWarningText.setText(&quot;customers.xml selected&quot;);</span>
+<span class="nc" id="L589">            checkFilesSelected();</span>
+        } else {
+<span class="nc" id="L591">            customersWarningText.setText(&quot;invalid file selected&quot;);</span>
+        }
+<span class="nc" id="L593">    }</span>
+
+    /**
+     * Gets all the xml files in the hashmap and unmarshal the xml files to objects.
+     * If the files are corrupted or invalid, the user is notified.
+     */
+    public void importData() {
+        try {
+<span class="nc" id="L601">            getAppEnvironment().getDatabase().importData(fileMap);</span>
+<span class="nc" id="L602">            finance = getAppEnvironment().getFinance();</span>
+<span class="nc" id="L603">            fileNotificationText.setText(&quot;All xml files successfully uploaded into application!&quot;);</span>
+<span class="nc" id="L604">            updateTillSpinners();</span>
+<span class="nc" id="L605">            recipeTableInitialize();</span>
+<span class="nc" id="L606">            initialiseSettings();</span>
+<span class="nc" id="L607">        } catch (Exception e) {</span>
+<span class="nc" id="L608">            fileNotificationText.setText(e.getMessage());</span>
+<span class="nc" id="L609">        }</span>
+<span class="nc" id="L610">    }</span>
+
+    /**
+     * Opens the add recipe screen
+     */
+    public void addRecipe() {
+        try {
+<span class="nc" id="L617">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/addRecipe.fxml&quot;));</span>
+<span class="nc" id="L618">            Parent root = loader.load();</span>
+
+<span class="nc" id="L620">            AddRecipeController controller = loader.getController();</span>
+<span class="nc" id="L621">            controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L622">            controller.pseudoInitialize();</span>
+
+<span class="nc" id="L624">            Stage stage = new Stage();</span>
+<span class="nc" id="L625">            stage.setTitle(&quot;Add a Recipe&quot;);</span>
+<span class="nc" id="L626">            stage.setScene(new Scene(root, 800, 600));</span>
+<span class="nc" id="L627">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L628">            stage.initOwner(addButton.getScene().getWindow());</span>
+
+<span class="nc" id="L630">            stage.showAndWait();</span>
+<span class="nc" id="L631">            pseudoInitialize();</span>
+<span class="nc" id="L632">        } catch (IOException e) {</span>
+
+<span class="nc" id="L634">        }</span>
+<span class="nc" id="L635">    }</span>
+
+    /**
+     * Action for deleteButton, deletes the selected item from the menu.
+     */
+    public void deleteSelectedItem() {
+<span class="nc" id="L641">        MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();</span>
+<span class="nc bnc" id="L642" title="All 2 branches missed.">        if (selectedItem != null) {</span>
+<span class="nc" id="L643">            getAppEnvironment().getMenuManager().removeItem(selectedItem.getID());</span>
+<span class="nc" id="L644">            recipeTableInitialize();</span>
+        }
+<span class="nc" id="L646">    }</span>
+
+    /**
+     * Action for modifyButton, opens a new window for the use to modify the menu item.
+     */
+    public void modifySelectedItem() {
+<span class="nc" id="L652">        MenuItem selectedItem = itemTable.getSelectionModel().getSelectedItem();</span>
+<span class="nc bnc" id="L653" title="All 2 branches missed.">        if (selectedItem != null) {</span>
+            try {
+<span class="nc" id="L655">                FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/addRecipe.fxml&quot;));</span>
+<span class="nc" id="L656">                Parent root = loader.load();</span>
+
+<span class="nc" id="L658">                AddRecipeController controller = loader.getController();</span>
+<span class="nc" id="L659">                controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L660">                controller.pseudoInitialize();</span>
+<span class="nc" id="L661">                controller.setMenuItem(selectedItem);</span>
+
+<span class="nc" id="L663">                Stage stage = new Stage();</span>
+<span class="nc" id="L664">                stage.setTitle(&quot;Add a Recipe&quot;);</span>
+<span class="nc" id="L665">                stage.setScene(new Scene(root, 800, 600));</span>
+<span class="nc" id="L666">                stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L667">                stage.initOwner(addButton.getScene().getWindow());</span>
+
+<span class="nc" id="L669">                stage.showAndWait();</span>
+<span class="nc" id="L670">                recipeTableInitialize();</span>
+<span class="nc" id="L671">            } catch (IOException e) {</span>
+
+<span class="nc" id="L673">            }</span>
+        }
+<span class="nc" id="L675">    }</span>
+
+    /**
+     * The method called when exportData button is clicked
+     * Converts the objects into xml files and exported to the selected directory.
+     */
+    public void exportData() {
+<span class="nc" id="L682">        DirectoryChooser directoryChooser = new DirectoryChooser();</span>
+<span class="nc" id="L683">        File selectedDirectory = directoryChooser.showDialog(null);</span>
+
+<span class="nc bnc" id="L685" title="All 2 branches missed.">        if (selectedDirectory != null) {</span>
+            try {
+<span class="nc" id="L687">                getAppEnvironment().getDatabase().allObjectsToXml(selectedDirectory.getPath());</span>
+<span class="nc" id="L688">                exportNotificationText.setText(&quot;All files successfully exported!&quot;);</span>
+<span class="nc" id="L689">            } catch (Exception e) {</span>
+<span class="nc" id="L690">                exportNotificationText.setText(&quot;Files failed to export, please try again.&quot;);</span>
+<span class="nc" id="L691">            }</span>
+        }
+
+<span class="nc" id="L694">    }</span>
+
+    /**
+     * The method called when selectImagesFolderButton is clicked
+     * Allows the user to select the folder containing all the images for the menu items
+     */
+    @FXML
+    public void selectImagesFolder() {
+<span class="nc" id="L702">        DirectoryChooser directoryChooser = new DirectoryChooser();</span>
+<span class="nc" id="L703">        File selectedDirectory = directoryChooser.showDialog(null);</span>
+
+<span class="nc bnc" id="L705" title="All 2 branches missed.">        if (selectedDirectory != null) {</span>
+<span class="nc" id="L706">            String imageFolderPath = selectedDirectory.getPath();</span>
+<span class="nc" id="L707">            getAppEnvironment().setImagesFolderPath(imageFolderPath);</span>
+<span class="nc" id="L708">            imageLocation.setText(imageFolderPath);</span>
+        }
+<span class="nc" id="L710">    }</span>
+
+    /**
+     * Sets the location where automatically saved/loaded files are found
+     */
+    public void updateAutoLocation() {
+<span class="nc" id="L716">        DirectoryChooser directoryChooser = new DirectoryChooser();</span>
+<span class="nc" id="L717">        File selectedDirectory = directoryChooser.showDialog(null);</span>
+
+<span class="nc bnc" id="L719" title="All 2 branches missed.">        if (selectedDirectory != null) {</span>
+<span class="nc" id="L720">            String autoLocationString = selectedDirectory.getPath();</span>
+<span class="nc" id="L721">            getAppEnvironment().getDatabase().setSaveFileLocation(autoLocationString);</span>
+<span class="nc" id="L722">            autoLocation.setText(autoLocationString);</span>
+        }
+<span class="nc" id="L724">    }</span>
+
+    /**
+     * Updates the autosave feature of the database
+     */
+    public void updateAutosave() {
+<span class="nc" id="L730">        getAppEnvironment().getDatabase().setAutosaveEnabled(autosaveCheckbox.isSelected());</span>
+<span class="nc" id="L731">    }</span>
+
+    /**
+     * Updates the autoload feature of the database
+     */
+    public void updateAutoload() {
+<span class="nc" id="L737">        getAppEnvironment().getDatabase().setAutoloadEnabled(autoloadCheckbox.isSelected());</span>
+<span class="nc" id="L738">    }</span>
+
+    /**
+     * Sets the overwrite setting of the database
+     */
+    public void setOverwriteType() {
+<span class="nc" id="L744">        getAppEnvironment().getDatabase().setOverwriteSetting(dataMergeTypeMenu.getValue());</span>
+<span class="nc" id="L745">    }</span>
+
+    /**
+     * Resets the till so that it contains no amounts of any denominations
+     */
+    public void resetTill() {
+<span class="nc" id="L751">        finance.setTill(new Till(finance.getDenomination()));</span>
+<span class="nc" id="L752">        updateTillSpinners();</span>
+<span class="nc" id="L753">    }</span>
+
+    private void updateTillSpinners() {
+<span class="nc bnc" id="L756" title="All 2 branches missed.">        for (Spinner&lt;Integer&gt; spinner : spinnerList) {</span>
+<span class="nc" id="L757">            Money amount = finance.getDenomination().get(spinnerList.size() - spinnerList.indexOf(spinner) - 1);</span>
+<span class="nc" id="L758">            Integer initialValue = finance.getTill().getDenominations().getOrDefault(amount, 0);</span>
+<span class="nc" id="L759">            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(</span>
+<span class="nc" id="L760">                    0, 999999, initialValue));</span>
+<span class="nc" id="L761">        }</span>
+<span class="nc" id="L762">    }</span>
+
+    /**
+     * Sets the finance.
+     *
+     * @param newFinance the new finance to set.
+     */
+    public void setFinance(Finance newFinance) {
+<span class="nc" id="L770">        finance = newFinance;</span>
+<span class="nc" id="L771">    }</span>
+
+    /**
+     * This function checks all the fields on password settings screen and checks if they are valid and accordingly allows
+     * user to update the password.
+     */
+    public void updateOldPassword() {
+
+<span class="nc bnc" id="L779" title="All 2 branches missed.">        if (getAppEnvironment().getDatabase().validatePassword(oldPasswordText.getText().hashCode())) {</span>
+<span class="nc bnc" id="L780" title="All 2 branches missed.">            if (newPasswordText.getText().equals(confirmPasswordText.getText())) {</span>
+<span class="nc bnc" id="L781" title="All 4 branches missed.">                if (newPasswordText.getText().length() == 4 &amp;&amp; confirmPasswordText.getText().length() == 4) {</span>
+<span class="nc" id="L782">                    oldPasswordWarning.setText(&quot;&quot;);</span>
+<span class="nc" id="L783">                    newPasswordWarning.setFill(Color.GREEN);</span>
+<span class="nc" id="L784">                    newPasswordWarning.setText(&quot;Password updated!!&quot;);</span>
+<span class="nc" id="L785">                    getAppEnvironment().getDatabase().setPasswordHash(newPasswordText.getText().hashCode());</span>
+<span class="nc bnc" id="L786" title="All 4 branches missed.">                } else if (newPasswordText.getText().length() &lt; 4 || confirmPasswordText.getText().length() &lt; 4) {</span>
+<span class="nc" id="L787">                    newPasswordWarning.setFill(Color.RED);</span>
+<span class="nc" id="L788">                    newPasswordWarning.setText(&quot;Password has to be 4 digit long&quot;);</span>
+<span class="nc" id="L789">                    oldPasswordWarning.setText(&quot;&quot;);</span>
+                }
+            } else {
+<span class="nc" id="L792">                newPasswordWarning.setFill(Color.RED);</span>
+<span class="nc" id="L793">                newPasswordWarning.setText(&quot;The new password and confirm password does not match&quot;);</span>
+<span class="nc" id="L794">                oldPasswordWarning.setText(&quot;&quot;);</span>
+            }
+        } else {
+<span class="nc" id="L797">            oldPasswordWarning.setFill(Color.RED);</span>
+<span class="nc" id="L798">            oldPasswordWarning.setText(&quot;Password does not match the old password&quot;);</span>
+
+        }
+<span class="nc" id="L801">    }</span>
+
+    /**
+     * The template to initialise all the Settings TextFields.
+     *
+     * @param field the TextField to add a listener to.
+     */
+    private void initialiseSettingsTextFields(TextField field) {
+<span class="nc" id="L809">        field.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,7}&quot;)) {</span>
+<span class="nc" id="L811">                field.setText(oldValue);</span>
+            }
+<span class="nc bnc" id="L813" title="All 4 branches missed.">            if (newValue.isBlank() || newValue.isEmpty()) {</span>
+<span class="nc" id="L814">                field.setText(&quot;0&quot;);</span>
+<span class="nc bnc" id="L815" title="All 2 branches missed.">            } else if (newValue.matches(&quot;0[\\d]&quot;)) {</span>
+<span class="nc" id="L816">                field.setText(newValue.replace(&quot;0&quot;, &quot;&quot;));</span>
+            }
+<span class="nc" id="L818">            successLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L819">        });</span>
+<span class="nc" id="L820">    }</span>
+
+    /**
+     * Initialises the Settings tab.
+     */
+    private void initialiseSettings() {
+        // Initialise all the settings text fields
+<span class="nc" id="L827">        initialiseSettingsTextFields(initialPointsField);</span>
+<span class="nc" id="L828">        initialiseSettingsTextFields(ratioField);</span>
+<span class="nc" id="L829">        initialiseSettingsTextFields(pointValueField);</span>
+<span class="nc" id="L830">        initialiseSettingsTextFields(maxIngredientField);</span>
+
+        // Initialise Loyalty System fields
+<span class="nc" id="L833">        CustomerSettings settings = getAppEnvironment().getCustomers().getCustomerSettings();</span>
+<span class="nc" id="L834">        initialPointsField.setText(String.valueOf(settings.getInitialPurchasePoints()));</span>
+<span class="nc" id="L835">        ratioField.setText(String.valueOf(settings.getRatio()));</span>
+<span class="nc" id="L836">        pointValueField.setText(String.valueOf(settings.getPointValue()));</span>
+
+        // Initialise Max Ingredient field
+<span class="nc" id="L839">        maxIngredientField.setText(String.valueOf(getAppEnvironment().getSettings().getMaxIngredientAmount()));</span>
+<span class="nc" id="L840">    }</span>
+
+    /**
+     * Saves the changes to the loyalty system.
+     */
+    @FXML
+    public void saveSettings() {
+<span class="nc bnc" id="L847" title="All 2 branches missed.">        if (Integer.parseInt(maxIngredientField.getText()) &lt; 5) {</span>
+<span class="nc" id="L848">            successLabel.setText(&quot;At least 5 Ingredients!&quot;);</span>
+<span class="nc" id="L849">            successLabel.setTextFill(Color.RED);</span>
+<span class="nc bnc" id="L850" title="All 2 branches missed.">        } else if (Integer.parseInt(ratioField.getText()) == 0) {</span>
+<span class="nc" id="L851">            successLabel.setText(&quot;Ratio must be at least 1!&quot;);</span>
+<span class="nc" id="L852">            successLabel.setTextFill(Color.RED);</span>
+        }
+        else {
+            // Saving Max % of Ingredients
+<span class="nc" id="L856">            getAppEnvironment().getSettings().setMaxIngredientAmount(Integer.parseInt(maxIngredientField.getText()));</span>
+
+            // Saving Loyalty System fields
+<span class="nc" id="L859">            int newInitialPurchasePoints = Integer.parseInt(initialPointsField.getText());</span>
+<span class="nc" id="L860">            int newRatio = Integer.parseInt(ratioField.getText());</span>
+<span class="nc" id="L861">            int newPointValue = Integer.parseInt(pointValueField.getText());</span>
+
+<span class="nc" id="L863">            CustomerSettings settings = getAppEnvironment().getCustomers().getCustomerSettings();</span>
+<span class="nc" id="L864">            settings.setInitialPurchasePoints(newInitialPurchasePoints);</span>
+<span class="nc" id="L865">            settings.setRatio(newRatio);</span>
+<span class="nc" id="L866">            settings.setPointValue(newPointValue);</span>
+
+<span class="nc" id="L868">            successLabel.setText(&quot;Values Saved!&quot;);</span>
+<span class="nc" id="L869">            successLabel.setTextFill(Color.GREEN);</span>
+        }
+<span class="nc" id="L871">    }</span>
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

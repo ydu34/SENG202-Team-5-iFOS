@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HistoryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.history</a> &gt; <span class="el_source">HistoryController.java</span></div><h1>HistoryController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.history;
+
+import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Transaction;
+import seng202.group5.logic.Order;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Collection;
+import java.util.HashMap;
+
+/**
+ * A controller to manage the History screen
+ *
+ * @author Shivin Gaba, Daniel Harris
+ */
+<span class="nc" id="L34">public class HistoryController extends GeneralController {</span>
+
+
+    @FXML
+    private DatePicker historyStartDatePicker;
+
+    @FXML
+    private DatePicker historyEndDatePicker;
+
+    /**
+     * The TextField for searching for an order by ID
+     */
+    @FXML
+    private TextField historySearchBar;
+
+    /**
+     * The table that displays the history of the orders
+     */
+    @FXML
+    private TableView&lt;Transaction&gt; historyTable;
+
+    // These are the rows of the history table
+    @FXML
+    private TableColumn&lt;Transaction, String&gt; columnID;
+
+    @FXML
+    private TableColumn&lt;Transaction, String&gt; columnDate;
+
+    @FXML
+    private TableColumn&lt;Transaction, String&gt; columnTime;
+
+    @FXML
+    private TableColumn&lt;Transaction, String&gt; columnOrder;
+
+    @FXML
+    private TableColumn&lt;Transaction, String&gt; columnCost;
+
+    @FXML
+    private TableColumn&lt;Transaction, JFXButton&gt; columnAction;
+
+    @FXML
+    private JFXButton addPastOrderButton;
+
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L79">        super.pseudoInitialize();</span>
+<span class="nc" id="L80">        setEndDateUpdater();</span>
+<span class="nc" id="L81">        setStartDateUpdater();</span>
+
+        // Listener for the historySearchBar text field to not allow letters and only numbers
+<span class="nc" id="L84">        historySearchBar.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,7}?&quot;)) {</span>
+<span class="nc" id="L86">                historySearchBar.setText(oldValue);</span>
+            }
+<span class="nc" id="L88">        });</span>
+
+
+        // Setting the factories for creating values to display for each order
+<span class="nc" id="L92">        columnID.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;orderID&quot;));</span>
+
+<span class="nc" id="L94">        columnDate.setCellValueFactory(cellData -&gt; new ReadOnlyStringWrapper(</span>
+<span class="nc" id="L95">                cellData.getValue().getDateTime().toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));</span>
+
+<span class="nc" id="L97">        columnTime.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc" id="L98">            LocalTime time = cellData.getValue().getDateTime().toLocalTime();</span>
+<span class="nc" id="L99">            time = time.minusSeconds(time.getSecond());</span>
+<span class="nc" id="L100">            time = time.minusNanos(time.getNano());</span>
+<span class="nc" id="L101">            return new ReadOnlyStringWrapper(time.toString());</span>
+        });
+
+<span class="nc" id="L104">        columnOrder.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc" id="L105">            String output = cellData.getValue().getOrder().printReceipt();</span>
+<span class="nc" id="L106">            output = output.replace(&quot;\n&quot;, &quot;, &quot;);</span>
+<span class="nc" id="L107">            return new ReadOnlyStringWrapper(output);</span>
+        });
+
+<span class="nc" id="L110">        columnCost.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;totalPrice&quot;));</span>
+
+        // The factory for this is quite complicated since it uses a button instead
+<span class="nc" id="L113">        columnAction.setCellValueFactory(param -&gt; {</span>
+<span class="nc" id="L114">            JFXButton refundButton = new JFXButton(&quot;Refund&quot;);</span>
+<span class="nc" id="L115">            Order order = param.getValue().getOrder();</span>
+            // Disable the button if the order cannot be refunded
+<span class="nc" id="L117">            HashMap&lt;String, Transaction&gt; transactions = getAppEnvironment().getFinance().getTransactionHistory();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (transactions.containsKey(order.getId())) {</span>
+<span class="nc" id="L119">                refundButton.setDisable(transactions.get(order.getId()).isRefunded());</span>
+            } else {
+<span class="nc" id="L121">                refundButton.setDisable(true);</span>
+            }
+<span class="nc" id="L123">            refundButton.setOnAction((ActionEvent event) -&gt; {</span>
+<span class="nc" id="L124">                refundButton.setDisable(true);</span>
+<span class="nc" id="L125">                refundOrder(order, refundButton);</span>
+<span class="nc" id="L126">            });</span>
+<span class="nc" id="L127">            return new ReadOnlyObjectWrapper&lt;&gt;(refundButton);</span>
+        });
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        addPastOrderButton.setDisable(!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty());</span>
+
+<span class="nc" id="L132">        historyTable.getItems().addAll(getAppEnvironment().getFinance().getTransactionHistory().values());</span>
+<span class="nc" id="L133">        historyTable.getSortOrder().add(columnID);</span>
+<span class="nc" id="L134">        historyTable.sort();</span>
+<span class="nc" id="L135">    }</span>
+
+    /**
+     * Refunds the given order
+     *
+     * @param orderToRefund the order to refund
+     */
+    private void refundOrder(Order orderToRefund, Button button) {
+        try {
+<span class="nc" id="L144">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/refundOrder.fxml&quot;));</span>
+<span class="nc" id="L145">            Parent root = loader.load();</span>
+
+<span class="nc" id="L147">            ConfirmRefundController controller = loader.getController();</span>
+<span class="nc" id="L148">            controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L149">            controller.setButton(button);</span>
+<span class="nc" id="L150">            controller.setOrder(orderToRefund);</span>
+
+<span class="nc" id="L152">            Stage stage = new Stage();</span>
+<span class="nc" id="L153">            stage.setTitle(&quot;Confirm Refund&quot;);</span>
+<span class="nc" id="L154">            stage.setScene(new Scene(root, 600, 200));</span>
+<span class="nc" id="L155">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+
+<span class="nc" id="L157">            stage.showAndWait();</span>
+<span class="nc" id="L158">        } catch (IOException e) {</span>
+
+<span class="nc" id="L160">        }</span>
+
+<span class="nc" id="L162">    }</span>
+
+    /**
+     * Sets the DateCell creators for the start date picker
+     */
+    public void setStartDateUpdater() {
+<span class="nc" id="L168">        historyStartDatePicker.setDayCellFactory(picker -&gt; new DateCell() {</span>
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L171">                super.updateItem(date, empty);</span>
+<span class="nc" id="L172">                LocalDate endDate = historyEndDatePicker.getValue();</span>
+<span class="nc" id="L173">                historyEndDatePicker.valueProperty().addListener((unused, old, newObj) -&gt; this.setDisable(date.isAfter(newObj)));</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">                if (endDate == null) {</span>
+<span class="nc" id="L175">                    setDisable(empty);</span>
+                } else {
+<span class="nc bnc" id="L177" title="All 4 branches missed.">                    setDisable(empty || date.isAfter(endDate));</span>
+                }
+<span class="nc" id="L179">            }</span>
+        });
+<span class="nc" id="L181">        historyStartDatePicker.setConverter(new LocalDateStringConverter() {</span>
+            @Override
+            public LocalDate fromString(String input) {
+<span class="nc" id="L184">                LocalDate date = super.fromString(input);</span>
+<span class="nc" id="L185">                LocalDate endDate = historyEndDatePicker.getValue();</span>
+<span class="nc bnc" id="L186" title="All 4 branches missed.">                if (endDate != null &amp;&amp; date.isAfter(endDate)) {</span>
+<span class="nc" id="L187">                    date = endDate;</span>
+                }
+<span class="nc" id="L189">                return date;</span>
+            }
+        });
+<span class="nc" id="L192">    }</span>
+
+    /**
+     * Sets the DateCell creators for the end date picker
+     */
+    public void setEndDateUpdater() {
+<span class="nc" id="L198">        historyEndDatePicker.setDayCellFactory(picker -&gt; new DateCell() {</span>
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L201">                super.updateItem(date, empty);</span>
+<span class="nc" id="L202">                LocalDate startDate = historyStartDatePicker.getValue();</span>
+<span class="nc" id="L203">                historyStartDatePicker.valueProperty().addListener((unused, old, newObj) -&gt; this.setDisable(date.isBefore(newObj)));</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">                if (startDate == null) {</span>
+<span class="nc" id="L205">                    setDisable(empty);</span>
+                } else {
+<span class="nc bnc" id="L207" title="All 4 branches missed.">                    setDisable(empty || date.isBefore(startDate));</span>
+                }
+<span class="nc" id="L209">            }</span>
+        });
+<span class="nc" id="L211">        historyEndDatePicker.setConverter(new LocalDateStringConverter() {</span>
+            @Override
+            public LocalDate fromString(String input) {
+<span class="nc" id="L214">                LocalDate date = super.fromString(input);</span>
+<span class="nc" id="L215">                LocalDate startDate = historyStartDatePicker.getValue();</span>
+<span class="nc bnc" id="L216" title="All 4 branches missed.">                if (startDate != null &amp;&amp; date.isBefore(startDate)) {</span>
+<span class="nc" id="L217">                    date = startDate;</span>
+                }
+<span class="nc" id="L219">                return date;</span>
+            }
+        });
+<span class="nc" id="L222">    }</span>
+
+    /**
+     * Updates the orders that are visible in the order table
+     */
+    public void updateVisibleOrders() {
+<span class="nc" id="L228">        LocalDate firstDate = historyStartDatePicker.getValue();</span>
+<span class="nc" id="L229">        LocalDate lastDate = historyEndDatePicker.getValue();</span>
+        LocalDateTime firstTime;
+<span class="nc bnc" id="L231" title="All 2 branches missed.">        if (firstDate == null) {</span>
+<span class="nc" id="L232">            firstTime = LocalDateTime.MIN;</span>
+        } else {
+<span class="nc" id="L234">            firstTime = LocalDateTime.of(firstDate, LocalTime.MIN);</span>
+        }
+        LocalDateTime lastTime;
+<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (lastDate == null) {</span>
+<span class="nc" id="L238">            lastTime = LocalDateTime.MAX;</span>
+        } else {
+<span class="nc" id="L240">            lastTime = LocalDateTime.of(lastDate, LocalTime.MAX);</span>
+        }
+<span class="nc" id="L242">        Collection&lt;Transaction&gt; historyValues = getAppEnvironment().getFinance().getTransactionHistory().values();</span>
+<span class="nc" id="L243">        historyTable.getItems().removeAll(historyValues);</span>
+<span class="nc" id="L244">        String searchString = historySearchBar.getCharacters().toString();</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">        for (Transaction transaction : historyValues) {</span>
+<span class="nc" id="L246">            Order order = transaction.getOrder();</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">            if (transaction.getDateTime().isAfter(firstTime) &amp;&amp;</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">                    transaction.getDateTime().isBefore(lastTime) &amp;&amp;</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">                    order.getId().matches(&quot;.*&quot; + searchString + &quot;.*&quot;)) {</span>
+<span class="nc" id="L250">                historyTable.getItems().add(transaction);</span>
+            }
+
+<span class="nc" id="L253">        }</span>
+<span class="nc" id="L254">    }</span>
+
+    /**
+     * Adds a new order to the history
+     *
+     * @param order the order to add to the history
+     */
+    public void addNewOrder(Order order, LocalDateTime datetime) {
+
+<span class="nc" id="L263">        HashMap&lt;String, Transaction&gt; history = getAppEnvironment().getFinance().getTransactionHistory();</span>
+
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        if (!history.containsKey(order.getId())) {</span>
+<span class="nc" id="L266">            Transaction tempTransaction = new Transaction(datetime, order.getTotalCost(), order);</span>
+<span class="nc" id="L267">            history.put(order.getId(), tempTransaction);</span>
+<span class="nc" id="L268">            updateVisibleOrders();</span>
+        } else {
+
+        }
+<span class="nc" id="L272">    }</span>
+
+    /**
+     * Uses a duplicate of the Order screen to create an order to put in the history
+     *
+     * @param event an event that caused this to happen
+     */
+    public void addPastOrder(ActionEvent event) {
+<span class="nc" id="L280">        AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(event, this);</span>
+<span class="nc" id="L281">        controller.resetOrder();</span>
+<span class="nc" id="L282">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

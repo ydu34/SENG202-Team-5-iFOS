@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneralController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui</a> &gt; <span class="el_source">GeneralController.java</span></div><h1>GeneralController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui;
+
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import seng202.group5.AppEnvironment;
+import seng202.group5.gui.admin.PasswordController;
+
+import java.io.IOException;
+
+/**
+ * A controller class for other classes to implement
+ *
+ * @author Daniel Harris
+ */
+<span class="nc" id="L26">public class GeneralController {</span>
+
+    private static final double FADE_DURATION = 200; // in milliseconds
+
+    /**
+     * The property that is shared between all the controllers to access the AppEnvironment
+     */
+    private AppEnvironment appEnvironment;
+
+    /**
+     * A function to smoothly transition from one scene to another
+     *
+     * @param oldStage the old stage which
+     */
+    protected static void smoothTransition(Stage oldStage, Pane origin, Pane destination, EventHandler&lt;ActionEvent&gt; event) {
+        // Creating a stack pane to transition from one screen to another
+<span class="nc" id="L42">        StackPane fadePane = new StackPane();</span>
+<span class="nc" id="L43">        fadePane.setMaxHeight(Double.POSITIVE_INFINITY);</span>
+<span class="nc" id="L44">        fadePane.setMaxWidth(Double.POSITIVE_INFINITY);</span>
+<span class="nc" id="L45">        fadePane.setPrefHeight(destination.getPrefHeight());</span>
+<span class="nc" id="L46">        fadePane.setPrefWidth(destination.getPrefWidth());</span>
+<span class="nc" id="L47">        destination.setMouseTransparent(true);</span>
+<span class="nc" id="L48">        origin.setMouseTransparent(true);</span>
+<span class="nc" id="L49">        fadePane.getChildren().add(destination);</span>
+<span class="nc" id="L50">        fadePane.getChildren().add(origin);</span>
+<span class="nc" id="L51">        FadeTransition transition = new FadeTransition(Duration.millis(FADE_DURATION), origin);</span>
+<span class="nc" id="L52">        transition.setFromValue(1.0);</span>
+<span class="nc" id="L53">        transition.setToValue(0.0);</span>
+
+<span class="nc" id="L55">        oldStage.getScene().setRoot(fadePane);</span>
+<span class="nc" id="L56">        transition.play();</span>
+<span class="nc" id="L57">        transition.setOnFinished((actionEvent) -&gt; {</span>
+<span class="nc" id="L58">            fadePane.getChildren().remove(destination);</span>
+<span class="nc" id="L59">            destination.setMouseTransparent(false);</span>
+<span class="nc" id="L60">            event.handle(actionEvent);</span>
+<span class="nc" id="L61">        });</span>
+<span class="nc" id="L62">    }</span>
+
+    /**
+     * A function which can be overwritten to initialize a controller with the
+     * AppEnvironment set, which is not available with the regular initialize method
+     */
+    public void pseudoInitialize() {
+<span class="nc" id="L69">    }</span>
+
+    /**
+     * This method is called when the screen needs to change to a different one
+     *
+     * @param event     an event that caused this to happen
+     * @param scenePath the location of the fxml file of the new screen
+     * @return the new controller for the new screen
+     */
+    protected GeneralController changeScreen(ActionEvent event, String scenePath) {
+        Parent sampleScene;
+<span class="nc" id="L80">        GeneralController controller = null;</span>
+<span class="nc" id="L81">        Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();</span>
+        try {
+<span class="nc" id="L83">            FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(scenePath));</span>
+<span class="nc" id="L84">            sampleScene = sampleLoader.load();</span>
+<span class="nc" id="L85">            controller = sampleLoader.getController();</span>
+<span class="nc" id="L86">            controller.setAppEnvironment(appEnvironment);</span>
+<span class="nc" id="L87">            controller.pseudoInitialize();</span>
+
+<span class="nc" id="L89">            Parent finalSampleScene = sampleScene;</span>
+<span class="nc" id="L90">            smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -&gt; {</span>
+<span class="nc" id="L91">                oldStage.getScene().setRoot(finalSampleScene);</span>
+<span class="nc" id="L92">            });</span>
+<span class="nc" id="L93">        } catch (IOException e) {</span>
+
+<span class="nc" id="L95">        }</span>
+        try {
+<span class="nc" id="L97">            appEnvironment.getDatabase().autosave();</span>
+<span class="nc" id="L98">        } catch (Exception e) {</span>
+
+<span class="nc" id="L100">        }</span>
+<span class="nc" id="L101">        return controller;</span>
+    }
+
+    /**
+     * This method launches the order screen when clicked on the &quot;Order&quot; button
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void launchOrderScreen(javafx.event.ActionEvent actionEvent) {
+<span class="nc" id="L110">        changeScreen(actionEvent, &quot;/gui/order.fxml&quot;);</span>
+<span class="nc" id="L111">    }</span>
+
+    /**
+     * This method launches the invoice screen when clicked on the &quot;Invoice&quot; button
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void launchInvoiceScreen(javafx.event.ActionEvent actionEvent) {
+<span class="nc" id="L119">        changeScreen(actionEvent, &quot;/gui/invoice.fxml&quot;);</span>
+<span class="nc" id="L120">    }</span>
+
+    /**
+     * This method launches the stock screen when clicked on the &quot;History&quot; button
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void launchStockScreen(javafx.event.ActionEvent actionEvent) {
+<span class="nc" id="L128">        changeScreen(actionEvent, &quot;/gui/stock.fxml&quot;);</span>
+<span class="nc" id="L129">    }</span>
+
+    /**
+     * This method launches the admin screen when clicked on the &quot;Admin&quot; button
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void launchAdminScreen(javafx.event.ActionEvent actionEvent) {
+<span class="nc" id="L137">        changeScreen(actionEvent, &quot;/gui/admin.fxml&quot;);</span>
+<span class="nc" id="L138">    }</span>
+
+    @FXML
+    private void launchPasswordScreen(javafx.event.ActionEvent event) {
+        try {
+<span class="nc" id="L143">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/password.fxml&quot;));</span>
+<span class="nc" id="L144">            Parent root = loader.load();</span>
+
+<span class="nc" id="L146">            PasswordController controller = loader.getController();</span>
+<span class="nc" id="L147">            controller.setSource(this);</span>
+<span class="nc" id="L148">            controller.setEvent(event);</span>
+
+<span class="nc" id="L150">            controller.setPasswordChecker(passwordHash -&gt; appEnvironment.getDatabase().validatePassword(passwordHash));</span>
+
+<span class="nc" id="L152">            Stage stage = new Stage();</span>
+<span class="nc" id="L153">            stage.setTitle(&quot;Enter the password&quot;);</span>
+<span class="nc" id="L154">            stage.setScene(new Scene(root, 555, 432));</span>
+<span class="nc" id="L155">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+
+<span class="nc" id="L157">            stage.showAndWait();</span>
+<span class="nc" id="L158">        } catch (IOException e) {</span>
+
+<span class="nc" id="L160">        }</span>
+
+<span class="nc" id="L162">    }</span>
+
+    /**
+     * This method launches the order screen when clicked on the &quot;Order&quot; button
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void launchHistoryScreen(javafx.event.ActionEvent actionEvent) {
+<span class="nc" id="L170">        changeScreen(actionEvent, &quot;/gui/history.fxml&quot;);</span>
+<span class="nc" id="L171">    }</span>
+
+    public AppEnvironment getAppEnvironment() {
+<span class="nc" id="L174">        return appEnvironment;</span>
+    }
+
+    public void setAppEnvironment(AppEnvironment appEnvironment) {
+<span class="nc" id="L178">        this.appEnvironment = appEnvironment;</span>
+<span class="nc" id="L179">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

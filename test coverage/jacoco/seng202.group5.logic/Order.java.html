@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.logic</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package seng202.group5.logic;
+
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
+import seng202.group5.IDGenerator;
+import seng202.group5.adapters.MoneyAdapter;
+import seng202.group5.information.Customer;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import static java.lang.String.format;
+
+/**
+ * The Order class keeps track of the current orders items and total cost. Contains methods to modify items to the order
+ * and give a discount to the order.
+ *
+ * @author Michael Morgoun, Yu Duan, James Kwok
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Order {
+
+    /**
+     * A HashMap of items in the order and their quantities.
+     **/
+    private HashMap&lt;MenuItem, Integer&gt; orderItems;
+
+    /**
+     * The current total cost of the order including the discount
+     **/
+<span class="fc" id="L41">    @XmlJavaTypeAdapter(MoneyAdapter.class)</span>
+<span class="fc" id="L42">    private Money totalCost = Money.zero(CurrencyUnit.of(&quot;NZD&quot;));</span>
+
+    /**
+     * The unique ID of the order given by the database
+     **/
+<span class="fc" id="L47">    private String id = IDGenerator.newOrderID();</span>
+
+    /**
+     * If it exists, the current Customer of the order
+     */
+    @XmlTransient
+    private Customer currentCustomer;
+
+    /**
+     * The discount if it exists, for the order.
+     */
+<span class="fc" id="L58">    @XmlTransient</span>
+<span class="fc" id="L59">    private Money discount = Money.parse(&quot;NZD 0&quot;);</span>
+
+    /**
+     * The Stock to update when creating this order
+     */
+    @XmlTransient
+    private Stock temporaryStock;
+
+<span class="fc" id="L67">    Order() {</span>
+<span class="fc" id="L68">        orderItems = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L69">    }</span>
+
+
+    /**
+     * The builder for an Order object.
+     *
+     * @param tempOrderItems An order with an initial order list of items.
+     * @param tempTotalCost  The total cost of an existing order.
+     * @param tempID         The unique ID of the order.
+     */
+    @Deprecated(since = &quot;Replaced with version that edits stock, THIS VERSION BREAKS OTHER CODE&quot;)
+<span class="fc" id="L80">    public Order(HashMap&lt;MenuItem, Integer&gt; tempOrderItems, Money tempTotalCost, String tempID) {</span>
+<span class="fc" id="L81">        orderItems = tempOrderItems;</span>
+<span class="fc" id="L82">        totalCost = tempTotalCost;</span>
+<span class="fc" id="L83">        id = tempID;</span>
+
+<span class="fc" id="L85">    }</span>
+
+    /**
+     * The builder for an Order object.
+     *
+     * @param tempOrderItems An order with an initial order list of items.
+     * @param tempTotalCost  The total cost of an existing order.
+     * @param tempID         The unique ID of the order.
+     * @param tempStock      The temporary stock to update when adding/removing items
+     */
+<span class="fc" id="L95">    public Order(HashMap&lt;MenuItem, Integer&gt; tempOrderItems, Money tempTotalCost, String tempID, Stock tempStock) {</span>
+<span class="fc" id="L96">        orderItems = tempOrderItems;</span>
+<span class="fc" id="L97">        totalCost = tempTotalCost;</span>
+<span class="fc" id="L98">        id = tempID;</span>
+<span class="fc" id="L99">        temporaryStock = tempStock.clone();</span>
+<span class="fc" id="L100">    }</span>
+
+
+    /**
+     * The builder for an Order object with no initial values.
+     *
+     * @param tempStock the stock to keep track of
+     */
+<span class="fc" id="L108">    public Order(Stock tempStock) {</span>
+<span class="fc" id="L109">        orderItems = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L110">        totalCost = Money.zero(CurrencyUnit.of(&quot;NZD&quot;));</span>
+<span class="fc" id="L111">        temporaryStock = tempStock.clone();</span>
+<span class="fc" id="L112">    }</span>
+
+    /**
+     * Adds a new item/s to the order and checks the temporaryStock in case there are not enough ingredients
+     *
+     * @param item     The item to add to the order
+     * @param quantity The quantity of the item to add to the order
+     * @return Whether there were enough ingredients in the stock to add those item/s.
+     */
+    public boolean addItem(MenuItem item, int quantity) {
+        // Getting the HashMap of ingredients, quantities
+
+<span class="fc" id="L124">        HashMap&lt;Ingredient, Integer&gt; ingredientQuantities = item.getRecipe().getIngredientsAmount();</span>
+<span class="fc" id="L125">        HashMap&lt;String, Integer&gt; ingredients = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        for (Ingredient ingredient : ingredientQuantities.keySet()) {</span>
+<span class="fc" id="L127">            ingredients.put(ingredient.getID(), ingredientQuantities.get(ingredient));</span>
+<span class="fc" id="L128">        }</span>
+        // Creating an ArrayList so that we can iterate through the ingredients
+<span class="fc" id="L130">        Set&lt;String&gt; keySet = ingredients.keySet();</span>
+<span class="fc" id="L131">        ArrayList&lt;String&gt; listOfKeys = new ArrayList&lt;&gt;(keySet);</span>
+
+        // For each ingredient we change the quantity to accommodate any extra's
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for (String id : listOfKeys) {</span>
+            // If we don't have enough in the Stock, we can't add it to order
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            if (temporaryStock.getIngredientQuantity(id) &lt; ingredients.get(id) * quantity) {</span>
+<span class="fc" id="L137">                return false;</span>
+            }
+<span class="fc" id="L139">        }</span>
+
+        // Finally removing ingredient amounts from stock
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        for (String id : listOfKeys) {</span>
+<span class="fc" id="L143">            temporaryStock.getIngredientStock().replace(id, temporaryStock.getIngredientQuantity(id) - ingredients.get(id) * quantity);</span>
+<span class="fc" id="L144">        }</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        if (orderItems.containsKey(item)) {</span>
+<span class="nc" id="L146">            orderItems.put(item, orderItems.get(item) + quantity);</span>
+        } else {
+<span class="fc" id="L148">            orderItems.put(item, quantity);</span>
+        }
+
+        // Add price of item to total cost
+<span class="fc" id="L152">        totalCost = totalCost.plus(item.getTotalCost().multipliedBy(quantity));</span>
+<span class="fc" id="L153">        return true;</span>
+    }
+
+
+    /**
+     * Removes the item taken as a parameter from the order and updates the temporaryStock and returns a boolean true or false as to whether
+     * it was successful or not.
+     *
+     * @param item The item that is to be removed from the order.
+     * @param all  True if all items are to be removed. If False, then only one item is removed.
+     * @return The boolean success of the removal.
+     */
+    public boolean removeItem(MenuItem item, boolean all) {
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (orderItems.containsKey(item)) {</span>
+<span class="fc" id="L167">            int quantity = 1;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            if (all) {</span>
+<span class="fc" id="L169">                quantity = orderItems.get(item);</span>
+            }
+            // Getting the ingredient HashMap and creating an Arraylist to iterate through out of the keys in the HashMap
+<span class="fc" id="L172">            HashMap&lt;Ingredient, Integer&gt; ingredientQuantities = item.getRecipe().getIngredientsAmount();</span>
+<span class="fc" id="L173">            HashMap&lt;String, Integer&gt; ingredients = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            for (Ingredient ingredient : ingredientQuantities.keySet()) {</span>
+<span class="fc" id="L175">                ingredients.put(ingredient.getID(), ingredientQuantities.get(ingredient));</span>
+<span class="fc" id="L176">            }</span>
+<span class="fc" id="L177">            Set&lt;String&gt; keySet = ingredients.keySet();</span>
+<span class="fc" id="L178">            ArrayList&lt;String&gt; listOfKeys = new ArrayList&lt;&gt;(keySet);</span>
+
+            // Adding the ingredients back into the stock
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            for (String id : listOfKeys) {</span>
+<span class="fc" id="L182">                temporaryStock.modifyQuantity(id, temporaryStock.getIngredientQuantity(id) + ingredients.get(id) * quantity);</span>
+<span class="fc" id="L183">            }</span>
+
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            if (all) {</span>
+<span class="fc" id="L186">                orderItems.remove(item);</span>
+            } else {
+<span class="fc" id="L188">                int oldCount = orderItems.get(item);</span>
+<span class="fc" id="L189">                orderItems.replace(item, oldCount, oldCount - 1);</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">                if (orderItems.get(item) == 0) {</span>
+<span class="nc" id="L191">                    orderItems.remove(item);</span>
+                }
+            }
+            // Minuses the price of the item from the total cost
+<span class="fc" id="L195">            totalCost = totalCost.minus(item.getTotalCost().multipliedBy(quantity));</span>
+
+<span class="fc" id="L197">            return true;</span>
+        } else {
+<span class="fc" id="L199">            return false;</span>
+        }
+    }
+
+    /**
+     * modifies the quantity of an item with the quantity parameter.
+     * Returns a boolean true or false as to whether it was successful or not.
+     *
+     * @param item     The item that will have its quantity change.
+     * @param quantity The new quantity for an item.
+     * @return The boolean success of the quantity update.
+     */
+    public boolean modifyItemQuantity(MenuItem item, int quantity) {
+<span class="fc bfc" id="L212" title="All 2 branches covered.">        if (orderItems.containsKey(item)) {</span>
+<span class="fc" id="L213">            int currentCount = orderItems.get(item);</span>
+<span class="fc" id="L214">            removeItem(item, true);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">            if (!addItem(item, quantity)) {</span>
+<span class="fc" id="L216">                addItem(item, currentCount);</span>
+<span class="fc" id="L217">                return false;</span>
+            } else {
+<span class="fc" id="L219">                return true;</span>
+            }
+        } else {
+<span class="fc" id="L222">            return false;</span>
+        }
+    }
+
+    public void clearItemsInOrder() {
+<span class="fc" id="L227">        orderItems.clear();</span>
+<span class="fc" id="L228">        totalCost = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="fc" id="L229">        discount = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="fc" id="L230">    }</span>
+
+    /**
+     * Prints the receipt of the order
+     *
+     * @return A string of the receipt of the order
+     */
+    public String printReceipt() {
+<span class="fc" id="L238">        StringBuilder outputString = new StringBuilder();</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        for (Map.Entry&lt;MenuItem, Integer&gt; entry : orderItems.entrySet()) {</span>
+<span class="fc" id="L240">            MenuItem a = entry.getKey();</span>
+<span class="fc" id="L241">            Integer b = entry.getValue();</span>
+<span class="fc" id="L242">            outputString.append(format(&quot;%d %s(s) - %s\n&quot;,</span>
+                    b,
+<span class="fc" id="L244">                    a.getItemName(),</span>
+<span class="fc" id="L245">                    a.getTotalCost().multipliedBy(b)));</span>
+<span class="fc" id="L246">        }</span>
+<span class="fc" id="L247">        outputString.append(&quot;Total cost - &quot;);</span>
+<span class="fc" id="L248">        outputString.append(getTotalCost());</span>
+<span class="fc" id="L249">        return outputString.toString();</span>
+    }
+
+    /**
+     * Gets the ID of this order
+     *
+     * @return the ID of this order
+     */
+    public String getId() {
+<span class="fc" id="L258">        return id;</span>
+    }
+
+    /**
+     * Sets the id of the order. Not necessary since it creates a new ID when initialised.
+     *
+     * @param id A string ID
+     */
+    public void setId(String id) {
+<span class="fc" id="L267">        this.id = id;</span>
+<span class="fc" id="L268">    }</span>
+
+    /**
+     * A getter for the current order list.
+     *
+     * @return A HashMap of order items
+     */
+    public HashMap&lt;MenuItem, Integer&gt; getOrderItems() {
+<span class="fc" id="L276">        return orderItems;</span>
+    }
+
+    /**
+     * Returns the total cost.
+     *
+     * @return the totalCost of the order.
+     */
+    public Money getTotalCost() {
+<span class="fc" id="L285">        return totalCost.minus(discount);</span>
+    }
+
+    /**
+     * Gets the stock that is being updated
+     *
+     * @return the stock that is being updated
+     */
+    public Stock getStock() {
+<span class="fc" id="L294">        return temporaryStock;</span>
+    }
+
+    /**
+     * Sets the stock to a clone of the specified stock
+     *
+     * @param stock the new stock to be cloned
+     */
+    public void setStock(Stock stock) {
+<span class="nc" id="L303">        temporaryStock = stock.clone();</span>
+<span class="nc" id="L304">    }</span>
+
+    /**
+     * Returns the discount.
+     *
+     * @return A money type discount.
+     */
+    public Money getDiscount() {
+<span class="nc" id="L312">        return discount;</span>
+    }
+
+    /**
+     * Sets the discount for the order.
+     *
+     * @param tempMoney The money saved.
+     */
+    public void setDiscount(Money tempMoney) {
+<span class="fc" id="L321">        discount = tempMoney;</span>
+<span class="fc" id="L322">    }</span>
+
+    /**
+     * Gets the current customer of the order if they exist.
+     *
+     * @return the current customer.
+     */
+    public Customer getCurrentCustomer() {
+<span class="fc" id="L330">        return currentCustomer;</span>
+    }
+
+    /**
+     * Sets the current customer.
+     *
+     * @param customer The new customer of the order.
+     */
+    public void setCurrentCustomer(Customer customer) {
+<span class="nc" id="L339">        currentCustomer = customer;</span>
+<span class="nc" id="L340">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

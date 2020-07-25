@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Stock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.logic</a> &gt; <span class="el_source">Stock.java</span></div><h1>Stock.java</h1><pre class="source lang-java linenums">package seng202.group5.logic;
+
+import seng202.group5.IDGenerator;
+import seng202.group5.information.Ingredient;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
+
+
+/**
+ * The Stock holds all ingredients in the database and methods to modify those ingredients.
+ *
+ * @author Michael Morgoun, Daniel Harris, Yu Duan
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Stock {
+
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+<span class="fc" id="L25">    @XmlElement</span>
+    private IDGenerator generator = new IDGenerator();
+
+    private HashMap&lt;String, Ingredient&gt; ingredients;
+    private HashMap&lt;String, Integer&gt; ingredientStock;
+
+    /**
+     * The builder for the Stock object.
+     *
+     * @param tempIngredients     A mapping from the ID of each ingredient to their instance
+     * @param tempIngredientStock An initial stock for the object, leave empty if there is none.
+     */
+<span class="fc" id="L37">    public Stock(HashMap&lt;String, Ingredient&gt; tempIngredients, HashMap&lt;String, Integer&gt; tempIngredientStock) {</span>
+<span class="fc" id="L38">        ingredients = tempIngredients;</span>
+<span class="fc" id="L39">        ingredientStock = tempIngredientStock;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * The builder for the Stock object if there is no initial stock.
+     */
+<span class="fc" id="L45">    public Stock() {</span>
+<span class="fc" id="L46">        ingredients = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L47">        ingredientStock = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Adds an ingredient to the stock with a given id, unit, category and quantity.
+     *
+     * @param ingredient The ingredient to add
+     * @param quantity   The initial quantity of the ingredient, leave empty if 0.
+     */
+    public void addNewIngredient(Ingredient ingredient, int quantity) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (ingredients.containsKey(ingredient.getID())) {</span>
+<span class="fc" id="L58">            ingredientStock.put(ingredient.getID(), ingredientStock.get(ingredient.getID() + quantity));</span>
+        } else {
+<span class="fc" id="L60">            ingredients.put(ingredient.getID(), ingredient);</span>
+<span class="fc" id="L61">            ingredientStock.put(ingredient.getID(), quantity);</span>
+
+        }
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * Removes an ingredient with the same ID.
+     *
+     * @param id The ID of the ingredient you want to remove.
+     */
+    public void removeIngredient(String id) {
+<span class="fc" id="L72">        ingredients.remove(id);</span>
+<span class="fc" id="L73">        ingredientStock.remove(id);</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Adds an ingredient to the stock with a given ID, unit, category and with a quantity initialised to 0.
+     *
+     * @param ingredient The ingredient to add
+     */
+    public void addNewIngredient(Ingredient ingredient) {
+<span class="fc" id="L82">        int quantity = 0;</span>
+<span class="fc" id="L83">        addNewIngredient(ingredient, quantity);</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Modifies the quantity of an ingredient already in the stock by changing the parameter quantity to the current
+     * quantity. Returns a boolean true or false as to whether it was successful or not.
+     *
+     * @param id       The unique ID of the ingredient.
+     * @param quantity The new quantity of that ingredient.
+     * @return A boolean true/false on whether the change was successful.
+     */
+    public boolean modifyQuantity(String id, int quantity) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (ingredientStock.containsKey(id)) {</span>
+<span class="fc" id="L96">            ingredientStock.replace(id, quantity);</span>
+<span class="fc" id="L97">            return true;</span>
+        } else {
+<span class="fc" id="L99">            return false;</span>
+        }
+    }
+
+    /**
+     * Creates a clone of this Stock class for a temporary order stock
+     *
+     * @return A clone of this stock class
+     */
+    public Stock clone() {
+<span class="fc" id="L109">        HashMap&lt;String, Ingredient&gt; tempIngredients = new HashMap&lt;&gt;(ingredients);</span>
+<span class="fc" id="L110">        HashMap&lt;String, Integer&gt; tempStock = new HashMap&lt;&gt;(ingredientStock);</span>
+<span class="fc" id="L111">        return new Stock(tempIngredients, tempStock);</span>
+    }
+
+    /**
+     * Ingredient stock getter.
+     *
+     * @return The HashMap ingredientStock
+     */
+    public HashMap&lt;String, Integer&gt; getIngredientStock() {
+<span class="fc" id="L120">        return ingredientStock;</span>
+    }
+
+
+    /**
+     * Returns a specific ingredients quantity.
+     *
+     * @param id The ID of the specific ingredient
+     * @return The quantity of the ingredient
+     */
+    public int getIngredientQuantity(String id) {
+<span class="fc" id="L131">        return ingredientStock.getOrDefault(id, 0);</span>
+    }
+
+    /**
+     * Returns the ingredients with their respective IDs.
+     *
+     * @return A HashMap of current ingredients.
+     */
+    public HashMap&lt;String, Ingredient&gt; getIngredients() {
+<span class="fc" id="L140">        return ingredients;</span>
+    }
+
+    /**
+     * Gets an ingredient from an ID.
+     *
+     * @param id the ID of the ingredient.
+     * @return The ingredient with the same ID.
+     */
+    public Ingredient getIngredientFromID(String id) {
+<span class="fc" id="L150">        return ingredients.getOrDefault(id, null);</span>
+    }
+
+    public void setIngredientsAndStock(HashMap&lt;String, Ingredient&gt; ingredients,
+                                       HashMap&lt;String, Integer&gt; ingredientStock) {
+<span class="nc" id="L155">        this.ingredients = ingredients;</span>
+<span class="nc" id="L156">        this.ingredientStock = ingredientStock;</span>
+<span class="nc" id="L157">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

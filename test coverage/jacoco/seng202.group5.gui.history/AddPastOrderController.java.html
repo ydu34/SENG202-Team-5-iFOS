@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AddPastOrderController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.history</a> &gt; <span class="el_source">AddPastOrderController.java</span></div><h1>AddPastOrderController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.history;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTimePicker;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
+import seng202.group5.gui.AddExtraIngredientController;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.gui.OrderController;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
+import seng202.group5.logic.Stock;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+/**
+ * A controller for detailing a past order specifically for the history
+ *
+ * @author Daniel Harris
+ */
+<span class="nc" id="L36">public class AddPastOrderController extends OrderController {</span>
+
+    /**
+     * The order that is being specified
+     */
+    private Order order;
+
+    /**
+     * A picker for the date when the order was made
+     */
+    private JFXDatePicker datePicker;
+
+    /**
+     * A picker for the time at which the order was made
+     */
+    private JFXTimePicker timePicker;
+
+    /**
+     * A button to confirm the new past order
+     */
+    private JFXButton confirmButton;
+
+    @FXML
+    private JFXButton cancelOrderButton;
+
+    /**
+     * The grid pane on the order screen that is used for the nodes added to the order screen
+     */
+    @FXML
+    private GridPane bottomRightGridPane;
+
+    @FXML
+    private Button launchOrderButton;
+
+    /**
+     * A method for switching to this screen
+     *
+     * @param event  an event that caused this to happen
+     * @param caller the controller that called this function
+     * @return the new AddPastOrderController created
+     */
+    public static AddPastOrderController changeToPastOrderScreen(ActionEvent event, GeneralController caller) {
+        Parent sampleScene;
+<span class="nc" id="L79">        AddPastOrderController controller = null;</span>
+        try {
+<span class="nc" id="L81">            FXMLLoader sampleLoader = new FXMLLoader(caller.getClass().getResource(&quot;/gui/order.fxml&quot;));</span>
+<span class="nc" id="L82">            sampleLoader.setControllerFactory(aClass -&gt; new AddPastOrderController());</span>
+<span class="nc" id="L83">            sampleScene = sampleLoader.load();</span>
+<span class="nc" id="L84">            controller = sampleLoader.getController();</span>
+<span class="nc" id="L85">            controller.setAppEnvironment(caller.getAppEnvironment());</span>
+<span class="nc" id="L86">            controller.pseudoInitialize();</span>
+
+<span class="nc" id="L88">            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L89">            Parent finalSampleScene = sampleScene;</span>
+<span class="nc" id="L90">            smoothTransition(oldStage, (Pane) oldStage.getScene().getRoot(), (Pane) sampleScene, (actionEvent) -&gt;</span>
+<span class="nc" id="L91">                    oldStage.getScene().setRoot(finalSampleScene));</span>
+<span class="nc" id="L92">        } catch (IOException e) {</span>
+
+<span class="nc" id="L94">        }</span>
+<span class="nc" id="L95">        return controller;</span>
+    }
+
+    /**
+     * Sets the constraints for a node
+     *
+     * @param node the node to set the constraints for
+     */
+    private void setNodeConstraints(Region node) {
+<span class="nc" id="L104">        GridPane.setHgrow(node, Priority.ALWAYS);</span>
+<span class="nc" id="L105">        GridPane.setVgrow(node, Priority.ALWAYS);</span>
+<span class="nc" id="L106">        GridPane.setMargin(node, new Insets(5, 5, 5, 5));</span>
+<span class="nc" id="L107">        node.setMinHeight(Region.USE_PREF_SIZE);</span>
+<span class="nc" id="L108">        node.setPrefHeight(40);</span>
+<span class="nc" id="L109">        node.setMaxHeight(Region.USE_PREF_SIZE);</span>
+<span class="nc" id="L110">        node.setMaxWidth(300); // Max width of box</span>
+<span class="nc" id="L111">    }</span>
+
+    /**
+     * An initializer for this controller
+     */
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L118">        super.pseudoInitialize();</span>
+
+        // Creating the date picker
+<span class="nc" id="L121">        datePicker = new JFXDatePicker();</span>
+<span class="nc" id="L122">        setNodeConstraints(datePicker);</span>
+<span class="nc" id="L123">        datePicker.setValue(LocalDate.now());</span>
+        // This sets the factory that creates each cell in the calendar
+<span class="nc" id="L125">        datePicker.setDayCellFactory(picker -&gt; new DateCell() {</span>
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L128">                super.updateItem(date, empty);</span>
+                // Disable dates that are in the future
+<span class="nc bnc" id="L130" title="All 4 branches missed.">                setDisable(empty || date.compareTo(LocalDate.now()) &gt; 0);</span>
+<span class="nc" id="L131">            }</span>
+        });
+        // This sets what converts typed dates into actual dates
+<span class="nc" id="L134">        datePicker.setConverter(new LocalDateStringConverter() {</span>
+            @Override
+            public LocalDate fromString(String input) {
+<span class="nc" id="L137">                LocalDate date = super.fromString(input);</span>
+<span class="nc" id="L138">                LocalDate today = LocalDate.now();</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">                if (date.compareTo(today) &gt; 0) {</span>
+<span class="nc" id="L140">                    date = today;</span>
+                }
+<span class="nc" id="L142">                return date;</span>
+            }
+        });
+
+        // Creating the time picker
+<span class="nc" id="L147">        timePicker = new JFXTimePicker();</span>
+<span class="nc" id="L148">        setNodeConstraints(timePicker);</span>
+<span class="nc" id="L149">        timePicker.setValue(LocalTime.now());</span>
+
+        // Creating the button to confirm the new order
+<span class="nc" id="L152">        confirmButton = new JFXButton(&quot;Confirm&quot;);</span>
+<span class="nc" id="L153">        confirmButton.setOnAction(this::sendPastOrderToHistory);</span>
+<span class="nc" id="L154">        confirmButton.setDisable(true);</span>
+<span class="nc" id="L155">        setNodeConstraints(confirmButton);</span>
+
+<span class="nc" id="L157">        cancelOrderButton.setOnAction(this::returnToHistory);</span>
+
+        // Adding the nodes into the grid pane
+<span class="nc" id="L160">        bottomRightGridPane.addRow(1);</span>
+<span class="nc" id="L161">        bottomRightGridPane.add(datePicker, 0, 1);</span>
+<span class="nc" id="L162">        bottomRightGridPane.add(timePicker, 1, 1);</span>
+<span class="nc" id="L163">        bottomRightGridPane.addRow(2);</span>
+<span class="nc" id="L164">        bottomRightGridPane.add(confirmButton, 0, 2, 2, 1);</span>
+
+        // Setting the row constraints of the new rows
+<span class="nc" id="L167">        RowConstraints row3 = new RowConstraints();</span>
+<span class="nc" id="L168">        RowConstraints row4 = new RowConstraints();</span>
+<span class="nc" id="L169">        row3.setVgrow(Priority.NEVER);</span>
+<span class="nc" id="L170">        row3.setMinHeight(Region.USE_PREF_SIZE);</span>
+<span class="nc" id="L171">        row3.setMaxHeight(Region.USE_PREF_SIZE);</span>
+<span class="nc" id="L172">        row4.setVgrow(Priority.NEVER);</span>
+<span class="nc" id="L173">        row4.setMinHeight(Region.USE_PREF_SIZE);</span>
+<span class="nc" id="L174">        row4.setMaxHeight(Region.USE_PREF_SIZE);</span>
+<span class="nc" id="L175">        bottomRightGridPane.getRowConstraints().add(row3);</span>
+<span class="nc" id="L176">        bottomRightGridPane.getRowConstraints().add(row4);</span>
+
+<span class="nc" id="L178">        launchOrderButton.setDisable(false);</span>
+<span class="nc" id="L179">        resetOrder();</span>
+<span class="nc" id="L180">    }</span>
+
+    /**
+     * Creates a new order
+     */
+    public void resetOrder() {
+        // Creating a new stock that has practically infinite ingredients
+<span class="nc" id="L187">        Stock maxStock = new Stock();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (Ingredient ingr : getAppEnvironment().getStock().getIngredients().values()) {</span>
+<span class="nc" id="L189">            maxStock.addNewIngredient(ingr, 9999999);</span>
+<span class="nc" id="L190">        }</span>
+<span class="nc" id="L191">        setOrder(new Order(maxStock));</span>
+<span class="nc" id="L192">    }</span>
+
+    /**
+     * Adds the past order to the history
+     *
+     * @param event an event that caused this to happen
+     */
+    public void sendPastOrderToHistory(ActionEvent event) {
+<span class="nc" id="L200">        HistoryController controller = (HistoryController) changeScreen(event, &quot;/gui/history.fxml&quot;);</span>
+<span class="nc" id="L201">        controller.addNewOrder(order, LocalDateTime.of(datePicker.getValue(),</span>
+<span class="nc" id="L202">                timePicker.getValue()));</span>
+<span class="nc" id="L203">    }</span>
+
+    /**
+     * Returns to the history screen without adding the past order
+     *
+     * @param event an event that caused this to happen
+     */
+    public void returnToHistory(ActionEvent event) {
+<span class="nc" id="L211">        changeScreen(event, &quot;/gui/history.fxml&quot;);</span>
+<span class="nc" id="L212">    }</span>
+
+    /**
+     * This method launches the screen for adding extra ingredients to the selected menu item and
+     * passes the item and order from the current class to the controller
+     *
+     * @param event an event that caused this to happen
+     */
+    @Override
+    public void addExtraIngredientScreen(ActionEvent event) {
+        Parent sampleScene;
+        AddExtraIngredientController controller;
+        try {
+<span class="nc" id="L225">            FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(&quot;/gui/addExtraIngredient.fxml&quot;));</span>
+            // Need to create a new class here so this screen comes back with the right controller
+<span class="nc" id="L227">            sampleScene = sampleLoader.load();</span>
+<span class="nc" id="L228">            controller = sampleLoader.getController();</span>
+<span class="nc" id="L229">            controller.setOpenMode(&quot;PastOrder&quot;);</span>
+<span class="nc" id="L230">            controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L231">            controller.pseudoInitialize();</span>
+<span class="nc" id="L232">            controller.setMenuItem(getSelectedItem());</span>
+<span class="nc" id="L233">            controller.setCurrentOrder(order);</span>
+<span class="nc" id="L234">            controller.updateStockRecipeMode();</span>
+<span class="nc" id="L235">            controller.initializeTable();</span>
+<span class="nc" id="L236">            Stage oldStage = (Stage) ((Node) event.getSource()).getScene().getWindow();</span>
+<span class="nc" id="L237">            double prevHeight = ((Node) event.getSource()).getScene().getHeight();</span>
+<span class="nc" id="L238">            double prevWidth = ((Node) event.getSource()).getScene().getWidth();</span>
+<span class="nc" id="L239">            oldStage.setScene(new Scene(sampleScene, prevWidth, prevHeight));</span>
+<span class="nc" id="L240">        } catch (IOException e) {</span>
+
+<span class="nc" id="L242">        }</span>
+<span class="nc" id="L243">    }</span>
+
+    /**
+     * Adds the selected item to the order
+     */
+    @Override
+    public void addItemToOrder(MenuItem item) {
+<span class="nc" id="L250">        super.addItemToOrder(item);</span>
+<span class="nc" id="L251">        confirmButton.setDisable(false);</span>
+<span class="nc" id="L252">    }</span>
+
+    //TODO make this change what is in the current order table
+
+    public void setOrder(Order order) {
+<span class="nc" id="L257">        super.setCurrentOrder(order);</span>
+<span class="nc" id="L258">        this.order = order;</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        confirmButton.setDisable(order.getOrderItems().size() == 0);</span>
+<span class="nc" id="L260">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

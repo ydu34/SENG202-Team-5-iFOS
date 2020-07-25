@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.information</a> &gt; <span class="el_source">Customer.java</span></div><h1>Customer.java</h1><pre class="source lang-java linenums">package seng202.group5.information;
+
+import org.joda.money.Money;
+import seng202.group5.IDGenerator;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * The Customer class holds information about each Customer who is considered a member and have a unique ID and an
+ * amount of loyalty points that can purchase food with.
+ *
+ * @author Michael Morgoun, James Kwok
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Customer {
+
+<span class="fc" id="L20">    private String customerID = IDGenerator.newCustomerID();</span>
+
+    private String name;
+
+    private String phoneNumber;
+
+<span class="fc" id="L26">    private int purchasePoints = 1;</span>
+
+<span class="fc" id="L28">    public Customer() {</span>
+
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Calculates and adds purchase points to a customers account when they have spent money.
+     * Default Rate: NZD $10 gives 1 Point = $0.50 discount
+     *
+     * @param spentMoney The total amount of money spent on an order, disregarding discounts.
+     */
+    public void purchasePoints(Money spentMoney, int ratio) {
+<span class="fc" id="L39">        int roundedMoney = spentMoney.getAmountMajorInt();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (roundedMoney &lt;= 0) {</span>
+<span class="fc" id="L41">            roundedMoney = 0;</span>
+        }
+<span class="fc" id="L43">        addPurchasePoints(roundedMoney / ratio);</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Subtracts a given amount of purchase points from an order and returns the amount of money discounted to an order
+     * Based on how many points were used.
+     *
+     * @param usedPoints        The amount of points to be used for discounts.
+     * @param currentOrderPrice The price of the customers order.
+     * @return discountMoney The amount of money to be removed from the order.
+     */
+    public Money discount(int usedPoints, Money currentOrderPrice, Money pointValue) {
+        Money discountMoney;
+<span class="fc" id="L56">        int maxPoints = (int) Math.ceil(currentOrderPrice.getAmountMinorInt() / 50);</span>
+
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (usedPoints &gt; purchasePoints) {</span>
+<span class="nc" id="L59">            usedPoints = purchasePoints;</span>
+        }
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (usedPoints &gt; maxPoints) {</span>
+<span class="fc" id="L62">            usedPoints = maxPoints;</span>
+        }
+<span class="fc" id="L64">        discountMoney = (pointValue.multipliedBy(usedPoints));</span>
+<span class="fc" id="L65">        addPurchasePoints(-usedPoints);</span>
+<span class="fc" id="L66">        return discountMoney;</span>
+    }
+
+    public void addPurchasePoints(int tempPurchasePoints) {
+<span class="fc" id="L70">        purchasePoints += tempPurchasePoints;</span>
+<span class="fc" id="L71">    }</span>
+
+    public String getName() {
+<span class="fc" id="L74">        return name;</span>
+    }
+
+    public void setName(String newName) {
+<span class="fc" id="L78">        name = newName;</span>
+<span class="fc" id="L79">    }</span>
+
+    public String getPhoneNumber() {
+<span class="fc" id="L82">        return phoneNumber;</span>
+    }
+
+    public void setPhoneNumber(String newPhoneNumber) {
+<span class="fc" id="L86">        phoneNumber = newPhoneNumber;</span>
+<span class="fc" id="L87">    }</span>
+
+    public int getPurchasePoints() {
+<span class="fc" id="L90">        return purchasePoints;</span>
+    }
+
+    public void setPurchasePoints(int tempPurchasePoints) {
+<span class="fc" id="L94">        purchasePoints = tempPurchasePoints;</span>
+<span class="fc" id="L95">    }</span>
+
+    public String getID() {
+<span class="fc" id="L98">        return customerID;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customers.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.information</a> &gt; <span class="el_source">Customers.java</span></div><h1>Customers.java</h1><pre class="source lang-java linenums">package seng202.group5.information;
+
+import seng202.group5.IDGenerator;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+
+/**
+ * Holds the list of customers, allows JAXB to easily import and export the customers data
+ *
+ * @author James Kwok
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Customers {
+
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+<span class="fc" id="L23">    @XmlElement</span>
+    private IDGenerator generator = new IDGenerator();
+
+<span class="fc" id="L26">    @XmlElement</span>
+    private ArrayList&lt;Customer&gt; customerList = new ArrayList&lt;&gt;();
+
+<span class="fc" id="L29">    private CustomerSettings customerSettings = new CustomerSettings();</span>
+
+<span class="fc" id="L31">    public Customers() {</span>
+<span class="fc" id="L32">    }</span>
+
+    public void add(Customer customer) {
+<span class="fc" id="L35">        customer.setPurchasePoints(customerSettings.getInitialPurchasePoints());</span>
+<span class="fc" id="L36">        customerList.add(customer);</span>
+<span class="fc" id="L37">    }</span>
+
+    public ArrayList&lt;Customer&gt; getCustomerList() {
+<span class="fc" id="L40">        return customerList;</span>
+    }
+
+    public CustomerSettings getCustomerSettings() {
+<span class="fc" id="L44">        return customerSettings;</span>
+    }
+
+    public void setCustomerSettings(CustomerSettings customerSettings) {
+<span class="fc" id="L48">        this.customerSettings = customerSettings;</span>
+<span class="fc" id="L49">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

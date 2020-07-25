@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StockController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.stock</a> &gt; <span class="el_source">StockController.java</span></div><h1>StockController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.stock;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Ingredient;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+
+/**
+ * A controller for managing the stock screen.
+ *
+ * @author Shivin Gaba, Michael Morgoun
+ */
+<span class="nc" id="L30">public class StockController extends GeneralController {</span>
+
+    /**
+     * The TableView for the visualisation of stock.
+     */
+    @FXML
+    private TableView&lt;Ingredient&gt; stockTable;
+
+    /**
+     * The column for item cost.
+     */
+    @FXML
+    private TableColumn&lt;Ingredient, String&gt; columnCost;
+
+    /**
+     * The column for item ID.
+     */
+    @FXML
+    private TableColumn&lt;Ingredient, String&gt; columnID;
+
+    /**
+     * The column for item name.
+     */
+    @FXML
+    private TableColumn&lt;Ingredient, String&gt; columnIngredient;
+
+    /**
+     * The column for item quantity.
+     */
+    @FXML
+    private TableColumn&lt;Ingredient, Integer&gt; columnQuantity;
+
+    /**
+     * The column for item category.
+     */
+    @FXML
+    private TableColumn&lt;Ingredient, String&gt; columnCategory;
+
+    /**
+     * The button for adding new stock.
+     */
+    @FXML
+    private Button addButton;
+
+    /**
+     * The button for modifying existing stock.
+     */
+    @FXML
+    private Button modifyButton;
+
+    /**
+     * The button for removing stock.
+     */
+    @FXML
+    private Button removeButton;
+
+    /**
+     * The text field for searching the stock.
+     */
+    @FXML
+    private TextField ingredientSearchField;
+
+    /**
+     * A warning label in case the stock can't be modified.
+     */
+    @FXML
+    private Text warningLabel;
+
+    /**
+     * A HashMap for the quantities of ingredients.
+     */
+    private HashMap&lt;String, Integer&gt; quantities;
+
+    /**
+     * An initializer for this controller
+     */
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L108">        super.pseudoInitialize();</span>
+        // Listener for the ingredientSearchField to only accept numbers
+<span class="nc" id="L110">        ingredientSearchField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            if (!newValue.matches(&quot;([\\-': ]*\\w*)*&quot;)) {</span>
+<span class="nc" id="L112">                ingredientSearchField.setText(oldValue);</span>
+            }
+<span class="nc" id="L114">            updateVisibleIngredients();</span>
+<span class="nc" id="L115">        });</span>
+
+        // Clearing tables and labels
+<span class="nc" id="L118">        stockTable.getItems().clear();</span>
+<span class="nc" id="L119">        warningLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L120">        addButton.setDisable(false);</span>
+<span class="nc" id="L121">        modifyButton.setDisable(false);</span>
+<span class="nc" id="L122">        removeButton.setDisable(false);</span>
+
+        // Initialising the TableView
+<span class="nc" id="L125">        ObservableList&lt;Ingredient&gt; ingredients = FXCollections.observableArrayList(</span>
+<span class="nc" id="L126">                getAppEnvironment().getStock().getIngredients().values());</span>
+
+<span class="nc" id="L128">        quantities = getAppEnvironment().getStock().getIngredientStock();</span>
+
+<span class="nc" id="L130">        columnID.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;ID&quot;));</span>
+<span class="nc" id="L131">        columnIngredient.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;name&quot;));</span>
+<span class="nc" id="L132">        columnCategory.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;category&quot;));</span>
+<span class="nc" id="L133">        columnCost.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;price&quot;));</span>
+
+<span class="nc" id="L135">        columnQuantity.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L136">            int quantity = quantities.get(data.getValue().getID());</span>
+<span class="nc" id="L137">            return new SimpleIntegerProperty(quantity).asObject();</span>
+        });
+
+<span class="nc" id="L140">        stockTable.setItems(ingredients);</span>
+<span class="nc" id="L141">        stockTable.getSortOrder().add(columnID);</span>
+<span class="nc" id="L142">        stockTable.sort();</span>
+
+        // If the order is in progress, the stock can't be modified
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (!getAppEnvironment().getOrderManager().getOrder().getOrderItems().isEmpty()) {</span>
+<span class="nc" id="L146">            warningLabel.setFill(Color.RED);</span>
+<span class="nc" id="L147">            warningLabel.setText(&quot;Can not Add/Modify/Remove Stock when Order is in progress.&quot;);</span>
+<span class="nc" id="L148">            addButton.setDisable(true);</span>
+<span class="nc" id="L149">            modifyButton.setDisable(true);</span>
+<span class="nc" id="L150">            removeButton.setDisable(true);</span>
+        } else {
+            // Mouse listener for the context menu
+<span class="nc" id="L153">            initialiseContextMenu();</span>
+        }
+<span class="nc" id="L155">    }</span>
+
+    /**
+     * Updates the visible ingredients, removing those that aren't matched in the search field.
+     */
+    private void updateVisibleIngredients() {
+<span class="nc" id="L161">        stockTable.getItems().clear();</span>
+
+<span class="nc" id="L163">        Collection&lt;Ingredient&gt; ingredientIDs = getAppEnvironment().getStock().getIngredients().values();</span>
+<span class="nc" id="L164">        String searchID = ingredientSearchField.getText().toLowerCase();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        for (Ingredient ingredient : ingredientIDs) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            if (ingredient.getName().toLowerCase().matches(&quot;.*&quot; + searchID + &quot;.*&quot;) ||</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">                    ingredient.getID().matches(&quot;.*&quot; + searchID + &quot;.*&quot;)) {</span>
+<span class="nc" id="L168">                stockTable.getItems().add(ingredient);</span>
+            }
+<span class="nc" id="L170">        }</span>
+<span class="nc" id="L171">    }</span>
+
+    /**
+     * Initialises the context menu for the stock table.
+     */
+    private void initialiseContextMenu() {
+        // Creating the ContextMenu and MenuItems
+<span class="nc" id="L178">        ContextMenu cm = new ContextMenu();</span>
+<span class="nc" id="L179">        MenuItem modifyItem = new MenuItem(&quot;Modify&quot;);</span>
+<span class="nc" id="L180">        MenuItem removeItem = new MenuItem(&quot;Remove&quot;);</span>
+<span class="nc" id="L181">        cm.getItems().add(modifyItem);</span>
+<span class="nc" id="L182">        cm.getItems().add(removeItem);</span>
+
+        // Creating the Handler for MouseEvents
+        // Shows cm if right clicked, or goes straight to modify if double clicked.
+<span class="nc" id="L186">        stockTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -&gt; {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (mouseEvent.getButton() == MouseButton.SECONDARY) {</span>
+<span class="nc" id="L188">                cm.show(stockTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());</span>
+<span class="nc bnc" id="L189" title="All 4 branches missed.">            } else if (mouseEvent.getButton() == MouseButton.PRIMARY &amp;&amp; mouseEvent.getClickCount() == 2 &amp;&amp;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">                    stockTable.getSelectionModel().getSelectedItem() != null) {</span>
+<span class="nc" id="L191">                modifyIngredient();</span>
+            } else {
+<span class="nc" id="L193">                cm.hide();</span>
+            }
+<span class="nc" id="L195">        });</span>
+
+        // Modifies ingredient if selected.
+<span class="nc" id="L198">        modifyItem.setOnAction(actionEvent -&gt; modifyIngredient());</span>
+
+        // Deletes ingredient if selected.
+<span class="nc" id="L201">        removeItem.setOnAction(actionEvent -&gt; removeIngredient());</span>
+<span class="nc" id="L202">    }</span>
+
+    /**
+     * Initialises both the Add and Modify screens.
+     *
+     * @param setTitle   A title that is set to &quot;Create a new Ingredient&quot; or &quot;Modifing &lt;ingredient&gt;&quot;
+     * @param ingredient The ingredient to be modified.
+     * @param quantity   The quantity of that ingredient.
+     */
+    private void initialiseScreen(String setTitle, Ingredient ingredient, String quantity) {
+        try {
+<span class="nc" id="L213">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/addStock.fxml&quot;));</span>
+<span class="nc" id="L214">            Parent root = loader.load();</span>
+
+<span class="nc" id="L216">            AddStockController controller = loader.getController();</span>
+<span class="nc" id="L217">            controller.setStock(getAppEnvironment().getStock());</span>
+
+<span class="nc" id="L219">            Stage stage = new Stage();</span>
+<span class="nc" id="L220">            stage.setTitle(setTitle);</span>
+<span class="nc" id="L221">            stage.setScene(new Scene(root, 600, 200));</span>
+<span class="nc" id="L222">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+
+<span class="nc" id="L224">            controller.setQuantity(quantity);</span>
+<span class="nc" id="L225">            controller.setIngredient(ingredient);</span>
+<span class="nc" id="L226">            controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L227">            controller.pseudoInitialize();</span>
+
+            // Automatic refresh of the table
+<span class="nc" id="L230">            stage.showAndWait();</span>
+<span class="nc" id="L231">            pseudoInitialize();</span>
+
+<span class="nc" id="L233">        } catch (IOException e) {</span>
+
+<span class="nc" id="L235">        }</span>
+<span class="nc" id="L236">    }</span>
+
+    /**
+     * Opens the add ingredient to stock screen.
+     */
+    @FXML
+    public void addIngredient() {
+<span class="nc" id="L243">        String quantity = &quot;&quot;;</span>
+<span class="nc" id="L244">        initialiseScreen(&quot;New Ingredient&quot;, null, quantity);</span>
+<span class="nc" id="L245">    }</span>
+
+    /**
+     * Opens the modify ingredient screen.
+     */
+    @FXML
+    public void modifyIngredient() {
+<span class="nc" id="L252">        Ingredient currentSelected = stockTable.getSelectionModel().getSelectedItem();</span>
+
+        try {
+<span class="nc" id="L255">            String quantity = quantities.get(currentSelected.getID()).toString();</span>
+<span class="nc" id="L256">            initialiseScreen(&quot;Modify &quot; + currentSelected.getName(), currentSelected, quantity);</span>
+<span class="nc" id="L257">        } catch (Exception e) {</span>
+<span class="nc" id="L258">            warningLabel.setText(&quot;Please select an item to modify.&quot;);</span>
+<span class="nc" id="L259">        }</span>
+<span class="nc" id="L260">    }</span>
+
+    /**
+     * Opens a prompt asking if the selected item will be deleted or not.
+     * If no item is selected, a warning label is shown.
+     */
+    @FXML
+    public void removeIngredient() {
+        try {
+<span class="nc" id="L269">            Ingredient item = stockTable.getSelectionModel().getSelectedItem();</span>
+
+<span class="nc" id="L271">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/confirmRemove.fxml&quot;));</span>
+<span class="nc" id="L272">            Parent root = loader.load();</span>
+
+<span class="nc" id="L274">            RemoveStockController controller = loader.getController();</span>
+<span class="nc" id="L275">            controller.setIngredient(item);</span>
+<span class="nc" id="L276">            controller.setStock(getAppEnvironment().getStock());</span>
+
+<span class="nc" id="L278">            Stage stage = new Stage();</span>
+<span class="nc" id="L279">            stage.setTitle(&quot;Remove Ingredient&quot;);</span>
+<span class="nc" id="L280">            stage.setScene(new Scene(root, 600, 200));</span>
+<span class="nc" id="L281">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L282">            stage.setResizable(false);</span>
+
+<span class="nc" id="L284">            controller.setAppEnvironment(getAppEnvironment());</span>
+<span class="nc" id="L285">            controller.pseudoInitialize();</span>
+
+<span class="nc" id="L287">            stage.showAndWait();</span>
+
+<span class="nc" id="L289">            pseudoInitialize();</span>
+<span class="nc" id="L290">        } catch (Exception e) {</span>
+<span class="nc" id="L291">            warningLabel.setText(&quot;Please select an item to remove.&quot;);</span>
+<span class="nc" id="L292">        }</span>
+<span class="nc" id="L293">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

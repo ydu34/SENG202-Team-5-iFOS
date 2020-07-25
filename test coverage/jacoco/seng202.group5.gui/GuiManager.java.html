@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GuiManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui</a> &gt; <span class="el_source">GuiManager.java</span></div><h1>GuiManager.java</h1><pre class="source lang-java linenums">package seng202.group5.gui;
+
+import com.sun.glass.ui.Screen;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.joda.money.Money;
+import seng202.group5.AppEnvironment;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.*;
+import seng202.group5.logic.Order;
+import seng202.group5.logic.Stock;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+
+/**
+ * A class that sets up the application and starts it
+ *
+ * @author Daniel Harris, Shivin Gaba, Yu Duan, James Kwok, Tasman Berry ,Michael Morgoun
+ */
+<span class="nc" id="L27">public class GuiManager extends Application {</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L30">        launch(args);</span>
+<span class="nc" id="L31">    }</span>
+
+    /**
+     * Starts the application
+     *
+     * @param primaryStage the stage to display the application on
+     * @throws IOException if the application fails to load
+     */
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+<span class="nc" id="L41">        FXMLLoader sampleLoader = new FXMLLoader(getClass().getResource(&quot;/gui/admin.fxml&quot;));</span>
+<span class="nc" id="L42">        Parent root = sampleLoader.load();</span>
+<span class="nc" id="L43">        GeneralController controller = sampleLoader.getController();</span>
+<span class="nc" id="L44">        AppEnvironment appEnvironment = createAppEnvironment();</span>
+<span class="nc" id="L45">        controller.setAppEnvironment(appEnvironment);</span>
+<span class="nc" id="L46">        controller.pseudoInitialize();</span>
+<span class="nc" id="L47">        primaryStage.setOnHiding(event -&gt; Platform.runLater(() -&gt; {</span>
+            try {
+<span class="nc" id="L49">                appEnvironment.getDatabase().autosave();</span>
+<span class="nc" id="L50">            } catch (Exception e) {</span>
+
+<span class="nc" id="L52">            }</span>
+<span class="nc" id="L53">            System.exit(0);</span>
+<span class="nc" id="L54">        }));</span>
+<span class="nc" id="L55">        int height = Screen.getMainScreen().getHeight();</span>
+<span class="nc" id="L56">        int width = Screen.getMainScreen().getWidth();</span>
+<span class="nc" id="L57">        primaryStage.setScene(new Scene(root, width, height));</span>
+<span class="nc" id="L58">        primaryStage.setTitle(&quot;iFOS&quot;);</span>
+<span class="nc" id="L59">        primaryStage.setFullScreen(true);</span>
+<span class="nc" id="L60">        primaryStage.show();</span>
+<span class="nc" id="L61">    }</span>
+
+    /**
+     * Creates the environment for the application logic to run in
+     *
+     * @return the new AppEnvironment
+     */
+    public AppEnvironment createAppEnvironment() {
+<span class="nc" id="L69">        AppEnvironment thing = new AppEnvironment();</span>
+        //addTestData(thing);
+<span class="nc" id="L71">        return thing;</span>
+    }
+
+    /**
+     * Adds data to the specified app environment for testing
+     *
+     * @param environment the app environment to add data to
+     */
+    public void addTestData(AppEnvironment environment) {
+<span class="nc" id="L80">        Ingredient test = new Ingredient(&quot;Flour&quot;, &quot;Flour&quot;, Money.parse(&quot;NZD 7.00&quot;));</span>
+<span class="nc" id="L81">        Stock stock = environment.getStock();</span>
+<span class="nc" id="L82">        stock.addNewIngredient(test, 100);</span>
+<span class="nc" id="L83">        stock.modifyQuantity(test.getID(), 1);</span>
+<span class="nc" id="L84">        Recipe testRecipe = new Recipe(&quot;Chicken burger&quot;, &quot;1) Get some Chicken\n2) Get some cheese\n3) Throw the chicken on the grill and let it fry\n&quot;);</span>
+<span class="nc" id="L85">        Recipe testRecipe2 = new Recipe(&quot;Vege burger&quot;, &quot;Steps to Vege burger&quot;);</span>
+<span class="nc" id="L86">        HashSet&lt;DietEnum&gt; ingredientInfo1 = new HashSet&lt;&gt;() {{</span>
+<span class="nc" id="L87">            add(DietEnum.GLUTEN_FREE);</span>
+<span class="nc" id="L88">        }};</span>
+<span class="nc" id="L89">        HashSet&lt;DietEnum&gt; ingredientInfo2 = new HashSet&lt;&gt;() {{</span>
+<span class="nc" id="L90">            add(DietEnum.GLUTEN_FREE);</span>
+<span class="nc" id="L91">            add(DietEnum.VEGETARIAN);</span>
+<span class="nc" id="L92">        }};</span>
+<span class="nc" id="L93">        Ingredient chickenpatty = new Ingredient(&quot;Chicken&quot;, &quot;Meat&quot;, Money.parse(&quot;NZD 10&quot;), ingredientInfo1);</span>
+<span class="nc" id="L94">        Ingredient cheese = new Ingredient(&quot;Cheese&quot;, &quot;Dairy&quot;, Money.parse(&quot;NZD 5&quot;), ingredientInfo2);</span>
+<span class="nc" id="L95">        HashSet&lt;DietEnum&gt; ingredientInfo3 = new HashSet&lt;&gt;() {{</span>
+<span class="nc" id="L96">            add(DietEnum.GLUTEN_FREE);</span>
+<span class="nc" id="L97">            add(DietEnum.VEGETARIAN);</span>
+<span class="nc" id="L98">        }};</span>
+<span class="nc" id="L99">        Ingredient vegePatty = new Ingredient(&quot;Vegetables&quot;, &quot;Vegetable&quot;, Money.parse(&quot;NZD 10&quot;), ingredientInfo3);</span>
+<span class="nc" id="L100">        testRecipe.addIngredient(chickenpatty, 1);</span>
+<span class="nc" id="L101">        testRecipe.addIngredient(cheese, 1);</span>
+<span class="nc" id="L102">        testRecipe2.addIngredient(vegePatty, 1);</span>
+
+<span class="nc" id="L104">        stock.addNewIngredient(chickenpatty, 100);</span>
+<span class="nc" id="L105">        stock.addNewIngredient(cheese, 200);</span>
+<span class="nc" id="L106">        stock.addNewIngredient(vegePatty, 150);</span>
+
+<span class="nc" id="L108">        MenuItem chickenBurger = new MenuItem(&quot;Chicken Burger&quot;, testRecipe, Money.parse(&quot;NZD 5&quot;), true, TypeEnum.MAIN);</span>
+<span class="nc" id="L109">        chickenBurger.setImageString(&quot;chicken_burger.jpg&quot;);</span>
+<span class="nc" id="L110">        environment.getMenuManager().getItemMap().put(chickenBurger.getID(), chickenBurger);</span>
+
+<span class="nc" id="L112">        MenuItem vegeBurger = new MenuItem(&quot;Vege Burger&quot;, testRecipe2, Money.parse(&quot;NZD 7&quot;), true, TypeEnum.MAIN);</span>
+<span class="nc" id="L113">        vegeBurger.setImageString(&quot;vege_burger.jpg&quot;);</span>
+<span class="nc" id="L114">        environment.getMenuManager().getItemMap().put(vegeBurger.getID(), vegeBurger);</span>
+
+
+<span class="nc" id="L117">        environment.getOrderManager().newOrder();</span>
+
+<span class="nc" id="L119">        Order tempOrder = new Order(stock);</span>
+<span class="nc" id="L120">        tempOrder.addItem(environment.getMenuManager().getItemMap().get(chickenBurger.getID()), 4);</span>
+        try {
+<span class="nc" id="L122">            environment.getFinance().pay(new ArrayList&lt;&gt;() {{</span>
+<span class="nc" id="L123">                                             add(Money.parse(&quot;NZD 100.00&quot;));</span>
+<span class="nc" id="L124">                                         }},</span>
+<span class="nc" id="L125">                    LocalDateTime.now(),</span>
+                    tempOrder);
+<span class="nc" id="L127">        } catch (InsufficientCashException e) {</span>
+
+<span class="nc" id="L129">        }</span>
+
+<span class="nc" id="L131">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

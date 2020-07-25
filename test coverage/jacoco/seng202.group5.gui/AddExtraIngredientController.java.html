@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AddExtraIngredientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui</a> &gt; <span class="el_source">AddExtraIngredientController.java</span></div><h1>AddExtraIngredientController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui;
+
+import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.joda.money.Money;
+import seng202.group5.gui.admin.AddRecipeController;
+import seng202.group5.gui.history.AddPastOrderController;
+import seng202.group5.information.DietEnum;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Order;
+import seng202.group5.logic.Stock;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Handles adding and removing ingredients and items from the selected item it is passed.
+ *
+ * @author James Kwok
+ */
+<span class="nc" id="L36">public class AddExtraIngredientController extends GeneralController {</span>
+
+    @FXML
+    private String openMode;
+
+    @FXML
+    private MenuItem oldItem;
+
+    @FXML
+    private MenuItem selectedItem;
+
+    @FXML
+    private Order currentOrder;
+
+    @FXML
+    private Stock updatedStock;
+
+    @FXML
+    private TableView&lt;Ingredient&gt; ingredientsTable;
+
+<span class="nc" id="L56">    @FXML</span>
+    private TableColumn&lt;Ingredient, String&gt; columnIngredientName = new TableColumn&lt;&gt;(&quot;ingredientName&quot;);
+
+<span class="nc" id="L59">    @FXML</span>
+    private TableColumn&lt;Ingredient, String&gt; columnQuantity = new TableColumn&lt;&gt;(&quot;quantity&quot;);
+
+<span class="nc" id="L62">    @FXML</span>
+    private TableColumn&lt;Ingredient, String&gt; columnCategory = new TableColumn&lt;&gt;(&quot;category&quot;);
+<span class="nc" id="L64">    @FXML</span>
+    private TableColumn&lt;Ingredient, String&gt; columnCost = new TableColumn&lt;&gt;(&quot;cost&quot;);
+
+<span class="nc" id="L67">    @FXML</span>
+    private TableColumn&lt;Ingredient, String&gt; columnSpinner = new TableColumn&lt;&gt;(&quot;spinner&quot;);
+
+    @FXML
+    private JFXButton backButton;
+
+<span class="nc" id="L73">    @FXML</span>
+    private TableColumn&lt;Ingredient, String&gt; columnWarning = new TableColumn&lt;&gt;(&quot;warning&quot;);
+
+    private Set&lt;Ingredient&gt; selectedIngredientSet;
+
+<span class="nc" id="L78">    private boolean isConfirmed = true;</span>
+
+    private ObservableList&lt;Ingredient&gt; itemIngredients;
+
+    private MenuItem oldItemRef;
+
+    /**
+     * Calls helper functions which handle the filling of a list which is used to populate the ingredients table view.
+     */
+    public void initializeTable() {
+<span class="nc" id="L88">        initializeColumns();</span>
+<span class="nc" id="L89">        initializeSelectedIngredients();</span>
+<span class="nc" id="L90">        initializeRemainingIngredients();</span>
+<span class="nc" id="L91">        initializeSpinners();</span>
+<span class="nc" id="L92">        ingredientsTable.setItems(itemIngredients);</span>
+<span class="nc" id="L93">        ingredientsTable.getSortOrder().add(columnIngredientName);</span>
+<span class="nc" id="L94">        ingredientsTable.sort();</span>
+<span class="nc" id="L95">    }</span>
+
+    /**
+     * Sets up value factories in each column which take ingredients and populate the table with their data.
+     */
+    public void initializeColumns() {
+<span class="nc" id="L101">        columnIngredientName.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;name&quot;));</span>
+<span class="nc" id="L102">        columnQuantity.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;quantity&quot;));</span>
+<span class="nc" id="L103">        columnCategory.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;category&quot;));</span>
+<span class="nc" id="L104">        columnWarning.setCellValueFactory(data -&gt; {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            if (data.getValue().getDietInfo().size() == 0) {</span>
+<span class="nc" id="L106">                return new SimpleStringProperty((&quot;&quot;));</span>
+            } else {
+<span class="nc" id="L108">                return new SimpleStringProperty((data.getValue().getDietaryInformationString()));</span>
+            }
+        });
+<span class="nc" id="L111">        columnQuantity.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L112">            int quantity = updatedStock.getIngredientStock().get(data.getValue().getID());</span>
+<span class="nc" id="L113">            return new SimpleStringProperty(Integer.toString(quantity));</span>
+        });
+        //sets values for each ingredient cost.
+<span class="nc" id="L116">        columnCost.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L117">            Money cost = updatedStock.getIngredients().get(data.getValue().getID()).getCost();</span>
+<span class="nc" id="L118">            return new SimpleStringProperty(cost.toString());</span>
+        });
+<span class="nc" id="L120">    }</span>
+
+    /**
+     * Creates the spinners that contain the ingredient objects.
+     * Modified from dzim's code at:
+     * https://stackoverflow.com/questions/36326058/javafx-how-to-programmatically-change-items-of-combobox-in-tablecell
+     */
+    public void initializeSpinners() {
+<span class="nc" id="L128">        columnSpinner.setCellValueFactory(param -&gt; new ReadOnlyStringWrapper(param.getValue().getName()));</span>
+<span class="nc" id="L129">        columnSpinner.setCellFactory(param -&gt; new TableCell&lt;&gt;() {</span>
+            @Override
+            protected void updateItem(String item, boolean empty) {
+<span class="nc" id="L132">                super.updateItem(item, empty);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                if (empty) {</span>
+<span class="nc" id="L134">                    setText(null);</span>
+                } else {
+<span class="nc" id="L136">                    int maxAmount = getAppEnvironment().getSettings().getMaxIngredientAmount();</span>
+<span class="nc" id="L137">                    Ingredient ingredient = getTableView().getItems().get(getIndex());</span>
+<span class="nc" id="L138">                    HashMap&lt;Ingredient, Integer&gt; ingredientAmounts = selectedItem.getRecipe().getIngredientsAmount();</span>
+<span class="nc" id="L139">                    int index = getIndex();</span>
+<span class="nc" id="L140">                    int quantity = Integer.parseInt(columnQuantity.getCellObservableValue(index).getValue());</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                    if (quantity &lt; 0) {</span>
+<span class="nc" id="L142">                        quantity = 0;</span>
+                    }
+<span class="nc" id="L144">                    maxAmount = Math.min(maxAmount, quantity);</span>
+
+<span class="nc" id="L146">                    int selectedAmount = ingredientAmounts.getOrDefault(ingredient, 0);</span>
+<span class="nc" id="L147">                    Spinner&lt;Integer&gt; spinner = new Spinner&lt;&gt;();</span>
+<span class="nc" id="L148">                    spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);</span>
+<span class="nc" id="L149">                    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(</span>
+                            0, maxAmount, selectedAmount));
+
+                    /*
+                     * Updates the ingredient amount of the item. If the ingredient does not exist in the item,
+                     * it adds the ingredient to the item. If the amount of an ingredient was set to 0, then it
+                     * removes the ingredient from the map.
+                     */
+<span class="nc" id="L157">                    spinner.valueProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc" id="L158">                        HashMap&lt;Ingredient, Integer&gt; ingredientAmountMap =</span>
+<span class="nc" id="L159">                                selectedItem.getRecipe().getIngredientsAmount();</span>
+<span class="nc bnc" id="L160" title="All 4 branches missed.">                        if ((newValue == 0) &amp;&amp; (ingredientAmountMap.containsKey(ingredient))) {</span>
+<span class="nc" id="L161">                            ingredientAmountMap.remove(ingredient);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">                        } else if (newValue != 0) {</span>
+<span class="nc" id="L163">                            selectedItem.getRecipe().addIngredient(ingredient, newValue - oldValue);</span>
+                        }
+<span class="nc" id="L165">                    });</span>
+<span class="nc" id="L166">                    setGraphic(spinner);</span>
+<span class="nc" id="L167">                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);</span>
+                }
+<span class="nc" id="L169">            }</span>
+        });
+<span class="nc" id="L171">    }</span>
+
+    /**
+     * Opens the warning screen when a user tries to add an ingredient which doesn't meet an items dietary requirements.
+     */
+    public void addItemPrompt(HashSet&lt;DietEnum&gt; brokenDietEnums) {
+        try {
+<span class="nc" id="L178">            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/gui/addItemWarning.fxml&quot;));</span>
+<span class="nc" id="L179">            Parent root = loader.load();</span>
+<span class="nc" id="L180">            AddItemWarningController controller = loader.getController();</span>
+<span class="nc" id="L181">            controller.setParentController(this);</span>
+<span class="nc" id="L182">            controller.setDietRequirements(brokenDietEnums);</span>
+<span class="nc" id="L183">            controller.pseudoInitialize();</span>
+
+<span class="nc" id="L185">            Stage stage = new Stage();</span>
+<span class="nc" id="L186">            stage.setTitle(&quot;Dietary Requirement Not Met&quot;);</span>
+<span class="nc" id="L187">            stage.setScene(new Scene(root, 800, 600));</span>
+<span class="nc" id="L188">            stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L189">            stage.initOwner(backButton.getScene().getWindow());</span>
+<span class="nc" id="L190">            stage.showAndWait();</span>
+<span class="nc" id="L191">        } catch (Exception e) {</span>
+
+<span class="nc" id="L193">        }</span>
+<span class="nc" id="L194">    }</span>
+
+    /**
+     * Updates the given item's ingredients to match what is selected in the GUI and returns to the Order screen.
+     * Also updates the name of the item if it's ingredients are different to the unedited version.
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void updateItemIngredients(ActionEvent actionEvent) {
+<span class="nc bnc" id="L203" title="All 4 branches missed.">        switch (openMode) {</span>
+            case &quot;Order&quot;: {
+<span class="nc" id="L205">                MenuItem originalItem = getOriginalItem();</span>
+<span class="nc" id="L206">                HashSet&lt;DietEnum&gt; remainingRequirements = oldItem.getRecipe().getDietaryInformation();</span>
+<span class="nc" id="L207">                HashSet&lt;DietEnum&gt; allRequirements = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                for (DietEnum dietEnum : DietEnum.values()) {</span>
+<span class="nc" id="L209">                    allRequirements.add(dietEnum);</span>
+                }
+<span class="nc" id="L211">                allRequirements.retainAll(selectedItem.getRecipe().getDietaryInformation());</span>
+<span class="nc" id="L212">                remainingRequirements.removeAll(allRequirements);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">                if (remainingRequirements.size() != 0) {</span>
+<span class="nc" id="L214">                    addItemPrompt(remainingRequirements);</span>
+                }
+
+<span class="nc bnc" id="L217" title="All 2 branches missed.">                if (isConfirmed) {</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                    if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {</span>
+<span class="nc" id="L219">                        selectedItem.setEdited(false);</span>
+                    } else {
+<span class="nc" id="L221">                        selectedItem.setEdited(true);</span>
+                    }
+
+<span class="nc bnc" id="L224" title="All 2 branches missed.">                    if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {</span>
+<span class="nc" id="L225">                        currentOrder.removeItem(oldItemRef, false);</span>
+<span class="nc" id="L226">                        currentOrder.addItem(selectedItem, 1);</span>
+                    }
+
+<span class="nc" id="L229">                    OrderController controller = (OrderController) changeScreen(actionEvent, &quot;/gui/order.fxml&quot;);</span>
+<span class="nc" id="L230">                    controller.setCurrentOrder(currentOrder);</span>
+<span class="nc" id="L231">                    controller.setMenuItem(selectedItem);</span>
+<span class="nc" id="L232">                    controller.populateIngredientsTable();</span>
+<span class="nc" id="L233">                } else {</span>
+<span class="nc" id="L234">                    isConfirmed = true;</span>
+                }
+<span class="nc" id="L236">                break;</span>
+            }
+            case &quot;Recipe&quot;: {
+<span class="nc" id="L239">                AddRecipeController controller = (AddRecipeController) changeScreen(actionEvent, &quot;/gui/addRecipe.fxml&quot;);</span>
+<span class="nc" id="L240">                controller.setMenuItem(selectedItem);</span>
+<span class="nc" id="L241">                break;</span>
+            }
+            case &quot;PastOrder&quot;: {
+<span class="nc" id="L244">                AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);</span>
+<span class="nc" id="L245">                MenuItem originalItem = getOriginalItem();</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">                if ((selectedItem.getRecipe().getIngredientsAmount().equals(originalItem.getRecipe().getIngredientsAmount()))) {</span>
+<span class="nc" id="L247">                    selectedItem.setEdited(false);</span>
+                } else {
+<span class="nc" id="L249">                    selectedItem.setEdited(true);</span>
+                }
+
+<span class="nc bnc" id="L252" title="All 2 branches missed.">                if (!(selectedItem.getRecipe().getIngredientsAmount().equals(oldItem.getRecipe().getIngredientsAmount()))) {</span>
+<span class="nc" id="L253">                    currentOrder.removeItem(oldItem, false);</span>
+<span class="nc" id="L254">                    currentOrder.addItem(selectedItem, 1);</span>
+                }
+<span class="nc" id="L256">                controller.setOrder(getCurrentOrder());</span>
+<span class="nc" id="L257">                controller.setMenuItem(selectedItem);</span>
+<span class="nc" id="L258">                controller.populateIngredientsTable();</span>
+<span class="nc" id="L259">                break;</span>
+            }
+        }
+<span class="nc" id="L262">    }</span>
+
+    /**
+     * Takes the selected MenuItem and adds its ingredients required to the tableview.
+     */
+    public void initializeSelectedIngredients() {
+<span class="nc" id="L268">        selectedIngredientSet = selectedItem.getRecipe().getIngredientsAmount().keySet();</span>
+<span class="nc" id="L269">        itemIngredients = FXCollections.observableArrayList(selectedIngredientSet);</span>
+<span class="nc" id="L270">    }</span>
+
+    /**
+     * Sets updatedStock to a copy of the current stock. Calculates the updated stock values taking into account
+     * the items that currently exist in the order.
+     */
+    public void updateStock() {
+<span class="nc" id="L277">        updatedStock = getAppEnvironment().getStock().clone();</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">        if (currentOrder != null) {</span>
+<span class="nc" id="L279">            updatedStock = currentOrder.getStock().clone();</span>
+        }
+<span class="nc" id="L281">    }</span>
+
+    /**
+     * Sets updatedStock to a copy of the current stock. Set's all quantities to 9999 temporarily.
+     */
+    public void updateStockRecipeMode() {
+<span class="nc" id="L287">        updatedStock = getAppEnvironment().getStock().clone();</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">        for (String ingredientID : updatedStock.getIngredientStock().keySet()) {</span>
+<span class="nc" id="L289">            updatedStock.modifyQuantity(ingredientID, 999999);</span>
+<span class="nc" id="L290">        }</span>
+<span class="nc" id="L291">    }</span>
+
+    /**
+     * Takes the Stock and adds each ingredient that doesn't exist in the table view into it.
+     * Furthermore adds ingredients with 0 units left, but prevents the user from adding it to the MenuItem.
+     */
+    public void initializeRemainingIngredients() {
+<span class="nc" id="L298">        Collection&lt;Ingredient&gt; allIngredientList = updatedStock.getIngredients().values();</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        for (Ingredient ingredient : allIngredientList) {</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">            if (!selectedIngredientSet.contains(ingredient)) {</span>
+<span class="nc" id="L301">                itemIngredients.add(ingredient);</span>
+            }
+<span class="nc" id="L303">        }</span>
+<span class="nc" id="L304">    }</span>
+
+    /**
+     * Returns to the previous screen, returning the original item as the selected item.
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void revertScreen(javafx.event.ActionEvent actionEvent) {
+<span class="nc bnc" id="L312" title="All 4 branches missed.">        switch (openMode) {</span>
+            case &quot;Order&quot;: {
+<span class="nc" id="L314">                OrderController controller = (OrderController) changeScreen(actionEvent, &quot;/gui/order.fxml&quot;);</span>
+<span class="nc" id="L315">                controller.setMenuItem(oldItem);</span>
+<span class="nc" id="L316">                break;</span>
+            }
+            case &quot;Recipe&quot;: {
+<span class="nc" id="L319">                AddRecipeController controller = (AddRecipeController) changeScreen(actionEvent, &quot;/gui/addRecipe.fxml&quot;);</span>
+<span class="nc" id="L320">                controller.setMenuItem(oldItem);</span>
+<span class="nc" id="L321">                break;</span>
+            }
+            case &quot;PastOrder&quot;: {
+<span class="nc" id="L324">                AddPastOrderController controller = AddPastOrderController.changeToPastOrderScreen(actionEvent, this);</span>
+<span class="nc" id="L325">                controller.setOrder(currentOrder);</span>
+<span class="nc" id="L326">                controller.setMenuItem(getOriginalItem());</span>
+<span class="nc" id="L327">                break;</span>
+            }
+        }
+<span class="nc" id="L330">    }</span>
+
+    /**
+     * Sets the MenuItem.
+     *
+     * @param newItem The MenuItem being modified.
+     */
+    public void setMenuItem(MenuItem newItem) {
+<span class="nc" id="L338">        oldItemRef = newItem;</span>
+<span class="nc" id="L339">        oldItem = newItem.clone();</span>
+<span class="nc" id="L340">        selectedItem = newItem.clone();</span>
+<span class="nc" id="L341">    }</span>
+
+    /**
+     * Sets the openMode.
+     *
+     * @param tempOpenMode the new openMode.
+     */
+    public void setOpenMode(String tempOpenMode) {
+<span class="nc" id="L349">        openMode = tempOpenMode;</span>
+<span class="nc" id="L350">    }</span>
+
+    /**
+     * Gets the original item, before modification.
+     *
+     * @return The original MenuItem.
+     */
+    private MenuItem getOriginalItem() {
+<span class="nc" id="L358">        return getAppEnvironment().getMenuManager().getMenuItems().get(selectedItem.getID());</span>
+    }
+
+    /**
+     * Gets the current order.
+     *
+     * @return The currentOrder.
+     */
+    protected Order getCurrentOrder() {
+<span class="nc" id="L367">        return currentOrder;</span>
+    }
+
+    /**
+     * Sets the currentOrder.
+     *
+     * @param tempOrder The order being modifed.
+     */
+    public void setCurrentOrder(Order tempOrder) {
+<span class="nc" id="L376">        currentOrder = tempOrder;</span>
+<span class="nc" id="L377">    }</span>
+
+    /**
+     * Sets the isConfirmed boolean.
+     *
+     * @param tempIsConfirmed the new boolean isConfirmed.
+     */
+    public void setIsConfirmed(boolean tempIsConfirmed) {
+<span class="nc" id="L385">        isConfirmed = tempIsConfirmed;</span>
+<span class="nc" id="L386">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

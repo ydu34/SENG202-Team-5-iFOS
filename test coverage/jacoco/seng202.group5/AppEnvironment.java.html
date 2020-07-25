@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppEnvironment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5</a> &gt; <span class="el_source">AppEnvironment.java</span></div><h1>AppEnvironment.java</h1><pre class="source lang-java linenums">package seng202.group5;
+
+import org.joda.money.Money;
+import seng202.group5.exceptions.InsufficientCashException;
+import seng202.group5.information.Customers;
+import seng202.group5.logic.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+/**
+ * @author Yu Duan, Shivin Gaba
+ */
+public class AppEnvironment {
+
+    private OrderManager orderManager;
+    private Finance finance;
+    private Stock stock;
+    private MenuManager menuManager;
+    private Customers customers;
+    private Settings settings;
+    private IDGenerator idGenerator;
+    private String imagesFolderPath;
+    private Database database;
+
+    /**
+     * The constructor for AppEnvironment
+     */
+<span class="nc" id="L29">    public AppEnvironment() {</span>
+<span class="nc" id="L30">        finance = new Finance();</span>
+<span class="nc" id="L31">        stock = new Stock();</span>
+<span class="nc" id="L32">        menuManager = new MenuManager();</span>
+<span class="nc" id="L33">        orderManager = new OrderManager(stock);</span>
+<span class="nc" id="L34">        customers = new Customers();</span>
+<span class="nc" id="L35">        settings = new Settings();</span>
+<span class="nc" id="L36">        idGenerator = new IDGenerator();</span>
+
+<span class="nc" id="L38">        imagesFolderPath = &quot;&quot;;</span>
+        // Do not set any management classes after this
+<span class="nc" id="L40">        database = new Database(this);</span>
+<span class="nc" id="L41">    }</span>
+
+    @Deprecated(since = &quot;For testing use only&quot;)
+<span class="fc" id="L44">    public AppEnvironment(boolean autoload) {</span>
+<span class="fc" id="L45">        finance = new Finance();</span>
+<span class="fc" id="L46">        stock = new Stock();</span>
+<span class="fc" id="L47">        menuManager = new MenuManager();</span>
+<span class="fc" id="L48">        orderManager = new OrderManager(stock);</span>
+<span class="fc" id="L49">        customers = new Customers();</span>
+<span class="fc" id="L50">        settings = new Settings();</span>
+<span class="fc" id="L51">        idGenerator = new IDGenerator();</span>
+<span class="fc" id="L52">        database = new Database();</span>
+<span class="fc" id="L53">        database.setAppEnvironment(this);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (autoload) {</span>
+<span class="nc" id="L55">            database = new Database(this);</span>
+        } else {
+<span class="fc" id="L57">            database.setAutoloadEnabled(false);</span>
+        }
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Confirms payment for the current order, sends the order to the history,
+     * sends information about the transaction to Finance and retrieves the
+     * cash amounts to be given as change
+     *
+     * @param denominations the cash given to the worker to pay for the item
+     * @return the cash to be returned to the customer as change
+     * @throws InsufficientCashException if the given cash amount is not enough
+     *                                   to pay for the order
+     */
+    public ArrayList&lt;Money&gt; confirmPayment(ArrayList&lt;Money&gt; denominations) throws InsufficientCashException {
+        ArrayList&lt;Money&gt; change;
+<span class="fc" id="L73">        Order order = orderManager.getOrder();</span>
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (order.getCurrentCustomer() != null) {</span>
+<span class="nc" id="L76">            order.getCurrentCustomer().purchasePoints(order.getTotalCost().minus(order.getDiscount()), customers.getCustomerSettings().getRatio());</span>
+        }
+<span class="fc" id="L78">        setStock(order.getStock().clone());</span>
+<span class="fc" id="L79">        orderManager.setStock(stock);</span>
+<span class="fc" id="L80">        orderManager.newOrder();</span>
+
+<span class="fc" id="L82">        setStock(order.getStock().clone());</span>
+<span class="fc" id="L83">        orderManager.setStock(stock);</span>
+<span class="fc" id="L84">        orderManager.newOrder();</span>
+
+<span class="fc" id="L86">        change = finance.pay(denominations, LocalDateTime.now(), order);</span>
+
+<span class="fc" id="L88">        return change;</span>
+    }
+
+    public Stock getStock() {
+<span class="fc" id="L92">        return stock;</span>
+    }
+
+    public void setStock(Stock stock) {
+<span class="fc" id="L96">        this.stock = stock;</span>
+<span class="fc" id="L97">        orderManager.setStock(stock);</span>
+<span class="fc" id="L98">        orderManager.newOrder();</span>
+<span class="fc" id="L99">    }</span>
+
+    public Finance getFinance() {
+<span class="fc" id="L102">        return finance;</span>
+    }
+
+    public void setFinance(Finance finance) {
+<span class="fc" id="L106">        this.finance = finance;</span>
+<span class="fc" id="L107">    }</span>
+
+    public Customers getCustomers() {
+<span class="fc" id="L110">        return customers;</span>
+    }
+
+    public void setCustomers(Customers newCustomers) {
+<span class="fc" id="L114">        customers = newCustomers;</span>
+<span class="fc" id="L115">    }</span>
+
+    public Settings getSettings() {
+<span class="fc" id="L118">        return settings;</span>
+    }
+
+    public void setSettings(Settings settings) {
+<span class="fc" id="L122">        this.settings = settings;</span>
+<span class="fc" id="L123">    }</span>
+
+    public MenuManager getMenuManager() {
+<span class="fc" id="L126">        return menuManager;</span>
+    }
+
+    public void setMenuManager(MenuManager menuManager) {
+<span class="fc" id="L130">        this.menuManager = menuManager;</span>
+<span class="fc" id="L131">    }</span>
+
+    public OrderManager getOrderManager() {
+<span class="fc" id="L134">        return orderManager;</span>
+    }
+
+    public void setOrderManager(OrderManager tempManager) {
+<span class="fc" id="L138">        orderManager = tempManager;</span>
+<span class="fc" id="L139">    }</span>
+
+    public IDGenerator getIdGenerator() {
+<span class="fc" id="L142">        return idGenerator;</span>
+    }
+
+    public void setIdGenerator(IDGenerator idGenerator) {
+<span class="fc" id="L146">        this.idGenerator = idGenerator;</span>
+<span class="fc" id="L147">    }</span>
+
+    public Database getDatabase() {
+<span class="fc" id="L150">        return database;</span>
+    }
+
+    public String getImagesFolderPath() {
+<span class="nc" id="L154">        return imagesFolderPath;</span>
+    }
+
+    public void setImagesFolderPath(String imagesFolderPath) {
+<span class="nc" id="L158">        this.imagesFolderPath = imagesFolderPath;</span>
+<span class="nc" id="L159">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

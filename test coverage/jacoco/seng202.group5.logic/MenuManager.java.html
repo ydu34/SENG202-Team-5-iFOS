@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.logic</a> &gt; <span class="el_source">MenuManager.java</span></div><h1>MenuManager.java</h1><pre class="source lang-java linenums">package seng202.group5.logic;
+
+import org.joda.money.Money;
+import seng202.group5.IDGenerator;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
+
+/**
+ * This class manages the menu, includes creating recipes and items, and removing items from the menu.
+ *
+ * @author James Kwok
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class MenuManager {
+
+    /**
+     * An ID generator stored here so that it is kept persistent across the application
+     */
+<span class="fc" id="L27">    @XmlElement</span>
+    private IDGenerator generator = new IDGenerator();
+
+    /**
+     * A dictionary mapping string IDs to menu items
+     */
+    private HashMap&lt;String, MenuItem&gt; itemMap;
+
+<span class="fc" id="L35">    public MenuManager() {</span>
+<span class="fc" id="L36">        itemMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L37">    }</span>
+
+<span class="fc" id="L39">    public MenuManager(HashMap&lt;String, MenuItem&gt; tempItemList) {</span>
+<span class="fc" id="L40">        itemMap = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (String stringKey : tempItemList.keySet()) {</span>
+<span class="fc" id="L42">            itemMap.put(stringKey, tempItemList.get(stringKey));</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Creates a menu item and adds it to the item list
+     *
+     * @param name       the name of the item
+     * @param recipe     the recipe for this item
+     * @param markupCost the amount to increase the cost of this item by
+     * @param inMenu     whether or not this item will be added to the menu
+     * @param id         the id of the item
+     */
+    @Deprecated(since = &quot;Uses an old MenuItem constructor, use getItemMap to insert items instead&quot;)
+    public void createItem(String name, Recipe recipe, Money markupCost, String id, boolean inMenu) {
+<span class="fc" id="L57">        MenuItem newItem = new MenuItem(name, recipe, markupCost, id, inMenu, TypeEnum.MAIN);</span>
+<span class="fc" id="L58">        itemMap.put(id, newItem);</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * @param ID the ID of the item
+     * @return true if the item is removed, false if the item does not exist
+     */
+    public boolean removeItem(String ID) {
+<span class="fc" id="L66">        boolean removed = false;</span>
+<span class="fc" id="L67">        MenuItem answerItem = itemMap.remove(ID);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (answerItem != null) {</span>
+<span class="fc" id="L69">            removed = true;</span>
+        }
+<span class="fc" id="L71">        return removed;</span>
+    }
+
+    /**
+     * Adds the MenuItem object into the itemMap.
+     *
+     * @param menuItem The menu item to be added into the menu.
+     */
+    public void addItem(MenuItem menuItem) {
+<span class="nc" id="L80">        itemMap.put(menuItem.getID(), menuItem);</span>
+<span class="nc" id="L81">    }</span>
+
+    public HashMap&lt;String, MenuItem&gt; getItemMap() {
+<span class="fc" id="L84">        return itemMap;</span>
+    }
+
+    /**
+     * Calculates a HashMap containing all items which exist in a given menu.
+     *
+     * @return menuItemMap, a map containing all items which are in the menu.
+     */
+    public HashMap&lt;String, MenuItem&gt; getMenuItems() {
+<span class="fc" id="L93">        HashMap&lt;String, MenuItem&gt; menuItemMap = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (String stringKey : itemMap.keySet()) {</span>
+<span class="fc" id="L95">            MenuItem item = itemMap.get(stringKey);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            if (item.isInMenu()) {</span>
+<span class="fc" id="L97">                menuItemMap.put(stringKey, item);</span>
+            }
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">        return menuItemMap;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

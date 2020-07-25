@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExistingCustomerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.invoice</a> &gt; <span class="el_source">ExistingCustomerController.java</span></div><h1>ExistingCustomerController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.invoice;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.Customer;
+import seng202.group5.information.Customers;
+
+import java.util.Collection;
+
+/**
+ * The Controller for the Existing Member screen off of the invoice screen.
+ *
+ * @author Michael Morgoun
+ */
+<span class="nc" id="L22">public class ExistingCustomerController extends GeneralController {</span>
+
+    /**
+     * The customerTable where you view all customers.
+     */
+    @FXML
+    private TableView&lt;Customer&gt; customerTable;
+
+    /**
+     * The column for IDs.
+     */
+    @FXML
+    private TableColumn&lt;Customer, String&gt; colID;
+
+    /**
+     * The column for the names.
+     */
+    @FXML
+    private TableColumn&lt;Customer, String&gt; colName;
+
+    /**
+     * The column for the phone numbers.
+     */
+    @FXML
+    private TableColumn&lt;Customer, String&gt; colPhoneNumber;
+
+    /**
+     * The search bar for the name.
+     */
+    @FXML
+    private TextField nameField;
+
+    /**
+     * The search bar for the phone number.
+     */
+    @FXML
+    private TextField phoneNumberField;
+
+    /**
+     * The search bar for the ID.
+     */
+    @FXML
+    private TextField idField;
+
+    /**
+     * All customers in the system.
+     */
+    private Customers customers;
+
+    /**
+     * Initialises the screen with all necessary information and listeners.
+     */
+    @Override
+    public void pseudoInitialize() {
+        // Initialise the context menu for right clicking on existing members
+<span class="nc" id="L77">        createContextMenu();</span>
+
+        // Listeners for the TextFields to stop incorrect characters
+<span class="nc" id="L80">        nameField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (!newValue.matches(&quot;([\\-' ]*\\w*)*&quot;)) {</span>
+<span class="nc" id="L82">                nameField.setText(oldValue);</span>
+            }
+<span class="nc" id="L84">            updateVisibleCustomers();</span>
+<span class="nc" id="L85">        });</span>
+<span class="nc" id="L86">        phoneNumberField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,15}&quot;)) {</span>
+<span class="nc" id="L88">                phoneNumberField.setText(oldValue);</span>
+            }
+<span class="nc" id="L90">            updateVisibleCustomers();</span>
+<span class="nc" id="L91">        });</span>
+<span class="nc" id="L92">        idField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,15}&quot;)) {</span>
+<span class="nc" id="L94">                idField.setText(oldValue);</span>
+            }
+<span class="nc" id="L96">            updateVisibleCustomers();</span>
+<span class="nc" id="L97">        });</span>
+
+        // Populating the TableView
+<span class="nc" id="L100">        ObservableList&lt;Customer&gt; customersList = FXCollections.observableArrayList(</span>
+<span class="nc" id="L101">                customers.getCustomerList());</span>
+
+<span class="nc" id="L103">        colID.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;ID&quot;));</span>
+<span class="nc" id="L104">        colName.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;name&quot;));</span>
+<span class="nc" id="L105">        colPhoneNumber.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;phoneNumber&quot;));</span>
+
+<span class="nc" id="L107">        customerTable.setItems(customersList);</span>
+<span class="nc" id="L108">    }</span>
+
+    /**
+     * Creates the Context Menu when right clicking an item, or selects the item if double clicked.
+     */
+    private void createContextMenu() {
+<span class="nc" id="L114">        ContextMenu deleteMenu = new ContextMenu();</span>
+<span class="nc" id="L115">        MenuItem deleteMenuItem = new MenuItem(&quot;Delete Member&quot;);</span>
+<span class="nc" id="L116">        deleteMenu.getItems().add(deleteMenuItem);</span>
+
+        // Mouse Listeners for a double click, a right click and nothing
+<span class="nc" id="L119">        customerTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -&gt; {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            if (mouseEvent.getButton() == MouseButton.SECONDARY) {</span>
+<span class="nc" id="L121">                deleteMenu.show(customerTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());</span>
+<span class="nc bnc" id="L122" title="All 6 branches missed.">            } else if (mouseEvent.getButton() == MouseButton.PRIMARY &amp;&amp; mouseEvent.getClickCount() == 2 &amp;&amp; customerTable.getSelectionModel().getSelectedItem() != null) {</span>
+<span class="nc" id="L123">                selectCustomer();</span>
+            } else {
+<span class="nc" id="L125">                deleteMenu.hide();</span>
+            }
+<span class="nc" id="L127">        });</span>
+
+        // Updates the visible customers if a member was deleted
+<span class="nc" id="L130">        deleteMenuItem.setOnAction(actionEvent -&gt; {</span>
+<span class="nc" id="L131">            customers.getCustomerList().remove(customerTable.getSelectionModel().getSelectedItem());</span>
+<span class="nc" id="L132">            updateVisibleCustomers();</span>
+<span class="nc" id="L133">        });</span>
+<span class="nc" id="L134">    }</span>
+
+    /**
+     * Selects the current customer that is selected.
+     * Possible for it to be null.
+     */
+    @FXML
+    public void selectCustomer() {
+<span class="nc" id="L142">        Customer customer = customerTable.getSelectionModel().getSelectedItem();</span>
+
+<span class="nc" id="L144">        getAppEnvironment().getOrderManager().getOrder().setCurrentCustomer(customer);</span>
+<span class="nc" id="L145">        close();</span>
+<span class="nc" id="L146">    }</span>
+
+    @FXML
+    public void removeCustomer() {
+<span class="nc" id="L150">        Customer customer = customerTable.getSelectionModel().getSelectedItem();</span>
+<span class="nc" id="L151">        getAppEnvironment().getCustomers().getCustomerList().remove(customer);</span>
+<span class="nc" id="L152">        updateVisibleCustomers();</span>
+<span class="nc" id="L153">    }</span>
+
+    /**
+     * Updates the visible customers via TextFields that are about the Name, Phone number or ID.
+     */
+    private void updateVisibleCustomers() {
+        // Clear the table
+<span class="nc" id="L160">        customerTable.getItems().clear();</span>
+
+        // Collect all customers
+<span class="nc" id="L163">        Collection&lt;Customer&gt; customersList = customers.getCustomerList();</span>
+
+        // Collect each search element
+<span class="nc" id="L166">        String searchName = nameField.getText().toLowerCase();</span>
+<span class="nc" id="L167">        String searchPhone = phoneNumberField.getText();</span>
+<span class="nc" id="L168">        String searchID = idField.getText().toLowerCase();</span>
+
+        // Match the fields with customers
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        for (Customer customer : customersList) {</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (customer.getName().toLowerCase().matches(&quot;.*&quot; + searchName + &quot;.*&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">                    customer.getPhoneNumber().matches(&quot;.*&quot; + searchPhone + &quot;.*&quot;) &amp;&amp;</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">                    customer.getID().toLowerCase().matches(&quot;.*&quot; + searchID + &quot;.*&quot;)) {</span>
+<span class="nc" id="L175">                customerTable.getItems().add(customer);</span>
+            }
+<span class="nc" id="L177">        }</span>
+<span class="nc" id="L178">    }</span>
+
+    /**
+     * A method to close the current screen.
+     */
+    @FXML
+    private void close() {
+<span class="nc" id="L185">        Stage stage = (Stage) customerTable.getScene().getWindow();</span>
+<span class="nc" id="L186">        stage.close();</span>
+<span class="nc" id="L187">    }</span>
+
+    /**
+     * Sets the customers.
+     *
+     * @param newCustomers The new customers to be set.
+     */
+    public void setCustomers(Customers newCustomers) {
+<span class="nc" id="L195">        customers = newCustomers;</span>
+<span class="nc" id="L196">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

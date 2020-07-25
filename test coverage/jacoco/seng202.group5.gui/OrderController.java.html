@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui</a> &gt; <span class="el_source">OrderController.java</span></div><h1>OrderController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui;
+
+//import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.information.Recipe;
+import seng202.group5.information.TypeEnum;
+import seng202.group5.logic.Order;
+
+import java.io.FileInputStream;
+import java.util.*;
+
+/**
+ * This controller handles all the functionality with the making a new order or
+ * editing an existing order.
+ *
+ * @author Shivin Gaba
+ */
+<span class="nc" id="L37">public class OrderController extends GeneralController {</span>
+
+    private MenuItem item;
+
+    @FXML
+    private Label totalCostDisplay;
+
+    @FXML
+    private CheckBox vegan;
+
+    @FXML
+    private CheckBox vegetarian;
+
+    @FXML
+    private CheckBox glutenFree;
+
+    @FXML
+    private CheckBox mains;
+
+    @FXML
+    private CheckBox sides;
+
+    @FXML
+    private CheckBox beverages;
+
+    @FXML
+    private Text orderIDText;
+
+    @FXML
+    private TableView&lt;Ingredient&gt; ingredientInfoTable;
+
+    @FXML
+    private TableColumn&lt;Ingredient, String&gt; ingredientNameCol;
+
+    @FXML
+    private TableColumn&lt;Ingredient, String&gt; ingredientQuantityCol;
+
+    @FXML
+    private Text recipeText;
+
+    @FXML
+    private Text costText;
+
+    @FXML
+    private Text menuItemName;
+
+    @FXML
+    private JFXButton modifyIngredientsButton;
+
+    @FXML
+    private TilePane tilePane;
+
+    @FXML
+    private JFXComboBox&lt;SortType&gt; sortingBox;
+
+    @FXML
+    private Text promptText;
+
+    @FXML
+    private AnchorPane tilePaneContainer;
+
+    @FXML
+    private TableView&lt;MenuItem&gt; currentOrderTable;
+
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; itemNameCol;
+
+    private Order currentOrder;
+
+    private ArrayList&lt;MenuItem&gt; allItems;
+
+    private Map&lt;MenuItem, Integer&gt; orderItemsMap;
+
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; itemQuantityCol;
+
+    @FXML
+    private Button removeItemButton;
+
+    @FXML
+    private TableColumn&lt;MenuItem, String&gt; itemPriceCol;
+<span class="nc" id="L118">    private SortType sortingType = SortType.NAME;</span>
+
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L122">        super.pseudoInitialize();</span>
+<span class="nc" id="L123">        allItems = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L124">        allItems.addAll(getAppEnvironment().getMenuManager().getMenuItems().values());</span>
+<span class="nc" id="L125">        filterItems();</span>
+<span class="nc" id="L126">        currentOrder = getAppEnvironment().getOrderManager().getOrder();</span>
+<span class="nc" id="L127">        sortingBox.setItems(FXCollections.observableArrayList(SortType.values()));</span>
+<span class="nc" id="L128">        sortingBox.setValue(sortingType);</span>
+
+<span class="nc" id="L130">        currentOrderTable();</span>
+<span class="nc" id="L131">        orderIDText.setText(currentOrder.getId());</span>
+
+<span class="nc" id="L133">        tilePaneContainer.widthProperty().addListener((width) -&gt; {</span>
+<span class="nc" id="L134">            double newWidth = tilePaneContainer.getWidth();</span>
+<span class="nc" id="L135">            tilePane.setMinWidth(newWidth);</span>
+<span class="nc" id="L136">            tilePane.setPrefWidth(newWidth);</span>
+<span class="nc" id="L137">            tilePane.setMaxWidth(newWidth);</span>
+<span class="nc" id="L138">        });</span>
+<span class="nc" id="L139">        modifyIngredientsButton.setDisable(true);</span>
+<span class="nc" id="L140">        currentOrderTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            if (newValue == null) {</span>
+<span class="nc" id="L142">                recipeText.setText(&quot;&quot;);</span>
+<span class="nc" id="L143">                ingredientInfoTable.getItems().clear();</span>
+            } else {
+<span class="nc" id="L145">                item = newValue;</span>
+<span class="nc" id="L146">                recipeText.setText(newValue.getRecipe().getRecipeText());</span>
+<span class="nc" id="L147">                populateIngredientsTable();</span>
+<span class="nc" id="L148">                modifyIngredientsButton.setDisable(false);</span>
+            }
+<span class="nc" id="L150">        }));</span>
+<span class="nc" id="L151">    }</span>
+
+    /**
+     * This function sorts the menu item by its price
+     *
+     * @param event an event that caused this to happen
+     */
+
+    public void sortItems(ActionEvent event) {
+<span class="nc" id="L160">        sortingType = sortingBox.getValue();</span>
+<span class="nc" id="L161">        filterItems();</span>
+<span class="nc" id="L162">    }</span>
+
+    /**
+     * Adds all the menu items in the menu to the tile pane
+     *
+     * @param items the items to add to the pane
+     */
+    public void populateTilePane(Collection&lt;MenuItem&gt; items) {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (tilePane != null) {</span>
+<span class="nc" id="L171">            tilePane.setPrefTileWidth(304);</span>
+<span class="nc" id="L172">            tilePane.setPrefTileHeight(200);</span>
+<span class="nc" id="L173">            ObservableList&lt;Node&gt; buttons = tilePane.getChildren();</span>
+<span class="nc" id="L174">            buttons.clear();</span>
+<span class="nc" id="L175">            ArrayList&lt;MenuItem&gt; sortedItems = new ArrayList&lt;&gt;(items);</span>
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">            if (sortingType == SortType.NAME) {</span>
+<span class="nc" id="L178">                sortedItems.sort(Comparator.comparing(MenuItem::getItemName));</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            } else if (sortingType == SortType.PRICE) {</span>
+<span class="nc" id="L180">                sortedItems.sort(Comparator.comparing(MenuItem::getTotalCost));</span>
+            }
+
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            for (MenuItem item : sortedItems) {</span>
+<span class="nc" id="L184">                JFXButton tempButton = new JFXButton(item.getItemName());</span>
+<span class="nc" id="L185">                tempButton.setContentDisplay(ContentDisplay.TOP);</span>
+<span class="nc" id="L186">                tempButton.setStyle(&quot;-fx-font-size: 20; &quot;);</span>
+<span class="nc" id="L187">                tempButton.setPrefWidth(304);</span>
+<span class="nc" id="L188">                tempButton.setPrefHeight(200);</span>
+<span class="nc" id="L189">                tempButton.setMaxWidth(304);</span>
+<span class="nc" id="L190">                tempButton.setMaxHeight(200);</span>
+<span class="nc" id="L191">                ImageView imageView = new ImageView(getItemImage(item));</span>
+<span class="nc" id="L192">                imageView.setPreserveRatio(true);</span>
+<span class="nc" id="L193">                imageView.setFitHeight(144);</span>
+<span class="nc" id="L194">                imageView.setFitWidth(256);</span>
+
+<span class="nc" id="L196">                tempButton.setGraphic(imageView);</span>
+<span class="nc" id="L197">                TilePane.setMargin(tempButton, new Insets(5));</span>
+<span class="nc" id="L198">                tempButton.setOnAction((ActionEvent event) -&gt; addItemToOrder(item));</span>
+<span class="nc" id="L199">                buttons.add(tempButton);</span>
+<span class="nc" id="L200">            }</span>
+        }
+
+<span class="nc" id="L203">    }</span>
+
+    /**
+     * Filters the menu items in the menu based on the check boxes on the order screen
+     */
+    public void filterItems() {
+<span class="nc" id="L209">        ArrayList&lt;MenuItem&gt; filteredMenuItems = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (allItems != null) {</span>
+<span class="nc" id="L211">            filteredMenuItems = new ArrayList&lt;&gt;(allItems);</span>
+        }
+<span class="nc" id="L213">        ArrayList&lt;MenuItem&gt; filteredItems = new ArrayList&lt;&gt;(filteredMenuItems);</span>
+
+
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        if (glutenFree.isSelected()) {</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">            for (MenuItem item : filteredItems) {</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                if (!item.getRecipe().isGlutenFree()) {</span>
+<span class="nc" id="L219">                    filteredMenuItems.remove(item);</span>
+                }
+<span class="nc" id="L221">            }</span>
+        }
+<span class="nc" id="L223">        filteredItems = new ArrayList&lt;&gt;(filteredMenuItems);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (vegan.isSelected()) {</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">            for (MenuItem item : filteredItems) {</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">                if (!item.getRecipe().isVegan()) {</span>
+<span class="nc" id="L227">                    filteredMenuItems.remove(item);</span>
+                }
+<span class="nc" id="L229">            }</span>
+        }
+<span class="nc" id="L231">        filteredItems = new ArrayList&lt;&gt;(filteredMenuItems);</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">        if (vegetarian.isSelected()) {</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">            for (MenuItem item : filteredItems) {</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">                if (!item.getRecipe().isVegetarian()) {</span>
+<span class="nc" id="L235">                    filteredMenuItems.remove(item);</span>
+                }
+<span class="nc" id="L237">            }</span>
+        }
+<span class="nc" id="L239">        filteredItems = new ArrayList&lt;&gt;(filteredMenuItems);</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        if (!mains.isSelected()) {</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            for (MenuItem item : filteredItems) {</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">                if (item.getItemType() == TypeEnum.MAIN) {</span>
+<span class="nc" id="L243">                    filteredMenuItems.remove(item);</span>
+                }
+<span class="nc" id="L245">            }</span>
+        }
+<span class="nc" id="L247">        filteredItems = new ArrayList&lt;&gt;(filteredMenuItems);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        if (!sides.isSelected()) {</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">            for (MenuItem item : filteredItems) {</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">                if (item.getItemType() == TypeEnum.SIDE) {</span>
+<span class="nc" id="L251">                    filteredMenuItems.remove(item);</span>
+                }
+<span class="nc" id="L253">            }</span>
+        }
+<span class="nc" id="L255">        filteredItems = new ArrayList&lt;&gt;(filteredMenuItems);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        if (!beverages.isSelected()) {</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">            for (MenuItem item : filteredItems) {</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">                if (item.getItemType() == TypeEnum.BEVERAGE) {</span>
+<span class="nc" id="L259">                    filteredMenuItems.remove(item);</span>
+                }
+<span class="nc" id="L261">            }</span>
+        }
+
+<span class="nc" id="L264">        populateTilePane(filteredMenuItems);</span>
+
+<span class="nc" id="L266">    }</span>
+
+    private Image getItemImage(MenuItem item) {
+<span class="nc" id="L269">        Image itemImage = new Image(getClass().getResourceAsStream(&quot;/images/default.jpg&quot;));</span>
+        try {
+
+<span class="nc" id="L272">            itemImage = new Image(new FileInputStream(getAppEnvironment().getImagesFolderPath() + &quot;/&quot; + item.getImageString()));</span>
+<span class="nc" id="L273">        } catch (Exception ignored) {</span>
+
+<span class="nc" id="L275">        }</span>
+<span class="nc" id="L276">        return itemImage;</span>
+    }
+
+    /**
+     * This function removes the selected item from the current order when clicked on the remove button and updates the invoice display
+     */
+    @FXML
+    private void removeSelectedItem() {
+<span class="nc" id="L284">        currentOrder.removeItem(currentOrderTable.getSelectionModel().getSelectedItem(), true);</span>
+<span class="nc" id="L285">        boolean someOrder = this.currentOrderTable.getItems().remove(this.currentOrderTable.getSelectionModel().getSelectedItem());</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (someOrder) removeItemButton.setDisable(false);</span>
+<span class="nc" id="L287">    }</span>
+
+    /**
+     * Updates the display with items using the selected item.
+     *
+     * @param newItem the new item with updated quantities and categories.
+     */
+    public void setMenuItem(MenuItem newItem) {
+<span class="nc" id="L295">        item = newItem;</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">        for (int i = 0; i &lt; currentOrderTable.getItems().size(); i++) {</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">            if (currentOrderTable.getItems().get(i).equals(newItem))</span>
+<span class="nc" id="L298">                currentOrderTable.getSelectionModel().select(i);</span>
+        }
+<span class="nc" id="L300">        totalCostDisplay.setText(currentOrder.getTotalCost().toString());</span>
+<span class="nc" id="L301">    }</span>
+
+    /**
+     * This method adds the selected menu Item to the stock only if the valid amount of ingredients are available.
+     * Otherwise displays the appropriate message if the order can/cannot be added.
+     * Calls setMenuItem() if adding the item is successful.
+     */
+    public void addItemToOrder(MenuItem item) {
+<span class="nc bnc" id="L309" title="All 2 branches missed.">        if (currentOrder.addItem(item, 1)) {</span>
+<span class="nc" id="L310">            promptText.setText(item.getItemName() + &quot; was added to the current order.&quot;);</span>
+<span class="nc" id="L311">            promptText.setFill(Color.GREEN);</span>
+<span class="nc" id="L312">            currentOrderTable();</span>
+<span class="nc" id="L313">            setMenuItem(item);</span>
+        } else {
+<span class="nc" id="L315">            promptText.setText(&quot;Some ingredients are low in stock!\n&quot; + item.getItemName() + &quot; was not added to the current order&quot;);</span>
+<span class="nc" id="L316">            promptText.setFill(Color.RED);</span>
+        }
+<span class="nc" id="L318">        totalCostDisplay.setText(currentOrder.getTotalCost().toString());</span>
+<span class="nc" id="L319">    }</span>
+
+    /**
+     * This method shows the amount of ingredients in a selected menu item
+     */
+
+    public void populateIngredientsTable() {
+<span class="nc" id="L326">        Recipe currentRecipe = item.getRecipe();</span>
+<span class="nc" id="L327">        Map&lt;Ingredient, Integer&gt; recipeIngredientsMap = currentRecipe.getIngredientsAmount();</span>
+<span class="nc" id="L328">        List&lt;Ingredient&gt; recipeIngredients = new ArrayList&lt;&gt;(recipeIngredientsMap.keySet());</span>
+<span class="nc" id="L329">        ingredientNameCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;name&quot;));</span>
+<span class="nc" id="L330">        ingredientQuantityCol.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L331">            int quantity = recipeIngredientsMap.get(data.getValue());</span>
+<span class="nc" id="L332">            return new SimpleStringProperty(Integer.toString(quantity));</span>
+        });
+<span class="nc" id="L334">        ingredientInfoTable.setItems(FXCollections.observableArrayList(recipeIngredients));</span>
+<span class="nc" id="L335">        ingredientInfoTable.refresh();</span>
+<span class="nc" id="L336">        ingredientInfoTable.getSortOrder().add(ingredientNameCol);</span>
+<span class="nc" id="L337">        ingredientInfoTable.sort();</span>
+<span class="nc" id="L338">    }</span>
+
+    /**
+     * This function populates the mini invoice screen with the selected menu items along with their quantity which are the part of the current order
+     */
+
+    public void currentOrderTable() {
+<span class="nc" id="L345">        orderItemsMap = currentOrder.getOrderItems();</span>
+<span class="nc" id="L346">        List&lt;MenuItem&gt; orderItems = new ArrayList&lt;&gt;(orderItemsMap.keySet());</span>
+<span class="nc" id="L347">        itemNameCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;itemName&quot;));</span>
+<span class="nc" id="L348">        itemQuantityCol.setCellValueFactory(data -&gt; {</span>
+<span class="nc" id="L349">            int quantity = orderItemsMap.get(data.getValue());</span>
+<span class="nc" id="L350">            return new SimpleStringProperty(Integer.toString(quantity));</span>
+
+        });
+
+<span class="nc" id="L354">        currentOrderTable.setItems(FXCollections.observableArrayList(orderItems));</span>
+<span class="nc" id="L355">        currentOrderTable.refresh();</span>
+<span class="nc" id="L356">    }</span>
+
+    /**
+     * This function clears whole order when clicked on the cancel button on the mini invoice screen.
+     */
+    @FXML
+    private void cancelCurrentOrder() {
+<span class="nc" id="L363">        currentOrder = getAppEnvironment().getOrderManager().getOrder();</span>
+<span class="nc" id="L364">        currentOrder.setStock(getAppEnvironment().getStock());</span>
+<span class="nc" id="L365">        currentOrder.clearItemsInOrder();</span>
+<span class="nc" id="L366">        pseudoInitialize();</span>
+<span class="nc" id="L367">    }</span>
+
+    /**
+     * Changes screen to the add ingredient screen to select ingredients to add to the recipe by passing in the item.
+     *
+     * @param actionEvent an event that caused this to happen
+     */
+    public void addExtraIngredientScreen(ActionEvent actionEvent) {
+<span class="nc" id="L375">        AddExtraIngredientController controller =</span>
+<span class="nc" id="L376">                (AddExtraIngredientController) changeScreen(actionEvent, &quot;/gui/addExtraIngredient.fxml&quot;);</span>
+<span class="nc" id="L377">        MenuItem currentItem = currentOrderTable.getSelectionModel().getSelectedItem();</span>
+<span class="nc" id="L378">        controller.setMenuItem(currentItem);</span>
+<span class="nc" id="L379">        controller.setCurrentOrder(currentOrder);</span>
+<span class="nc" id="L380">        controller.updateStock();</span>
+<span class="nc" id="L381">        controller.setOpenMode(&quot;Order&quot;);</span>
+<span class="nc" id="L382">        controller.initializeTable();</span>
+<span class="nc" id="L383">    }</span>
+
+    /**
+     * A method to set the current order for the alternate order screen in history
+     *
+     * @param order the order to set the current order to
+     */
+    protected void setCurrentOrder(Order order) {
+<span class="nc" id="L391">        currentOrder = order;</span>
+<span class="nc" id="L392">        currentOrderTable();</span>
+<span class="nc" id="L393">    }</span>
+
+    /**
+     * A method to get the selected item for the alternate order screen in history
+     *
+     * @return the selected item
+     */
+    protected MenuItem getSelectedItem() {
+<span class="nc" id="L401">        return item;</span>
+    }
+
+<span class="nc" id="L404">    private enum SortType {</span>
+<span class="nc" id="L405">        NAME,</span>
+<span class="nc" id="L406">        PRICE;</span>
+
+        public String toString() {
+<span class="nc bnc" id="L409" title="All 3 branches missed.">            switch (this) {</span>
+                case NAME:
+<span class="nc" id="L411">                    return &quot;Name&quot;;</span>
+                case PRICE:
+<span class="nc" id="L413">                    return &quot;Price&quot;;</span>
+                default:
+<span class="nc" id="L415">                    return &quot;&quot;;</span>
+            }
+        }
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

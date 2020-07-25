@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.information</a> &gt; <span class="el_source">MenuItem.java</span></div><h1>MenuItem.java</h1><pre class="source lang-java linenums">package seng202.group5.information;
+
+import org.joda.money.Money;
+import seng202.group5.IDGenerator;
+import seng202.group5.adapters.MoneyAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * This class contains methods to update the stock, removes the stock , calculates the making and selling price for the menu item.
+ *
+ * @author Shivin Gaba, James Kwok, Yu Duan
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class MenuItem {
+
+    /**
+     * Name of the dish/item on the menu.
+     */
+    private String itemName;
+    /**
+     * The recipe object that has the list of the ingredients involved to make that menu item
+     */
+    private Recipe recipe;
+    /**
+     * The final cost of the menu item that after the mark up
+     */
+    @XmlJavaTypeAdapter(MoneyAdapter.class)
+    private Money markupCost;
+    /**
+     * Unique id for a menu item
+     */
+<span class="fc" id="L41">    private String id = IDGenerator.newMenuItemID();</span>
+    /**
+     * Whether or not this item is in the menu
+     */
+    private boolean inMenu;
+    /**
+     * Enum type that tells about the dietary info about the menu item
+     */
+    private TypeEnum itemType;
+    /**
+     * Whether or not the item was modified
+     */
+    private boolean edited;
+
+    /**
+     * A string representing the image for this menu item
+     */
+    private String imageString;
+
+    /**
+     * Default constructor for the menu item class
+     */
+<span class="fc" id="L63">    public MenuItem() {</span>
+<span class="fc" id="L64">        itemName = &quot;&quot;;</span>
+<span class="fc" id="L65">        recipe = new Recipe();</span>
+<span class="fc" id="L66">        markupCost = Money.parse(&quot;NZD 0.00&quot;);</span>
+<span class="fc" id="L67">        inMenu = true;</span>
+<span class="fc" id="L68">        itemType = TypeEnum.MAIN;</span>
+<span class="fc" id="L69">        edited = false;</span>
+<span class="fc" id="L70">        imageString = null;</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * @param tempItemName   is the name of an item on the menu
+     * @param tempRecipe     is the recipe for a an item on the menu
+     * @param tempMarkupCost is the cost added to the ingredient cost of the menu item
+     * @param uniqueId       is the unique id related to each menu item
+     * @param tempInMenu     whether or not the item is in the menu
+     * @param type           the type of the new item
+     */
+    @Deprecated(since = &quot;ID is made using ID Maker now, this may be useful for tests though&quot;)
+<span class="fc" id="L82">    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, String uniqueId, boolean tempInMenu, TypeEnum type) {</span>
+<span class="fc" id="L83">        itemName = tempItemName;</span>
+<span class="fc" id="L84">        recipe = tempRecipe;</span>
+<span class="fc" id="L85">        markupCost = tempMarkupCost;</span>
+<span class="fc" id="L86">        id = uniqueId;</span>
+<span class="fc" id="L87">        inMenu = tempInMenu;</span>
+<span class="fc" id="L88">        itemType = type;</span>
+<span class="fc" id="L89">        edited = false;</span>
+<span class="fc" id="L90">    }</span>
+
+    /**
+     * @param tempItemName   is the name of an item on the menu
+     * @param tempRecipe     is the recipe for a an item on the menu
+     * @param tempMarkupCost is the cost added to the ingredient cost of the menu item
+     * @param tempInMenu     whether or not the item is in the menu
+     * @param itemType       the type of the item
+     */
+<span class="fc" id="L99">    public MenuItem(String tempItemName, Recipe tempRecipe, Money tempMarkupCost, boolean tempInMenu, TypeEnum itemType) {</span>
+<span class="fc" id="L100">        itemName = tempItemName;</span>
+<span class="fc" id="L101">        recipe = tempRecipe;</span>
+<span class="fc" id="L102">        markupCost = tempMarkupCost;</span>
+<span class="fc" id="L103">        inMenu = tempInMenu;</span>
+<span class="fc" id="L104">        this.itemType = itemType;</span>
+<span class="fc" id="L105">        edited = false;</span>
+<span class="fc" id="L106">    }</span>
+
+
+    /**
+     * This method runs a loop over the ingredientAmount hash map and calculates the total cost of making a menu item in NZD
+     *
+     * @return the making cost of the recipe in the form of the money object in NZD
+     */
+    public Money calculateMakingCost() {
+<span class="fc" id="L115">        Money recipeMakingCost = Money.parse(&quot;NZD 0.00&quot;);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (recipe != null) {</span>
+<span class="fc" id="L117">            HashMap&lt;Ingredient, Integer&gt; ingredients = recipe.getIngredientsAmount();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (Map.Entry&lt;Ingredient, Integer&gt; eachIngredient : ingredients.entrySet()) {</span>
+<span class="fc" id="L119">                Ingredient ingredient = eachIngredient.getKey();</span>
+<span class="fc" id="L120">                Integer amount = eachIngredient.getValue();</span>
+<span class="fc" id="L121">                recipeMakingCost = recipeMakingCost.plus(ingredient.getCost().multipliedBy(amount));</span>
+<span class="fc" id="L122">            }</span>
+        }
+<span class="fc" id="L124">        return recipeMakingCost;</span>
+    }
+
+    /**
+     * This function adds a markup to the total cost of the ingredients based
+     * on the markup cost
+     *
+     * @return the selling cost of the menu item in the form of the Money object in NZD
+     */
+    public Money getTotalCost() {
+<span class="fc" id="L134">        Money totalCost = Money.parse(&quot;NZD 0.00&quot;);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (markupCost != null) {</span>
+<span class="fc" id="L136">            totalCost = calculateMakingCost().plus(markupCost);</span>
+        }
+<span class="fc" id="L138">        return totalCost;</span>
+
+    }
+
+    /**
+     * @return a boolean based on if the if the item is in the menu or not
+     */
+    public boolean isInMenu() {
+<span class="fc" id="L146">        return inMenu;</span>
+    }
+
+    /**
+     * The function returns the id for the menu item
+     *
+     * @return td id for the menu item
+     */
+
+    public String getID() {
+<span class="fc" id="L156">        return id;</span>
+    }
+
+    /**
+     * The function returns the name of the item
+     *
+     * @return the name of the item
+     */
+
+    public String getItemName() {
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (edited) {</span>
+<span class="nc" id="L167">            return &quot;Edited\n&quot; + itemName;</span>
+        } else {
+<span class="fc" id="L169">            return itemName;</span>
+        }
+    }
+
+    /**
+     * The function sets the name of the menu item
+     *
+     * @param tempName the assigned name for the menu item
+     */
+
+    public void setItemName(String tempName) {
+<span class="nc" id="L180">        itemName = tempName;</span>
+<span class="nc" id="L181">    }</span>
+
+    /**
+     * @return The function returns the recipe object
+     */
+
+    public Recipe getRecipe() {
+<span class="fc" id="L188">        return recipe;</span>
+    }
+
+    /**
+     * @return The function returns the markup cost set by the user
+     */
+
+    public Money getMarkupCost() {
+<span class="fc" id="L196">        return markupCost;</span>
+    }
+
+    /**
+     * The function assigns the value to the markup cost
+     *
+     * @param markupCost is the cost added to the ingredient cost of the menu item
+     */
+
+    public void setMarkupCost(Money markupCost) {
+<span class="nc" id="L206">        this.markupCost = markupCost;</span>
+<span class="nc" id="L207">    }</span>
+
+    /**
+     * @return a unique integer based on the contents of this menu item
+     */
+
+    public int hashcode() {
+<span class="fc" id="L214">        ArrayList&lt;Object&gt; tempList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L215">        tempList.addAll(recipe.getIngredientsAmount().values());</span>
+<span class="fc" id="L216">        tempList.addAll(recipe.getIngredientsAmount().keySet());</span>
+<span class="fc" id="L217">        tempList.add(recipe.getName());</span>
+<span class="fc" id="L218">        tempList.add(id);</span>
+<span class="fc" id="L219">        tempList.add(markupCost);</span>
+<span class="fc" id="L220">        return Objects.hash(tempList);</span>
+    }
+
+    public boolean equals(MenuItem other) {
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        return hashcode() == other.hashcode();</span>
+    }
+
+    /**
+     * Creates a clone of this menu item, with a different instance of Recipe
+     *
+     * @return the clone of this menu item
+     */
+    public MenuItem clone() {
+<span class="fc" id="L233">        Recipe tempRecipe = new Recipe(recipe.getName(),</span>
+<span class="fc" id="L234">                recipe.getRecipeText(),</span>
+<span class="fc" id="L235">                new HashMap&lt;&gt;(recipe.getIngredientsAmount()),</span>
+<span class="fc" id="L236">                new HashMap&lt;&gt;(recipe.getIngredientIDs()));</span>
+<span class="fc" id="L237">        MenuItem returnItem = new MenuItem(itemName, tempRecipe, markupCost, id, inMenu, itemType);</span>
+<span class="fc" id="L238">        returnItem.setEdited(edited);</span>
+<span class="fc" id="L239">        returnItem.setType(itemType);</span>
+<span class="fc" id="L240">        return returnItem;</span>
+    }
+
+    /**
+     * @return the enum which reflects the dietary information for the menu item
+     */
+
+    public TypeEnum getItemType() {
+<span class="fc" id="L248">        return itemType;</span>
+    }
+
+    /**
+     * This function sets the itemType enum for the menu item
+     *
+     * @param itemType the new type of the item
+     */
+
+    public void setType(TypeEnum itemType) {
+<span class="fc" id="L258">        this.itemType = itemType;</span>
+<span class="fc" id="L259">    }</span>
+
+    /**
+     * Checks if this menu item is edited or not
+     *
+     * @return the value for the boolean if the item was edited
+     */
+    public boolean isEdited() {
+<span class="fc" id="L267">        return edited;</span>
+    }
+
+    /**
+     * Sets the boolean to true if the menu item was edited
+     *
+     * @param tempEdited whether or not the item was edited
+     */
+
+    public void setEdited(boolean tempEdited) {
+<span class="fc" id="L277">        edited = tempEdited;</span>
+<span class="fc" id="L278">    }</span>
+
+    public String getImageString() {
+<span class="nc" id="L281">        return imageString;</span>
+    }
+
+    public void setImageString(String imageString) {
+<span class="nc" id="L285">        this.imageString = imageString;</span>
+<span class="nc" id="L286">    }</span>
+
+}
+
+
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

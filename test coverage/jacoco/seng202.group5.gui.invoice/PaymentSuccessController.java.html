@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentSuccessController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.invoice</a> &gt; <span class="el_source">PaymentSuccessController.java</span></div><h1>PaymentSuccessController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.invoice;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.joda.money.Money;
+import seng202.group5.gui.GeneralController;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * The Controller for the screen after payment is accepted. This screen shows the change quantities for the worker
+ * to give to the customer.
+ *
+ * @author Michael Morgoun
+ */
+<span class="nc" id="L21">public class PaymentSuccessController extends GeneralController {</span>
+
+    /**
+     * An ArrayList which is of all the change that must be given to the customer.
+     */
+    private ArrayList&lt;Money&gt; change;
+
+    /**
+     * The label which shows the total amount of change to give back.
+     */
+    @FXML
+    private Label totalChangeLabel;
+
+    /**
+     * Text which states &quot;Payment Success!&quot;.
+     */
+    @FXML
+    private Text paymentText;
+
+    /**
+     * The label where all the change will be shown.
+     */
+    @FXML
+    private Text changeLabel;
+
+    /**
+     * A button for closing the screen and continuing.
+     */
+    @FXML
+    private Button okButton;
+
+    /**
+     * Initialises the screen with all relevant information.
+     */
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L57">        paymentText.setFill(Color.GREEN);</span>
+
+        // Getting the total change
+<span class="nc" id="L60">        Money totalChange = Money.parse(&quot;NZD 0&quot;);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        for (Money money : change) {</span>
+<span class="nc" id="L62">            totalChange = totalChange.plus(money);</span>
+<span class="nc" id="L63">        }</span>
+<span class="nc" id="L64">        totalChangeLabel.setText(&quot;$&quot; + totalChange.toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;));</span>
+
+<span class="nc" id="L66">        showChange();</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * A method which creates a string that shows all the change denominations and their quantities.
+     */
+    public void showChange() {
+        // Initialising local variables
+<span class="nc" id="L74">        StringBuilder display = new StringBuilder();</span>
+<span class="nc" id="L75">        HashMap&lt;String, Integer&gt; changeSet = new HashMap&lt;&gt;();</span>
+
+        // Adding the money from the array to a HashMap containing the quantity of each denomination
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        for (Money money : change) {</span>
+            // The Key for the HashMap
+<span class="nc" id="L80">            String key = &quot;$&quot; + money.toString().replaceAll(&quot;[^\\d.]&quot;, &quot;&quot;);</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            if (changeSet.containsKey(key)) {</span>
+<span class="nc" id="L83">                changeSet.replace(key, changeSet.get(key) + 1);</span>
+            } else {
+<span class="nc" id="L85">                changeSet.put(key, 1);</span>
+            }
+<span class="nc" id="L87">        }</span>
+
+        // For each object, append them to the display.
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        for (Object key : changeSet.keySet().toArray()) {</span>
+<span class="nc" id="L91">            display.append(key);</span>
+<span class="nc" id="L92">            display.append(&quot;: &quot;);</span>
+<span class="nc" id="L93">            display.append(changeSet.get(key));</span>
+<span class="nc" id="L94">            display.append(&quot;\n&quot;);</span>
+        }
+<span class="nc" id="L96">        changeLabel.setText(display.toString());</span>
+<span class="nc" id="L97">    }</span>
+
+    /**
+     * Closes the screen.
+     */
+    public void close() {
+<span class="nc" id="L103">        Stage stage = (Stage) okButton.getScene().getWindow();</span>
+<span class="nc" id="L104">        stage.close();</span>
+<span class="nc" id="L105">    }</span>
+
+    /**
+     * Sets the change to give back to the customer.
+     *
+     * @param tempChange The change to be given.
+     */
+    public void setChange(ArrayList&lt;Money&gt; tempChange) {
+<span class="nc" id="L113">        change = tempChange;</span>
+<span class="nc" id="L114">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

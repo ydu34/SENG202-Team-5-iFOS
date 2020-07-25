@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AddStockController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.gui.stock</a> &gt; <span class="el_source">AddStockController.java</span></div><h1>AddStockController.java</h1><pre class="source lang-java linenums">package seng202.group5.gui.stock;
+
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import org.joda.money.Money;
+import seng202.group5.gui.GeneralController;
+import seng202.group5.information.DietEnum;
+import seng202.group5.information.Ingredient;
+import seng202.group5.information.MenuItem;
+import seng202.group5.logic.Stock;
+
+import java.util.HashSet;
+
+/**
+ * A controller for a screen that adds ingredients to the stock.
+ *
+ * @author Michael Morgoun
+ */
+<span class="nc" id="L24">public class AddStockController extends GeneralController {</span>
+
+    /**
+     * The button for which the final creation is made.
+     */
+    @FXML
+    private JFXButton createButton;
+
+    /**
+     * The name field of the ingredient.
+     */
+    @FXML
+    private TextField nameField;
+
+    /**
+     * The category field for the ingredient.
+     */
+    @FXML
+    private TextField categoryField;
+
+    /**
+     * The cost field for the ingredient.
+     */
+    @FXML
+    private TextField costField;
+
+    /**
+     * The quantity field for the ingredient.
+     */
+    @FXML
+    private TextField quantityField;
+
+    /**
+     * The warning label which shows when a field is missing.
+     */
+    @FXML
+    private Label warningLabel;
+
+    /**
+     * A check for a vegan ingredient.
+     */
+    @FXML
+    private CheckBox veganCheck;
+
+    /**
+     * A check for a vegetarian ingredient.
+     */
+    @FXML
+    private CheckBox vegetarianCheck;
+
+    /**
+     * A check for a gluten free ingredient.
+     */
+    @FXML
+    private CheckBox glutenFreeCheck;
+
+    /**
+     * The stock of the system.
+     */
+    private Stock stock;
+
+    /**
+     * The current ingredient being modifed, or made.
+     */
+    private Ingredient ingredient;
+
+    /**
+     * Initialises the fields to one of an existing ingredient, or to empty fields.
+     */
+    @Override
+    public void pseudoInitialize() {
+<span class="nc" id="L95">        super.pseudoInitialize();</span>
+        // Set text of all text field to the ones of the ingredient if it exists.
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (ingredient != null) {</span>
+<span class="nc" id="L98">            nameField.setText(ingredient.getName());</span>
+<span class="nc" id="L99">            categoryField.setText(ingredient.getCategory());</span>
+<span class="nc" id="L100">            costField.setText(ingredient.getCost().getAmount().toString());</span>
+
+            // Matches the checkboxes with that of the existent ingredient.
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            for (DietEnum diet : ingredient.getDietInfo()) {</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">                switch (diet) {</span>
+                    case GLUTEN_FREE:
+<span class="nc" id="L106">                        glutenFreeCheck.setSelected(true);</span>
+<span class="nc" id="L107">                        break;</span>
+                    case VEGETARIAN:
+<span class="nc" id="L109">                        vegetarianCheck.setSelected(true);</span>
+<span class="nc" id="L110">                        break;</span>
+                    case VEGAN:
+<span class="nc" id="L112">                        veganCheck.setSelected(true);</span>
+                        break;
+                }
+<span class="nc" id="L115">            }</span>
+
+            // Changing button label.
+<span class="nc" id="L118">            createButton.setText(&quot;Modify&quot;);</span>
+        } else {
+<span class="nc" id="L120">            createButton.setText(&quot;Create&quot;);</span>
+        }
+
+        // Listeners for the number only text fields such as quantity and cost
+<span class="nc" id="L124">        costField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,7}([\\.]\\d{0,2})?&quot;)) {</span>
+<span class="nc" id="L126">                costField.setText(oldValue);</span>
+            }
+<span class="nc" id="L128">        });</span>
+<span class="nc" id="L129">        quantityField.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            if (!newValue.matches(&quot;\\d{0,7}?&quot;)) {</span>
+<span class="nc" id="L131">                quantityField.setText(oldValue);</span>
+            }
+<span class="nc" id="L133">        });</span>
+<span class="nc" id="L134">    }</span>
+
+    /**
+     * Either creates or modifies an ingredient depending on if it's null or not.
+     *
+     * @param actionEvent The button action.
+     */
+    @FXML
+    public void buttonAction(ActionEvent actionEvent) {
+        try {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">            if (ingredient == null) {</span>
+<span class="nc" id="L145">                createIngredient();</span>
+            } else {
+<span class="nc" id="L147">                modifyIngredient();</span>
+            }
+            // Closing window
+<span class="nc" id="L150">            Stage stage = (Stage) createButton.getScene().getWindow();</span>
+<span class="nc" id="L151">            stage.close();</span>
+<span class="nc" id="L152">        } catch (Exception e) {</span>
+
+<span class="nc" id="L154">            warningLabel.setText(&quot;Error creating ingredient.&quot;);</span>
+<span class="nc" id="L155">        }</span>
+<span class="nc" id="L156">    }</span>
+
+    /**
+     * Modifies an existing ingredient.
+     */
+    public void modifyIngredient() throws ArithmeticException {
+        // Modifying the current ingredient
+<span class="nc" id="L163">        String name = nameField.getText();</span>
+<span class="nc" id="L164">        String category = categoryField.getText();</span>
+<span class="nc" id="L165">        String price = costField.getText();</span>
+<span class="nc" id="L166">        String quantity = quantityField.getText();</span>
+
+        // Throwing exceptions if input in incorrect.
+<span class="nc bnc" id="L169" title="All 8 branches missed.">        if (name.isEmpty() || category.isEmpty() || price.isEmpty() || quantity.isEmpty()) {</span>
+<span class="nc" id="L170">            throw new ArithmeticException(&quot;A Field is blank.&quot;);</span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">        } else if (Float.parseFloat(price) &lt; 0 || Integer.parseInt(quantity) &lt; 0) {</span>
+<span class="nc" id="L172">            throw new ArithmeticException(&quot;Integers are out of bounds.&quot;);</span>
+        } else {
+
+<span class="nc" id="L175">            ingredient.setName(name);</span>
+<span class="nc" id="L176">            ingredient.setCategory(category);</span>
+<span class="nc" id="L177">            ingredient.setPrice(Money.parse(&quot;NZD &quot; + price));</span>
+<span class="nc" id="L178">            stock.modifyQuantity(ingredient.getID(), Integer.parseInt(quantity));</span>
+
+            // Clears diet info since it's just added on again later
+<span class="nc" id="L181">            HashSet&lt;DietEnum&gt; set = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L182">            ingredient.setDietaryInformation(set);</span>
+
+<span class="nc" id="L184">            addDietaryInformation();</span>
+
+            // Updates the dietary information about stored recipes
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            for (MenuItem item : getAppEnvironment().getMenuManager().getItemMap().values()) {</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">                for (DietEnum dietType : DietEnum.values()) item.getRecipe().checkDietaryInfo(dietType);</span>
+<span class="nc" id="L189">            }</span>
+        }
+
+<span class="nc" id="L192">    }</span>
+
+    /**
+     * Creates a new ingredient.
+     */
+    public void createIngredient() throws ArithmeticException {
+        // Getting all the values through the text fields
+<span class="nc" id="L199">        String name = nameField.getText();</span>
+<span class="nc" id="L200">        String category = categoryField.getText();</span>
+<span class="nc" id="L201">        Money cost = Money.parse(&quot;NZD &quot; + costField.getText());</span>
+<span class="nc" id="L202">        int quantity = Integer.parseInt(quantityField.getText());</span>
+
+        // Throwing exceptions if input in incorrect.
+<span class="nc bnc" id="L205" title="All 8 branches missed.">        if (name.isEmpty() || category.isEmpty() || costField.getText().isEmpty() || quantityField.getText().isEmpty()) {</span>
+<span class="nc" id="L206">            throw new ArithmeticException(&quot;A Field is blank.&quot;);</span>
+<span class="nc bnc" id="L207" title="All 4 branches missed.">        } else if (Float.parseFloat(costField.getText()) &lt; 0 || quantity &lt; 0) {</span>
+<span class="nc" id="L208">            throw new ArithmeticException(&quot;Integers are out of bounds.&quot;);</span>
+        } else {
+
+            // Getting dietary information of ingredient through checkboxes
+<span class="nc" id="L212">            HashSet&lt;DietEnum&gt; dietRequirements = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (veganCheck.isSelected()) {</span>
+<span class="nc" id="L214">                dietRequirements.add(DietEnum.VEGAN);</span>
+            }
+<span class="nc bnc" id="L216" title="All 2 branches missed.">            if (vegetarianCheck.isSelected()) {</span>
+<span class="nc" id="L217">                dietRequirements.add(DietEnum.VEGETARIAN);</span>
+            }
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (glutenFreeCheck.isSelected()) {</span>
+<span class="nc" id="L220">                dietRequirements.add(DietEnum.GLUTEN_FREE);</span>
+            }
+
+            // Attempting to make an ingredient from data collected above
+<span class="nc" id="L224">            ingredient = new Ingredient(name, category, cost, dietRequirements);</span>
+<span class="nc" id="L225">            addDietaryInformation();</span>
+            // Adding ingredient to the stock
+<span class="nc" id="L227">            stock.addNewIngredient(ingredient, quantity);</span>
+        }
+<span class="nc" id="L229">    }</span>
+
+    /**
+     * Adds dietary information to the current ingredient.
+     */
+    public void addDietaryInformation() {
+<span class="nc bnc" id="L235" title="All 2 branches missed.">        if (veganCheck.isSelected()) {</span>
+<span class="nc" id="L236">            ingredient.addDietInfo(DietEnum.VEGAN);</span>
+        }
+<span class="nc bnc" id="L238" title="All 2 branches missed.">        if (vegetarianCheck.isSelected()) {</span>
+<span class="nc" id="L239">            ingredient.addDietInfo(DietEnum.VEGETARIAN);</span>
+        }
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (glutenFreeCheck.isSelected()) {</span>
+<span class="nc" id="L242">            ingredient.addDietInfo(DietEnum.GLUTEN_FREE);</span>
+        }
+<span class="nc" id="L244">    }</span>
+
+    /**
+     * Sets the Stock of this screen to the stock that is currently in the system.
+     *
+     * @param input The current Stock.
+     */
+    public void setStock(Stock input) {
+<span class="nc" id="L252">        stock = input;</span>
+<span class="nc" id="L253">    }</span>
+
+    /**
+     * Sets the ingredient for modifying.
+     *
+     * @param ingredient1 The Ingredient to be modified.
+     */
+    public void setIngredient(Ingredient ingredient1) {
+<span class="nc" id="L261">        ingredient = ingredient1;</span>
+<span class="nc" id="L262">    }</span>
+
+    /**
+     * Sets the quantity field separately due to the attributes of an Ingredient not containing its own quantity.
+     *
+     * @param quantity A string for the quantity.
+     */
+    public void setQuantity(String quantity) {
+<span class="nc" id="L270">        quantityField.setText(quantity);</span>
+<span class="nc" id="L271">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IDGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5</a> &gt; <span class="el_source">IDGenerator.java</span></div><h1>IDGenerator.java</h1><pre class="source lang-java linenums">package seng202.group5;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * A class which creates IDs for all that requires an ID and makes sure that
+ * they're never the same.
+ *
+ * @author Michael Morgoun
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class IDGenerator {
+
+    /**
+     * A static variable ID which shows the last Ingredient ID used or 0 if none used so far.
+     */
+    @XmlElement
+<span class="fc" id="L22">    private static int ingredientID = 0;</span>
+
+    /**
+     * A static variable ID which shows the last MenuItem ID used or 0 if none used so far.
+     */
+    @XmlElement
+<span class="fc" id="L28">    private static int menuItemID = 0;</span>
+
+    /**
+     * A static variable ID which shows the last Order ID used or 0 if none used so far.
+     */
+    @XmlElement
+<span class="fc" id="L34">    private static int orderID = 0;</span>
+
+    /**
+     * A static variable ID which shows the last Customer ID used or 0 if none used so far.
+     */
+    @XmlElement
+<span class="fc" id="L40">    private static int customerID = 0;</span>
+
+<span class="fc" id="L42">    public IDGenerator() {</span>
+
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Creates a new  Ingredient ID and increments the static variable by 1.
+     *
+     * @return The new ID as a string.
+     */
+    public static String newIngredientID() {
+<span class="fc" id="L52">        return &quot;INGR&quot; + ingredientID++;</span>
+    }
+
+    /**
+     * Creates a new  MenuItem ID and increments the static variable by 1.
+     *
+     * @return The new ID as a string.
+     */
+    public static String newMenuItemID() {
+<span class="fc" id="L61">        return &quot;ITEM&quot; + menuItemID++;</span>
+    }
+
+    /**
+     * Creates a new  Order ID and increments the static variable by 1.
+     *
+     * @return The new ID as a string.
+     */
+    public static String newOrderID() {
+<span class="fc" id="L70">        return &quot;ORDR&quot; + orderID++;</span>
+    }
+
+    /**
+     * Creates a new Customer ID and increments the static variable by 1.
+     *
+     * @return The new ID as a string.
+     */
+    public static String newCustomerID() {
+<span class="fc" id="L79">        return &quot;CUST&quot; + customerID++;</span>
+    }
+
+    /**
+     * Returns the last ingredientID used.
+     *
+     * @return an integer last ingredientID.
+     */
+    public static int getIngredientID() {
+<span class="fc" id="L88">        return ingredientID;</span>
+    }
+
+    /**
+     * Sets the last ingredientID to the parameter.
+     *
+     * @param newIngredientID An integer referring to the digit of the new ingredientID.
+     */
+    public static void setIngredientID(int newIngredientID) {
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (ingredientID &lt; newIngredientID) ingredientID = newIngredientID;</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * Returns the last menuItemID used.
+     *
+     * @return an integer last menuItemID.
+     */
+    public static int getMenuItemID() {
+<span class="fc" id="L106">        return menuItemID;</span>
+    }
+
+    /**
+     * Sets the last menuItemID to the parameter.
+     *
+     * @param newMenuItemID An integer referring to the digit of the new menuItemID.
+     */
+    public static void setMenuItemID(int newMenuItemID) {
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (menuItemID &lt; newMenuItemID) menuItemID = newMenuItemID;</span>
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * Returns the last orderID used.
+     *
+     * @return an integer last orderID.
+     */
+    public static int getOrderID() {
+<span class="fc" id="L124">        return orderID;</span>
+    }
+
+    /**
+     * Sets the last orderID to the parameter.
+     *
+     * @param newOrderID An integer referring to the digit of the new orderID.
+     */
+    public static void setOrderID(int newOrderID) {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (orderID &lt; newOrderID) orderID = newOrderID;</span>
+<span class="fc" id="L134">    }</span>
+
+    /**
+     * Returns the last customerID used.
+     *
+     * @return an integer last customerID.
+     */
+    public static int getCustomerID() {
+<span class="fc" id="L142">        return customerID;</span>
+    }
+
+    /**
+     * Sets the last customerID to the parameter.
+     *
+     * @param newCustomerID An integer referring to the digit of the new customerID.
+     */
+    public static void setCustomerID(int newCustomerID) {
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (customerID &lt; newCustomerID) customerID = newCustomerID;</span>
+<span class="fc" id="L152">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

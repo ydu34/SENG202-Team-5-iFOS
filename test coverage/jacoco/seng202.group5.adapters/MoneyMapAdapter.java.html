@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MoneyMapAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SENG202-Team-5</a> &gt; <a href="index.source.html" class="el_package">seng202.group5.adapters</a> &gt; <span class="el_source">MoneyMapAdapter.java</span></div><h1>MoneyMapAdapter.java</h1><pre class="source lang-java linenums">package seng202.group5.adapters;
+
+import org.joda.money.Money;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * A class created so that Jaxb can deal with Money Objects
+ */
+<span class="fc" id="L12">public final class MoneyMapAdapter extends XmlAdapter&lt;AdaptedMoneyMap, HashMap&lt;Money, Integer&gt;&gt; {</span>
+
+    /**
+     * @param v Takes in an AdaptedMoneyMap that contains a list of AdaptedMoneyEntry
+     * @return HashMap containing money objects and the quantity of each money
+     */
+    @Override
+    public HashMap&lt;Money, Integer&gt; unmarshal(AdaptedMoneyMap v) {
+<span class="fc" id="L20">        List&lt;AdaptedMoneyEntry&gt; adaptedEntries = v.entries;</span>
+<span class="fc" id="L21">        HashMap&lt;Money, Integer&gt; map = new HashMap&lt;Money, Integer&gt;(adaptedEntries.size());</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (AdaptedMoneyEntry adaptedMoneyEntry : adaptedEntries) {</span>
+<span class="fc" id="L23">            map.put(Money.parse(adaptedMoneyEntry.key), adaptedMoneyEntry.value);</span>
+<span class="fc" id="L24">        }</span>
+<span class="fc" id="L25">        return map;</span>
+    }
+
+    /**
+     * @param v Takes in an HashMap containing money objects and the quantity of each money
+     * @return AdaptedMoneyMap that contains a list of AdaptedMoneyEntry
+     */
+    @Override
+    public AdaptedMoneyMap marshal(HashMap&lt;Money, Integer&gt; v) {
+<span class="fc" id="L34">        AdaptedMoneyMap adaptedMoneyMap = new AdaptedMoneyMap();</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (HashMap.Entry&lt;Money, Integer&gt; entry : v.entrySet()) {</span>
+<span class="fc" id="L36">            AdaptedMoneyEntry adaptedMoneyEntry = new AdaptedMoneyEntry();</span>
+<span class="fc" id="L37">            adaptedMoneyEntry.key = entry.getKey().toString();</span>
+<span class="fc" id="L38">            adaptedMoneyEntry.value = entry.getValue();</span>
+<span class="fc" id="L39">            adaptedMoneyMap.entries.add(adaptedMoneyEntry);</span>
+<span class="fc" id="L40">        }</span>
+<span class="fc" id="L41">        return adaptedMoneyMap;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

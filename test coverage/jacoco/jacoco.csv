@@ -1,0 +1,68 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+SENG202-Team-5,seng202.group5.gui.invoice,InvoiceController,962,0,34,0,229,0,44,0,27,0
+SENG202-Team-5,seng202.group5.gui.invoice,ApplyDiscountController,200,0,8,0,40,0,17,0,13,0
+SENG202-Team-5,seng202.group5.gui.invoice,NewCustomerController,98,0,8,0,24,0,11,0,7,0
+SENG202-Team-5,seng202.group5.gui.invoice,PaymentSuccessController,143,0,8,0,29,0,9,0,5,0
+SENG202-Team-5,seng202.group5.gui.invoice,ExistingCustomerController,261,0,22,0,64,0,24,0,13,0
+SENG202-Team-5,seng202.group5.information,DietEnum,2,45,1,3,1,8,1,4,0,2
+SENG202-Team-5,seng202.group5.information,Customer,3,81,1,5,1,28,1,13,0,11
+SENG202-Team-5,seng202.group5.information,MenuItem,28,257,5,5,9,67,9,17,5,16
+SENG202-Team-5,seng202.group5.information,Recipe,14,399,6,26,5,87,7,32,1,22
+SENG202-Team-5,seng202.group5.information,TypeEnum,13,34,4,0,5,4,4,1,1,1
+SENG202-Team-5,seng202.group5.information,Ingredient,0,246,1,7,0,69,1,27,0,24
+SENG202-Team-5,seng202.group5.information,Transaction,6,61,1,1,2,22,1,11,0,11
+SENG202-Team-5,seng202.group5.information,CustomerSettings,4,29,0,0,2,11,1,6,1,6
+SENG202-Team-5,seng202.group5.information,Customers,0,39,0,0,0,12,0,5,0,5
+SENG202-Team-5,seng202.group5.logic,Finance,48,708,10,62,7,122,9,39,0,12
+SENG202-Team-5,seng202.group5.logic,Settings,0,13,0,0,0,5,0,3,0,3
+SENG202-Team-5,seng202.group5.logic,OrderManager,4,35,0,0,2,14,1,6,1,6
+SENG202-Team-5,seng202.group5.logic,Stock,7,143,0,4,3,31,1,13,1,11
+SENG202-Team-5,seng202.group5.logic,Till,0,166,1,11,0,35,1,14,0,9
+SENG202-Team-5,seng202.group5.logic,Order,32,478,2,26,7,96,5,28,3,16
+SENG202-Team-5,seng202.group5.logic,MenuManager,8,114,1,7,2,26,2,9,1,6
+SENG202-Team-5,seng202.group5.gui.history,HistoryController,394,0,20,0,86,0,26,0,16,0
+SENG202-Team-5,seng202.group5.gui.history,AddPastOrderController,388,0,4,0,91,0,15,0,13,0
+SENG202-Team-5,seng202.group5.gui.history,HistoryController.new DateCell() {...},48,0,6,0,8,0,6,0,3,0
+SENG202-Team-5,seng202.group5.gui.history,HistoryController.new DateCell() {...},48,0,6,0,8,0,6,0,3,0
+SENG202-Team-5,seng202.group5.gui.history,HistoryController.new LocalDateStringConverter() {...},26,0,4,0,6,0,4,0,2,0
+SENG202-Team-5,seng202.group5.gui.history,HistoryController.new LocalDateStringConverter() {...},26,0,4,0,6,0,4,0,2,0
+SENG202-Team-5,seng202.group5.gui.history,ConfirmRefundController,224,0,8,0,45,0,12,0,8,0
+SENG202-Team-5,seng202.group5.gui.history,AddPastOrderController.new LocalDateStringConverter() {...},20,0,2,0,6,0,3,0,2,0
+SENG202-Team-5,seng202.group5.gui.history,AddPastOrderController.new DateCell() {...},22,0,4,0,4,0,4,0,2,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController.new DateCell() {...},48,0,6,0,8,0,6,0,3,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController.new LocalDateStringConverter() {...},26,0,4,0,6,0,4,0,2,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController.new DateCell() {...},48,0,6,0,8,0,6,0,3,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController.new StringConverter() {...},17,0,0,0,3,0,3,0,3,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController.new StringConverter() {...},16,0,0,0,3,0,3,0,3,0
+SENG202-Team-5,seng202.group5.gui.admin,PasswordController,274,0,16,0,88,0,27,0,19,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController.new LocalDateStringConverter() {...},26,0,4,0,6,0,4,0,2,0
+SENG202-Team-5,seng202.group5.gui.admin,AddRecipeController,503,0,20,0,134,0,26,0,16,0
+SENG202-Team-5,seng202.group5.gui.admin,AdminController,1426,0,78,0,310,0,79,0,40,0
+SENG202-Team-5,seng202.group5.exceptions,InsufficientCashException,0,7,0,0,0,4,0,2,0,2
+SENG202-Team-5,seng202.group5.exceptions,NoPastOrderException,7,0,0,0,4,0,2,0,2,0
+SENG202-Team-5,seng202.group5.adapters,MoneyAdapter,0,9,0,0,0,3,0,3,0,3
+SENG202-Team-5,seng202.group5.adapters,AdaptedMoneyEntry,0,3,0,0,0,2,0,1,0,1
+SENG202-Team-5,seng202.group5.adapters,LocalDateTimeAdapter,0,9,0,0,0,3,0,3,0,3
+SENG202-Team-5,seng202.group5.adapters,AdaptedMoneyMap,0,8,0,0,0,2,0,1,0,1
+SENG202-Team-5,seng202.group5.adapters,MoneyMapAdapter,0,71,0,4,0,15,0,5,0,3
+SENG202-Team-5,seng202.group5,AppEnvironment,75,156,2,2,16,47,5,17,3,17
+SENG202-Team-5,seng202.group5,SchemaGenerator,77,0,0,0,25,0,5,0,5,0
+SENG202-Team-5,seng202.group5,ModifiedSchemaOutputResolver,23,0,0,0,6,0,3,0,3,0
+SENG202-Team-5,seng202.group5,Database.OverwriteType,13,34,4,0,5,4,4,1,1,1
+SENG202-Team-5,seng202.group5,IDGenerator,0,72,4,4,0,22,4,14,0,14
+SENG202-Team-5,seng202.group5,Database,668,430,69,23,145,91,61,22,19,14
+SENG202-Team-5,seng202.group5.gui,GeneralController,227,0,0,0,66,0,15,0,15,0
+SENG202-Team-5,seng202.group5.gui,OrderController.SortType,35,0,3,0,7,0,4,0,2,0
+SENG202-Team-5,seng202.group5.gui,AddItemWarningController,73,0,4,0,22,0,9,0,7,0
+SENG202-Team-5,seng202.group5.gui,GuiManager,250,0,0,0,56,0,7,0,7,0
+SENG202-Team-5,seng202.group5.gui,GuiManager.new HashSet() {...},10,0,0,0,3,0,1,0,1,0
+SENG202-Team-5,seng202.group5.gui,GuiManager.new HashSet() {...},14,0,0,0,4,0,1,0,1,0
+SENG202-Team-5,seng202.group5.gui,AddExtraIngredientController.new TableCell() {...},127,0,10,0,27,0,8,0,3,0
+SENG202-Team-5,seng202.group5.gui,AddExtraIngredientController,592,0,32,0,130,0,40,0,22,0
+SENG202-Team-5,seng202.group5.gui,GuiManager.new HashSet() {...},14,0,0,0,4,0,1,0,1,0
+SENG202-Team-5,seng202.group5.gui,GuiManager.new ArrayList() {...},11,0,0,0,3,0,1,0,1,0
+SENG202-Team-5,seng202.group5.gui,Main,6,0,0,0,3,0,2,0,2,0
+SENG202-Team-5,seng202.group5.gui,OrderController,701,0,56,0,163,0,48,0,20,0
+SENG202-Team-5,seng202.group5.gui.stock,RemoveStockController,76,0,4,0,20,0,8,0,6,0
+SENG202-Team-5,seng202.group5.gui.stock,StockController,435,0,18,0,104,0,22,0,13,0
+SENG202-Team-5,seng202.group5.gui.stock,AddStockController,376,0,54,0,85,0,39,0,11,0
