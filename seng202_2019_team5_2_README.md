@@ -1,10 +1,10 @@
-iFOS(Intutitive Food Ordering Sytem) 
+iFOS(Intuitive Food Ordering System) 
 
 Table of contents: 
 
 I)   Running the application
-II)  Importing the project to IntellJ
-III) Running the application from IntellJ
+II)  Importing the project to Intellij
+III) Running the application from Intellij
 IV)  Importing the .xml files to the application 
 V)   Running the JUnit Tests
 VI)  Running the Acceptance testing  
@@ -15,21 +15,21 @@ I) Running the jar application through jar file.
    - Run application with "java -jar SENG202-Team-5-1.0-SNAPSHOT.jar"
    - You may import pre made .xml files in the xmlFiles folder
    - Once the application is running
-   - The admin screen should launched
+   - The admin screen should launch
    - Go to Import/Export Data
    - Import each individual file in xmlFiles
    - Select Import Data
 
-II) Importing the project to IntellJ
-   -Open IntelliJ
+II) Importing the project to Intellij
+   -Open Intellij
    -Select File > New >Project from existing sources
-   -Find the directory where the contents from the zip file were extracted
+   -Find the directory where the contents from the zip file that were extracted
    -Select the pom.xml
    -Click Next > Select the maven project to import
    -Select the JDK version 1.11.0
    -Click Next > Finish
 
-III) Running the application in IntellJ
+III) Running the application in Intellij
    - To run the graphical application go to
    - SENG202-Team5/src/main/java/seng202.group5/gui/main
    - Run it buy clicking the green arrow on the top left of the screen or by right clicking main and selecting run
@@ -48,7 +48,7 @@ V) Runng the JUnit Tests
 
 VI) Running the Acceptance testing
  - In intellJ
- - Select SENG202-Team-5 > src > test > stepDefinations
+ - Select SENG202-Team-5 > src > test > stepDefinitions
  - Right Click on the RunCucumberTest
 
 VII) Accessing the Admin Screen
