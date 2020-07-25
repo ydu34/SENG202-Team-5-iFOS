@@ -22,13 +22,13 @@
    - Select Import Data
 
 ### II) Importing the project to Intellij
-   -Open Intellij
-   -Select File > New >Project from existing sources
-   -Find the directory where the contents from the zip file that were extracted
-   -Select the pom.xml
-   -Click Next > Select the maven project to import
-   -Select the JDK version 1.11.0
-   -Click Next > Finish
+   - Open Intellij
+   - Select File > New >Project from existing sources
+   - Find the directory where the contents from the zip file that were extracted
+   - Select the pom.xml
+   - Click Next > Select the maven project to import
+   - Select the JDK version 1.11.0
+   - Click Next > Finish
 
 ### III) Running the application in Intellij
    - To run the graphical application go to
